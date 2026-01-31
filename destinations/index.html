@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore our curated destinations across Africa and beyond. Luxury travel experiences from creatives who've been there.">
+
+  <title>Destinations | NUBEAUX Travel</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .page-hero {
+      background-color: var(--color-charcoal);
+      color: var(--color-white);
+      padding: var(--space-xl) 0;
+      margin-top: var(--header-height);
+      text-align: center;
+    }
+
+    .page-hero h1 {
+      margin-bottom: var(--space-sm);
+    }
+
+    .page-hero p {
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .destinations-section {
+      padding: var(--space-xl) 0;
+    }
+
+    .region-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--color-ecru);
+    }
+
+    .destinations-large-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .destination-large-card {
+      position: relative;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+    }
+
+    .destination-large-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .destination-large-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .destination-large-card .destination-card-overlay {
+      padding: var(--space-lg);
+    }
+
+    .destination-large-card h3 {
+      font-size: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .destinations-large-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-text">NUBEAUX TRAVEL</span>
+      </a>
+
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../creators/">Creators</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../creators/">Creators</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Destinations</h1>
+      <p>Every place we recommend, we've experienced firsthand. Discover our curated selection across Africa and beyond.</p>
+    </div>
+  </section>
+
+  <!-- Southern Africa -->
+  <section class="destinations-section">
+    <div class="container">
+      <h2 class="region-title">Southern Africa</h2>
+      <div class="destinations-large-grid">
+        <a href="namibia.html" class="destination-large-card destination-card">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1000,h_625,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Namibia">
+          <div class="destination-card-overlay">
+            <span class="destination-card-label">Safari & Desert</span>
+            <h3>Namibia</h3>
+            <p>Etosha wildlife, desert luxury, and endless horizons</p>
+          </div>
+        </a>
+
+        <a href="south-africa.html" class="destination-large-card destination-card">
+          <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1000&h=625&fit=crop&q=80" alt="South Africa">
+          <div class="destination-card-overlay">
+            <span class="destination-card-label">Safari & City</span>
+            <h3>South Africa</h3>
+            <p>Cape Town, Johannesburg, and world-class safari</p>
+          </div>
+        </a>
+
+        <a href="zambia.html" class="destination-large-card destination-card">
+          <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1000&h=625&fit=crop&q=80" alt="Zambia">
+          <div class="destination-card-overlay">
+            <span class="destination-card-label">Victoria Falls</span>
+            <h3>Zambia</h3>
+            <p>Victoria Falls, Zambezi sunsets, and authentic safari</p>
+          </div>
+        </a>
+
+        <a href="botswana.html" class="destination-large-card destination-card">
+          <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1000&h=625&fit=crop&q=80" alt="Botswana">
+          <div class="destination-card-overlay">
+            <span class="destination-card-label">Wilderness</span>
+            <h3>Botswana</h3>
+            <p>Okavango Delta and pristine wilderness experiences</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- East Africa -->
+  <section class="destinations-section" style="background-color: var(--color-ecru);">
+    <div class="container">
+      <h2 class="region-title">East Africa</h2>
+      <div class="destinations-large-grid">
+        <a href="kenya.html" class="destination-large-card destination-card">
+          <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=1000&h=625&fit=crop&q=80" alt="Kenya">
+          <div class="destination-card-overlay">
+            <span class="destination-card-label">Classic Safari</span>
+            <h3>Kenya</h3>
+            <p>The Masai Mara and the original safari experience</p>
+          </div>
+        </a>
+
+        <a href="zanzibar.html" class="destination-large-card destination-card">
+          <img src="https://images.unsplash.com/photo-1586861203927-800a5acdcc4d?w=1000&h=625&fit=crop&q=80" alt="Zanzibar">
+          <div class="destination-card-overlay">
+            <span class="destination-card-label">Beach & Culture</span>
+            <h3>Zanzibar</h3>
+            <p>Spice islands, Stone Town, and Indian Ocean serenity</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Not sure where to go?</h2>
+      <p class="text-large">Tell us what you're looking for. We'll recommend the perfect destination.</p>
+      <a href="../plan-your-trip.html" class="btn btn-dark">Get Recommendations</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text" style="font-size: 1.25rem;">NUBEAUX TRAVEL</span>
+          <p>Curated luxury travel experiences from creatives who've been there.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Explore</h4>
+          <div class="footer-links">
+            <a href="../destinations/">Destinations</a>
+            <a href="../itineraries/">Itineraries</a>
+            <a href="../stays/">Stays</a>
+            <a href="../creators/">Creators</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="../about.html">About</a>
+            <a href="../plan-your-trip.html">Plan Your Trip</a>
+            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Connect</h4>
+          <div class="footer-links">
+            <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

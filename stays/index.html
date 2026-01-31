@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Curated luxury stays across Africa. Hotels and lodges we've personally experienced and recommend.">
+
+  <title>Stays | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .page-hero { background-color: var(--color-charcoal); color: var(--color-white); padding: var(--space-xl) 0; margin-top: var(--header-height); text-align: center; }
+    .page-hero h1 { margin-bottom: var(--space-sm); }
+    .page-hero p { opacity: 0.8; max-width: 600px; margin: 0 auto; }
+    .stays-section { padding: var(--space-xl) 0; }
+    .stays-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+    .stay-card { background: var(--color-white); overflow: hidden; }
+    .stay-card-image { aspect-ratio: 4/3; overflow: hidden; }
+    .stay-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-slow); }
+    .stay-card:hover .stay-card-image img { transform: scale(1.05); }
+    .stay-card-content { padding: var(--space-md); }
+    .stay-card-label { font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-xs); }
+    .stay-card h3 { font-size: 1.25rem; margin-bottom: var(--space-xs); }
+    .stay-card p { font-size: 0.875rem; color: var(--color-warm-grey); }
+    .region-title { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-md); padding-bottom: var(--space-sm); border-bottom: 1px solid var(--color-ecru); }
+    @media (max-width: 1024px) { .stays-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .stays-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><span class="logo-text">NUBEAUX TRAVEL</span></a>
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../creators/">Creators</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../creators/">Creators</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Where to Stay</h1>
+      <p>Every property we recommend, we've experienced firsthand. These are the lodges, hotels, and camps that meet our standards.</p>
+    </div>
+  </section>
+
+  <section class="stays-section">
+    <div class="container">
+      <h2 class="region-title">Namibia</h2>
+      <div class="stays-grid" style="margin-bottom: var(--space-xl);">
+        <a href="onguma-camp-kala.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Onguma Camp Kala">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">Safari Lodge</span>
+            <h3>Onguma Camp Kala</h3>
+            <p>Design-forward luxury on Etosha's eastern border</p>
+          </div>
+        </a>
+      </div>
+
+      <h2 class="region-title">South Africa</h2>
+      <div class="stays-grid" style="margin-bottom: var(--space-xl);">
+        <a href="four-seasons-westcliff.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=450&fit=crop&q=80" alt="Four Seasons The Westcliff">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">City Hotel</span>
+            <h3>Four Seasons The Westcliff</h3>
+            <p>Johannesburg's hillside sanctuary</p>
+          </div>
+        </a>
+        <a href="park-hyatt-johannesburg.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=450&fit=crop&q=80" alt="Park Hyatt Johannesburg">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">City Hotel</span>
+            <h3>Park Hyatt Johannesburg</h3>
+            <p>Contemporary luxury in Rosebank</p>
+          </div>
+        </a>
+      </div>
+
+      <h2 class="region-title">Coming Soon</h2>
+      <p style="color: var(--color-warm-grey);">We're adding more properties from Kenya, Mozambique, Zanzibar, and beyond. Check back soon.</p>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Need a recommendation?</h2>
+      <p class="text-large">Tell us what you're looking for and we'll suggest the perfect property.</p>
+      <a href="../plan-your-trip.html" class="btn btn-dark">Get Recommendations</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

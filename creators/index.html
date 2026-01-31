@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Meet the creators behind NUBEAUX Travel. Creatives who travel beautifully and share their experiences.">
+
+  <title>Creators | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .page-hero { background-color: var(--color-charcoal); color: var(--color-white); padding: var(--space-xl) 0; margin-top: var(--header-height); text-align: center; }
+    .page-hero h1 { margin-bottom: var(--space-sm); }
+    .page-hero p { opacity: 0.8; max-width: 600px; margin: 0 auto; }
+    .creators-section { padding: var(--space-xl) 0; }
+    .creator-feature { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); margin-bottom: var(--space-xl); padding-bottom: var(--space-xl); border-bottom: 1px solid var(--color-ecru); }
+    .creator-feature:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .creator-image { aspect-ratio: 1; overflow: hidden; }
+    .creator-image img { width: 100%; height: 100%; object-fit: cover; }
+    .creator-content { display: flex; flex-direction: column; justify-content: center; }
+    .creator-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-sm); }
+    .creator-content h2 { margin-bottom: var(--space-md); }
+    .creator-content p { color: var(--color-warm-grey); line-height: 1.8; margin-bottom: var(--space-md); }
+    .creator-specialties { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-lg); }
+    .specialty-tag { font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.5rem 1rem; background: var(--color-ecru); color: var(--color-charcoal); }
+    @media (max-width: 768px) { .creator-feature { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><span class="logo-text">NUBEAUX TRAVEL</span></a>
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../creators/">Creators</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../creators/">Creators</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Meet the Creators</h1>
+      <p>The creatives behind our recommendations. Every destination they suggest, they've experienced. Every property, they've stayed at.</p>
+    </div>
+  </section>
+
+  <section class="creators-section">
+    <div class="container">
+      <div class="creator-feature">
+        <div class="creator-image">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_800,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light" onerror="this.src='https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&h=800&fit=crop&q=80'">
+        </div>
+        <div class="creator-content">
+          <span class="creator-label">Content Creator & Storyteller</span>
+          <h2>Nia The Light</h2>
+          <p>Nia is a content creator and storyteller with a passion for African luxury, wellness, and the art of solo travel. Her work captures the beauty of intentional living, from sunrise safari drives to boutique hotel rooms designed for restoration.</p>
+          <p>With an audience of over 430,000 across platforms, Nia brings an elevated eye to every destination she visits. Her travel philosophy centers on slowing down, immersing deeply, and returning transformed.</p>
+          <div class="creator-specialties">
+            <span class="specialty-tag">Solo Travel</span>
+            <span class="specialty-tag">Wellness</span>
+            <span class="specialty-tag">Luxury Hotels</span>
+            <span class="specialty-tag">African Heritage</span>
+          </div>
+          <a href="nia.html" class="btn btn-dark">View Nia's Collection</a>
+        </div>
+      </div>
+
+      <div class="creator-feature">
+        <div class="creator-image">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_800,q_auto,f_auto/v1/nubeaux/klein_profile" alt="Klein Nettoh" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=800&fit=crop&q=80'">
+        </div>
+        <div class="creator-content">
+          <span class="creator-label">Videographer & Photographer</span>
+          <h2>Klein Nettoh</h2>
+          <p>Klein is a wildlife videographer and photographer who has spent years documenting the raw beauty of East and Southern Africa. His work has taken him from the Masai Mara to the deserts of Namibia, capturing moments that most travellers never see.</p>
+          <p>With a background in professional film production, Klein brings a cinematic eye to safari. His recommendations focus on properties that offer exceptional wildlife access and photographic opportunities.</p>
+          <div class="creator-specialties">
+            <span class="specialty-tag">Safari</span>
+            <span class="specialty-tag">Wildlife Photography</span>
+            <span class="specialty-tag">Conservation</span>
+            <span class="specialty-tag">Film</span>
+          </div>
+          <a href="klein.html" class="btn btn-dark">View Klein's Collection</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Travel with our creators</h2>
+      <p class="text-large">Let their expertise shape your journey. We'll connect you with the destinations and experiences they love most.</p>
+      <a href="../plan-your-trip.html" class="btn btn-dark">Start Planning</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

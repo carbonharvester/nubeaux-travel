@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kenya travel guide. Masai Mara, luxury safari lodges, and the Great Migration. Curated by NUBEAUX Travel.">
+
+  <title>Kenya | NUBEAUX Travel</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .dest-hero {
+      position: relative;
+      min-height: 70vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .dest-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .dest-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .dest-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%);
+      z-index: 2;
+    }
+
+    .dest-hero-content {
+      position: relative;
+      z-index: 3;
+      padding: var(--space-xl) var(--space-md);
+      color: var(--color-white);
+      width: 100%;
+    }
+
+    .dest-hero-content .container {
+      max-width: 800px;
+      margin: 0;
+    }
+
+    .dest-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .dest-hero h1 {
+      font-size: clamp(3rem, 8vw, 5rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .dest-hero p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      max-width: 600px;
+    }
+
+    .dest-content {
+      padding: var(--space-xl) 0;
+    }
+
+    .dest-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    .dest-main h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .dest-main p {
+      color: var(--color-warm-grey);
+      line-height: 1.8;
+      margin-bottom: var(--space-md);
+    }
+
+    .dest-sidebar {
+      background-color: var(--color-ecru);
+      padding: var(--space-lg);
+      height: fit-content;
+    }
+
+    .sidebar-section {
+      margin-bottom: var(--space-lg);
+    }
+
+    .sidebar-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .sidebar-title {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .sidebar-content {
+      font-size: 0.9375rem;
+      color: var(--color-charcoal);
+    }
+
+    .highlight-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .highlight-list li {
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      font-size: 0.9375rem;
+    }
+
+    .highlight-list li:last-child {
+      border-bottom: none;
+    }
+
+    .stays-section {
+      background-color: var(--color-ecru);
+      padding: var(--space-xl) 0;
+    }
+
+    .stays-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .stay-card {
+      background-color: var(--color-white);
+      overflow: hidden;
+    }
+
+    .stay-card-image {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .stay-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .stay-card:hover .stay-card-image img {
+      transform: scale(1.05);
+    }
+
+    .stay-card-content {
+      padding: var(--space-md);
+    }
+
+    .stay-card-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-xs);
+    }
+
+    .stay-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .stay-card p {
+      font-size: 0.875rem;
+      color: var(--color-warm-grey);
+    }
+
+    @media (max-width: 1024px) {
+      .stays-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dest-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stays-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-text">NUBEAUX TRAVEL</span>
+      </a>
+
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../creators/">Creators</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../creators/">Creators</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="dest-hero">
+    <div class="dest-hero-bg">
+      <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=1920&h=1080&fit=crop&q=80" alt="Kenya safari">
+    </div>
+    <div class="dest-hero-overlay"></div>
+    <div class="dest-hero-content">
+      <div class="container">
+        <span class="dest-label">East Africa</span>
+        <h1>Kenya</h1>
+        <p>Where safari was born. The Masai Mara, the Great Migration, and the lodges that defined African luxury travel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="dest-content">
+    <div class="container">
+      <div class="dest-grid">
+        <div class="dest-main">
+          <h2>Why Kenya</h2>
+          <p>Kenya is the original safari destination. This is where European explorers first fell in love with African wildlife, where Out of Africa was filmed, and where the luxury safari lodge was invented. The Masai Mara remains the gold standard for game viewing, particularly during the Great Migration when over a million wildebeest cross from the Serengeti.</p>
+
+          <p>Beyond the Mara, Kenya offers remarkable diversity. The Laikipia Plateau has become a conservation success story with some of the most exclusive camps in Africa. Amboseli delivers iconic views of Kilimanjaro with elephants in the foreground. And the coast around Lamu offers Swahili culture and Indian Ocean beauty. This is a country that has been welcoming travellers for over a century, and it shows in the refinement of the experience.</p>
+
+          <h2 style="margin-top: var(--space-lg);">Our Favorite Experiences</h2>
+          <ul class="highlight-list">
+            <li><strong>Masai Mara</strong> — The world's greatest wildlife reserve</li>
+            <li><strong>Great Migration</strong> — River crossings from July to October</li>
+            <li><strong>Laikipia</strong> — Private conservancies with walking safaris</li>
+            <li><strong>Amboseli</strong> — Elephants beneath Kilimanjaro</li>
+            <li><strong>Nairobi</strong> — Giraffe Centre and Karen Blixen Museum</li>
+            <li><strong>Lamu</strong> — Historic Swahili island town</li>
+          </ul>
+
+          <h2 style="margin-top: var(--space-lg);">When to Visit</h2>
+          <p>The dry seasons (January-March and July-October) are best for game viewing. July to October is peak season for the Great Migration. The "green season" (April-June, November) offers lower prices and dramatic landscapes but more rain.</p>
+        </div>
+
+        <div class="dest-sidebar">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">At a Glance</h3>
+            <div class="sidebar-content">
+              <p><strong>Best for:</strong> Safari, wildlife photography, honeymoon</p>
+              <p style="margin-top: 0.5rem;"><strong>Currency:</strong> Kenyan Shilling (KES)</p>
+              <p style="margin-top: 0.5rem;"><strong>Language:</strong> English, Swahili</p>
+              <p style="margin-top: 0.5rem;"><strong>Visa:</strong> eVisa required</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Best Time to Visit</h3>
+            <div class="sidebar-content">
+              <p><strong>Migration:</strong> July - October</p>
+              <p style="margin-top: 0.5rem;"><strong>General Safari:</strong> Year-round</p>
+              <p style="margin-top: 0.5rem;"><strong>Budget:</strong> April - June</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Getting There</h3>
+            <div class="sidebar-content">
+              <p>Fly into Nairobi (NBO). Direct flights from London, Dubai, Amsterdam. Light aircraft transfers to safari camps.</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Trip Length</h3>
+            <div class="sidebar-content">
+              <p><strong>Mara only:</strong> 4-5 nights</p>
+              <p style="margin-top: 0.5rem;"><strong>Multi-region:</strong> 7-10 nights</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where to Stay -->
+  <section class="stays-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Where to Stay</h2>
+        <a href="../stays/">View all properties</a>
+      </div>
+
+      <div class="stays-grid">
+        <a href="../stays/angama-mara.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600&h=450&fit=crop&q=80" alt="Angama Mara">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">Iconic</span>
+            <h3>Angama Mara</h3>
+            <p>Suspended above the Great Rift Valley</p>
+          </div>
+        </a>
+
+        <a href="../stays/governors-camp.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&h=450&fit=crop&q=80" alt="Governors Camp">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">Classic</span>
+            <h3>Governors Camp</h3>
+            <p>The original Mara safari camp</p>
+          </div>
+        </a>
+
+        <a href="../stays/segera-retreat.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://images.unsplash.com/photo-1568495248636-6432b97bd949?w=600&h=450&fit=crop&q=80" alt="Segera Retreat">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">Art & Conservation</span>
+            <h3>Segera Retreat</h3>
+            <p>Art-filled lodge in Laikipia</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to experience Kenya?</h2>
+      <p class="text-large">From the Mara to the coast, let us craft your perfect Kenyan journey.</p>
+      <a href="../plan-your-trip.html" class="btn btn-dark">Plan Your Kenya Trip</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text" style="font-size: 1.25rem;">NUBEAUX TRAVEL</span>
+          <p>Curated luxury travel experiences from creatives who've been there.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Explore</h4>
+          <div class="footer-links">
+            <a href="../destinations/">Destinations</a>
+            <a href="../itineraries/">Itineraries</a>
+            <a href="../stays/">Stays</a>
+            <a href="../creators/">Creators</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="../about.html">About</a>
+            <a href="../plan-your-trip.html">Plan Your Trip</a>
+            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Connect</h4>
+          <div class="footer-links">
+            <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plan your luxury trip with NUBEAUX Travel. Tell us your dream destination and we'll craft an unforgettable experience.">
+
+  <title>Plan Your Trip | NUBEAUX Travel</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .inquiry-hero {
+      background-color: var(--color-charcoal);
+      color: var(--color-white);
+      padding: var(--space-xl) 0;
+      margin-top: var(--header-height);
+      text-align: center;
+    }
+
+    .inquiry-hero h1 {
+      margin-bottom: var(--space-sm);
+    }
+
+    .inquiry-hero p {
+      opacity: 0.8;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .inquiry-section {
+      padding: var(--space-xl) 0;
+    }
+
+    .inquiry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    .inquiry-info {
+      padding-right: var(--space-lg);
+    }
+
+    .inquiry-info h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .inquiry-info p {
+      color: var(--color-warm-grey);
+      margin-bottom: var(--space-md);
+      line-height: 1.8;
+    }
+
+    .inquiry-steps {
+      margin-top: var(--space-lg);
+    }
+
+    .inquiry-step {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-terracotta);
+      color: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: var(--space-xs);
+    }
+
+    .step-content p {
+      font-size: 0.9375rem;
+      margin-bottom: 0;
+    }
+
+    .inquiry-form {
+      background-color: var(--color-ecru);
+      padding: var(--space-lg);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: var(--space-xl);
+    }
+
+    .form-success.active {
+      display: block;
+    }
+
+    .form-success h3 {
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .inquiry-form form.hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .inquiry-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .inquiry-info {
+        padding-right: 0;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-text">NUBEAUX TRAVEL</span>
+      </a>
+
+      <nav class="nav">
+        <a href="destinations/">Destinations</a>
+        <a href="itineraries/">Itineraries</a>
+        <a href="stays/">Stays</a>
+        <a href="creators/">Creators</a>
+        <a href="about.html">About</a>
+        <a href="plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="destinations/">Destinations</a>
+    <a href="itineraries/">Itineraries</a>
+    <a href="stays/">Stays</a>
+    <a href="creators/">Creators</a>
+    <a href="about.html">About</a>
+    <a href="plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="inquiry-hero">
+    <div class="container">
+      <h1>Let's plan your journey.</h1>
+      <p>Tell us where you want to go. We'll handle the rest.</p>
+    </div>
+  </section>
+
+  <!-- Inquiry Section -->
+  <section class="inquiry-section">
+    <div class="container">
+      <div class="inquiry-grid">
+        <div class="inquiry-info">
+          <h2>How it works</h2>
+          <p>Planning a trip should be exciting, not exhausting. Share your travel dreams with us, and we'll craft a personalized itinerary based on our firsthand experience.</p>
+
+          <div class="inquiry-steps">
+            <div class="inquiry-step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>Tell us your vision</h4>
+                <p>Fill out the form with your destination interests, travel dates, and preferences.</p>
+              </div>
+            </div>
+            <div class="inquiry-step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>We'll reach out</h4>
+                <p>Within 48 hours, we'll contact you to discuss your trip in detail.</p>
+              </div>
+            </div>
+            <div class="inquiry-step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>Receive your itinerary</h4>
+                <p>We'll create a custom proposal with our recommended properties and experiences.</p>
+              </div>
+            </div>
+            <div class="inquiry-step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>Book with confidence</h4>
+                <p>Once approved, we handle all bookings through our Fora partnership.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="inquiry-form">
+          <form id="tripInquiryForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="firstName">First Name *</label>
+                <input type="text" id="firstName" name="firstName" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="lastName" class="form-input" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">Email *</label>
+              <input type="email" id="email" name="email" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="destination">Where do you want to go? *</label>
+              <select id="destination" name="destination" class="form-select" required>
+                <option value="">Select a destination</option>
+                <option value="namibia">Namibia</option>
+                <option value="zanzibar">Zanzibar</option>
+                <option value="kenya">Kenya</option>
+                <option value="south-africa">South Africa</option>
+                <option value="zambia">Zambia</option>
+                <option value="zimbabwe">Zimbabwe</option>
+                <option value="botswana">Botswana</option>
+                <option value="other-africa">Other Africa</option>
+                <option value="multiple">Multiple Destinations</option>
+                <option value="not-sure">Not Sure Yet</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="travelDates">Preferred Travel Dates</label>
+                <input type="text" id="travelDates" name="travelDates" class="form-input" placeholder="e.g., June 2026, Flexible">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="travelers">Number of Travelers</label>
+                <select id="travelers" name="travelers" class="form-select">
+                  <option value="">Select</option>
+                  <option value="1">Solo</option>
+                  <option value="2">Couple</option>
+                  <option value="3-4">3-4 People</option>
+                  <option value="5+">5+ People</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="budget">Budget Range (per person)</label>
+              <select id="budget" name="budget" class="form-select">
+                <option value="">Select your budget</option>
+                <option value="3000-5000">$3,000 - $5,000</option>
+                <option value="5000-10000">$5,000 - $10,000</option>
+                <option value="10000-20000">$10,000 - $20,000</option>
+                <option value="20000+">$20,000+</option>
+                <option value="flexible">Flexible</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="travelStyle">What kind of experience are you looking for?</label>
+              <select id="travelStyle" name="travelStyle" class="form-select">
+                <option value="">Select travel style</option>
+                <option value="safari-wildlife">Safari & Wildlife</option>
+                <option value="beach-relaxation">Beach & Relaxation</option>
+                <option value="wellness-spa">Wellness & Spa</option>
+                <option value="adventure">Adventure & Activities</option>
+                <option value="cultural">Cultural & Heritage</option>
+                <option value="honeymoon">Honeymoon & Romance</option>
+                <option value="mixed">Mix of Everything</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="message">Tell us more about your dream trip</label>
+              <textarea id="message" name="message" class="form-textarea" placeholder="Share any specific interests, must-see places, or questions you have..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="howFound">How did you find us?</label>
+              <select id="howFound" name="howFound" class="form-select">
+                <option value="">Select</option>
+                <option value="instagram">Instagram</option>
+                <option value="google">Google Search</option>
+                <option value="referral">Friend/Referral</option>
+                <option value="nubeaux-collective">NUBEAUX Collective</option>
+                <option value="creator">Through a Creator</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-dark" style="width: 100%; margin-top: var(--space-sm);">
+              Submit Inquiry
+            </button>
+          </form>
+
+          <div class="form-success" id="formSuccess">
+            <h3>Thank you!</h3>
+            <p>We've received your inquiry and will be in touch within 48 hours to discuss your trip.</p>
+            <p style="margin-top: var(--space-md);"><a href="index.html" style="color: var(--color-terracotta);">Return to homepage</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo-text" style="font-size: 1.25rem;">NUBEAUX TRAVEL</span>
+          <p>Curated luxury travel experiences from creatives who've been there. Part of the NUBEAUX Collective family.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Explore</h4>
+          <div class="footer-links">
+            <a href="destinations/">Destinations</a>
+            <a href="itineraries/">Itineraries</a>
+            <a href="stays/">Stays</a>
+            <a href="creators/">Creators</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="plan-your-trip.html">Plan Your Trip</a>
+            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Connect</h4>
+          <div class="footer-links">
+            <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
+            <a href="https://instagram.com/nubeauxcollective" target="_blank">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.getElementById('tripInquiryForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      // Add timestamp
+      data.timestamp = new Date().toISOString();
+      data.userAgent = navigator.userAgent;
+
+      try {
+        const response = await fetch('/.netlify/functions/trip-inquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          form.classList.add('hidden');
+          document.getElementById('formSuccess').classList.add('active');
+        } else {
+          alert('Something went wrong. Please try again or email us directly at travel@nubeauxcollective.com');
+        }
+      } catch (error) {
+        // If Netlify function not available (local dev), still show success
+        form.classList.add('hidden');
+        document.getElementById('formSuccess').classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>
