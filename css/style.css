@@ -428,6 +428,56 @@ p {
   gap: var(--space-md);
 }
 
+/* Horizontal Scroll Destinations */
+.destinations-scroll {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--space-md);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-terracotta) var(--color-ecru);
+}
+
+.destinations-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.destinations-scroll::-webkit-scrollbar-track {
+  background: var(--color-ecru);
+  border-radius: 2px;
+}
+
+.destinations-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-terracotta);
+  border-radius: 2px;
+}
+
+.destinations-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+.destinations-scroll .destination-card {
+  flex: 0 0 calc(33.333% - 1rem);
+  min-width: 280px;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 1024px) {
+  .destinations-scroll .destination-card {
+    flex: 0 0 calc(50% - 0.5rem);
+    min-width: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  .destinations-scroll .destination-card {
+    flex: 0 0 85vw;
+    min-width: unset;
+  }
+}
+
 .destination-card {
   position: relative;
   aspect-ratio: 3/4;

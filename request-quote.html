@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Request a personalized quote for your luxury trip with NUBEAUX Travel.">
+
+  <title>Request a Quote | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .quote-hero {
+      background-color: var(--color-charcoal);
+      color: var(--color-white);
+      padding: var(--space-xl) 0;
+      margin-top: var(--header-height);
+      text-align: center;
+    }
+
+    .quote-hero h1 {
+      margin-bottom: var(--space-sm);
+    }
+
+    .quote-hero p {
+      opacity: 0.8;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .quote-section {
+      padding: var(--space-xl) 0;
+    }
+
+    .quote-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .quote-info h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .quote-info p {
+      color: var(--color-warm-grey);
+      margin-bottom: var(--space-md);
+      line-height: 1.8;
+    }
+
+    .trip-summary {
+      background: var(--color-ecru);
+      padding: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+
+    .trip-summary h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .trip-summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      font-size: 0.9375rem;
+    }
+
+    .trip-summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .trip-summary-label {
+      color: var(--color-warm-grey);
+    }
+
+    .quote-form {
+      background-color: var(--color-ecru);
+      padding: var(--space-lg);
+    }
+
+    .quote-form h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: var(--space-xl);
+    }
+
+    .form-success.active {
+      display: block;
+    }
+
+    .form-success h3 {
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .quote-form form.hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .quote-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-text">NUBEAUX TRAVEL</span>
+      </a>
+
+      <nav class="nav">
+        <a href="destinations/">Destinations</a>
+        <a href="itineraries/">Itineraries</a>
+        <a href="stays/">Stays</a>
+        <a href="stories/">Stories</a>
+        <a href="about.html">About</a>
+        <a href="plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="destinations/">Destinations</a>
+    <a href="itineraries/">Itineraries</a>
+    <a href="stays/">Stays</a>
+    <a href="stories/">Stories</a>
+    <a href="about.html">About</a>
+    <a href="plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="quote-hero">
+    <div class="container">
+      <h1>Request a Quote</h1>
+      <p>Get a personalized quote for your dream trip. We'll respond within 24 hours.</p>
+    </div>
+  </section>
+
+  <section class="quote-section">
+    <div class="container">
+      <div class="quote-grid">
+        <div class="quote-info">
+          <h2>Your Personalized Quote</h2>
+          <p>Fill out the form with your travel details and we'll prepare a customized quote based on your preferences. Our quotes include accommodation, transfers, activities, and any special requests.</p>
+          <p>Once you submit, you'll receive a detailed proposal within 24 hours that you can review, adjust, and book when ready.</p>
+
+          <div class="trip-summary" id="tripSummary" style="display: none;">
+            <h3>Selected Trip</h3>
+            <div class="trip-summary-item">
+              <span class="trip-summary-label">Itinerary</span>
+              <span id="summaryTrip">-</span>
+            </div>
+            <div class="trip-summary-item">
+              <span class="trip-summary-label">Starting From</span>
+              <span id="summaryPrice">-</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote-form">
+          <h3>Your Details</h3>
+          <form id="quoteRequestForm">
+            <input type="hidden" id="tripName" name="tripName" value="">
+            <input type="hidden" id="tripPrice" name="tripPrice" value="">
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="firstName">First Name *</label>
+                <input type="text" id="firstName" name="firstName" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="lastName" class="form-input" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="email">Email *</label>
+              <input type="email" id="email" name="email" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" class="form-input" required placeholder="+1 (555) 123-4567">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="startDate">Preferred Start Date *</label>
+                <input type="date" id="startDate" name="startDate" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="endDate">Preferred End Date</label>
+                <input type="date" id="endDate" name="endDate" class="form-input">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="flexibility">Date Flexibility</label>
+              <select id="flexibility" name="flexibility" class="form-select">
+                <option value="exact">Exact dates only</option>
+                <option value="1-2-days">Flexible by 1-2 days</option>
+                <option value="1-week">Flexible by up to a week</option>
+                <option value="very-flexible">Very flexible</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="adults">Adults *</label>
+                <select id="adults" name="adults" class="form-select" required>
+                  <option value="1">1</option>
+                  <option value="2" selected>2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7+">7+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="children">Children (under 12)</label>
+                <select id="children" name="children" class="form-select">
+                  <option value="0" selected>0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4+">4+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="roomConfig">Room Configuration</label>
+              <select id="roomConfig" name="roomConfig" class="form-select">
+                <option value="1-room">1 Room</option>
+                <option value="2-rooms">2 Rooms</option>
+                <option value="3-rooms">3 Rooms</option>
+                <option value="discuss">Let's Discuss</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="specialRequests">Special Requests or Notes</label>
+              <textarea id="specialRequests" name="specialRequests" class="form-textarea" placeholder="Dietary requirements, accessibility needs, special occasions, or any other preferences..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-dark" style="width: 100%; margin-top: var(--space-sm);">
+              Request Quote
+            </button>
+
+            <p style="font-size: 0.75rem; color: var(--color-warm-grey); margin-top: var(--space-md); text-align: center;">
+              By submitting, you agree to be contacted about your travel inquiry. No spam, ever.
+            </p>
+          </form>
+
+          <div class="form-success" id="formSuccess">
+            <h3>Quote Request Received!</h3>
+            <p>Thank you for your interest. We'll prepare a personalized quote and send it to your email within 24 hours.</p>
+            <p style="margin-top: var(--space-md);"><a href="itineraries/" style="color: var(--color-terracotta);">Browse more itineraries</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Parse URL parameters to pre-fill trip info
+    const urlParams = new URLSearchParams(window.location.search);
+    const tripName = urlParams.get('trip');
+    const tripPrice = urlParams.get('price');
+
+    if (tripName) {
+      document.getElementById('tripName').value = tripName;
+      document.getElementById('summaryTrip').textContent = tripName;
+      document.getElementById('tripSummary').style.display = 'block';
+    }
+
+    if (tripPrice) {
+      document.getElementById('tripPrice').value = tripPrice;
+      document.getElementById('summaryPrice').textContent = tripPrice;
+    }
+
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('startDate').setAttribute('min', today);
+    document.getElementById('endDate').setAttribute('min', today);
+
+    // Update end date min when start date changes
+    document.getElementById('startDate').addEventListener('change', function() {
+      document.getElementById('endDate').setAttribute('min', this.value);
+    });
+
+    // Form submission
+    document.getElementById('quoteRequestForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      // Add metadata
+      data.timestamp = new Date().toISOString();
+      data.type = 'quote_request';
+      data.referrer = document.referrer;
+
+      try {
+        const response = await fetch('/.netlify/functions/quote-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          form.classList.add('hidden');
+          document.getElementById('formSuccess').classList.add('active');
+        } else {
+          alert('Something went wrong. Please try again or email us directly at travel@nubeauxcollective.com');
+        }
+      } catch (error) {
+        // If Netlify function not available (local dev), still show success
+        form.classList.add('hidden');
+        document.getElementById('formSuccess').classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>

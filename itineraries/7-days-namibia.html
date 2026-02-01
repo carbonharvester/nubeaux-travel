@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="7-day Namibia safari itinerary. Etosha wildlife, Onguma luxury lodges, and endless horizons. Curated by NUBEAUX Travel.">
+
+  <title>7 Days in Namibia | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .itin-hero {
+      position: relative;
+      min-height: 70vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .itin-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .itin-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .itin-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%);
+      z-index: 2;
+    }
+
+    .itin-hero-content {
+      position: relative;
+      z-index: 3;
+      padding: var(--space-xl) var(--space-md);
+      color: var(--color-white);
+      width: 100%;
+    }
+
+    .itin-hero-content .container {
+      max-width: 800px;
+      margin: 0;
+    }
+
+    .itin-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .itin-hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .itin-hero-meta {
+      display: flex;
+      gap: var(--space-lg);
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .itin-content {
+      padding: var(--space-xl) 0;
+    }
+
+    .itin-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    .itin-main h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .itin-main p {
+      color: var(--color-warm-grey);
+      line-height: 1.8;
+      margin-bottom: var(--space-md);
+    }
+
+    .day-block {
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--color-ecru);
+    }
+
+    .day-block:last-child {
+      border-bottom: none;
+    }
+
+    .day-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-xs);
+    }
+
+    .day-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .day-content {
+      color: var(--color-warm-grey);
+      line-height: 1.8;
+    }
+
+    .itin-sidebar {
+      background-color: var(--color-ecru);
+      padding: var(--space-lg);
+      height: fit-content;
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-md));
+    }
+
+    .sidebar-section {
+      margin-bottom: var(--space-lg);
+    }
+
+    .sidebar-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .sidebar-title {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .sidebar-content {
+      font-size: 0.9375rem;
+      color: var(--color-charcoal);
+    }
+
+    .creator-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      background: var(--color-white);
+      margin-bottom: var(--space-lg);
+    }
+
+    .creator-badge img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .creator-badge-content span {
+      display: block;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+    }
+
+    .creator-badge-content strong {
+      font-family: var(--font-serif);
+      font-weight: 400;
+    }
+
+    .book-cta {
+      background: var(--color-terracotta);
+      color: var(--color-white);
+      padding: var(--space-md);
+      text-align: center;
+    }
+
+    .book-cta h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .book-cta p {
+      font-size: 0.875rem;
+      opacity: 0.9;
+      margin-bottom: var(--space-md);
+    }
+
+    .book-cta .btn {
+      background: var(--color-white);
+      color: var(--color-terracotta);
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .itin-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .itin-sidebar {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-text">NUBEAUX TRAVEL</span>
+      </a>
+
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../stories/">Stories</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../stories/">Stories</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="itin-hero">
+    <div class="itin-hero-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Namibia Safari">
+    </div>
+    <div class="itin-hero-overlay"></div>
+    <div class="itin-hero-content">
+      <div class="container">
+        <span class="itin-label">Safari & Wilderness</span>
+        <h1>7 Days in Namibia</h1>
+        <div class="itin-hero-meta">
+          <span>7 Days / 6 Nights</span>
+          <span>From $8,500 pp</span>
+          <span>Etosha & Onguma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="itin-content">
+    <div class="container">
+      <div class="itin-grid">
+        <div class="itin-main">
+          <div class="creator-badge">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_96,h_96,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+            <div class="creator-badge-content">
+              <span>Curated by</span>
+              <strong>Nia The Light</strong>
+            </div>
+          </div>
+
+          <h2>The Journey</h2>
+          <p>Namibia delivers on every promise. This itinerary takes you into the heart of Etosha, one of Africa's great wildlife destinations, with stays at Onguma's exceptional lodges. The combination of world-class game viewing, design-forward accommodation, and the otherworldly beauty of the Namibian landscape creates an unforgettable week.</p>
+
+          <p>This is safari done right: intimate lodges, expert guides, and endless horizons. Whether it's your first African safari or your tenth, Namibia offers something uniquely compelling.</p>
+
+          <h2 style="margin-top: var(--space-lg);">Day by Day</h2>
+
+          <div class="day-block">
+            <span class="day-label">Day 1</span>
+            <h3 class="day-title">Arrival in Windhoek</h3>
+            <p class="day-content">Arrive at Windhoek's Hosea Kutako International Airport. You'll be met and transferred to a boutique hotel in the city for one night. Depending on your arrival time, explore the city's German colonial architecture and excellent restaurants. Dinner at Joe's Beerhouse or The Stellenbosch for an introduction to Namibian cuisine.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 2</span>
+            <h3 class="day-title">Drive to Onguma</h3>
+            <p class="day-content">After breakfast, begin the scenic 4.5-hour drive north to Onguma Game Reserve on Etosha's eastern border. The landscape shifts from central highlands to the drier savanna of the north. Arrive at Onguma Camp Kala in time for lunch. Settle into your suite before an afternoon game drive in the reserve. Sundowners overlooking the waterhole, followed by dinner under the stars.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 3-4</span>
+            <h3 class="day-title">Etosha Exploration</h3>
+            <p class="day-content">Two full days exploring Etosha National Park. Morning game drives depart early to catch the best wildlife activity. Return to camp for brunch and pool time during the midday heat. Afternoon drives continue until sunset. The pan is vast, and your guide will cover different areas each day, maximizing your chances of seeing lion, elephant, giraffe, rhino, and the countless antelope species that thrive here.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 5</span>
+            <h3 class="day-title">Transfer to The Fort</h3>
+            <p class="day-content">Move to Onguma The Fort, the reserve's most dramatic lodge. Its Moorish architecture and waterhole-facing rooms offer a different perspective. Spend the afternoon watching wildlife come to drink from your private viewing deck. A night drive reveals Etosha's nocturnal residents: aardvark, porcupine, and perhaps a leopard.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 6</span>
+            <h3 class="day-title">Final Safari Day</h3>
+            <p class="day-content">One last morning game drive, this time on Onguma's private reserve where walking safaris are possible. The afternoon is yours to enjoy The Fort's facilities or take a guided nature walk. Farewell dinner at the lodge with your guide, recounting the week's highlights.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 7</span>
+            <h3 class="day-title">Departure</h3>
+            <p class="day-content">After breakfast, transfer to the airstrip for your charter flight back to Windhoek (or drive if you prefer). Connect to international flights home, or extend your journey to Sossusvlei, the Skeleton Coast, or Cape Town.</p>
+          </div>
+
+          <h2 style="margin-top: var(--space-lg);">What's Included</h2>
+          <ul style="color: var(--color-warm-grey); line-height: 1.8; margin-left: 1.5rem;">
+            <li>1 night Windhoek boutique hotel (B&B)</li>
+            <li>3 nights Onguma Camp Kala (full board + activities)</li>
+            <li>2 nights Onguma The Fort (full board + activities)</li>
+            <li>All game drives in Etosha National Park</li>
+            <li>Night drives and walking safaris on Onguma Reserve</li>
+            <li>Park fees and conservation levies</li>
+            <li>Ground transfers as per itinerary</li>
+          </ul>
+        </div>
+
+        <div class="itin-sidebar">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Trip Details</h3>
+            <div class="sidebar-content">
+              <p><strong>Duration:</strong> 7 days / 6 nights</p>
+              <p style="margin-top: 0.5rem;"><strong>Starting from:</strong> $8,500 per person</p>
+              <p style="margin-top: 0.5rem;"><strong>Best for:</strong> First safari, photography, couples</p>
+              <p style="margin-top: 0.5rem;"><strong>Activity level:</strong> Easy to moderate</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Where You'll Stay</h3>
+            <div class="sidebar-content">
+              <p><strong>Windhoek:</strong> Boutique hotel</p>
+              <p style="margin-top: 0.5rem;"><strong>Onguma Camp Kala:</strong> 3 nights</p>
+              <a href="../stays/onguma-camp-kala.html" style="display: inline-block; margin-top: 0.25rem; color: var(--color-terracotta); font-size: 0.8125rem;">View Property</a>
+              <p style="margin-top: 0.5rem;"><strong>Onguma The Fort:</strong> 2 nights</p>
+              <a href="../stays/onguma-the-fort.html" style="display: inline-block; margin-top: 0.25rem; color: var(--color-terracotta); font-size: 0.8125rem;">View Property</a>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Best Time to Go</h3>
+            <div class="sidebar-content">
+              <p><strong>Peak wildlife:</strong> May - October</p>
+              <p style="margin-top: 0.5rem;"><strong>Green season:</strong> November - April</p>
+              <p style="margin-top: 0.5rem;"><strong>Best weather:</strong> June - September</p>
+            </div>
+          </div>
+
+          <div class="book-cta">
+            <h3>Get Your Quote</h3>
+            <p>Ready for Namibia? Get a personalized quote for your dates.</p>
+            <a href="../request-quote.html?trip=7%20Days%20in%20Namibia&price=From%20%248%2C500%20pp" class="btn">Request Quote</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Customize this itinerary</h2>
+      <p class="text-large">Add Sossusvlei, extend at Etosha, or combine with Cape Town. We'll tailor it to you.</p>
+      <a href="../plan-your-trip.html" class="btn btn-dark">Plan Your Trip</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

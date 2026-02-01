@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Onguma The Fort review. Moorish-inspired safari lodge with waterhole views on Etosha's eastern border. Reviewed by NUBEAUX Travel.">
+
+  <title>Onguma The Fort | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .stay-hero {
+      position: relative;
+      min-height: 70vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .stay-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .stay-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stay-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%);
+      z-index: 2;
+    }
+
+    .stay-hero-content {
+      position: relative;
+      z-index: 3;
+      padding: var(--space-xl) var(--space-md);
+      color: var(--color-white);
+      width: 100%;
+    }
+
+    .stay-hero-content .container {
+      max-width: 800px;
+      margin: 0;
+    }
+
+    .stay-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .stay-hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .stay-hero p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      max-width: 600px;
+    }
+
+    .stay-content {
+      padding: var(--space-xl) 0;
+    }
+
+    .stay-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    .stay-main h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .stay-main p {
+      color: var(--color-warm-grey);
+      line-height: 1.8;
+      margin-bottom: var(--space-md);
+    }
+
+    .stay-sidebar {
+      background-color: var(--color-ecru);
+      padding: var(--space-lg);
+      height: fit-content;
+    }
+
+    .sidebar-section {
+      margin-bottom: var(--space-lg);
+    }
+
+    .sidebar-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .sidebar-title {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .sidebar-content {
+      font-size: 0.9375rem;
+      color: var(--color-charcoal);
+    }
+
+    .creator-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      background: var(--color-white);
+      margin-bottom: var(--space-lg);
+    }
+
+    .creator-badge img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .creator-badge-content span {
+      display: block;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+    }
+
+    .creator-badge-content strong {
+      font-family: var(--font-serif);
+      font-weight: 400;
+    }
+
+    .highlight-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .highlight-list li {
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      font-size: 0.9375rem;
+    }
+
+    .highlight-list li:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+      .stay-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-text">NUBEAUX TRAVEL</span>
+      </a>
+
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../stories/">Stories</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../stories/">Stories</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="stay-hero">
+    <div class="stay-hero-bg">
+      <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1920&h=1080&fit=crop&q=80" alt="Onguma The Fort">
+    </div>
+    <div class="stay-hero-overlay"></div>
+    <div class="stay-hero-content">
+      <div class="container">
+        <span class="stay-label">Namibia</span>
+        <h1>Onguma The Fort</h1>
+        <p>Moorish-inspired architecture meets African wilderness. A dramatic safari lodge with panoramic waterhole views on Etosha's eastern border.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stay-content">
+    <div class="container">
+      <div class="stay-grid">
+        <div class="stay-main">
+          <div class="creator-badge">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_96,h_96,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+            <div class="creator-badge-content">
+              <span>Reviewed by</span>
+              <strong>Nia The Light</strong>
+            </div>
+          </div>
+
+          <h2>Our Take</h2>
+          <p>Onguma The Fort is unlike any other safari lodge in Namibia. Its dramatic Moorish-inspired architecture, complete with towers and ornate details, creates an otherworldly atmosphere that somehow feels perfectly at home in the African bush. The lodge overlooks a productive waterhole that draws a constant parade of wildlife, particularly during the dry season.</p>
+
+          <p>The rooms are spacious and thoughtfully designed, each with private balconies or patios that offer uninterrupted views of the waterhole. Waking up to elephants drinking at dawn or watching lions approach at dusk becomes the rhythm of your stay. The pool area, built to mirror the lodge's unique architecture, provides a beautiful spot for afternoon relaxation between game drives.</p>
+
+          <h2 style="margin-top: var(--space-lg);">What We Loved</h2>
+          <ul class="highlight-list">
+            <li><strong>Waterhole views</strong> — Constant wildlife activity day and night</li>
+            <li><strong>Unique architecture</strong> — Moorish design creates unforgettable atmosphere</li>
+            <li><strong>Location</strong> — Perfect base for Etosha exploration</li>
+            <li><strong>Night drives</strong> — Excellent guided experiences</li>
+            <li><strong>Photography opportunities</strong> — Incredible light and wildlife compositions</li>
+          </ul>
+
+          <h2 style="margin-top: var(--space-lg);">The Experience</h2>
+          <p>Game drives into Etosha National Park depart early morning and late afternoon, with the lodge's guides bringing extensive knowledge of local wildlife patterns. The lodge is positioned on the Onguma Game Reserve, a private concession bordering Etosha, which means you can also enjoy night drives and walking safaris not permitted in the national park itself.</p>
+
+          <p>Dining at The Fort matches the drama of the setting. Meals are served in the main lodge area with its sweeping views, or outdoors under the stars. The cuisine blends international influences with local ingredients, and dietary requirements are handled with care.</p>
+        </div>
+
+        <div class="stay-sidebar">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">At a Glance</h3>
+            <div class="sidebar-content">
+              <p><strong>Location:</strong> Etosha Eastern Border, Namibia</p>
+              <p style="margin-top: 0.5rem;"><strong>Style:</strong> Moorish-inspired safari lodge</p>
+              <p style="margin-top: 0.5rem;"><strong>Rooms:</strong> 13 suites</p>
+              <p style="margin-top: 0.5rem;"><strong>Best for:</strong> Safari, photography, couples</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Price Range</h3>
+            <div class="sidebar-content">
+              <p><strong>From:</strong> $450/night (full board)</p>
+              <p style="margin-top: 0.5rem;">Includes accommodation, meals, and game activities</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Getting There</h3>
+            <div class="sidebar-content">
+              <p>4.5 hours from Windhoek by road, or fly to the private Onguma airstrip.</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Best Time to Visit</h3>
+            <div class="sidebar-content">
+              <p><strong>Wildlife:</strong> May - October (dry season)</p>
+              <p style="margin-top: 0.5rem;"><strong>Green season:</strong> November - April</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section" style="background: var(--color-terracotta); color: var(--color-white); padding: var(--space-md); margin: 0 calc(var(--space-lg) * -1) calc(var(--space-lg) * -1); margin-top: var(--space-md);">
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: var(--space-sm);">Book This Stay</h3>
+            <p style="font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md);">Ready to experience The Fort? Let us handle your booking.</p>
+            <a href="../plan-your-trip.html" class="btn" style="background: var(--color-white); color: var(--color-terracotta); width: 100%; text-align: center;">Inquire Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Include The Fort in your itinerary</h2>
+      <p class="text-large">Combine The Fort with Camp Kala for the complete Onguma experience.</p>
+      <a href="../plan-your-trip.html" class="btn btn-dark">Plan Your Namibia Trip</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

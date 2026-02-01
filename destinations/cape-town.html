@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cape Town travel guide. Table Mountain, wine country, and coastal beauty. Curated by NUBEAUX Travel.">
+
+  <title>Cape Town | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .dest-hero {
+      position: relative;
+      min-height: 70vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .dest-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .dest-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .dest-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%);
+      z-index: 2;
+    }
+
+    .dest-hero-content {
+      position: relative;
+      z-index: 3;
+      padding: var(--space-xl) var(--space-md);
+      color: var(--color-white);
+      width: 100%;
+    }
+
+    .dest-hero-content .container {
+      max-width: 800px;
+      margin: 0;
+    }
+
+    .dest-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .dest-hero h1 {
+      font-size: clamp(3rem, 8vw, 5rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .dest-hero p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      max-width: 600px;
+    }
+
+    .dest-content {
+      padding: var(--space-xl) 0;
+    }
+
+    .dest-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    .dest-main h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .dest-main p {
+      color: var(--color-warm-grey);
+      line-height: 1.8;
+      margin-bottom: var(--space-md);
+    }
+
+    .dest-sidebar {
+      background-color: var(--color-ecru);
+      padding: var(--space-lg);
+      height: fit-content;
+    }
+
+    .sidebar-section {
+      margin-bottom: var(--space-lg);
+    }
+
+    .sidebar-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .sidebar-title {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .sidebar-content {
+      font-size: 0.9375rem;
+      color: var(--color-charcoal);
+    }
+
+    .highlight-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .highlight-list li {
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      font-size: 0.9375rem;
+    }
+
+    .highlight-list li:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+      .dest-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-text">NUBEAUX TRAVEL</span>
+      </a>
+
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../creators/">Creators</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../creators/">Creators</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="dest-hero">
+    <div class="dest-hero-bg">
+      <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1920&h=1080&fit=crop&q=80" alt="Cape Town">
+    </div>
+    <div class="dest-hero-overlay"></div>
+    <div class="dest-hero-content">
+      <div class="container">
+        <span class="dest-label">South Africa</span>
+        <h1>Cape Town</h1>
+        <p>Where mountain meets ocean. One of the world's most beautiful cities, surrounded by wine country and pristine beaches.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dest-content">
+    <div class="container">
+      <div class="dest-grid">
+        <div class="dest-main">
+          <h2>Why Cape Town</h2>
+          <p>Cape Town consistently ranks among the world's most beautiful cities, and it's easy to see why. Table Mountain provides a dramatic backdrop to a city that combines natural splendour with cosmopolitan energy. The Winelands are just 45 minutes away. The beaches of Camps Bay rival any in the Mediterranean. And the food scene has evolved into one of Africa's most exciting.</p>
+
+          <p>For travellers, Cape Town offers rare versatility. You can hike Lion's Head at sunrise, taste wine in Stellenbosch by lunch, and watch the sunset from a beachfront restaurant. The city works as a standalone destination, a gateway to South Africa's garden route, or the perfect bookend to a safari elsewhere in Southern Africa.</p>
+
+          <h2 style="margin-top: var(--space-lg);">Our Favorite Experiences</h2>
+          <ul class="highlight-list">
+            <li><strong>Table Mountain</strong> — Cable car or hike to the summit</li>
+            <li><strong>Winelands</strong> — Stellenbosch, Franschhoek, and beyond</li>
+            <li><strong>Camps Bay</strong> — Sunset drinks on the beachfront</li>
+            <li><strong>Cape Point</strong> — Dramatic scenery at the peninsula's tip</li>
+            <li><strong>Bo-Kaap</strong> — Colorful historic neighborhood</li>
+            <li><strong>Constantia</strong> — Historic wine estates in the city</li>
+          </ul>
+
+          <h2 style="margin-top: var(--space-lg);">When to Visit</h2>
+          <p>Cape Town's summer (November-March) offers the best weather with warm, dry days. Shoulder seasons (April-May, September-October) are also lovely with fewer crowds. Winter (June-August) brings rain but also whale watching season and green landscapes.</p>
+        </div>
+
+        <div class="dest-sidebar">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">At a Glance</h3>
+            <div class="sidebar-content">
+              <p><strong>Best for:</strong> Wine, beach, hiking, food</p>
+              <p style="margin-top: 0.5rem;"><strong>Currency:</strong> South African Rand (ZAR)</p>
+              <p style="margin-top: 0.5rem;"><strong>Language:</strong> English, Afrikaans, Xhosa</p>
+              <p style="margin-top: 0.5rem;"><strong>Visa:</strong> Not required (most nationalities)</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Best Time to Visit</h3>
+            <div class="sidebar-content">
+              <p><strong>Peak:</strong> November - March</p>
+              <p style="margin-top: 0.5rem;"><strong>Shoulder:</strong> April - May, Sept - Oct</p>
+              <p style="margin-top: 0.5rem;"><strong>Whale season:</strong> July - November</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Getting There</h3>
+            <div class="sidebar-content">
+              <p>Cape Town International Airport (CPT) with direct flights from Europe, Middle East, and Johannesburg.</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Trip Length</h3>
+            <div class="sidebar-content">
+              <p><strong>City focus:</strong> 3-4 nights</p>
+              <p style="margin-top: 0.5rem;"><strong>With Winelands:</strong> 5-7 nights</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to discover Cape Town?</h2>
+      <p class="text-large">Mountain, ocean, and wine. Let us craft your perfect Cape Town experience.</p>
+      <a href="../plan-your-trip.html" class="btn btn-dark">Plan Your Trip</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

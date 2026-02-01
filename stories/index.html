@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Travel stories and guides from NUBEAUX Travel. First-hand accounts, destination guides, and travel inspiration.">
+
+  <title>Stories | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .page-hero { background-color: var(--color-charcoal); color: var(--color-white); padding: var(--space-xl) 0; margin-top: var(--header-height); text-align: center; }
+    .page-hero h1 { margin-bottom: var(--space-sm); }
+    .page-hero p { opacity: 0.8; max-width: 600px; margin: 0 auto; }
+    .stories-section { padding: var(--space-xl) 0; }
+    .stories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg); }
+    .story-card { background: var(--color-white); overflow: hidden; }
+    .story-card-image { aspect-ratio: 16/10; overflow: hidden; }
+    .story-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-slow); }
+    .story-card:hover .story-card-image img { transform: scale(1.05); }
+    .story-card-content { padding: var(--space-md); }
+    .story-card-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-sm); }
+    .story-card h3 { font-size: 1.25rem; margin-bottom: var(--space-sm); }
+    .story-card p { font-size: 0.9375rem; color: var(--color-warm-grey); line-height: 1.6; }
+    .story-card-meta { display: flex; align-items: center; gap: 0.5rem; margin-top: var(--space-md); padding-top: var(--space-sm); border-top: 1px solid var(--color-ecru); }
+    .story-card-meta img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+    .story-card-meta span { font-size: 0.75rem; color: var(--color-warm-grey); }
+    @media (max-width: 1024px) { .stories-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .stories-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><span class="logo-text">NUBEAUX TRAVEL</span></a>
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../stories/">Stories</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../stories/">Stories</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Stories</h1>
+      <p>First-hand accounts, travel guides, and inspiration from our journeys across Africa.</p>
+    </div>
+  </section>
+
+  <section class="stories-section">
+    <div class="container">
+      <div class="stories-grid">
+        <a href="why-lamu.html" class="story-card">
+          <div class="story-card-image">
+            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&h=400&fit=crop&q=80" alt="Lamu Island">
+          </div>
+          <div class="story-card-content">
+            <span class="story-card-label">Destination Guide</span>
+            <h3>Why Lamu Should Be on Your List</h3>
+            <p>A UNESCO World Heritage site where time stands still. Here's what makes this Swahili island so special.</p>
+            <div class="story-card-meta">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+              <span>By Nia The Light</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="onguma-review.html" class="story-card">
+          <div class="story-card-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_400,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Onguma Camp Kala">
+          </div>
+          <div class="story-card-content">
+            <span class="story-card-label">Hotel Review</span>
+            <h3>Onguma Camp Kala: Design Meets Safari</h3>
+            <p>How this Namibian lodge combines world-class design with authentic bush experiences.</p>
+            <div class="story-card-meta">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+              <span>By Nia The Light</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="kilifi-creative-coast.html" class="story-card">
+          <div class="story-card-image">
+            <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&h=400&fit=crop&q=80" alt="Kilifi">
+          </div>
+          <div class="story-card-content">
+            <span class="story-card-label">Travel Essay</span>
+            <h3>Kilifi: Kenya's Creative Coast</h3>
+            <p>How a small coastal town became a haven for artists, wellness seekers, and discerning travellers.</p>
+            <div class="story-card-meta">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+              <span>By Nia The Light</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to write your own story?</h2>
+      <p class="text-large">Let us help you plan a journey worth telling.</p>
+      <a href="../plan-your-trip.html" class="btn btn-dark">Start Planning</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

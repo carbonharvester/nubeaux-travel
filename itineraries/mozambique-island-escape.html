@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="5-day Mozambique island escape itinerary. Anantara Bazaruto luxury, pristine beaches, and marine adventures. Curated by NUBEAUX Travel.">
+
+  <title>Mozambique Island Escape | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .itin-hero {
+      position: relative;
+      min-height: 70vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .itin-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .itin-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .itin-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%);
+      z-index: 2;
+    }
+
+    .itin-hero-content {
+      position: relative;
+      z-index: 3;
+      padding: var(--space-xl) var(--space-md);
+      color: var(--color-white);
+      width: 100%;
+    }
+
+    .itin-hero-content .container {
+      max-width: 800px;
+      margin: 0;
+    }
+
+    .itin-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .itin-hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .itin-hero-meta {
+      display: flex;
+      gap: var(--space-lg);
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .itin-content {
+      padding: var(--space-xl) 0;
+    }
+
+    .itin-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    .itin-main h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .itin-main p {
+      color: var(--color-warm-grey);
+      line-height: 1.8;
+      margin-bottom: var(--space-md);
+    }
+
+    .day-block {
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--color-ecru);
+    }
+
+    .day-block:last-child {
+      border-bottom: none;
+    }
+
+    .day-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-xs);
+    }
+
+    .day-title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .day-content {
+      color: var(--color-warm-grey);
+      line-height: 1.8;
+    }
+
+    .itin-sidebar {
+      background-color: var(--color-ecru);
+      padding: var(--space-lg);
+      height: fit-content;
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-md));
+    }
+
+    .sidebar-section {
+      margin-bottom: var(--space-lg);
+    }
+
+    .sidebar-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .sidebar-title {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-sm);
+    }
+
+    .sidebar-content {
+      font-size: 0.9375rem;
+      color: var(--color-charcoal);
+    }
+
+    .creator-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      background: var(--color-white);
+      margin-bottom: var(--space-lg);
+    }
+
+    .creator-badge img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .creator-badge-content span {
+      display: block;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+    }
+
+    .creator-badge-content strong {
+      font-family: var(--font-serif);
+      font-weight: 400;
+    }
+
+    .book-cta {
+      background: var(--color-terracotta);
+      color: var(--color-white);
+      padding: var(--space-md);
+      text-align: center;
+    }
+
+    .book-cta h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .book-cta p {
+      font-size: 0.875rem;
+      opacity: 0.9;
+      margin-bottom: var(--space-md);
+    }
+
+    .book-cta .btn {
+      background: var(--color-white);
+      color: var(--color-terracotta);
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .itin-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .itin-sidebar {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <span class="logo-text">NUBEAUX TRAVEL</span>
+      </a>
+
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../stories/">Stories</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../stories/">Stories</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="itin-hero">
+    <div class="itin-hero-bg">
+      <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=1920&h=1080&fit=crop&q=80" alt="Mozambique beaches">
+    </div>
+    <div class="itin-hero-overlay"></div>
+    <div class="itin-hero-content">
+      <div class="container">
+        <span class="itin-label">Island + Beach</span>
+        <h1>Mozambique Island Escape</h1>
+        <div class="itin-hero-meta">
+          <span>5 Days / 4 Nights</span>
+          <span>From $6,500 pp</span>
+          <span>Bazaruto Archipelago</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="itin-content">
+    <div class="container">
+      <div class="itin-grid">
+        <div class="itin-main">
+          <div class="creator-badge">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_96,h_96,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+            <div class="creator-badge-content">
+              <span>Curated by</span>
+              <strong>Nia The Light</strong>
+            </div>
+          </div>
+
+          <h2>The Journey</h2>
+          <p>Mozambique offers something increasingly rare: pristine, uncrowded beaches in a setting of genuine luxury. The Bazaruto Archipelago, a chain of islands off the southern coast, feels like the edge of the world. Turquoise waters, endless sandbanks, and a marine national park teeming with life.</p>
+
+          <p>This itinerary centers on Anantara Bazaruto, an island resort that delivers on every front: beautiful villas, exceptional dining, and activities that range from blissful relaxation to ocean adventures. It's the kind of destination where days blur into each other in the best possible way.</p>
+
+          <h2 style="margin-top: var(--space-lg);">Day by Day</h2>
+
+          <div class="day-block">
+            <span class="day-label">Day 1</span>
+            <h3 class="day-title">Arrival in Paradise</h3>
+            <p class="day-content">Fly from Johannesburg or Vilanculos to Bazaruto Island. The helicopter transfer from the mainland is an experience in itself, with aerial views of the archipelago's stunning colors. Arrive at Anantara Bazaruto and settle into your beach villa. The afternoon is yours to explore the property or simply collapse onto the beach. Sundowners on the sand, followed by dinner at the main restaurant.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 2</span>
+            <h3 class="day-title">Ocean Adventures</h3>
+            <p class="day-content">After breakfast, choose your adventure: snorkeling in the marine reserve, a dhow sailing excursion, or deep-sea fishing in waters known for marlin and sailfish. The afternoon brings spa time or pool lounging. As the sun sets, join the beach dinner setup for a private meal on the sand with the Indian Ocean as your backdrop.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 3</span>
+            <h3 class="day-title">Island Exploration</h3>
+            <p class="day-content">Take a guided walk to discover the island's interior, including freshwater lakes and local villages. The contrast between the lush interior and the endless beaches is striking. Afternoon at leisure before a sunset horse ride along the beach. Dinner at Tartaruga, the resort's seafood restaurant built over the water.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 4</span>
+            <h3 class="day-title">Sandbank Picnic</h3>
+            <p class="day-content">The signature experience: a boat trip to a private sandbank in the middle of the ocean. Your guide sets up a gourmet picnic on what feels like the most remote beach on Earth. Snorkel the surrounding waters, spot dolphins, and spend hours in complete isolation. Return to the resort for your final sunset and a farewell dinner.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 5</span>
+            <h3 class="day-title">Departure</h3>
+            <p class="day-content">A leisurely final breakfast before your helicopter transfer back to the mainland. Connect to flights home via Johannesburg, or extend your journey to Cape Town or a safari destination.</p>
+          </div>
+
+          <h2 style="margin-top: var(--space-lg);">What's Included</h2>
+          <ul style="color: var(--color-warm-grey); line-height: 1.8; margin-left: 1.5rem;">
+            <li>4 nights at Anantara Bazaruto Island Resort (Beach Villa)</li>
+            <li>All meals and selected beverages</li>
+            <li>Return helicopter transfers from Vilanculos</li>
+            <li>Sandbank picnic experience</li>
+            <li>Snorkeling equipment and guided excursions</li>
+            <li>Dhow sailing trip</li>
+            <li>One spa treatment per person</li>
+          </ul>
+        </div>
+
+        <div class="itin-sidebar">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Trip Details</h3>
+            <div class="sidebar-content">
+              <p><strong>Duration:</strong> 5 days / 4 nights</p>
+              <p style="margin-top: 0.5rem;"><strong>Starting from:</strong> $6,500 per person</p>
+              <p style="margin-top: 0.5rem;"><strong>Best for:</strong> Couples, honeymoons, relaxation</p>
+              <p style="margin-top: 0.5rem;"><strong>Difficulty:</strong> Easy (relaxation-focused)</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Where You'll Stay</h3>
+            <div class="sidebar-content">
+              <p><strong>Anantara Bazaruto</strong></p>
+              <p style="margin-top: 0.5rem;">Beach Villa with private deck and direct beach access.</p>
+              <a href="../stays/anantara-bazaruto.html" style="display: inline-block; margin-top: 0.5rem; color: var(--color-terracotta); font-size: 0.875rem;">View Property</a>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Best Time to Go</h3>
+            <div class="sidebar-content">
+              <p><strong>Peak:</strong> April - November (dry season)</p>
+              <p style="margin-top: 0.5rem;"><strong>Shoulder:</strong> March, December</p>
+              <p style="margin-top: 0.5rem;"><strong>Avoid:</strong> January - February (cyclone risk)</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Getting There</h3>
+            <div class="sidebar-content">
+              <p>Fly to Vilanculos (VNX) via Johannesburg, then helicopter to Bazaruto Island.</p>
+            </div>
+          </div>
+
+          <div class="book-cta">
+            <h3>Get Your Quote</h3>
+            <p>Ready to escape to Mozambique? Get a personalized quote for your dates.</p>
+            <a href="../request-quote.html?trip=Mozambique%20Island%20Escape&price=From%20%246%2C500%20pp" class="btn">Request Quote</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Extend your journey</h2>
+      <p class="text-large">Combine Mozambique with safari in South Africa or Namibia for the ultimate Southern Africa experience.</p>
+      <a href="../plan-your-trip.html" class="btn btn-dark">Plan Your Trip</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
