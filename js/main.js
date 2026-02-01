@@ -416,30 +416,39 @@ document.addEventListener('DOMContentLoaded', function() {
   // HORIZONTAL SCROLL BAR
   // ========================================
 
-  document.querySelectorAll('.scroll-wrapper').forEach(wrapper => {
+  const scrollWrappers = document.querySelectorAll('.scroll-wrapper');
+  console.log('Found scroll wrappers:', scrollWrappers.length);
+
+  scrollWrappers.forEach((wrapper, index) => {
     const container = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll');
     const bar = wrapper.querySelector('.scroll-bar');
     const thumb = wrapper.querySelector('.scroll-bar-thumb');
 
-    if (!container || !bar || !thumb) {
-      console.log('Scroll bar: missing elements', { container: !!container, bar: !!bar, thumb: !!thumb });
-      return;
-    }
+    console.log('Wrapper', index, ':', {
+      container: !!container,
+      bar: !!bar,
+      thumb: !!thumb,
+      containerClass: container?.className
+    });
+
+    if (!container || !bar || !thumb) return;
 
     function updateThumb() {
       const scrollWidth = container.scrollWidth;
       const clientWidth = container.clientWidth;
       const maxScroll = scrollWidth - clientWidth;
 
+      console.log('Scroll bar update:', { scrollWidth, clientWidth, maxScroll, scrollLeft: container.scrollLeft });
+
+      // Always show bar, even if no scroll needed
       if (maxScroll <= 0) {
-        bar.style.display = 'none';
+        thumb.style.width = '100%';
+        thumb.style.left = '0px';
         return;
       }
 
-      bar.style.display = 'block';
-
       // Calculate thumb width (proportional to visible area)
-      const thumbWidth = Math.max(30, (clientWidth / scrollWidth) * bar.offsetWidth);
+      const thumbWidth = Math.max(40, (clientWidth / scrollWidth) * bar.offsetWidth);
       thumb.style.width = thumbWidth + 'px';
 
       // Calculate thumb position
@@ -464,7 +473,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update on scroll event
     container.addEventListener('scroll', updateThumb);
 
-    // CRITICAL: Polling backup - ensures thumb updates even if scroll event misses
+    // Polling backup
     let lastScrollLeft = -1;
     function poll() {
       if (container.scrollLeft !== lastScrollLeft) {
