@@ -427,29 +427,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!scrollContainer || !scrollTrack || !scrollThumb) return;
 
-    // Update thumb position based on scroll
+    // Update thumb position based on scroll using transform
     const updateThumbPosition = () => {
-      const scrollWidth = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      if (scrollWidth <= 0) return;
-      const scrollPercent = scrollContainer.scrollLeft / scrollWidth;
-      const thumbWidth = scrollThumb.offsetWidth;
+      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+      if (maxScroll <= 0) {
+        scrollThumb.style.transform = 'translateX(0)';
+        return;
+      }
+      const scrollPercent = scrollContainer.scrollLeft / maxScroll;
       const trackWidth = scrollTrack.offsetWidth;
-      const thumbMaxLeft = trackWidth - thumbWidth;
-      scrollThumb.style.left = `${Math.max(0, scrollPercent * thumbMaxLeft)}px`;
+      const thumbWidth = scrollThumb.offsetWidth;
+      const maxTranslate = trackWidth - thumbWidth;
+      const translateX = Math.round(scrollPercent * maxTranslate);
+      scrollThumb.style.transform = `translateX(${translateX}px)`;
     };
 
-    // Update thumb width based on visible ratio
-    const updateThumbWidth = () => {
-      const visibleRatio = scrollContainer.clientWidth / scrollContainer.scrollWidth;
-      const thumbWidth = Math.max(visibleRatio * 100, 20); // Minimum 20%
-      scrollThumb.style.width = `${thumbWidth}%`;
-    };
-
-    // Initial setup with slight delay to ensure dimensions are calculated
-    setTimeout(() => {
-      updateThumbWidth();
+    // Initial setup - wait for images to load for accurate dimensions
+    const initScrollbar = () => {
       updateThumbPosition();
-    }, 100);
+    };
+
+    // Run after a short delay and also when window loads
+    setTimeout(initScrollbar, 150);
+    window.addEventListener('load', initScrollbar);
 
     // Listen for scroll events with multiple fallbacks
     scrollContainer.addEventListener('scroll', () => {
