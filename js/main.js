@@ -413,164 +413,32 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // ========================================
-  // HORIZONTAL SCROLL WITH CUSTOM SCROLLBAR
+  // HORIZONTAL SCROLL PROGRESS BAR
   // ========================================
 
-  const scrollWrappers = document.querySelectorAll('.scroll-wrapper');
+  document.querySelectorAll('.scroll-wrapper').forEach(wrapper => {
+    const scrollContainer = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll');
+    const progressBar = wrapper.querySelector('.scroll-progress-bar');
 
-  scrollWrappers.forEach(wrapper => {
-    // Find any horizontal scroll container inside the wrapper
-    const scrollContainer = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll') ||
-                           wrapper.querySelector('[class*="-scroll"]:not(.scroll-track):not(.scroll-thumb)');
-    const scrollTrack = wrapper.querySelector('.scroll-track');
-    const scrollThumb = wrapper.querySelector('.scroll-thumb');
+    if (!scrollContainer || !progressBar) return;
 
-    if (!scrollContainer || !scrollTrack || !scrollThumb) return;
-
-    // Update thumb position based on scroll using transform
-    const updateThumbPosition = () => {
+    // Update progress bar width based on scroll position
+    const updateProgress = () => {
       const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
       if (maxScroll <= 0) {
-        scrollThumb.style.transform = 'translateX(0)';
+        progressBar.style.width = '100%';
         return;
       }
-      const scrollPercent = scrollContainer.scrollLeft / maxScroll;
-      const trackWidth = scrollTrack.offsetWidth;
-      const thumbWidth = scrollThumb.offsetWidth;
-      const maxTranslate = trackWidth - thumbWidth;
-      const translateX = Math.round(scrollPercent * maxTranslate);
-      scrollThumb.style.transform = `translateX(${translateX}px)`;
+      const percent = (scrollContainer.scrollLeft / maxScroll) * 100;
+      progressBar.style.width = percent + '%';
     };
 
-    // Initial setup - wait for images to load for accurate dimensions
-    const initScrollbar = () => {
-      updateThumbPosition();
-    };
+    // Listen for scroll
+    scrollContainer.addEventListener('scroll', updateProgress, { passive: true });
 
-    // Run after a short delay and also when window loads
-    setTimeout(initScrollbar, 150);
-    window.addEventListener('load', initScrollbar);
-
-    // Listen for scroll events with multiple fallbacks
-    scrollContainer.addEventListener('scroll', () => {
-      requestAnimationFrame(updateThumbPosition);
-    }, { passive: true });
-
-    // Also update on wheel events for better responsiveness
-    scrollContainer.addEventListener('wheel', () => {
-      setTimeout(updateThumbPosition, 10);
-    }, { passive: true });
-
-    // Update on any interaction
-    scrollContainer.addEventListener('scrollend', updateThumbPosition, { passive: true });
-
-    // Polling fallback for browsers that don't fire scroll events reliably
-    let lastScrollLeft = 0;
-    const pollScroll = () => {
-      if (scrollContainer.scrollLeft !== lastScrollLeft) {
-        lastScrollLeft = scrollContainer.scrollLeft;
-        updateThumbPosition();
-      }
-      requestAnimationFrame(pollScroll);
-    };
-    requestAnimationFrame(pollScroll);
-
-    window.addEventListener('resize', () => {
-      updateThumbWidth();
-      updateThumbPosition();
-    });
-
-    // Drag to scroll
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    scrollContainer.addEventListener('mousedown', (e) => {
-      isDown = true;
-      startX = e.pageX - scrollContainer.offsetLeft;
-      scrollLeft = scrollContainer.scrollLeft;
-      scrollContainer.style.cursor = 'grabbing';
-    });
-
-    scrollContainer.addEventListener('mouseleave', () => {
-      isDown = false;
-      scrollContainer.style.cursor = 'grab';
-    });
-
-    scrollContainer.addEventListener('mouseup', () => {
-      isDown = false;
-      scrollContainer.style.cursor = 'grab';
-    });
-
-    scrollContainer.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - scrollContainer.offsetLeft;
-      const walk = (x - startX) * 2;
-      scrollContainer.scrollLeft = scrollLeft - walk;
-    });
-
-    // Click on track to scroll
-    scrollTrack.addEventListener('click', (e) => {
-      const trackRect = scrollTrack.getBoundingClientRect();
-      const clickPosition = (e.clientX - trackRect.left) / trackRect.width;
-      const scrollWidth = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      scrollContainer.scrollTo({
-        left: clickPosition * scrollWidth,
-        behavior: 'smooth'
-      });
-    });
-
-    // Drag thumb to scroll
-    let thumbDragging = false;
-
-    scrollThumb.addEventListener('mousedown', (e) => {
-      thumbDragging = true;
-      e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!thumbDragging) return;
-      const trackRect = scrollTrack.getBoundingClientRect();
-      const thumbWidth = scrollThumb.clientWidth;
-      const newLeft = Math.min(
-        Math.max(0, e.clientX - trackRect.left - thumbWidth / 2),
-        trackRect.width - thumbWidth
-      );
-      const scrollPercent = newLeft / (trackRect.width - thumbWidth);
-      const scrollWidth = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      scrollContainer.scrollLeft = scrollPercent * scrollWidth;
-    });
-
-    document.addEventListener('mouseup', () => {
-      thumbDragging = false;
-    });
-
-    // ========================================
-    // TOUCH SUPPORT FOR HORIZONTAL SCROLL
-    // ========================================
-
-    let touchStartX = 0;
-    let touchStartScrollLeft = 0;
-    let isTouchMoving = false;
-
-    scrollContainer.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].pageX;
-      touchStartScrollLeft = scrollContainer.scrollLeft;
-      isTouchMoving = true;
-    }, { passive: true });
-
-    scrollContainer.addEventListener('touchmove', (e) => {
-      if (!isTouchMoving) return;
-      const touchX = e.touches[0].pageX;
-      const diff = touchStartX - touchX;
-      scrollContainer.scrollLeft = touchStartScrollLeft + diff;
-      requestAnimationFrame(updateThumbPosition);
-    }, { passive: true });
-
-    scrollContainer.addEventListener('touchend', () => {
-      isTouchMoving = false;
-    }, { passive: true });
+    // Initial update
+    updateProgress();
+    window.addEventListener('load', updateProgress);
   });
 
   // ========================================

@@ -699,29 +699,22 @@ p {
   padding: var(--space-md);
 }
 
-/* Custom Scroll Track */
-.scroll-track {
-  position: relative;
+/* Custom Scroll Progress Bar */
+.scroll-progress {
   width: 200px;
-  height: 3px;
+  height: 2px;
   background-color: var(--color-light-grey);
   margin: var(--space-md) auto 0;
-  border-radius: 2px;
+  border-radius: 1px;
+  overflow: hidden;
 }
 
-.scroll-thumb {
-  position: absolute;
-  top: 0;
-  left: 0;
+.scroll-progress-bar {
   height: 100%;
+  width: 0%;
   background-color: var(--color-accent);
-  border-radius: 2px;
-  width: 60px;
-  transform: translateX(0);
-  transition: transform 0.1s ease-out;
-  pointer-events: auto;
-  cursor: pointer;
-  will-change: transform;
+  border-radius: 1px;
+  transition: width 0.05s linear;
 }
 
 /* ----- Full-Bleed Image Section ----- */
@@ -1825,8 +1818,8 @@ p {
     margin-bottom: var(--space-xs);
   }
 
-  /* Scroll track positioning */
-  .scroll-track {
+  /* Scroll progress positioning */
+  .scroll-progress {
     width: 120px;
   }
 
