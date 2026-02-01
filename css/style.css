@@ -3127,6 +3127,10 @@ p {
     min-height: 50vh;
   }
 
+  .full-bleed-bg img {
+    object-position: 80% center;
+  }
+
   .full-bleed-content {
     background: linear-gradient(
       to right,
