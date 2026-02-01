@@ -1332,8 +1332,10 @@ p {
   resize: vertical;
 }
 
-/* ----- UNIVERSAL HERO SCALING ----- */
-/* All hero sections match homepage scale across all platforms */
+/* ===== UNIVERSAL HERO SCALING ===== */
+/* All heroes: 100vh on all platforms, 100dvh on iOS for safe areas */
+/* This rule uses !important to override any inline styles in HTML files */
+
 .hero,
 .page-hero,
 .page-hero-full,
@@ -1352,19 +1354,33 @@ p {
   overflow: hidden;
 }
 
+/* iOS Dynamic Viewport Height - uses @supports for clean fallback */
+@supports (min-height: 100dvh) {
+  .hero,
+  .page-hero,
+  .page-hero-full,
+  .dest-hero,
+  .itin-hero,
+  .stay-hero,
+  .about-hero,
+  .inquiry-hero,
+  .quiz-hero,
+  .quote-hero,
+  .journal-hero,
+  .stays-hero {
+    min-height: 100dvh !important;
+  }
+}
+
 /* Ensure all hero backgrounds cover properly */
+[class*="-hero-bg"] img,
+[class*="-hero-bg"] video,
 .hero-bg img,
-.hero-bg video,
-.page-hero-bg img,
-.dest-hero-bg img,
-.itin-hero-bg img,
-.stay-hero-bg img,
-.about-hero-bg img,
-.inquiry-hero-bg img,
-[class*="-hero-bg"] img {
+.hero-bg video {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
+  object-position: center !important;
 }
 
 /* ----- Page Heroes (Subpages) ----- */
@@ -1573,23 +1589,7 @@ p {
     padding: 0 var(--space-sm);
   }
 
-  /* Hero - fullscreen on mobile - ALL hero types */
-  .hero,
-  .page-hero,
-  .page-hero-full,
-  .dest-hero,
-  .itin-hero,
-  .stay-hero,
-  .about-hero,
-  .inquiry-hero,
-  .quiz-hero,
-  .quote-hero,
-  .journal-hero,
-  .stays-hero {
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    min-height: -webkit-fill-available !important;
-  }
+  /* Hero sizing handled by universal rule above */
 
   .hero-minimal {
     align-items: flex-end;
@@ -1902,23 +1902,7 @@ p {
     margin-top: var(--space-lg);
   }
 
-  /* Hero - FULLSCREEN on mobile - ALL types */
-  .hero,
-  .page-hero,
-  .page-hero-full,
-  .dest-hero,
-  .itin-hero,
-  .stay-hero,
-  .about-hero,
-  .inquiry-hero,
-  .quiz-hero,
-  .quote-hero,
-  .journal-hero,
-  .stays-hero {
-    min-height: 100vh !important;
-    min-height: 100dvh !important;
-    min-height: -webkit-fill-available !important;
-  }
+  /* Hero sizing handled by universal rule with @supports */
 
   .hero-minimal {
     align-items: flex-end;
@@ -3137,10 +3121,7 @@ p {
     font-size: 0.6875rem;
   }
 
-  /* Mobile page hero - full bleed feel */
-  .page-hero {
-    min-height: 40vh;
-  }
+  /* Hero sizing controlled by universal @supports rule */
 
   .page-hero-simple {
     padding: var(--space-xl) 0;
@@ -3270,9 +3251,7 @@ p {
     display: none;
   }
 
-  .page-hero {
-    min-height: 100vh;
-  }
+  /* Hero sizing handled by universal @supports rule */
 
   .mobile-menu {
     flex-direction: row;

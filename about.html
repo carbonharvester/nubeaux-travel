@@ -19,7 +19,6 @@
     /* Hero - Full-bleed image with overlay text */
     .about-hero {
       position: relative;
-      min-height: 80vh;
       margin-top: var(--header-height);
       display: flex;
       align-items: center;
@@ -63,7 +62,6 @@
     .split-section {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
-      min-height: 70vh;
     }
     .split-section.reverse {
       grid-template-columns: 1fr 1.2fr;
@@ -208,7 +206,6 @@
     .partner-section {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: 50vh;
     }
     .partner-content {
       display: flex;
@@ -268,10 +265,8 @@
         grid-template-columns: 1fr;
       }
       .split-image {
-        min-height: 50vh;
       }
       .partner-image {
-        min-height: 40vh;
       }
       .benefits-grid {
         grid-template-columns: 1fr;
@@ -283,8 +278,6 @@
 
     @media (max-width: 768px) {
       .about-hero {
-        min-height: 100vh;
-        min-height: 100dvh;
         min-height: -webkit-fill-available;
       }
       .about-hero-content {
