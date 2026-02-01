@@ -281,9 +281,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // ========================================
 
   // Gallery grid hover
-  document.querySelectorAll('.mosaic-grid > *, [style*="grid-template-columns: repeat(4"]').forEach(grid => {
-    const items = grid.querySelectorAll ? grid.querySelectorAll('> *') : [grid];
-    items.forEach(item => {
+  document.querySelectorAll('.mosaic-grid').forEach(grid => {
+    Array.from(grid.children).forEach(item => {
       const img = item.querySelector('img') || item;
       if (img.tagName === 'IMG') {
         img.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
