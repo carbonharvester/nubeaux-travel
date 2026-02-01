@@ -1528,6 +1528,18 @@ p {
     align-items: center;
   }
 
+  .footer-links .footer-cta {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-accent);
+    color: var(--color-white) !important;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: var(--space-sm);
+  }
+
   .footer-bottom {
     flex-direction: column;
     gap: var(--space-sm);
