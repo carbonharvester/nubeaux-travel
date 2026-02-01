@@ -423,26 +423,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!scrollContainer || !track || !thumb) return;
 
-    // Move thumb position based on scroll
+    // Update thumb position based on scroll
     const updateThumb = () => {
       const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      if (maxScroll <= 0) {
-        thumb.style.left = '0px';
-        return;
-      }
+      if (maxScroll <= 0) return;
+
       const scrollPercent = scrollContainer.scrollLeft / maxScroll;
       const trackWidth = track.offsetWidth;
       const thumbWidth = thumb.offsetWidth;
       const maxLeft = trackWidth - thumbWidth;
-      thumb.style.left = (scrollPercent * maxLeft) + 'px';
+      thumb.style.left = Math.round(scrollPercent * maxLeft) + 'px';
     };
 
-    // Listen for scroll
+    // Click on track to scroll to that position
+    track.style.cursor = 'pointer';
+    track.addEventListener('click', (e) => {
+      const rect = track.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickPercent = clickX / rect.width;
+      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+      scrollContainer.scrollTo({
+        left: clickPercent * maxScroll,
+        behavior: 'smooth'
+      });
+    });
+
+    // Listen for scroll events
     scrollContainer.addEventListener('scroll', updateThumb, { passive: true });
 
-    // Initial update
-    updateThumb();
+    // Initial update after load
     window.addEventListener('load', updateThumb);
+    setTimeout(updateThumb, 100);
+    setTimeout(updateThumb, 500);
   });
 
   // ========================================
