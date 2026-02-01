@@ -3128,7 +3128,7 @@ p {
   }
 
   .full-bleed-bg img {
-    object-position: 20% center;
+    object-position: center center;
   }
 
   .full-bleed-content {
