@@ -1332,10 +1332,45 @@ p {
   resize: vertical;
 }
 
+/* ----- UNIVERSAL HERO SCALING ----- */
+/* All hero sections match homepage scale across all platforms */
+.hero,
+.page-hero,
+.page-hero-full,
+.dest-hero,
+.itin-hero,
+.stay-hero,
+.about-hero,
+.inquiry-hero,
+.quiz-hero,
+.quote-hero,
+.journal-hero,
+.stays-hero {
+  min-height: 100vh !important;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Ensure all hero backgrounds cover properly */
+.hero-bg img,
+.hero-bg video,
+.page-hero-bg img,
+.dest-hero-bg img,
+.itin-hero-bg img,
+.stay-hero-bg img,
+.about-hero-bg img,
+.inquiry-hero-bg img,
+[class*="-hero-bg"] img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
 /* ----- Page Heroes (Subpages) ----- */
 .page-hero {
   position: relative;
-  min-height: 50vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1538,16 +1573,22 @@ p {
     padding: 0 var(--space-sm);
   }
 
-  /* Hero - fullscreen on mobile like andBeyond */
+  /* Hero - fullscreen on mobile - ALL hero types */
   .hero,
+  .page-hero,
+  .page-hero-full,
   .dest-hero,
   .itin-hero,
   .stay-hero,
-  .page-hero,
-  .page-hero-full {
-    min-height: 100vh;
-    min-height: 100dvh;
-    min-height: -webkit-fill-available;
+  .about-hero,
+  .inquiry-hero,
+  .quiz-hero,
+  .quote-hero,
+  .journal-hero,
+  .stays-hero {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    min-height: -webkit-fill-available !important;
   }
 
   .hero-minimal {
@@ -1861,11 +1902,22 @@ p {
     margin-top: var(--space-lg);
   }
 
-  /* Hero - FULLSCREEN on mobile */
-  .hero {
-    min-height: 100vh;
-    min-height: 100dvh;
-    min-height: -webkit-fill-available;
+  /* Hero - FULLSCREEN on mobile - ALL types */
+  .hero,
+  .page-hero,
+  .page-hero-full,
+  .dest-hero,
+  .itin-hero,
+  .stay-hero,
+  .about-hero,
+  .inquiry-hero,
+  .quiz-hero,
+  .quote-hero,
+  .journal-hero,
+  .stays-hero {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    min-height: -webkit-fill-available !important;
   }
 
   .hero-minimal {
