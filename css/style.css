@@ -813,9 +813,20 @@ p {
 
 .itinerary-card-meta {
   display: flex;
-  gap: var(--space-md);
+  flex-direction: column;
+  gap: 0.25rem;
   font-size: 0.75rem;
   color: var(--color-medium-grey);
+  margin-top: var(--space-sm);
+}
+
+.itinerary-card-meta span:first-child {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.itinerary-card-meta span:last-child {
+  color: var(--color-accent);
 }
 
 .itinerary-card p {
