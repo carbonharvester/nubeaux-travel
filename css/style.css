@@ -3127,10 +3127,6 @@ p {
     min-height: 50vh;
   }
 
-  .full-bleed-bg img {
-    object-position: center center;
-  }
-
   .full-bleed-content {
     background: linear-gradient(
       to right,
