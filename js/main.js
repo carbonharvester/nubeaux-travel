@@ -416,56 +416,24 @@ document.addEventListener('DOMContentLoaded', function() {
   // HORIZONTAL SCROLL ARROWS
   // ========================================
 
-  const scrollWrappers = document.querySelectorAll('.scroll-wrapper');
+  document.querySelectorAll('.scroll-arrow').forEach(arrow => {
+    arrow.addEventListener('click', function(e) {
+      e.preventDefault();
 
-  scrollWrappers.forEach(wrapper => {
-    const scrollContainer = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll');
-    const leftArrow = wrapper.querySelector('.scroll-arrow-left');
-    const rightArrow = wrapper.querySelector('.scroll-arrow-right');
+      const wrapper = this.closest('.scroll-wrapper');
+      if (!wrapper) return;
 
-    if (!scrollContainer || !leftArrow || !rightArrow) return;
+      const scrollContainer = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll');
+      if (!scrollContainer) return;
 
-    // Get scroll amount (width of one card + gap)
-    const getScrollAmount = () => {
-      const card = scrollContainer.querySelector('.destination-card, .itinerary-card-scroll, .journal-card');
-      if (card) {
-        const style = getComputedStyle(scrollContainer);
-        const gap = parseInt(style.gap) || 16;
-        return card.offsetWidth + gap;
-      }
-      return 320;
-    };
+      const scrollAmount = 350;
+      const direction = this.classList.contains('scroll-arrow-left') ? -1 : 1;
 
-    // Update arrow states
-    const updateArrows = () => {
-      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      leftArrow.disabled = scrollContainer.scrollLeft <= 0;
-      rightArrow.disabled = scrollContainer.scrollLeft >= maxScroll - 1;
-    };
-
-    // Arrow click handlers
-    leftArrow.addEventListener('click', () => {
       scrollContainer.scrollBy({
-        left: -getScrollAmount(),
+        left: direction * scrollAmount,
         behavior: 'smooth'
       });
     });
-
-    rightArrow.addEventListener('click', () => {
-      scrollContainer.scrollBy({
-        left: getScrollAmount(),
-        behavior: 'smooth'
-      });
-    });
-
-    // Update arrows on scroll
-    scrollContainer.addEventListener('scroll', updateArrows, { passive: true });
-
-    // Initial state
-    updateArrows();
-
-    // Update on resize
-    window.addEventListener('resize', updateArrows);
   });
 
   // ========================================
