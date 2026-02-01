@@ -28,10 +28,10 @@
       right: var(--space-md);
       z-index: 10;
       background: rgba(255, 255, 255, 0.95);
-      padding: 0.5rem 1rem;
-      display: flex;
+      padding: 0.5rem 0.75rem;
+      display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
       font-size: 0.6875rem;
       font-weight: 500;
       letter-spacing: 0.1em;
@@ -45,12 +45,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       background: var(--color-charcoal);
       color: white;
       border-radius: 50%;
-      font-size: 0.625rem;
+      font-size: 0.5rem;
+      flex-shrink: 0;
     }
 
     .stay-hero-bg {
@@ -96,12 +97,21 @@
     .stay-hero h1 {
       font-size: clamp(2.5rem, 6vw, 4rem);
       margin-bottom: var(--space-md);
+      color: var(--color-white);
     }
 
     .stay-hero p {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       opacity: 0.9;
-      max-width: 600px;
+      max-width: 500px;
+      color: var(--color-white);
+    }
+
+    @media (max-width: 768px) {
+      .stay-hero {
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
     }
 
     .stay-content {
@@ -245,7 +255,7 @@
       <div class="container">
         <span class="stay-label">Namibia</span>
         <h1>Onguma The Fort</h1>
-        <p>Moorish-inspired architecture meets African wilderness. A dramatic safari lodge with panoramic waterhole views on Etosha's eastern border.</p>
+        <p>Moorish-inspired architecture meets African wilderness on Etosha's eastern border.</p>
       </div>
     </div>
   </section>
@@ -262,12 +272,12 @@
             </div>
           </div>
 
-          <h2>Our Take</h2>
+          <h2>Nia's Take</h2>
           <p>Onguma The Fort is unlike any other safari lodge in Namibia. Its dramatic Afro-Moroccan architecture, complete with a tower bar, raw stone walls, and antique windows and doors, creates an otherworldly atmosphere. The lodge overlooks Fischer's Pan, a productive waterhole that draws constant wildlife, particularly during the dry season when it offers what Onguma describes as "probably one of the best sunset views in the whole of Namibia."</p>
 
           <p>The fort-style main complex spans split levels, with 13 beautifully appointed suites: 11 Bush Suites, one exclusive Sultan's Suite in the main tower, and a romantic Honeymoon Suite. All suites overlook Fischer's Pan with uninterrupted views, and the Bush Suites feature outdoor showers and wood-fired hot tubs for starlit soaks.</p>
 
-          <h2 style="margin-top: var(--space-lg);">What We Loved</h2>
+          <h2 style="margin-top: var(--space-lg);">What Nia Loved</h2>
           <ul class="highlight-list">
             <li><strong>Fischer's Pan waterhole</strong> — Elephants, lions, and more parading day and night</li>
             <li><strong>Tower bar</strong> — Panoramic views from the dramatic Afro-Moroccan tower</li>
@@ -322,7 +332,7 @@
           <div class="sidebar-section" style="background: var(--color-terracotta); color: var(--color-white); padding: var(--space-md); margin: 0 calc(var(--space-lg) * -1) calc(var(--space-lg) * -1); margin-top: var(--space-md);">
             <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: var(--space-sm);">Get Your Quote</h3>
             <p style="font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md);">Ready to experience The Fort? Get a personalized quote for your dates.</p>
-            <a href="../request-quote.html?trip=Onguma%20The%20Fort&price=From%20%24555%2Fnight%20pp" class="btn" style="background: var(--color-white); color: var(--color-terracotta); width: 100%; text-align: center;">Request Quote</a>
+            <a href="../request-quote.html?trip=Onguma%20The%20Fort&price=From%20%24555%2Fnight%20pp" class="btn btn-primary" style="width: 100%; text-align: center;">Request Quote</a>
           </div>
         </div>
       </div>
