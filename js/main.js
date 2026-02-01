@@ -413,119 +413,59 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // ========================================
-  // HORIZONTAL SCROLL BAR
+  // HORIZONTAL SCROLL ARROWS
   // ========================================
 
   const scrollWrappers = document.querySelectorAll('.scroll-wrapper');
 
   scrollWrappers.forEach(wrapper => {
     const scrollContainer = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll');
-    const track = wrapper.querySelector('.scroll-progress');
-    const thumb = wrapper.querySelector('.scroll-progress-bar');
+    const leftArrow = wrapper.querySelector('.scroll-arrow-left');
+    const rightArrow = wrapper.querySelector('.scroll-arrow-right');
 
-    if (!scrollContainer || !track || !thumb) {
-      console.log('Missing scroll elements:', { scrollContainer: !!scrollContainer, track: !!track, thumb: !!thumb });
-      return;
-    }
+    if (!scrollContainer || !leftArrow || !rightArrow) return;
 
-    // Update thumb position
-    function updateScrollBar() {
-      const scrollWidth = scrollContainer.scrollWidth;
-      const clientWidth = scrollContainer.clientWidth;
-      const maxScroll = scrollWidth - clientWidth;
-
-      if (maxScroll <= 0) {
-        thumb.style.width = '100%';
-        thumb.style.transform = 'translateX(0)';
-        return;
+    // Get scroll amount (width of one card + gap)
+    const getScrollAmount = () => {
+      const card = scrollContainer.querySelector('.destination-card, .itinerary-card-scroll, .journal-card');
+      if (card) {
+        const style = getComputedStyle(scrollContainer);
+        const gap = parseInt(style.gap) || 16;
+        return card.offsetWidth + gap;
       }
+      return 320;
+    };
 
-      const scrollPercent = scrollContainer.scrollLeft / maxScroll;
-      const trackWidth = track.offsetWidth;
-      const thumbWidth = thumb.offsetWidth;
-      const maxMove = trackWidth - thumbWidth;
-      const moveX = scrollPercent * maxMove;
-
-      thumb.style.transform = `translateX(${moveX}px)`;
-    }
-
-    // Scroll event listener
-    scrollContainer.addEventListener('scroll', updateScrollBar);
-
-    // Click track to scroll
-    track.addEventListener('click', (e) => {
-      const rect = track.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const clickPercent = clickX / rect.width;
+    // Update arrow states
+    const updateArrows = () => {
       const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      scrollContainer.scrollTo({
-        left: clickPercent * maxScroll,
+      leftArrow.disabled = scrollContainer.scrollLeft <= 0;
+      rightArrow.disabled = scrollContainer.scrollLeft >= maxScroll - 1;
+    };
+
+    // Arrow click handlers
+    leftArrow.addEventListener('click', () => {
+      scrollContainer.scrollBy({
+        left: -getScrollAmount(),
         behavior: 'smooth'
       });
     });
 
-    // Drag thumb to scroll
-    let isDragging = false;
-    let startX = 0;
-    let startScrollLeft = 0;
-
-    thumb.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startX = e.clientX;
-      startScrollLeft = scrollContainer.scrollLeft;
-      thumb.style.cursor = 'grabbing';
-      e.preventDefault();
+    rightArrow.addEventListener('click', () => {
+      scrollContainer.scrollBy({
+        left: getScrollAmount(),
+        behavior: 'smooth'
+      });
     });
 
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const dx = e.clientX - startX;
-      const trackWidth = track.offsetWidth;
-      const thumbWidth = thumb.offsetWidth;
-      const maxMove = trackWidth - thumbWidth;
-      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      const scrollDelta = (dx / maxMove) * maxScroll;
-      scrollContainer.scrollLeft = startScrollLeft + scrollDelta;
-    });
+    // Update arrows on scroll
+    scrollContainer.addEventListener('scroll', updateArrows, { passive: true });
 
-    document.addEventListener('mouseup', () => {
-      if (isDragging) {
-        isDragging = false;
-        thumb.style.cursor = 'grab';
-      }
-    });
+    // Initial state
+    updateArrows();
 
-    // Touch support for thumb dragging
-    thumb.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      startX = e.touches[0].clientX;
-      startScrollLeft = scrollContainer.scrollLeft;
-    }, { passive: true });
-
-    document.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      const dx = e.touches[0].clientX - startX;
-      const trackWidth = track.offsetWidth;
-      const thumbWidth = thumb.offsetWidth;
-      const maxMove = trackWidth - thumbWidth;
-      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      const scrollDelta = (dx / maxMove) * maxScroll;
-      scrollContainer.scrollLeft = startScrollLeft + scrollDelta;
-    }, { passive: true });
-
-    document.addEventListener('touchend', () => {
-      isDragging = false;
-    });
-
-    // Style thumb as draggable
-    thumb.style.cursor = 'grab';
-    track.style.cursor = 'pointer';
-
-    // Initial update
-    updateScrollBar();
-
-    // Update on window resize
-    window.addEventListener('resize', updateScrollBar);
+    // Update on resize
+    window.addEventListener('resize', updateArrows);
   });
 
   // ========================================

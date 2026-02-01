@@ -699,27 +699,44 @@ p {
   padding: var(--space-md);
 }
 
-/* Custom Scroll Bar */
-.scroll-progress {
-  width: 200px;
-  height: 3px;
-  background-color: var(--color-light-grey);
-  margin: var(--space-md) auto 0;
-  border-radius: 2px;
-  position: relative;
+/* Scroll Arrows */
+.scroll-arrows {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
 }
 
-.scroll-progress-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 50px;
-  background-color: var(--color-accent);
-  border-radius: 2px;
-  transform: translateX(0);
-  transition: transform 0.1s ease-out;
-  will-change: transform;
+.scroll-arrow {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-medium-grey);
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--color-text);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-arrow:hover {
+  background: var(--color-text);
+  color: var(--color-white);
+  border-color: var(--color-text);
+}
+
+.scroll-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.scroll-arrow:disabled:hover {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-medium-grey);
 }
 
 /* ----- Full-Bleed Image Section ----- */
@@ -1821,11 +1838,6 @@ p {
   .form-label {
     font-size: 0.75rem;
     margin-bottom: var(--space-xs);
-  }
-
-  /* Scroll progress positioning */
-  .scroll-progress {
-    width: 120px;
   }
 
   /* Improved text readability on mobile */
