@@ -717,6 +717,8 @@ p {
   width: 50px;
   background-color: var(--color-accent);
   border-radius: 2px;
+  transform: translateX(0);
+  will-change: transform;
 }
 
 /* ----- Full-Bleed Image Section ----- */

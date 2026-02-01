@@ -423,19 +423,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (!scrollContainer || !track || !thumb) return;
 
-    // Update thumb position based on scroll
+    // Update thumb position using transform (more reliable than left)
     const updateThumb = () => {
-      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-      if (maxScroll <= 0) return;
+      const scrollWidth = scrollContainer.scrollWidth;
+      const clientWidth = scrollContainer.clientWidth;
+      const maxScroll = scrollWidth - clientWidth;
+
+      if (maxScroll <= 0) {
+        thumb.style.transform = 'translateX(0)';
+        return;
+      }
 
       const scrollPercent = scrollContainer.scrollLeft / maxScroll;
       const trackWidth = track.offsetWidth;
       const thumbWidth = thumb.offsetWidth;
-      const maxLeft = trackWidth - thumbWidth;
-      thumb.style.left = Math.round(scrollPercent * maxLeft) + 'px';
+      const maxMove = trackWidth - thumbWidth;
+      const move = Math.round(scrollPercent * maxMove);
+
+      thumb.style.transform = `translateX(${move}px)`;
     };
 
-    // Click on track to scroll to that position
+    // Click on track to scroll
     track.style.cursor = 'pointer';
     track.addEventListener('click', (e) => {
       const rect = track.getBoundingClientRect();
@@ -451,10 +459,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Listen for scroll events
     scrollContainer.addEventListener('scroll', updateThumb, { passive: true });
 
-    // Initial update after load
-    window.addEventListener('load', updateThumb);
-    setTimeout(updateThumb, 100);
-    setTimeout(updateThumb, 500);
+    // Polling backup - catches scroll changes that events miss
+    let lastScroll = -1;
+    const poll = () => {
+      if (scrollContainer.scrollLeft !== lastScroll) {
+        lastScroll = scrollContainer.scrollLeft;
+        updateThumb();
+      }
+      requestAnimationFrame(poll);
+    };
+    requestAnimationFrame(poll);
+
+    // Initialize
+    updateThumb();
   });
 
   // ========================================
