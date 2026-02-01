@@ -413,27 +413,73 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // ========================================
-  // HORIZONTAL SCROLL ARROWS
+  // HORIZONTAL SCROLL BAR
   // ========================================
 
-  document.querySelectorAll('.scroll-arrow').forEach(arrow => {
-    arrow.addEventListener('click', function(e) {
-      e.preventDefault();
+  document.querySelectorAll('.scroll-wrapper').forEach(wrapper => {
+    const container = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll');
+    const bar = wrapper.querySelector('.scroll-bar');
+    const thumb = wrapper.querySelector('.scroll-bar-thumb');
 
-      const wrapper = this.closest('.scroll-wrapper');
-      if (!wrapper) return;
+    if (!container || !bar || !thumb) {
+      console.log('Scroll bar: missing elements', { container: !!container, bar: !!bar, thumb: !!thumb });
+      return;
+    }
 
-      const scrollContainer = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll');
-      if (!scrollContainer) return;
+    function updateThumb() {
+      const scrollWidth = container.scrollWidth;
+      const clientWidth = container.clientWidth;
+      const maxScroll = scrollWidth - clientWidth;
 
-      const scrollAmount = 350;
-      const direction = this.classList.contains('scroll-arrow-left') ? -1 : 1;
+      if (maxScroll <= 0) {
+        bar.style.display = 'none';
+        return;
+      }
 
-      scrollContainer.scrollBy({
-        left: direction * scrollAmount,
+      bar.style.display = 'block';
+
+      // Calculate thumb width (proportional to visible area)
+      const thumbWidth = Math.max(30, (clientWidth / scrollWidth) * bar.offsetWidth);
+      thumb.style.width = thumbWidth + 'px';
+
+      // Calculate thumb position
+      const scrollPercent = container.scrollLeft / maxScroll;
+      const maxThumbMove = bar.offsetWidth - thumbWidth;
+      const thumbLeft = scrollPercent * maxThumbMove;
+
+      thumb.style.left = thumbLeft + 'px';
+    }
+
+    // Click on bar to scroll
+    bar.addEventListener('click', (e) => {
+      const rect = bar.getBoundingClientRect();
+      const clickPercent = (e.clientX - rect.left) / rect.width;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      container.scrollTo({
+        left: clickPercent * maxScroll,
         behavior: 'smooth'
       });
     });
+
+    // Update on scroll event
+    container.addEventListener('scroll', updateThumb);
+
+    // CRITICAL: Polling backup - ensures thumb updates even if scroll event misses
+    let lastScrollLeft = -1;
+    function poll() {
+      if (container.scrollLeft !== lastScrollLeft) {
+        lastScrollLeft = container.scrollLeft;
+        updateThumb();
+      }
+      requestAnimationFrame(poll);
+    }
+    requestAnimationFrame(poll);
+
+    // Initial update
+    updateThumb();
+
+    // Update on resize
+    window.addEventListener('resize', updateThumb);
   });
 
   // ========================================
