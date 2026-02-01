@@ -449,13 +449,29 @@ document.addEventListener('DOMContentLoaded', function() {
       updateThumbPosition();
     }, 100);
 
-    // Listen for scroll events
-    scrollContainer.addEventListener('scroll', updateThumbPosition, { passive: true });
+    // Listen for scroll events with multiple fallbacks
+    scrollContainer.addEventListener('scroll', () => {
+      requestAnimationFrame(updateThumbPosition);
+    }, { passive: true });
 
     // Also update on wheel events for better responsiveness
     scrollContainer.addEventListener('wheel', () => {
-      requestAnimationFrame(updateThumbPosition);
+      setTimeout(updateThumbPosition, 10);
     }, { passive: true });
+
+    // Update on any interaction
+    scrollContainer.addEventListener('scrollend', updateThumbPosition, { passive: true });
+
+    // Polling fallback for browsers that don't fire scroll events reliably
+    let lastScrollLeft = 0;
+    const pollScroll = () => {
+      if (scrollContainer.scrollLeft !== lastScrollLeft) {
+        lastScrollLeft = scrollContainer.scrollLeft;
+        updateThumbPosition();
+      }
+      requestAnimationFrame(pollScroll);
+    };
+    requestAnimationFrame(pollScroll);
 
     window.addEventListener('resize', () => {
       updateThumbWidth();
@@ -547,6 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const touchX = e.touches[0].pageX;
       const diff = touchStartX - touchX;
       scrollContainer.scrollLeft = touchStartScrollLeft + diff;
+      requestAnimationFrame(updateThumbPosition);
     }, { passive: true });
 
     scrollContainer.addEventListener('touchend', () => {
