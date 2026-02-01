@@ -219,6 +219,50 @@
       transition: transform var(--transition-fast), box-shadow var(--transition-fast);
     }
 
+    .verified-badge {
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-sm);
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 0.375rem 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.5625rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-charcoal);
+      border: 1px solid var(--color-charcoal);
+    }
+
+    .verified-badge::before {
+      content: "✓";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      background: var(--color-charcoal);
+      color: white;
+      border-radius: 50%;
+      font-size: 0.5rem;
+    }
+
+    .featured-stay-image .verified-badge {
+      top: var(--space-md);
+      right: var(--space-md);
+      padding: 0.5rem 1rem;
+      font-size: 0.6875rem;
+    }
+
+    .featured-stay-image .verified-badge::before {
+      width: 16px;
+      height: 16px;
+      font-size: 0.625rem;
+    }
+
     .stay-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
@@ -341,6 +385,7 @@
   <!-- Featured Stay: Onguma Camp Kala -->
   <a href="onguma-camp-kala.html" class="featured-stay">
     <div class="featured-stay-image">
+      <span class="verified-badge">NUBEAUX Verified</span>
       <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_900,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Onguma Camp Kala">
     </div>
     <div class="featured-stay-content">
@@ -390,6 +435,7 @@
       <span class="btn btn-outline-dark">View Property</span>
     </div>
     <div class="featured-stay-image">
+      <span class="verified-badge">NUBEAUX Verified</span>
       <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_900,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Onguma The Fort">
     </div>
   </a>
