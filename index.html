@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="NUBEAUX Travel. Curated luxury travel experiences from creatives who've been there. Discover Africa and beyond with our expert-crafted itineraries.">
+  <meta name="description" content="NUBEAUX Travel. Curated luxury travel experiences from creatives who've been there. Discover Africa and beyond.">
 
-  <title>NUBEAUX Travel | Curated Luxury Travel Experiences</title>
+  <title>NUBEAUX Travel | Curated Luxury Travel</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,15 +19,12 @@
   <!-- Header -->
   <header class="header">
     <div class="header-inner">
-      <a href="index.html" class="logo">
-        <span class="logo-text">NUBEAUX TRAVEL</span>
-      </a>
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="NUBEAUX"></a>
 
       <nav class="nav">
         <a href="destinations/">Destinations</a>
         <a href="itineraries/">Itineraries</a>
         <a href="stays/">Stays</a>
-        <a href="creators/">Creators</a>
         <a href="about.html">About</a>
         <a href="plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
       </nav>
@@ -45,30 +42,37 @@
     <a href="destinations/">Destinations</a>
     <a href="itineraries/">Itineraries</a>
     <a href="stays/">Stays</a>
-    <a href="creators/">Creators</a>
     <a href="about.html">About</a>
     <a href="plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
   </div>
 
-  <!-- Hero Section -->
-  <section class="hero">
+  <!-- Hero Section with Video -->
+  <section class="hero hero-minimal">
     <div class="hero-bg">
-      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Luxury safari in Namibia">
+      <!-- Video background with image fallback -->
+      <video autoplay muted loop playsinline poster="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg">
+        <source src="https://res.cloudinary.com/dng12bd0a/video/upload/q_auto,f_auto/v1/nubeaux/namibia-safari-hero" type="video/mp4">
+      </video>
+      <!-- Fallback image if video doesn't load -->
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Luxury safari in Namibia" style="display: none;">
     </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-label">Curated Travel Experiences</span>
-      <h1 class="hero-title">Travel with intention.<br>Return transformed.</h1>
-      <p class="hero-subtitle">Luxury itineraries crafted by creatives who've been there. Africa and beyond, designed for the discerning traveller.</p>
-      <a href="plan-your-trip.html" class="btn btn-primary">Plan Your Journey</a>
+    <div class="hero-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 50%);"></div>
+    <div class="hero-content hero-content-bottom-left">
+      <h1 class="hero-title">Travel with intention.</h1>
+      <a href="plan-your-trip.html" class="btn btn-outline">Plan Your Journey</a>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
     </div>
   </section>
 
-  <!-- Intro Section -->
-  <section class="section-large">
+  <!-- Introduction -->
+  <section class="section-large section-cream">
     <div class="container" style="text-align: center;">
-      <p class="text-large" style="max-width: 800px; margin: 0 auto;">
-        NUBEAUX Travel is not a booking engine. It's a curation. Every destination, every property, every itinerary has been personally experienced by our network of creatives. We don't recommend places we haven't been. We don't suggest experiences we haven't had. This is travel advice from people who travel beautifully.
+      <p class="intro-statement">
+        Every destination we recommend, we've experienced.<br>
+        Every property we suggest, we've stayed at.<br>
+        <em>This is curation, not aggregation.</em>
       </p>
     </div>
   </section>
@@ -76,140 +80,264 @@
   <!-- Featured Destinations -->
   <section class="section">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header-left">
         <h2>Destinations</h2>
-        <a href="destinations/">View all</a>
+        <a href="destinations/">View All</a>
       </div>
 
-      <div class="destinations-scroll">
-        <a href="destinations/namibia.html" class="destination-card">
-          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_800,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Namibia">
-          <div class="destination-card-overlay">
-            <span class="destination-card-label">Southern Africa</span>
-            <h3>Namibia</h3>
-            <p>Safari, dunes, and desert luxury</p>
-          </div>
-        </a>
-
-        <a href="destinations/south-africa.html" class="destination-card">
-          <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=600&h=800&fit=crop&q=80" alt="South Africa">
-          <div class="destination-card-overlay">
-            <span class="destination-card-label">Southern Africa</span>
-            <h3>South Africa</h3>
-            <p>Cape Town, Johannesburg, and beyond</p>
-          </div>
-        </a>
-
-        <a href="destinations/kenya.html" class="destination-card">
-          <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=600&h=800&fit=crop&q=80" alt="Kenya">
-          <div class="destination-card-overlay">
-            <span class="destination-card-label">East Africa</span>
-            <h3>Kenya</h3>
-            <p>Coast, culture, and Swahili heritage</p>
-          </div>
-        </a>
-
-        <a href="destinations/mozambique.html" class="destination-card">
-          <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&h=800&fit=crop&q=80" alt="Mozambique">
-          <div class="destination-card-overlay">
-            <span class="destination-card-label">Southern Africa</span>
-            <h3>Mozambique</h3>
-            <p>Remote beaches and island luxury</p>
-          </div>
-        </a>
-
-        <a href="destinations/senegal.html" class="destination-card">
-          <img src="https://images.unsplash.com/photo-1591122947157-26bad3a117d2?w=600&h=800&fit=crop&q=80" alt="Senegal">
-          <div class="destination-card-overlay">
-            <span class="destination-card-label">West Africa</span>
-            <h3>Senegal</h3>
-            <p>Vibrant culture and Atlantic coast</p>
-          </div>
-        </a>
-
-        <a href="destinations/aruba.html" class="destination-card">
-          <img src="https://images.unsplash.com/photo-1551524164-c2e5d55e76b8?w=600&h=800&fit=crop&q=80" alt="Aruba">
-          <div class="destination-card-overlay">
-            <span class="destination-card-label">Caribbean</span>
-            <h3>Aruba</h3>
-            <p>Pristine beaches and desert landscapes</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Itineraries -->
-  <section class="section" style="background-color: var(--color-ecru);">
-    <div class="container">
-      <div class="section-header">
-        <h2>Curated Itineraries</h2>
-        <a href="itineraries/">View all</a>
-      </div>
-
-      <div class="itineraries-grid">
-        <a href="itineraries/7-days-namibia.html" class="itinerary-card">
-          <div class="itinerary-card-image">
-            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Namibia Safari">
-          </div>
-          <div class="itinerary-card-content">
-            <span class="itinerary-card-label">Safari & Wilderness</span>
-            <h3>7 Days in Namibia</h3>
-            <div class="itinerary-card-meta">
-              <span>7 Days</span>
-              <span>From $8,500</span>
+      <div class="scroll-wrapper" data-scroll="destinations">
+        <div class="destinations-scroll">
+          <a href="destinations/namibia.html" class="destination-card">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_800,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Namibia">
+            <div class="destination-card-overlay">
+              <span class="destination-card-label">Southern Africa</span>
+              <h3>Namibia</h3>
+              <p>Safari, dunes, and desert luxury</p>
             </div>
-            <p>Etosha wildlife, Onguma luxury, and the endless horizons of the Namibian bush.</p>
-          </div>
-        </a>
+          </a>
 
-        <a href="itineraries/kenya-coast.html" class="itinerary-card">
-          <div class="itinerary-card-image">
-            <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&h=600&fit=crop&q=80" alt="Kenya Coast">
-          </div>
-          <div class="itinerary-card-content">
-            <span class="itinerary-card-label">Coast + Culture</span>
-            <h3>Kenya: Kilifi to Lamu</h3>
-            <div class="itinerary-card-meta">
-              <span>7 Days</span>
-              <span>From $4,500</span>
+          <a href="destinations/kenya.html" class="destination-card">
+            <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=600&h=800&fit=crop&q=80" alt="Kenya">
+            <div class="destination-card-overlay">
+              <span class="destination-card-label">East Africa</span>
+              <h3>Kenya</h3>
+              <p>Coast, culture, and Swahili heritage</p>
             </div>
-            <p>Kenya's creative coast and Swahili heritage from Kilifi to Lamu.</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
+          </a>
 
-  <!-- Creator Spotlight -->
-  <section class="creators-section">
-    <div class="container">
-      <div class="section-header" style="border-color: rgba(255,255,255,0.2);">
-        <h2>Meet the Creators</h2>
-        <a href="creators/">View all</a>
-      </div>
+          <a href="destinations/mozambique.html" class="destination-card">
+            <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&h=800&fit=crop&q=80" alt="Mozambique">
+            <div class="destination-card-overlay">
+              <span class="destination-card-label">Southern Africa</span>
+              <h3>Mozambique</h3>
+              <p>Remote beaches and island luxury</p>
+            </div>
+          </a>
 
-      <div class="creators-grid" style="justify-content: center;">
-        <div class="creator-card">
-          <div class="creator-card-image">
-            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_240,h_240,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
-          </div>
-          <div class="creator-card-content">
-            <h3>Nia The Light</h3>
-            <p>Content creator and storyteller with a passion for African luxury, wellness, and solo travel.</p>
-            <a href="creators/nia.html" class="creator-card-link">View Collection</a>
-          </div>
+          <a href="destinations/south-africa.html" class="destination-card">
+            <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=600&h=800&fit=crop&q=80" alt="South Africa">
+            <div class="destination-card-overlay">
+              <span class="destination-card-label">Southern Africa</span>
+              <h3>South Africa</h3>
+              <p>Cape Town, Johannesburg, and beyond</p>
+            </div>
+          </a>
+
+          <a href="destinations/senegal.html" class="destination-card">
+            <img src="https://images.unsplash.com/photo-1591122947157-26bad3a117d2?w=600&h=800&fit=crop&q=80" alt="Senegal">
+            <div class="destination-card-overlay">
+              <span class="destination-card-label">West Africa</span>
+              <h3>Senegal</h3>
+              <p>Vibrant culture and Atlantic coast</p>
+            </div>
+          </a>
+
+          <a href="destinations/aruba.html" class="destination-card">
+            <img src="https://images.unsplash.com/photo-1551524164-c2e5d55e76b8?w=600&h=800&fit=crop&q=80" alt="Aruba">
+            <div class="destination-card-overlay">
+              <span class="destination-card-label">Caribbean</span>
+              <h3>Aruba</h3>
+              <p>Pristine beaches and desert landscapes</p>
+            </div>
+          </a>
+        </div>
+        <div class="scroll-track">
+          <div class="scroll-thumb"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="cta-section">
+  <!-- Full-Bleed Image Feature -->
+  <section class="full-bleed-section">
+    <div class="full-bleed-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Luxury safari experience">
+    </div>
+    <div class="hero-overlay" style="background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 70%);"></div>
+    <div class="full-bleed-content">
+      <span class="text-xs" style="color: rgba(255,255,255,0.7); display: block; margin-bottom: var(--space-sm);">Featured Experience</span>
+      <h2 style="color: var(--color-white); margin-bottom: var(--space-md);">Safari & Wilderness</h2>
+      <p style="color: rgba(255,255,255,0.9); margin-bottom: var(--space-lg);">Three days in Namibia's most exclusive camps. Wake to wildlife, dine under stars, experience Africa at its most intimate.</p>
+      <a href="itineraries/namibia-safari.html" class="btn btn-outline">View Itinerary</a>
+    </div>
+  </section>
+
+  <!-- Curated Itineraries -->
+  <section class="section-large itineraries-section">
     <div class="container">
+      <div class="section-header-left">
+        <h2>Curated Itineraries</h2>
+        <a href="itineraries/">View All</a>
+      </div>
+
+      <div class="scroll-wrapper" data-scroll="itineraries">
+        <div class="itineraries-scroll">
+          <a href="itineraries/namibia-safari.html" class="itinerary-card-scroll">
+            <div class="itinerary-card-image">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_300,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Namibia Safari">
+            </div>
+            <div class="itinerary-card-content">
+              <span class="itinerary-card-label">Safari & Wilderness</span>
+              <h3>Namibia Safari</h3>
+              <div class="itinerary-card-meta">
+                <span>3 Days</span>
+                <span>From $4,500</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="itineraries/kilifi-coast.html" class="itinerary-card-scroll">
+            <div class="itinerary-card-image">
+              <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=400&h=300&fit=crop&q=80" alt="Kilifi Coast">
+            </div>
+            <div class="itinerary-card-content">
+              <span class="itinerary-card-label">Coast + Culture</span>
+              <h3>Kilifi Coast</h3>
+              <div class="itinerary-card-meta">
+                <span>3 Days</span>
+                <span>From $2,500</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="itineraries/lamu-island.html" class="itinerary-card-scroll">
+            <div class="itinerary-card-image">
+              <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=400&h=300&fit=crop&q=80" alt="Lamu Island">
+            </div>
+            <div class="itinerary-card-content">
+              <span class="itinerary-card-label">Island Heritage</span>
+              <h3>Lamu Island</h3>
+              <div class="itinerary-card-meta">
+                <span>4 Days</span>
+                <span>From $3,500</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="itineraries/mozambique-island-escape.html" class="itinerary-card-scroll">
+            <div class="itinerary-card-image">
+              <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=400&h=300&fit=crop&q=80" alt="Mozambique Islands">
+            </div>
+            <div class="itinerary-card-content">
+              <span class="itinerary-card-label">Beach & Island</span>
+              <h3>Mozambique Island Escape</h3>
+              <div class="itinerary-card-meta">
+                <span>5 Days</span>
+                <span>From $6,000</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="itineraries/joburg-gateway.html" class="itinerary-card-scroll">
+            <div class="itinerary-card-image">
+              <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=400&h=300&fit=crop&q=80" alt="Johannesburg">
+            </div>
+            <div class="itinerary-card-content">
+              <span class="itinerary-card-label">City & Culture</span>
+              <h3>Johannesburg Gateway</h3>
+              <div class="itinerary-card-meta">
+                <span>3 Days</span>
+                <span>From $2,500</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="itineraries/senegal-discovery.html" class="itinerary-card-scroll">
+            <div class="itinerary-card-image">
+              <img src="https://images.unsplash.com/photo-1591122947157-26bad3a117d2?w=400&h=300&fit=crop&q=80" alt="Senegal">
+            </div>
+            <div class="itinerary-card-content">
+              <span class="itinerary-card-label">Culture & Coast</span>
+              <h3>Senegal Discovery</h3>
+              <div class="itinerary-card-meta">
+                <span>6 Days</span>
+                <span>From $4,800</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="itineraries/aruba-wellness.html" class="itinerary-card-scroll">
+            <div class="itinerary-card-image">
+              <img src="https://images.unsplash.com/photo-1551524164-c2e5d55e76b8?w=400&h=300&fit=crop&q=80" alt="Aruba">
+            </div>
+            <div class="itinerary-card-content">
+              <span class="itinerary-card-label">Beach & Wellness</span>
+              <h3>Aruba Wellness Retreat</h3>
+              <div class="itinerary-card-meta">
+                <span>5 Days</span>
+                <span>From $5,500</span>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="scroll-track">
+          <div class="scroll-thumb"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Strip -->
+  <section class="feature-strip">
+    <div class="feature-strip-item">
+      <h4>Personal Curation</h4>
+      <p>Every trip tailored to you</p>
+    </div>
+    <div class="feature-strip-item">
+      <h4>First-Hand Experience</h4>
+      <p>We've been everywhere we recommend</p>
+    </div>
+    <div class="feature-strip-item">
+      <h4>24/7 Support</h4>
+      <p>We're with you every step</p>
+    </div>
+    <div class="feature-strip-item">
+      <h4>Best Rate Guarantee</h4>
+      <p>Premium service, competitive pricing</p>
+    </div>
+  </section>
+
+  <!-- Quote Section -->
+  <section class="quote-section">
+    <div class="container">
+      <blockquote>
+        "Travel should transform, not just transport. Every trip should return you changed for the better."
+      </blockquote>
+      <cite>— NUBEAUX Travel Philosophy</cite>
+    </div>
+  </section>
+
+  <!-- Image Mosaic Gallery -->
+  <section class="section" style="padding: 0;">
+    <div class="mosaic-grid">
+      <div class="mosaic-large" style="overflow: hidden;">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_800,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Travel moment">
+      </div>
+      <div style="overflow: hidden;">
+        <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=400&h=400&fit=crop&q=80" alt="Travel moment">
+      </div>
+      <div style="overflow: hidden;">
+        <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=400&h=400&fit=crop&q=80" alt="Travel moment">
+      </div>
+      <div style="overflow: hidden;">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Travel moment">
+      </div>
+      <div style="overflow: hidden;">
+        <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=400&h=400&fit=crop&q=80" alt="Travel moment">
+      </div>
+    </div>
+  </section>
+
+  <!-- Image CTA Section -->
+  <section class="image-cta-section">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=1920&h=1080&fit=crop&q=80" alt="Beach luxury">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="image-cta-content">
       <h2>Ready to plan your journey?</h2>
-      <p class="text-large">Tell us where you want to go. We'll craft an experience you'll never forget.</p>
-      <a href="plan-your-trip.html" class="btn btn-dark">Start Planning</a>
+      <p>Tell us where you want to go. We'll craft an experience you'll never forget.</p>
+      <a href="plan-your-trip.html" class="btn btn-outline">Start Planning</a>
     </div>
   </section>
 
@@ -218,8 +346,8 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <span class="logo-text" style="font-size: 1.25rem;">NUBEAUX TRAVEL</span>
-          <p>Curated luxury travel experiences from creatives who've been there. Part of the NUBEAUX Collective family.</p>
+          <img src="assets/logo.svg" alt="NUBEAUX" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>Curated luxury travel experiences from creatives who've been there.</p>
         </div>
 
         <div class="footer-col">
@@ -258,5 +386,16 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    // Video fallback - show image if video fails to load
+    const video = document.querySelector('.hero-bg video');
+    const fallbackImg = document.querySelector('.hero-bg img');
+    if (video) {
+      video.addEventListener('error', () => {
+        video.style.display = 'none';
+        if (fallbackImg) fallbackImg.style.display = 'block';
+      });
+    }
+  </script>
 </body>
 </html>

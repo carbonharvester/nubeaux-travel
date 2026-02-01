@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="6-day Senegal itinerary. Dakar, Saint-Louis, and the vibrant culture of West Africa. Curated by NUBEAUX Travel.">
+
+  <title>Senegal Discovery | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .itin-hero { position: relative; min-height: 70vh; margin-top: var(--header-height); display: flex; align-items: flex-end; overflow: hidden; }
+    .itin-hero-bg { position: absolute; inset: 0; z-index: 1; }
+    .itin-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .itin-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%); z-index: 2; }
+    .itin-hero-content { position: relative; z-index: 3; padding: var(--space-xl) var(--space-md); color: var(--color-white); width: 100%; }
+    .itin-hero-content .container { max-width: 800px; margin: 0; }
+    .itin-label { font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .itin-hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: var(--space-md); color: var(--color-white); }
+    .itin-hero-meta { display: flex; gap: var(--space-lg); font-size: 1rem; opacity: 0.9; }
+    .itin-content { padding: var(--space-xl) 0; }
+    .itin-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-xl); }
+    .itin-main h2 { margin-bottom: var(--space-md); }
+    .itin-main p { color: var(--color-text-light); line-height: 1.8; margin-bottom: var(--space-md); }
+    .day-block { margin-bottom: var(--space-lg); padding-bottom: var(--space-lg); border-bottom: 1px solid var(--color-light-grey); }
+    .day-block:last-child { border-bottom: none; }
+    .day-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-xs); }
+    .day-title { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: var(--space-sm); }
+    .day-content { color: var(--color-text-light); line-height: 1.8; }
+    .itin-sidebar { background-color: var(--color-off-white); padding: var(--space-lg); height: fit-content; position: sticky; top: calc(var(--header-height) + var(--space-md)); }
+    .sidebar-section { margin-bottom: var(--space-lg); }
+    .sidebar-section:last-child { margin-bottom: 0; }
+    .sidebar-title { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .sidebar-content { font-size: 0.9375rem; color: var(--color-text); }
+    .creator-badge { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-md); background: var(--color-off-white); margin-bottom: var(--space-lg); }
+    .creator-badge img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .creator-badge-content span { display: block; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+    .creator-badge-content strong { font-family: var(--font-serif); font-weight: 400; }
+    .book-cta { background: var(--color-accent); color: var(--color-white); padding: var(--space-md); text-align: center; }
+    .book-cta h3 { font-size: 1.25rem; margin-bottom: var(--space-sm); color: var(--color-white); }
+    .book-cta p { font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md); color: var(--color-white); }
+    .book-cta .btn { background: var(--color-white); color: var(--color-accent); width: 100%; }
+    @media (max-width: 768px) { .itin-grid { grid-template-columns: 1fr; } .itin-sidebar { position: static; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="itin-hero">
+    <div class="itin-hero-bg">
+      <img src="https://images.unsplash.com/photo-1591122947157-26bad3a117d2?w=1920&h=1080&fit=crop&q=80" alt="Senegal">
+    </div>
+    <div class="itin-hero-overlay"></div>
+    <div class="itin-hero-content">
+      <div class="container">
+        <span class="itin-label">Culture + Coast</span>
+        <h1>Senegal Discovery</h1>
+        <div class="itin-hero-meta">
+          <span>6 Days / 5 Nights</span>
+          <span>From $4,800 pp</span>
+          <span>Dakar & Saint-Louis</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="itin-content">
+    <div class="container">
+      <div class="itin-grid">
+        <div class="itin-main">
+          <div class="creator-badge">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_96,h_96,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+            <div class="creator-badge-content">
+              <span>Curated by</span>
+              <strong>Nia The Light</strong>
+            </div>
+          </div>
+
+          <h2>The Journey</h2>
+          <p>Senegal pulses with a creative energy unlike anywhere else in Africa. From Dakar's thriving art scene to the faded colonial elegance of Saint-Louis, this is a destination for those seeking culture, music, and genuine connection with West African life.</p>
+
+          <p>This itinerary immerses you in Senegal's vibrant spirit: contemporary art galleries, live music venues, historic fishing communities, and landscapes that shift from urban energy to Atlantic coast serenity.</p>
+
+          <h2 style="margin-top: var(--space-lg);">Day by Day</h2>
+
+          <div class="day-block">
+            <span class="day-label">Day 1</span>
+            <h3 class="day-title">Arrival in Dakar</h3>
+            <p class="day-content">Arrive at Blaise Diagne International Airport. Transfer to your boutique hotel in the Almadies district. Settle in with views of the Atlantic. Evening introduction to Dakar's legendary nightlife with dinner at a rooftop restaurant as the city comes alive.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 2</span>
+            <h3 class="day-title">Dakar Arts & Culture</h3>
+            <p class="day-content">Full day exploring Dakar's creative side. Visit the African Renaissance Monument, the Village des Arts studios, and the vibrant Marché Sandaga. Lunch in the trendy Plateau district. Afternoon at the IFAN Museum of African Arts before sunset drinks overlooking Gorée Island.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 3</span>
+            <h3 class="day-title">Gorée Island</h3>
+            <p class="day-content">Ferry to historic Gorée Island, a UNESCO World Heritage site. Explore the colonial-era streets, visit the House of Slaves museum, and absorb the island's profound history. Lunch at a courtyard restaurant. Return to Dakar for an evening of live mbalax music.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 4</span>
+            <h3 class="day-title">Dakar to Saint-Louis</h3>
+            <p class="day-content">Morning departure north along the coast to Saint-Louis, once the capital of French West Africa. The five-hour drive passes through the Sahel landscape and fishing villages. Arrive at your hotel on the island, a beautifully restored colonial building. Evening stroll through the atmospheric old town.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 5</span>
+            <h3 class="day-title">Saint-Louis Exploration</h3>
+            <p class="day-content">Full day in this faded-glory gem. Visit the fishing quarter of Guet Ndar, the colonial architecture of the island, and the Langue de Barbarie peninsula. Afternoon at leisure on the beach. Evening jazz at one of the town's legendary music venues that inspired generations of Senegalese musicians.</p>
+          </div>
+
+          <div class="day-block">
+            <span class="day-label">Day 6</span>
+            <h3 class="day-title">Departure</h3>
+            <p class="day-content">Morning at leisure in Saint-Louis. Transfer to Dakar for your departure flight, or extend to explore the Pink Lake or Sine-Saloum Delta.</p>
+          </div>
+
+          <h2 style="margin-top: var(--space-lg);">What's Included</h2>
+          <ul style="color: var(--color-text-light); line-height: 1.8; margin-left: 1.5rem;">
+            <li>3 nights boutique hotel, Dakar</li>
+            <li>2 nights heritage hotel, Saint-Louis</li>
+            <li>All transfers including Dakar-Saint-Louis</li>
+            <li>Gorée Island ferry and guided tour</li>
+            <li>Dakar art and culture tour with local guide</li>
+            <li>Saint-Louis walking tour</li>
+            <li>Live music evening in Dakar</li>
+          </ul>
+        </div>
+
+        <div class="itin-sidebar">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Trip Details</h3>
+            <div class="sidebar-content">
+              <p><strong>Duration:</strong> 6 days / 5 nights</p>
+              <p style="margin-top: 0.5rem;"><strong>Starting from:</strong> $4,800 per person</p>
+              <p style="margin-top: 0.5rem;"><strong>Best for:</strong> Culture, art, music lovers</p>
+              <p style="margin-top: 0.5rem;"><strong>Activity level:</strong> Moderate</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Best Time to Go</h3>
+            <div class="sidebar-content">
+              <p><strong>Best weather:</strong> November - May (dry season)</p>
+              <p style="margin-top: 0.5rem;"><strong>Avoid:</strong> July - September (rainy)</p>
+              <p style="margin-top: 0.5rem;"><strong>Music festival:</strong> Saint-Louis Jazz (May)</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Good to Know</h3>
+            <div class="sidebar-content">
+              <p><strong>Language:</strong> French, Wolof</p>
+              <p style="margin-top: 0.5rem;"><strong>Currency:</strong> West African CFA Franc</p>
+              <p style="margin-top: 0.5rem;"><strong>Visa:</strong> Check requirements</p>
+            </div>
+          </div>
+
+          <div class="book-cta">
+            <h3>Get Your Quote</h3>
+            <p>Ready for Senegal? Get a personalized quote for your dates.</p>
+            <a href="../request-quote.html?trip=Senegal%20Discovery&price=From%20%244%2C800%20pp" class="btn">Request Quote</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Extend your journey</h2>
+      <p class="text-large">Add the Sine-Saloum Delta or Pink Lake for a complete Senegal experience.</p>
+      <a href="../plan-your-trip.html" class="btn btn-outline-dark">Plan Your Trip</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

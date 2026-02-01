@@ -192,8 +192,72 @@
       color: var(--color-warm-grey);
     }
 
+    .regions-section {
+      background-color: var(--color-bone);
+      padding: var(--space-xl) 0;
+    }
+
+    .regions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-md);
+    }
+
+    .region-card {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      display: block;
+      text-decoration: none;
+    }
+
+    .region-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .region-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .region-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+    }
+
+    .region-card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-md);
+      color: var(--color-white);
+    }
+
+    .region-card-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-terracotta);
+      margin-bottom: var(--space-xs);
+    }
+
+    .region-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .region-card p {
+      font-size: 0.8125rem;
+      opacity: 0.9;
+    }
+
     @media (max-width: 1024px) {
-      .stays-grid {
+      .stays-grid,
+      .regions-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
@@ -203,7 +267,8 @@
         grid-template-columns: 1fr;
       }
 
-      .stays-grid {
+      .stays-grid,
+      .regions-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -221,7 +286,6 @@
         <a href="../destinations/">Destinations</a>
         <a href="../itineraries/">Itineraries</a>
         <a href="../stays/">Stays</a>
-        <a href="../creators/">Creators</a>
         <a href="../about.html">About</a>
         <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
       </nav>
@@ -239,7 +303,6 @@
     <a href="../destinations/">Destinations</a>
     <a href="../itineraries/">Itineraries</a>
     <a href="../stays/">Stays</a>
-    <a href="../creators/">Creators</a>
     <a href="../about.html">About</a>
     <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
   </div>
@@ -318,6 +381,38 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Explore Kenya Regions -->
+  <section class="regions-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Explore Kenya</h2>
+        <p>Safari, coast, and city—each with its own character</p>
+      </div>
+
+      <div class="regions-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 800px;">
+        <a href="kenya/lamu.html" class="region-card">
+          <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&h=800&fit=crop&q=80" alt="Lamu">
+          <div class="region-card-overlay"></div>
+          <div class="region-card-content">
+            <span class="region-card-label">Coast</span>
+            <h3>Lamu</h3>
+            <p>Historic Swahili island town</p>
+          </div>
+        </a>
+
+        <a href="kenya/kilifi.html" class="region-card">
+          <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&h=800&fit=crop&q=80" alt="Kilifi">
+          <div class="region-card-overlay"></div>
+          <div class="region-card-content">
+            <span class="region-card-label">Coast</span>
+            <h3>Kilifi</h3>
+            <p>Kenya's creative coastal haven</p>
+          </div>
+        </a>
       </div>
     </div>
   </section>

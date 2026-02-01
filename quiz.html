@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Take our quiz to find your perfect destination. Answer a few questions and we'll match you with curated travel experiences.">
+
+  <title>Find Your Destination | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .quiz-page {
+      min-height: 100vh;
+      margin-top: var(--header-height);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quiz-hero {
+      background-color: var(--color-warm-cream);
+      padding: var(--space-2xl) var(--space-md);
+      text-align: center;
+    }
+
+    .quiz-hero h1 {
+      margin-bottom: var(--space-sm);
+    }
+
+    .quiz-hero p {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .quiz-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-md);
+      width: 100%;
+    }
+
+    /* Progress Bar */
+    .quiz-progress {
+      margin-bottom: var(--space-lg);
+    }
+
+    .quiz-progress-bar {
+      height: 3px;
+      background-color: var(--color-light-grey);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .quiz-progress-fill {
+      height: 100%;
+      background-color: var(--color-accent);
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .quiz-progress-text {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+      margin-top: var(--space-xs);
+      text-align: right;
+    }
+
+    /* Question */
+    .quiz-question {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .quiz-question.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .quiz-question h2 {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      margin-bottom: var(--space-lg);
+      text-align: center;
+    }
+
+    /* Options */
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+    }
+
+    .quiz-option {
+      position: relative;
+      cursor: pointer;
+      border: 2px solid var(--color-light-grey);
+      padding: var(--space-lg);
+      text-align: center;
+      transition: all var(--transition-fast);
+      background-color: var(--color-white);
+    }
+
+    .quiz-option:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .quiz-option.selected {
+      border-color: var(--color-accent);
+      background-color: var(--color-warm-cream);
+    }
+
+    .quiz-option-icon {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
+
+    .quiz-option h3 {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .quiz-option p {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      margin: 0;
+    }
+
+    /* Image Options */
+    .quiz-options.image-options {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .quiz-option.image-option {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .quiz-option.image-option img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .quiz-option.image-option:hover img {
+      transform: scale(1.05);
+    }
+
+    .quiz-option.image-option .option-label {
+      padding: var(--space-md);
+      background-color: var(--color-white);
+    }
+
+    .quiz-option.image-option.selected .option-label {
+      background-color: var(--color-warm-cream);
+    }
+
+    /* Navigation */
+    .quiz-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: var(--space-xl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .quiz-nav .btn {
+      min-width: 140px;
+    }
+
+    .btn-back {
+      background: none;
+      border: none;
+      color: var(--color-text-light);
+      font-size: 0.8125rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color var(--transition-fast);
+    }
+
+    .btn-back:hover {
+      color: var(--color-text);
+    }
+
+    .btn-back::before {
+      content: '←';
+    }
+
+    /* Results */
+    .quiz-results {
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .quiz-results.active {
+      display: block;
+    }
+
+    .quiz-results h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: var(--space-sm);
+    }
+
+    .quiz-results > p {
+      margin-bottom: var(--space-xl);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .result-destinations {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+    }
+
+    .result-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+    }
+
+    .result-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .result-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .result-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-lg);
+      color: var(--color-white);
+    }
+
+    .result-card-match {
+      font-size: 0.625rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      background-color: var(--color-white);
+      padding: 0.25rem 0.5rem;
+      display: inline-block;
+      margin-bottom: var(--space-xs);
+      width: fit-content;
+    }
+
+    .result-card h3 {
+      font-size: 1.5rem;
+      color: var(--color-white);
+    }
+
+    .result-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .result-cta p {
+      font-size: 0.9375rem;
+      color: var(--color-text-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .quiz-options {
+        grid-template-columns: 1fr;
+      }
+
+      .quiz-options.image-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .result-destinations {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="NUBEAUX"></a>
+      <nav class="nav">
+        <a href="destinations/">Destinations</a>
+        <a href="itineraries/">Itineraries</a>
+        <a href="stays/">Stays</a>
+        <a href="about.html">About</a>
+        <a href="plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="destinations/">Destinations</a>
+    <a href="itineraries/">Itineraries</a>
+    <a href="stays/">Stays</a>
+    <a href="about.html">About</a>
+    <a href="plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <div class="quiz-page">
+    <section class="quiz-hero">
+      <div class="container">
+        <h1>Find Your Perfect Destination</h1>
+        <p>Answer a few questions and we'll match you with destinations that fit your travel style.</p>
+      </div>
+    </section>
+
+    <div class="quiz-container">
+      <div class="quiz-progress">
+        <div class="quiz-progress-bar">
+          <div class="quiz-progress-fill" id="progressFill" style="width: 20%"></div>
+        </div>
+        <div class="quiz-progress-text"><span id="currentQuestion">1</span> of 5</div>
+      </div>
+
+      <!-- Question 1: Travel Style -->
+      <div class="quiz-question active" data-question="1">
+        <h2>What kind of experience are you looking for?</h2>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="adventure" data-tags="safari,wildlife,nature">
+            <span class="quiz-option-icon">🦁</span>
+            <h3>Wildlife & Safari</h3>
+            <p>Get close to nature and incredible animals</p>
+          </div>
+          <div class="quiz-option" data-value="beach" data-tags="beach,island,relaxation">
+            <span class="quiz-option-icon">🏝️</span>
+            <h3>Beach & Island</h3>
+            <p>Pristine beaches and ocean vibes</p>
+          </div>
+          <div class="quiz-option" data-value="culture" data-tags="culture,history,heritage">
+            <span class="quiz-option-icon">🏛️</span>
+            <h3>Culture & Heritage</h3>
+            <p>History, art, and local traditions</p>
+          </div>
+          <div class="quiz-option" data-value="city" data-tags="city,urban,gastronomy">
+            <span class="quiz-option-icon">🌆</span>
+            <h3>City & Gastronomy</h3>
+            <p>Urban energy and culinary experiences</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 2: Pace -->
+      <div class="quiz-question" data-question="2">
+        <h2>What's your ideal travel pace?</h2>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="slow" data-tags="relaxation,wellness">
+            <span class="quiz-option-icon">🧘</span>
+            <h3>Slow & Relaxed</h3>
+            <p>Unwind with plenty of downtime</p>
+          </div>
+          <div class="quiz-option" data-value="balanced" data-tags="balanced">
+            <span class="quiz-option-icon">⚖️</span>
+            <h3>Balanced Mix</h3>
+            <p>Activity and relaxation in equal measure</p>
+          </div>
+          <div class="quiz-option" data-value="active" data-tags="adventure,active">
+            <span class="quiz-option-icon">🥾</span>
+            <h3>Active & Adventurous</h3>
+            <p>Packed itinerary, maximum experiences</p>
+          </div>
+          <div class="quiz-option" data-value="flexible" data-tags="flexible">
+            <span class="quiz-option-icon">🌊</span>
+            <h3>Go With The Flow</h3>
+            <p>Spontaneous and flexible schedule</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 3: Landscape -->
+      <div class="quiz-question" data-question="3">
+        <h2>Which landscape speaks to you?</h2>
+        <div class="quiz-options image-options">
+          <div class="quiz-option image-option" data-value="savanna" data-tags="namibia,kenya,south-africa">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="African savanna">
+            <div class="option-label">
+              <h3>Open Savanna</h3>
+            </div>
+          </div>
+          <div class="quiz-option image-option" data-value="ocean" data-tags="zanzibar,mozambique,kenya-coast">
+            <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=400&h=400&fit=crop&q=80" alt="Tropical ocean">
+            <div class="option-label">
+              <h3>Tropical Coast</h3>
+            </div>
+          </div>
+          <div class="quiz-option image-option" data-value="mountains" data-tags="rwanda,south-africa">
+            <img src="https://images.unsplash.com/photo-1504526966975-1c25f6ca3aec?w=400&h=400&fit=crop&q=80" alt="Mountains and hills">
+            <div class="option-label">
+              <h3>Mountains & Hills</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 4: Travel Party -->
+      <div class="quiz-question" data-question="4">
+        <h2>Who are you traveling with?</h2>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="solo" data-tags="solo">
+            <span class="quiz-option-icon">🧳</span>
+            <h3>Solo</h3>
+            <p>Just me, myself, and I</p>
+          </div>
+          <div class="quiz-option" data-value="couple" data-tags="romantic,couples">
+            <span class="quiz-option-icon">💑</span>
+            <h3>Partner</h3>
+            <p>Romantic getaway for two</p>
+          </div>
+          <div class="quiz-option" data-value="friends" data-tags="group,friends">
+            <span class="quiz-option-icon">👯</span>
+            <h3>Friends</h3>
+            <p>Adventure with my crew</p>
+          </div>
+          <div class="quiz-option" data-value="family" data-tags="family">
+            <span class="quiz-option-icon">👨‍👩‍👧‍👦</span>
+            <h3>Family</h3>
+            <p>Multi-generational travel</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 5: Priority -->
+      <div class="quiz-question" data-question="5">
+        <h2>What matters most to you?</h2>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="luxury" data-tags="luxury,premium">
+            <span class="quiz-option-icon">✨</span>
+            <h3>Luxury & Comfort</h3>
+            <p>Five-star service and amenities</p>
+          </div>
+          <div class="quiz-option" data-value="authentic" data-tags="authentic,local">
+            <span class="quiz-option-icon">🏺</span>
+            <h3>Authenticity</h3>
+            <p>Real local experiences</p>
+          </div>
+          <div class="quiz-option" data-value="unique" data-tags="unique,off-beaten-path">
+            <span class="quiz-option-icon">🗺️</span>
+            <h3>Unique & Rare</h3>
+            <p>Off-the-beaten-path discoveries</p>
+          </div>
+          <div class="quiz-option" data-value="photography" data-tags="photography,scenic">
+            <span class="quiz-option-icon">📸</span>
+            <h3>Photo Opportunities</h3>
+            <p>Stunning visuals at every turn</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="quiz-results" id="quizResults">
+        <h2>Your Perfect Destinations</h2>
+        <p>Based on your answers, we think you'd love these destinations:</p>
+
+        <div class="result-destinations" id="resultDestinations">
+          <!-- Results populated by JS -->
+        </div>
+
+        <div class="result-cta">
+          <p>Ready to start planning?</p>
+          <a href="plan-your-trip.html" class="btn btn-primary">Plan Your Trip</a>
+          <button class="btn-back" onclick="restartQuiz()">Take Quiz Again</button>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="quiz-nav" id="quizNav">
+        <button class="btn-back" id="btnBack" style="visibility: hidden;">Back</button>
+        <button class="btn btn-primary" id="btnNext" disabled>Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Quiz Logic
+    const destinations = {
+      namibia: {
+        name: 'Namibia',
+        image: 'https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_650,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg',
+        url: 'destinations/namibia.html',
+        tags: ['safari', 'wildlife', 'nature', 'adventure', 'photography', 'scenic', 'luxury', 'couples', 'unique']
+      },
+      kenya: {
+        name: 'Kenya',
+        image: 'https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=500&h=650&fit=crop&q=80',
+        url: 'destinations/kenya.html',
+        tags: ['safari', 'wildlife', 'culture', 'beach', 'active', 'family', 'authentic', 'photography']
+      },
+      zanzibar: {
+        name: 'Zanzibar',
+        image: 'https://images.unsplash.com/photo-1586861203927-800a5acdcc4d?w=500&h=650&fit=crop&q=80',
+        url: 'destinations/zanzibar.html',
+        tags: ['beach', 'island', 'relaxation', 'culture', 'romantic', 'couples', 'history', 'wellness']
+      },
+      mozambique: {
+        name: 'Mozambique',
+        image: 'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=500&h=650&fit=crop&q=80',
+        url: 'destinations/mozambique.html',
+        tags: ['beach', 'island', 'relaxation', 'unique', 'off-beaten-path', 'luxury', 'couples', 'diving']
+      },
+      'south-africa': {
+        name: 'South Africa',
+        image: 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=500&h=650&fit=crop&q=80',
+        url: 'destinations/south-africa.html',
+        tags: ['city', 'urban', 'gastronomy', 'safari', 'culture', 'balanced', 'friends', 'family', 'photography']
+      },
+      rwanda: {
+        name: 'Rwanda',
+        image: 'https://images.unsplash.com/photo-1504526966975-1c25f6ca3aec?w=500&h=650&fit=crop&q=80',
+        url: 'destinations/rwanda.html',
+        tags: ['wildlife', 'unique', 'adventure', 'authentic', 'photography', 'nature', 'active']
+      },
+      senegal: {
+        name: 'Senegal',
+        image: 'https://images.unsplash.com/photo-1591122947157-26bad3a117d2?w=500&h=650&fit=crop&q=80',
+        url: 'destinations/senegal.html',
+        tags: ['culture', 'history', 'heritage', 'authentic', 'local', 'city', 'friends', 'solo']
+      },
+      ghana: {
+        name: 'Ghana',
+        image: 'https://images.unsplash.com/photo-1597893898175-ad0e0f8d3b73?w=500&h=650&fit=crop&q=80',
+        url: 'destinations/ghana.html',
+        tags: ['culture', 'history', 'heritage', 'authentic', 'local', 'friends', 'solo', 'group']
+      }
+    };
+
+    let currentQuestion = 1;
+    let totalQuestions = 5;
+    let selectedTags = [];
+
+    const questions = document.querySelectorAll('.quiz-question');
+    const progressFill = document.getElementById('progressFill');
+    const currentQuestionText = document.getElementById('currentQuestion');
+    const btnBack = document.getElementById('btnBack');
+    const btnNext = document.getElementById('btnNext');
+    const quizNav = document.getElementById('quizNav');
+    const quizResults = document.getElementById('quizResults');
+
+    // Option selection
+    document.querySelectorAll('.quiz-option').forEach(option => {
+      option.addEventListener('click', function() {
+        const parent = this.closest('.quiz-options');
+        parent.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+        this.classList.add('selected');
+        btnNext.disabled = false;
+
+        // Store selected tags
+        const tags = this.dataset.tags.split(',');
+        const questionNum = parseInt(this.closest('.quiz-question').dataset.question);
+
+        // Update tags for this question
+        selectedTags[questionNum - 1] = tags;
+      });
+    });
+
+    // Next button
+    btnNext.addEventListener('click', function() {
+      if (currentQuestion < totalQuestions) {
+        questions[currentQuestion - 1].classList.remove('active');
+        currentQuestion++;
+        questions[currentQuestion - 1].classList.add('active');
+
+        updateProgress();
+        btnBack.style.visibility = 'visible';
+        btnNext.disabled = true;
+
+        // Check if already selected
+        const currentQ = questions[currentQuestion - 1];
+        if (currentQ.querySelector('.quiz-option.selected')) {
+          btnNext.disabled = false;
+        }
+
+        if (currentQuestion === totalQuestions) {
+          btnNext.textContent = 'See Results';
+        }
+      } else {
+        showResults();
+      }
+    });
+
+    // Back button
+    btnBack.addEventListener('click', function() {
+      if (currentQuestion > 1) {
+        questions[currentQuestion - 1].classList.remove('active');
+        currentQuestion--;
+        questions[currentQuestion - 1].classList.add('active');
+
+        updateProgress();
+        btnNext.textContent = 'Next';
+        btnNext.disabled = false;
+
+        if (currentQuestion === 1) {
+          btnBack.style.visibility = 'hidden';
+        }
+      }
+    });
+
+    function updateProgress() {
+      const progress = (currentQuestion / totalQuestions) * 100;
+      progressFill.style.width = progress + '%';
+      currentQuestionText.textContent = currentQuestion;
+    }
+
+    function showResults() {
+      // Hide questions and nav
+      questions.forEach(q => q.classList.remove('active'));
+      quizNav.style.display = 'none';
+      document.querySelector('.quiz-progress').style.display = 'none';
+
+      // Calculate scores
+      const allTags = selectedTags.flat();
+      const scores = {};
+
+      Object.keys(destinations).forEach(key => {
+        const dest = destinations[key];
+        let score = 0;
+        allTags.forEach(tag => {
+          if (dest.tags.includes(tag)) score++;
+        });
+        scores[key] = score;
+      });
+
+      // Sort and get top 3
+      const sorted = Object.entries(scores)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+
+      // Display results
+      const resultsContainer = document.getElementById('resultDestinations');
+      resultsContainer.innerHTML = '';
+
+      sorted.forEach((item, index) => {
+        const [key, score] = item;
+        const dest = destinations[key];
+        const matchPercent = Math.min(Math.round((score / allTags.length) * 100) + 60, 98);
+
+        resultsContainer.innerHTML += `
+          <a href="${dest.url}" class="result-card">
+            <img src="${dest.image}" alt="${dest.name}">
+            <div class="result-card-overlay">
+              <span class="result-card-match">${matchPercent}% Match</span>
+              <h3>${dest.name}</h3>
+            </div>
+          </a>
+        `;
+      });
+
+      quizResults.classList.add('active');
+    }
+
+    function restartQuiz() {
+      currentQuestion = 1;
+      selectedTags = [];
+
+      // Reset UI
+      quizResults.classList.remove('active');
+      quizNav.style.display = 'flex';
+      document.querySelector('.quiz-progress').style.display = 'block';
+
+      questions.forEach((q, i) => {
+        q.classList.remove('active');
+        q.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+      });
+      questions[0].classList.add('active');
+
+      updateProgress();
+      btnBack.style.visibility = 'hidden';
+      btnNext.disabled = true;
+      btnNext.textContent = 'Next';
+    }
+  </script>
+</body>
+</html>

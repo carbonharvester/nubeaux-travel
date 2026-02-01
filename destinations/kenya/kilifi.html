@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kilifi travel guide. Kenya's creative coast, boutique retreats, and laid-back coastal lifestyle. Curated by NUBEAUX Travel.">
+
+  <title>Kilifi | Kenya | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css">
+
+  <style>
+    .dest-hero { position: relative; min-height: 70vh; margin-top: var(--header-height); display: flex; align-items: flex-end; overflow: hidden; }
+    .dest-hero-bg { position: absolute; inset: 0; z-index: 1; }
+    .dest-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .dest-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%); z-index: 2; }
+    .dest-hero-content { position: relative; z-index: 3; padding: var(--space-xl) var(--space-md); color: var(--color-white); width: 100%; }
+    .dest-hero-content .container { max-width: 800px; margin: 0; }
+    .dest-label { font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-sm); }
+    .dest-hero h1 { font-size: clamp(3rem, 8vw, 5rem); margin-bottom: var(--space-md); }
+    .dest-hero p { font-size: 1.25rem; opacity: 0.9; max-width: 600px; }
+    .breadcrumb { margin-bottom: var(--space-sm); }
+    .breadcrumb a { color: var(--color-white); opacity: 0.7; text-decoration: none; font-size: 0.875rem; }
+    .breadcrumb a:hover { opacity: 1; }
+    .breadcrumb span { opacity: 0.5; margin: 0 0.5rem; }
+    .dest-content { padding: var(--space-xl) 0; }
+    .dest-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-xl); }
+    .dest-main h2 { margin-bottom: var(--space-md); }
+    .dest-main p { color: var(--color-warm-grey); line-height: 1.8; margin-bottom: var(--space-md); }
+    .dest-sidebar { background-color: var(--color-ecru); padding: var(--space-lg); height: fit-content; }
+    .sidebar-section { margin-bottom: var(--space-lg); }
+    .sidebar-section:last-child { margin-bottom: 0; }
+    .sidebar-title { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-sm); }
+    .sidebar-content { font-size: 0.9375rem; color: var(--color-charcoal); }
+    .highlight-list { list-style: none; padding: 0; }
+    .highlight-list li { padding: var(--space-sm) 0; border-bottom: 1px solid rgba(0,0,0,0.1); font-size: 0.9375rem; }
+    .highlight-list li:last-child { border-bottom: none; }
+    .stays-section { background-color: var(--color-ecru); padding: var(--space-xl) 0; }
+    .stays-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+    .stay-card { background-color: var(--color-white); overflow: hidden; }
+    .stay-card-image { aspect-ratio: 4/3; overflow: hidden; }
+    .stay-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-slow); }
+    .stay-card:hover .stay-card-image img { transform: scale(1.05); }
+    .stay-card-content { padding: var(--space-md); }
+    .stay-card-label { font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-xs); }
+    .stay-card h3 { font-size: 1.25rem; margin-bottom: var(--space-xs); }
+    .stay-card p { font-size: 0.875rem; color: var(--color-warm-grey); }
+    @media (max-width: 768px) { .dest-grid { grid-template-columns: 1fr; } .stays-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../../index.html" class="logo"><img src="../../assets/logo.svg" alt="NUBEAUX"></a>
+      <nav class="nav">
+        <a href="../../destinations/">Destinations</a>
+        <a href="../../itineraries/">Itineraries</a>
+        <a href="../../stays/">Stays</a>
+        <a href="../../stories/">Stories</a>
+        <a href="../../about.html">About</a>
+        <a href="../../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../../destinations/">Destinations</a>
+    <a href="../../itineraries/">Itineraries</a>
+    <a href="../../stays/">Stays</a>
+    <a href="../../stories/">Stories</a>
+    <a href="../../about.html">About</a>
+    <a href="../../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="dest-hero">
+    <div class="dest-hero-bg">
+      <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&h=1080&fit=crop&q=80" alt="Kilifi Coast">
+    </div>
+    <div class="dest-hero-overlay"></div>
+    <div class="dest-hero-content">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="../kenya.html">Kenya</a>
+          <span>/</span>
+        </div>
+        <span class="dest-label">Kenya Coast</span>
+        <h1>Kilifi</h1>
+        <p>Kenya's creative coast. A laid-back haven for artists, wellness seekers, and travellers looking beyond the ordinary.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dest-content">
+    <div class="container">
+      <div class="dest-grid">
+        <div class="dest-main">
+          <h2>Why Kilifi</h2>
+          <p>Kilifi has quietly become one of East Africa's most interesting destinations. Straddling a beautiful creek on Kenya's north coast, this small town has attracted a community of artists, entrepreneurs, and free spirits who have transformed it into a hub of creativity and conscious living.</p>
+
+          <p>Unlike Mombasa's resort sprawl or Lamu's historic preservation, Kilifi offers something different: a working coastal town with world-class restaurants, yoga studios, boutique hotels, and a genuine sense of community. The beaches are beautiful but uncrowded. The vibe is relaxed but engaged. It's the kind of place where you plan to stay three nights and end up staying a week.</p>
+
+          <p>For travellers seeking the Kenyan coast without the tourist infrastructure, Kilifi is the answer. It pairs beautifully with Lamu for a coastal journey, or serves as the perfect wind-down after safari.</p>
+
+          <h2 style="margin-top: var(--space-lg);">Our Favorite Experiences</h2>
+          <ul class="highlight-list">
+            <li><strong>Kilifi Creek</strong> — Kayaking and boat trips on the tidal waters</li>
+            <li><strong>Beach time</strong> — Pristine, uncrowded coastal stretches</li>
+            <li><strong>Kilifi restaurants</strong> — Surprisingly excellent dining scene</li>
+            <li><strong>Yoga & wellness</strong> — Multiple studios and retreat centres</li>
+            <li><strong>Watamu Marine Park</strong> — Snorkeling and diving nearby</li>
+            <li><strong>Gede Ruins</strong> — Ancient Swahili settlement in the forest</li>
+          </ul>
+
+          <h2 style="margin-top: var(--space-lg);">When to Visit</h2>
+          <p>December to March offers the best weather with warm, dry days. June to October is also pleasant with cooler temperatures. Avoid April-May when the long rains arrive. Kilifi is less seasonal than Lamu, making it a good year-round option.</p>
+        </div>
+
+        <div class="dest-sidebar">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">At a Glance</h3>
+            <div class="sidebar-content">
+              <p><strong>Best for:</strong> Wellness, beach, food, creative scene</p>
+              <p style="margin-top: 0.5rem;"><strong>Currency:</strong> Kenyan Shilling (KES)</p>
+              <p style="margin-top: 0.5rem;"><strong>Language:</strong> Swahili, English</p>
+              <p style="margin-top: 0.5rem;"><strong>Visa:</strong> eVisa required</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Best Time to Visit</h3>
+            <div class="sidebar-content">
+              <p><strong>Peak:</strong> December - March</p>
+              <p style="margin-top: 0.5rem;"><strong>Also good:</strong> June - October</p>
+              <p style="margin-top: 0.5rem;"><strong>Avoid:</strong> April - May</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Getting There</h3>
+            <div class="sidebar-content">
+              <p>Fly to Mombasa (MBA), then 1.5 hour drive north. Or fly to Malindi (MYD), then 30 minute drive south.</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Combine With</h3>
+            <div class="sidebar-content">
+              <p><a href="lamu.html">Lamu</a> — Historic Swahili island</p>
+              <p style="margin-top: 0.5rem;"><a href="../../destinations/zanzibar.html">Zanzibar</a> — Cross to Tanzania</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section" style="background: var(--color-terracotta); color: var(--color-white); padding: var(--space-md); margin: 0 calc(var(--space-lg) * -1) calc(var(--space-lg) * -1); margin-top: var(--space-md);">
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: var(--space-sm);">Plan Your Kilifi Trip</h3>
+            <p style="font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md);">Get a personalized quote for your coastal escape.</p>
+            <a href="../../request-quote.html?trip=Kilifi%20Coastal%20Retreat&price=From%20%243%2C500%20pp" class="btn" style="background: var(--color-white); color: var(--color-terracotta); width: 100%; text-align: center;">Request Quote</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stays-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Where to Stay</h2>
+        <a href="../../stays/">View all properties</a>
+      </div>
+
+      <div class="stays-grid">
+        <a href="../../stays/tarangau-retreat.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&h=450&fit=crop&q=80" alt="Tarangau Retreat">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">Coastal Retreat</span>
+            <h3>Tarangau Retreat</h3>
+            <p>Serene escape in tropical gardens</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Explore all of Kenya</h2>
+      <p class="text-large">Combine Kilifi with Lamu for the ultimate coastal journey.</p>
+      <a href="../kenya.html" class="btn btn-dark">Back to Kenya</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>

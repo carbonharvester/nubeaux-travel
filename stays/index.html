@@ -13,36 +13,294 @@
   <link rel="stylesheet" href="../css/style.css">
 
   <style>
-    .page-hero { background-color: var(--color-charcoal); color: var(--color-white); padding: var(--space-xl) 0; margin-top: var(--header-height); text-align: center; }
-    .page-hero h1 { margin-bottom: var(--space-sm); }
-    .page-hero p { opacity: 0.8; max-width: 600px; margin: 0 auto; }
-    .stays-section { padding: var(--space-xl) 0; }
-    .stays-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
-    .stay-card { background: var(--color-white); overflow: hidden; }
-    .stay-card-image { aspect-ratio: 4/3; overflow: hidden; }
-    .stay-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-slow); }
-    .stay-card:hover .stay-card-image img { transform: scale(1.05); }
-    .stay-card-content { padding: var(--space-md); }
-    .stay-card-label { font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-xs); }
-    .stay-card h3 { font-size: 1.25rem; margin-bottom: var(--space-xs); }
-    .stay-card p { font-size: 0.875rem; color: var(--color-warm-grey); }
-    .stay-card-creator { display: flex; align-items: center; gap: 0.5rem; margin-top: var(--space-sm); padding-top: var(--space-sm); border-top: 1px solid var(--color-ecru); }
-    .stay-card-creator img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
-    .stay-card-creator span { font-size: 0.75rem; color: var(--color-warm-grey); }
-    .region-title { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-md); padding-bottom: var(--space-sm); border-bottom: 1px solid var(--color-ecru); }
-    @media (max-width: 1024px) { .stays-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 768px) { .stays-grid { grid-template-columns: 1fr; } }
+    /* Hero */
+    .stays-hero {
+      position: relative;
+      min-height: 70vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .stays-hero .hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .stays-hero .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stays-hero .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%);
+    }
+
+    .stays-hero .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--color-white);
+      padding: var(--space-xl);
+      max-width: 700px;
+    }
+
+    .stays-hero h1 {
+      color: var(--color-white);
+      margin-bottom: var(--space-md);
+    }
+
+    .stays-hero p {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.7;
+    }
+
+    /* Intro */
+    .stays-intro {
+      padding: var(--space-xl) 0;
+      text-align: center;
+      background-color: var(--color-warm-cream);
+    }
+
+    .stays-intro p {
+      font-family: var(--font-serif);
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      color: var(--color-text);
+    }
+
+    /* Featured Property */
+    .featured-stay {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      min-height: 80vh;
+    }
+
+    .featured-stay.reverse {
+      grid-template-columns: 1fr 1.3fr;
+    }
+
+    .featured-stay-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-stay-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .featured-stay:hover .featured-stay-image img {
+      transform: scale(1.03);
+    }
+
+    .featured-stay-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-2xl);
+      background-color: var(--color-white);
+    }
+
+    .featured-stay.reverse .featured-stay-content {
+      background-color: var(--color-sage-light);
+    }
+
+    .featured-stay-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .featured-stay-content h2 {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      margin-bottom: var(--space-sm);
+    }
+
+    .featured-stay-location {
+      font-size: 0.9375rem;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-md);
+    }
+
+    .featured-stay-content p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+      max-width: 450px;
+    }
+
+    .featured-stay-meta {
+      display: flex;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .featured-stay-meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .featured-stay-meta-item span:first-child {
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-light);
+      margin-bottom: 0.25rem;
+    }
+
+    .featured-stay-meta-item span:last-child {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      color: var(--color-text);
+    }
+
+    /* Region Sections */
+    .region-section {
+      padding: var(--space-xl) 0;
+    }
+
+    .region-section.alt-bg {
+      background-color: var(--color-sage-light);
+    }
+
+    .region-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .region-header h2 {
+      font-size: 0.875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      font-family: var(--font-sans);
+      font-weight: 500;
+    }
+
+    .region-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--color-light-grey);
+    }
+
+    /* Stay Cards Grid */
+    .stays-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .stay-card {
+      position: relative;
+      background-color: var(--color-white);
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .stay-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .stay-card-image {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .stay-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .stay-card:hover .stay-card-image img {
+      transform: scale(1.08);
+    }
+
+    .stay-card-content {
+      padding: var(--space-md);
+    }
+
+    .stay-card-label {
+      font-size: 0.625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+    }
+
+    .stay-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .stay-card-location {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .stay-card p {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .featured-stay,
+      .featured-stay.reverse {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-stay-image {
+        min-height: 50vh;
+      }
+
+      .stays-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .featured-stay-content {
+        padding: var(--space-lg);
+      }
+
+      .stays-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <header class="header">
     <div class="header-inner">
-      <a href="../index.html" class="logo"><span class="logo-text">NUBEAUX TRAVEL</span></a>
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
       <nav class="nav">
         <a href="../destinations/">Destinations</a>
         <a href="../itineraries/">Itineraries</a>
         <a href="../stays/">Stays</a>
-        <a href="../creators/">Creators</a>
         <a href="../about.html">About</a>
         <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
       </nav>
@@ -54,54 +312,93 @@
     <a href="../destinations/">Destinations</a>
     <a href="../itineraries/">Itineraries</a>
     <a href="../stays/">Stays</a>
-    <a href="../creators/">Creators</a>
     <a href="../about.html">About</a>
     <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
   </div>
 
-  <section class="page-hero">
-    <div class="container">
+  <!-- Hero -->
+  <section class="stays-hero">
+    <div class="hero-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Luxury safari lodge">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
       <h1>Where to Stay</h1>
-      <p>Every property we recommend, we've experienced firsthand. These are the lodges, hotels, and camps that meet our standards.</p>
+      <p>Every property we recommend, we've experienced firsthand. These are the lodges, hotels, and camps that meet our standards for design, service, and soul.</p>
     </div>
   </section>
 
-  <section class="stays-section">
+  <!-- Intro -->
+  <section class="stays-intro">
     <div class="container">
-      <h2 class="region-title">Namibia</h2>
-      <div class="stays-grid" style="margin-bottom: var(--space-xl);">
-        <a href="onguma-camp-kala.html" class="stay-card">
-          <div class="stay-card-image">
-            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Onguma Camp Kala">
-          </div>
-          <div class="stay-card-content">
-            <span class="stay-card-label">Safari Lodge</span>
-            <h3>Onguma Camp Kala</h3>
-            <p>Design-forward luxury on Etosha's eastern border</p>
-            <div class="stay-card-creator">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
-              <span>Stayed by Nia The Light</span>
-            </div>
-          </div>
-        </a>
-        <a href="onguma-the-fort.html" class="stay-card">
-          <div class="stay-card-image">
-            <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600&h=450&fit=crop&q=80" alt="Onguma The Fort">
-          </div>
-          <div class="stay-card-content">
-            <span class="stay-card-label">Safari Lodge</span>
-            <h3>Onguma The Fort</h3>
-            <p>Moorish-inspired architecture with waterhole views</p>
-            <div class="stay-card-creator">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
-              <span>Stayed by Nia The Light</span>
-            </div>
-          </div>
-        </a>
+      <p>We don't list properties we haven't slept in ourselves. Each recommendation comes from genuine experience—the good, the great, and the unforgettable.</p>
+    </div>
+  </section>
+
+  <!-- Featured Stay: Onguma Camp Kala -->
+  <a href="onguma-camp-kala.html" class="featured-stay">
+    <div class="featured-stay-image">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_900,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Onguma Camp Kala">
+    </div>
+    <div class="featured-stay-content">
+      <span class="featured-stay-label">Safari Lodge</span>
+      <h2>Onguma Camp Kala</h2>
+      <span class="featured-stay-location">Etosha, Namibia</span>
+      <p>Design-forward luxury on Etosha's eastern border. Eight elevated chalets with private plunge pools overlook the Fischer's Pan—a natural salt flat that draws wildlife from across the reserve.</p>
+      <div class="featured-stay-meta">
+        <div class="featured-stay-meta-item">
+          <span>Best For</span>
+          <span>Couples, Photography</span>
+        </div>
+        <div class="featured-stay-meta-item">
+          <span>Rooms</span>
+          <span>8 Chalets</span>
+        </div>
+        <div class="featured-stay-meta-item">
+          <span>From</span>
+          <span>$850/night</span>
+        </div>
+      </div>
+      <span class="btn btn-outline-dark">View Property</span>
+    </div>
+  </a>
+
+  <!-- Featured Stay: The Fort -->
+  <a href="onguma-the-fort.html" class="featured-stay reverse">
+    <div class="featured-stay-content">
+      <span class="featured-stay-label">Safari Lodge</span>
+      <h2>Onguma The Fort</h2>
+      <span class="featured-stay-location">Etosha, Namibia</span>
+      <p>Moorish-inspired architecture rises from the African bush. This dramatic property overlooks a floodlit waterhole where elephants, lions, and leopards come to drink after dark.</p>
+      <div class="featured-stay-meta">
+        <div class="featured-stay-meta-item">
+          <span>Best For</span>
+          <span>Architecture, Wildlife</span>
+        </div>
+        <div class="featured-stay-meta-item">
+          <span>Rooms</span>
+          <span>13 Suites</span>
+        </div>
+        <div class="featured-stay-meta-item">
+          <span>From</span>
+          <span>$650/night</span>
+        </div>
+      </div>
+      <span class="btn btn-outline-dark">View Property</span>
+    </div>
+    <div class="featured-stay-image">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_900,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Onguma The Fort">
+    </div>
+  </a>
+
+  <!-- South Africa -->
+  <section class="region-section">
+    <div class="container">
+      <div class="region-header">
+        <h2>South Africa</h2>
       </div>
 
-      <h2 class="region-title">South Africa</h2>
-      <div class="stays-grid" style="margin-bottom: var(--space-xl);">
+      <div class="stays-grid">
         <a href="four-seasons-westcliff.html" class="stay-card">
           <div class="stay-card-image">
             <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=450&fit=crop&q=80" alt="Four Seasons The Westcliff">
@@ -109,13 +406,11 @@
           <div class="stay-card-content">
             <span class="stay-card-label">City Hotel</span>
             <h3>Four Seasons The Westcliff</h3>
-            <p>Johannesburg's hillside sanctuary</p>
-            <div class="stay-card-creator">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
-              <span>Stayed by Nia The Light</span>
-            </div>
+            <span class="stay-card-location">Johannesburg</span>
+            <p>Hillside urban retreat with panoramic city views</p>
           </div>
         </a>
+
         <a href="park-hyatt-johannesburg.html" class="stay-card">
           <div class="stay-card-image">
             <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=450&fit=crop&q=80" alt="Park Hyatt Johannesburg">
@@ -123,17 +418,34 @@
           <div class="stay-card-content">
             <span class="stay-card-label">City Hotel</span>
             <h3>Park Hyatt Johannesburg</h3>
-            <p>Contemporary luxury in Rosebank</p>
-            <div class="stay-card-creator">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
-              <span>Stayed by Nia The Light</span>
-            </div>
+            <span class="stay-card-location">Rosebank, Johannesburg</span>
+            <p>Contemporary luxury in the heart of Rosebank</p>
+          </div>
+        </a>
+
+        <a href="ellerman-house.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&h=450&fit=crop&q=80" alt="Ellerman House">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">Boutique Hotel</span>
+            <h3>Ellerman House</h3>
+            <span class="stay-card-location">Cape Town</span>
+            <p>Art-filled mansion overlooking Bantry Bay</p>
           </div>
         </a>
       </div>
+    </div>
+  </section>
 
-      <h2 class="region-title">Kenya</h2>
-      <div class="stays-grid" style="margin-bottom: var(--space-xl);">
+  <!-- Kenya -->
+  <section class="region-section alt-bg">
+    <div class="container">
+      <div class="region-header">
+        <h2>Kenya</h2>
+      </div>
+
+      <div class="stays-grid">
         <a href="the-dhow-house.html" class="stay-card">
           <div class="stay-card-image">
             <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&h=450&fit=crop&q=80" alt="The Dhow House">
@@ -141,13 +453,11 @@
           <div class="stay-card-content">
             <span class="stay-card-label">Private House</span>
             <h3>The Dhow House</h3>
-            <p>Exclusive beachfront retreat in Lamu</p>
-            <div class="stay-card-creator">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
-              <span>Stayed by Nia The Light</span>
-            </div>
+            <span class="stay-card-location">Lamu Island</span>
+            <p>Exclusive beachfront retreat with traditional Swahili charm</p>
           </div>
         </a>
+
         <a href="tarangau-retreat.html" class="stay-card">
           <div class="stay-card-image">
             <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&h=450&fit=crop&q=80" alt="Tarangau Retreat">
@@ -155,43 +465,83 @@
           <div class="stay-card-content">
             <span class="stay-card-label">Coastal Retreat</span>
             <h3>Tarangau Retreat</h3>
-            <p>Serene coastal escape in Kilifi</p>
-            <div class="stay-card-creator">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
-              <span>Stayed by Nia The Light</span>
-            </div>
+            <span class="stay-card-location">Kilifi</span>
+            <p>Serene creekside escape on the Swahili coast</p>
+          </div>
+        </a>
+
+        <a href="giraffe-manor.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://images.unsplash.com/photo-1534177616064-ef1f0f1c9c54?w=600&h=450&fit=crop&q=80" alt="Giraffe Manor">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">Heritage Hotel</span>
+            <h3>Giraffe Manor</h3>
+            <span class="stay-card-location">Nairobi</span>
+            <p>The iconic breakfast-with-giraffes experience</p>
           </div>
         </a>
       </div>
+    </div>
+  </section>
 
-      <h2 class="region-title">Mozambique</h2>
-      <div class="stays-grid" style="margin-bottom: var(--space-xl);">
+  <!-- Mozambique & Zanzibar -->
+  <section class="region-section">
+    <div class="container">
+      <div class="region-header">
+        <h2>Island & Beach</h2>
+      </div>
+
+      <div class="stays-grid">
         <a href="anantara-bazaruto.html" class="stay-card">
           <div class="stay-card-image">
-            <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&h=450&fit=crop&q=80" alt="Anantara Bazaruto">
+            <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&h=450&fit=crop&q=80" alt="Anantara Bazaruto">
           </div>
           <div class="stay-card-content">
             <span class="stay-card-label">Island Luxury</span>
             <h3>Anantara Bazaruto</h3>
+            <span class="stay-card-location">Bazaruto, Mozambique</span>
             <p>Exclusive island resort in the marine reserve</p>
-            <div class="stay-card-creator">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
-              <span>Stayed by Nia The Light</span>
-            </div>
+          </div>
+        </a>
+
+        <a href="baraza-zanzibar.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://images.unsplash.com/photo-1586861203927-800a5acdcc4d?w=600&h=450&fit=crop&q=80" alt="Baraza Resort">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">Beach Resort</span>
+            <h3>Baraza Resort & Spa</h3>
+            <span class="stay-card-location">Bwejuu, Zanzibar</span>
+            <p>Palatial suites on Zanzibar's pristine east coast</p>
+          </div>
+        </a>
+
+        <a href="zuri-zanzibar.html" class="stay-card">
+          <div class="stay-card-image">
+            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=450&fit=crop&q=80" alt="Zuri Zanzibar">
+          </div>
+          <div class="stay-card-content">
+            <span class="stay-card-label">Design Hotel</span>
+            <h3>Zuri Zanzibar</h3>
+            <span class="stay-card-location">Kendwa, Zanzibar</span>
+            <p>Contemporary design meets island soul</p>
           </div>
         </a>
       </div>
-
-      <h2 class="region-title">Coming Soon</h2>
-      <p style="color: var(--color-warm-grey);">We're adding more properties from Zanzibar and beyond. Check back soon.</p>
     </div>
   </section>
 
-  <section class="cta-section">
-    <div class="container">
+  <!-- CTA -->
+  <section class="split-section">
+    <div class="split-image">
+      <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=900&fit=crop&q=80" alt="Luxury hotel pool">
+    </div>
+    <div class="split-content centered" style="background-color: var(--color-warm-cream);">
       <h2>Need a recommendation?</h2>
-      <p class="text-large">Tell us what you're looking for and we'll suggest the perfect property.</p>
-      <a href="../plan-your-trip.html" class="btn btn-dark">Get Recommendations</a>
+      <hr class="hr-accent centered">
+      <p style="max-width: 400px;">Answer a few questions and we'll match you with the perfect property.</p>
+      <a href="../quiz.html" class="btn btn-outline-dark" style="margin-top: var(--space-md);">Take Our Quiz</a>
     </div>
   </section>
 

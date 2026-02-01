@@ -7,141 +7,304 @@
 
   <title>About | NUBEAUX Travel</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-
-  <!-- Styles -->
   <link rel="stylesheet" href="css/style.css">
 
   <style>
+    /* Hero - Full-bleed image with overlay text */
     .about-hero {
-      background-color: var(--color-charcoal);
-      color: var(--color-white);
-      padding: var(--space-2xl) 0;
+      position: relative;
+      min-height: 80vh;
       margin-top: var(--header-height);
-      text-align: center;
-    }
-
-    .about-hero h1 {
-      margin-bottom: var(--space-md);
-    }
-
-    .about-hero p {
-      font-size: 1.25rem;
-      opacity: 0.8;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .about-content {
-      padding: var(--space-xl) 0;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-xl);
+      display: flex;
       align-items: center;
+      overflow: hidden;
     }
-
-    .about-image img {
+    .about-hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .about-hero-bg img {
       width: 100%;
-      aspect-ratio: 4/3;
+      height: 100%;
       object-fit: cover;
     }
-
-    .about-text h2 {
+    .about-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.1) 100%);
+    }
+    .about-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 650px;
+      padding: var(--space-2xl);
+      color: var(--color-white);
+    }
+    .about-hero-content h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
       margin-bottom: var(--space-md);
+      color: var(--color-white);
+    }
+    .about-hero-content p {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      opacity: 0.9;
+      color: var(--color-white);
     }
 
-    .about-text p {
+    /* Split section - Asymmetric */
+    .split-section {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      min-height: 70vh;
+    }
+    .split-section.reverse {
+      grid-template-columns: 1fr 1.2fr;
+    }
+    .split-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .split-image img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .split-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-2xl);
+      background-color: var(--color-white);
+    }
+    .split-section.reverse .split-content {
+      background-color: var(--color-warm-cream);
+    }
+    .split-content .label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
       margin-bottom: var(--space-md);
-      color: var(--color-warm-grey);
+    }
+    .split-content h2 {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      margin-bottom: var(--space-md);
+      max-width: 450px;
+    }
+    .split-content p {
+      color: var(--color-text-light);
       line-height: 1.8;
+      margin-bottom: var(--space-md);
+      max-width: 500px;
     }
 
+    /* Values - Boxed Grid */
     .values-section {
-      background-color: var(--color-ecru);
-      padding: var(--space-xl) 0;
+      padding: var(--space-2xl) 0;
+      background-color: var(--color-sage-light);
     }
-
+    .values-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+    .values-header .label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
     .values-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-lg);
-      margin-top: var(--space-lg);
+      gap: 1px;
+      background-color: var(--color-light-grey);
+      max-width: 1200px;
+      margin: 0 auto;
     }
-
-    .value-card {
-      text-align: center;
-    }
-
-    .value-number {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      color: var(--color-terracotta);
-      margin-bottom: var(--space-sm);
-    }
-
-    .value-card h3 {
-      margin-bottom: var(--space-sm);
-    }
-
-    .value-card p {
-      color: var(--color-warm-grey);
-      font-size: 0.9375rem;
-    }
-
-    .fora-section {
-      padding: var(--space-xl) 0;
-      text-align: center;
-    }
-
-    .fora-badge {
-      display: inline-block;
-      padding: var(--space-sm) var(--space-md);
+    .value-box {
       background-color: var(--color-white);
-      border: 1px solid var(--color-ecru);
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+    }
+    .value-box .number {
+      font-size: 3rem;
+      font-family: var(--font-serif);
+      color: var(--color-light-grey);
+      margin-bottom: var(--space-md);
+      line-height: 1;
+    }
+    .value-box h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-sm);
+    }
+    .value-box p {
+      color: var(--color-text-light);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+    }
+
+    /* Benefits - Two-column with large numbers */
+    .benefits-section {
+      padding: var(--space-2xl) 0;
+      background-color: var(--color-sand);
+    }
+    .benefits-header {
+      max-width: 600px;
+      margin-bottom: var(--space-xl);
+    }
+    .benefits-header .label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+    .benefit-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: var(--space-md);
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+    .benefit-item:last-child {
+      border-bottom: none;
+    }
+    .benefit-number {
+      font-size: 2.5rem;
+      font-family: var(--font-serif);
+      color: var(--color-accent);
+      line-height: 1;
+    }
+    .benefit-content h3 {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-xs);
+    }
+    .benefit-content p {
+      color: var(--color-text-light);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* Partnership Banner */
+    .partner-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 50vh;
+    }
+    .partner-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-2xl);
+      background-color: var(--color-text);
+      color: var(--color-white);
+    }
+    .partner-content .label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
       margin-bottom: var(--space-md);
     }
+    .partner-content h2 {
+      color: var(--color-white);
+      margin-bottom: var(--space-md);
+    }
+    .partner-content p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: var(--space-lg);
+      max-width: 450px;
+    }
+    .partner-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .partner-image img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-    .fora-badge span {
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--color-warm-grey);
+    /* CTA Section */
+    .about-cta {
+      padding: var(--space-2xl) 0;
+      text-align: center;
+      background-color: var(--color-warm-cream);
+    }
+    .about-cta h2 {
+      margin-bottom: var(--space-sm);
+    }
+    .about-cta p {
+      max-width: 500px;
+      margin: 0 auto var(--space-lg);
+      color: var(--color-text-light);
+    }
+
+    @media (max-width: 1024px) {
+      .split-section,
+      .split-section.reverse,
+      .partner-section {
+        grid-template-columns: 1fr;
+      }
+      .split-image {
+        min-height: 50vh;
+      }
+      .partner-image {
+        min-height: 40vh;
+      }
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 768px) {
-      .about-grid {
-        grid-template-columns: 1fr;
+      .about-hero-content {
+        padding: var(--space-lg);
       }
-
-      .values-grid {
-        grid-template-columns: 1fr;
+      .split-content {
+        padding: var(--space-lg);
+      }
+      .partner-content {
+        padding: var(--space-lg);
+      }
+      .benefit-item {
+        grid-template-columns: 60px 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
   <header class="header">
     <div class="header-inner">
-      <a href="index.html" class="logo">
-        <span class="logo-text">NUBEAUX TRAVEL</span>
-      </a>
-
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="NUBEAUX"></a>
       <nav class="nav">
         <a href="destinations/">Destinations</a>
         <a href="itineraries/">Itineraries</a>
         <a href="stays/">Stays</a>
-        <a href="creators/">Creators</a>
         <a href="about.html">About</a>
         <a href="plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
       </nav>
-
       <button class="menu-toggle" aria-label="Toggle menu">
         <span></span>
         <span></span>
@@ -150,127 +313,163 @@
     </div>
   </header>
 
-  <!-- Mobile Menu -->
   <div class="mobile-menu">
     <a href="destinations/">Destinations</a>
     <a href="itineraries/">Itineraries</a>
     <a href="stays/">Stays</a>
-    <a href="creators/">Creators</a>
     <a href="about.html">About</a>
     <a href="plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
   </div>
 
   <!-- Hero -->
   <section class="about-hero">
-    <div class="container">
-      <h1>Travel advice from people<br>who travel beautifully.</h1>
+    <div class="about-hero-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Luxury safari">
+    </div>
+    <div class="about-hero-overlay"></div>
+    <div class="about-hero-content">
+      <h1>Travel advice from people who travel beautifully.</h1>
       <p>Every destination we recommend, we've experienced. Every property we suggest, we've stayed at. This is curation, not aggregation.</p>
     </div>
   </section>
 
-  <!-- About Content -->
-  <section class="about-content">
-    <div class="container">
-      <div class="about-grid">
-        <div class="about-image">
-          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Luxury travel in Africa">
-        </div>
-        <div class="about-text">
-          <h2>Not another booking site.</h2>
-          <p>NUBEAUX Travel was born from a simple observation: the best travel advice comes from people who travel well. Not algorithms. Not aggregators. People.</p>
-          <p>Our network of creatives spans the globe, but we specialize in African luxury. These are photographers, filmmakers, and content creators who don't just visit places for a photo op. They immerse. They stay. They understand what makes a place special.</p>
-          <p>When you book through NUBEAUX Travel, you're not getting generic recommendations. You're getting the exact itinerary, the specific room request, the restaurant table worth reserving. You're getting the real experience.</p>
-        </div>
-      </div>
+  <!-- Split Section 1 -->
+  <section class="split-section">
+    <div class="split-image">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1000,h_1200,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Travel experience">
+    </div>
+    <div class="split-content">
+      <span class="label">Our Philosophy</span>
+      <h2>Not another booking site.</h2>
+      <p>NUBEAUX Travel was born from a simple observation: the best travel advice comes from people who travel well. Not algorithms. Not aggregators. People.</p>
+      <p>Our network of creatives spans the globe, but we specialize in African luxury. These are photographers, filmmakers, and content creators who don't just visit places for a photo op. They immerse. They stay. They understand what makes a place special.</p>
     </div>
   </section>
 
-  <!-- Values -->
+  <!-- Split Section 2 -->
+  <section class="split-section reverse">
+    <div class="split-content">
+      <span class="label">The Experience</span>
+      <h2>When you book through us.</h2>
+      <p>You're not getting generic recommendations. You're getting the exact itinerary, the specific room request, the restaurant table worth reserving. You're getting the real experience.</p>
+      <p>We've already done the research. We've made the mistakes so you don't have to. We know which sunset view is worth the premium, and which isn't.</p>
+    </div>
+    <div class="split-image">
+      <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1000&h=1200&fit=crop&q=80" alt="Coastal luxury">
+    </div>
+  </section>
+
+  <!-- Values Section -->
   <section class="values-section">
     <div class="container">
-      <h2 style="text-align: center;">What We Believe</h2>
-      <div class="values-grid">
-        <div class="value-card">
-          <span class="value-number">01</span>
-          <h3>Personal Experience</h3>
-          <p>We only recommend what we've experienced firsthand. No paid placements, no algorithmic suggestions.</p>
+      <div class="values-header">
+        <span class="label">What We Believe</span>
+        <h2>Our principles</h2>
+      </div>
+    </div>
+    <div class="values-grid">
+      <div class="value-box">
+        <span class="number">01</span>
+        <h3>Personal Experience</h3>
+        <p>We only recommend what we've experienced firsthand. No paid placements, no algorithmic suggestions.</p>
+      </div>
+      <div class="value-box">
+        <span class="number">02</span>
+        <h3>Quality Over Volume</h3>
+        <p>A handful of perfect recommendations beats a thousand mediocre ones. We curate, not aggregate.</p>
+      </div>
+      <div class="value-box">
+        <span class="number">03</span>
+        <h3>Intentional Travel</h3>
+        <p>Travel should transform, not just transport. Every trip should return you changed for the better.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits-section">
+    <div class="container">
+      <div class="benefits-header">
+        <span class="label">Why Book With Us</span>
+        <h2>More than a reservation</h2>
+        <p>When you book through NUBEAUX Travel, you get a dedicated advocate with preferred partner access.</p>
+      </div>
+      <div class="benefits-grid">
+        <div>
+          <div class="benefit-item">
+            <span class="benefit-number">01</span>
+            <div class="benefit-content">
+              <h3>Exclusive Perks</h3>
+              <p>Room upgrades, spa credits, early check-in, late checkout, and VIP treatment through our preferred partner status.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-number">02</span>
+            <div class="benefit-content">
+              <h3>Personal Advocate</h3>
+              <p>When things go wrong, you have someone in your corner. Direct access to someone who knows your trip.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-number">03</span>
+            <div class="benefit-content">
+              <h3>Priority Service</h3>
+              <p>Preferred partner bookings like ours get top priority for upgrades and special requests.</p>
+            </div>
+          </div>
         </div>
-        <div class="value-card">
-          <span class="value-number">02</span>
-          <h3>Quality Over Volume</h3>
-          <p>A handful of perfect recommendations beats a thousand mediocre ones. We curate, not aggregate.</p>
-        </div>
-        <div class="value-card">
-          <span class="value-number">03</span>
-          <h3>Intentional Travel</h3>
-          <p>Travel should transform, not just transport. Every trip should return you changed for the better.</p>
+        <div>
+          <div class="benefit-item">
+            <span class="benefit-number">04</span>
+            <div class="benefit-content">
+              <h3>Keep Your Points</h3>
+              <p>Book through us and still earn your hotel loyalty points and credit card rewards.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-number">05</span>
+            <div class="benefit-content">
+              <h3>Expert Curation</h3>
+              <p>We handle the research, compare options, and coordinate every detail of your journey.</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <span class="benefit-number">06</span>
+            <div class="benefit-content">
+              <h3>Long-Term Relationship</h3>
+              <p>We learn your preferences over time. Each trip gets more personalized.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Fora Partnership -->
-  <section class="fora-section">
-    <div class="container">
-      <div class="fora-badge">
-        <span>Powered by Fora Travel</span>
-      </div>
-      <h2>Booking made seamless.</h2>
-      <p class="text-large" style="max-width: 700px; margin: var(--space-md) auto var(--space-lg); color: var(--color-warm-grey);">
-        We partner with Fora, the modern travel platform, to handle all bookings. This means you get preferred rates, exclusive perks, and dedicated support while we focus on what we do best: curation.
-      </p>
-      <a href="plan-your-trip.html" class="btn btn-dark">Start Your Journey</a>
+  <!-- Partnership Section -->
+  <section class="partner-section">
+    <div class="partner-content">
+      <span class="label">Powered By</span>
+      <h2>Fora Travel</h2>
+      <p>We partner with Fora, the modern travel platform, to handle all bookings. This means you get preferred rates, exclusive perks, and dedicated support while we focus on what we do best: curation.</p>
+      <a href="plan-your-trip.html" class="btn btn-outline">Start Your Journey</a>
+    </div>
+    <div class="partner-image">
+      <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=1000&h=800&fit=crop&q=80" alt="Beach destination">
     </div>
   </section>
 
-  <!-- NUBEAUX Collective Link -->
-  <section class="section" style="background-color: var(--color-charcoal); color: var(--color-white); text-align: center;">
+  <!-- CTA -->
+  <section class="about-cta">
     <div class="container">
-      <p class="text-xs" style="margin-bottom: var(--space-sm); opacity: 0.5;">Part of</p>
-      <h2 style="margin-bottom: var(--space-md);">NUBEAUX Collective</h2>
-      <p style="max-width: 600px; margin: 0 auto var(--space-lg); opacity: 0.8;">Elevated content and creator campaigns for luxury brands. NUBEAUX Travel is the hospitality arm of our creative collective.</p>
-      <a href="https://nubeauxcollective.com" target="_blank" class="btn btn-outline">Visit NUBEAUX Collective</a>
+      <h2>Ready to travel beautifully?</h2>
+      <p>Tell us where you want to go. We'll craft an experience you'll never forget.</p>
+      <a href="plan-your-trip.html" class="btn btn-primary">Plan Your Trip</a>
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <span class="logo-text" style="font-size: 1.25rem;">NUBEAUX TRAVEL</span>
-          <p>Curated luxury travel experiences from creatives who've been there. Part of the NUBEAUX Collective family.</p>
-        </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Explore</h4>
-          <div class="footer-links">
-            <a href="destinations/">Destinations</a>
-            <a href="itineraries/">Itineraries</a>
-            <a href="stays/">Stays</a>
-            <a href="creators/">Creators</a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Company</h4>
-          <div class="footer-links">
-            <a href="about.html">About</a>
-            <a href="plan-your-trip.html">Plan Your Trip</a>
-            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Connect</h4>
-          <div class="footer-links">
-            <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
-            <a href="https://instagram.com/nubeauxcollective" target="_blank">Instagram</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
         <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
         <p>A NUBEAUX Collective Company</p>
       </div>

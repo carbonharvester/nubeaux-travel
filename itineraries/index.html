@@ -13,31 +13,191 @@
   <link rel="stylesheet" href="../css/style.css">
 
   <style>
-    .page-hero { background-color: var(--color-charcoal); color: var(--color-white); padding: var(--space-xl) 0; margin-top: var(--header-height); text-align: center; }
-    .page-hero h1 { margin-bottom: var(--space-sm); }
-    .page-hero p { opacity: 0.8; max-width: 600px; margin: 0 auto; }
-    .itineraries-section { padding: var(--space-xl) 0; }
-    .itinerary-card { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); background: var(--color-white); margin-bottom: var(--space-lg); }
-    .itinerary-card-image { aspect-ratio: 16/10; overflow: hidden; }
-    .itinerary-card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-slow); }
-    .itinerary-card:hover .itinerary-card-image img { transform: scale(1.05); }
-    .itinerary-card-content { padding: var(--space-lg); display: flex; flex-direction: column; justify-content: center; }
-    .itinerary-card-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-sm); }
-    .itinerary-card h3 { font-size: 1.75rem; margin-bottom: var(--space-sm); }
-    .itinerary-card-meta { display: flex; gap: var(--space-md); font-size: 0.875rem; color: var(--color-warm-grey); margin-bottom: var(--space-md); }
-    .itinerary-card p { color: var(--color-warm-grey); line-height: 1.7; }
-    @media (max-width: 768px) { .itinerary-card { grid-template-columns: 1fr; } }
+    .page-hero-full {
+      position: relative;
+      min-height: 50vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .page-hero-full .hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .page-hero-full .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .page-hero-full .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+    }
+
+    .page-hero-full .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--color-white);
+      padding: var(--space-xl);
+    }
+
+    .page-hero-full h1 {
+      color: var(--color-white);
+      margin-bottom: var(--space-sm);
+    }
+
+    .page-hero-full p {
+      color: rgba(255,255,255,0.9);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .itineraries-intro {
+      padding: var(--space-xl) 0;
+      text-align: center;
+      background-color: var(--color-warm-cream);
+    }
+
+    .itineraries-intro p {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .itinerary-featured {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      min-height: 60vh;
+    }
+
+    .itinerary-featured.reverse {
+      grid-template-columns: 1fr 1.2fr;
+    }
+
+    .itinerary-featured-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .itinerary-featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .itinerary-featured:hover .itinerary-featured-image img {
+      transform: scale(1.03);
+    }
+
+    .itinerary-featured-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-2xl);
+      background-color: var(--color-white);
+    }
+
+    .itinerary-featured-content.alt {
+      background-color: var(--color-sage-light);
+    }
+
+    .itinerary-featured-content.dark {
+      background-color: var(--color-text);
+      color: var(--color-white);
+    }
+
+    .itinerary-featured-content.dark h3,
+    .itinerary-featured-content.dark p {
+      color: var(--color-white);
+    }
+
+    .itinerary-featured-content.dark p {
+      opacity: 0.8;
+    }
+
+    .itinerary-featured-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .itinerary-featured h3 {
+      font-size: 2rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .itinerary-featured-meta {
+      display: flex;
+      gap: var(--space-md);
+      font-size: 0.875rem;
+      color: var(--color-medium-grey);
+      margin-bottom: var(--space-md);
+    }
+
+    .itinerary-featured-content.dark .itinerary-featured-meta {
+      color: rgba(255,255,255,0.6);
+    }
+
+    .itinerary-featured p {
+      color: var(--color-text-light);
+      line-height: 1.8;
+      margin-bottom: var(--space-lg);
+    }
+
+    .itineraries-grid-section {
+      padding: var(--space-xl) 0;
+      background-color: var(--color-sand);
+    }
+
+    .itineraries-compact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    @media (max-width: 1024px) {
+      .itinerary-featured,
+      .itinerary-featured.reverse {
+        grid-template-columns: 1fr;
+      }
+
+      .itinerary-featured-image {
+        min-height: 50vh;
+      }
+
+      .itineraries-compact-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .itinerary-featured-content {
+        padding: var(--space-lg);
+      }
+
+      .itineraries-compact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <header class="header">
     <div class="header-inner">
-      <a href="../index.html" class="logo"><span class="logo-text">NUBEAUX TRAVEL</span></a>
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
       <nav class="nav">
         <a href="../destinations/">Destinations</a>
         <a href="../itineraries/">Itineraries</a>
         <a href="../stays/">Stays</a>
-        <a href="../creators/">Creators</a>
         <a href="../about.html">About</a>
         <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
       </nav>
@@ -49,87 +209,145 @@
     <a href="../destinations/">Destinations</a>
     <a href="../itineraries/">Itineraries</a>
     <a href="../stays/">Stays</a>
-    <a href="../creators/">Creators</a>
     <a href="../about.html">About</a>
     <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
   </div>
 
-  <section class="page-hero">
-    <div class="container">
+  <!-- Hero -->
+  <section class="page-hero-full">
+    <div class="hero-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Safari landscape">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
       <h1>Curated Itineraries</h1>
       <p>Day-by-day trip plans crafted from personal experience. Use these as starting points for your perfect journey.</p>
     </div>
   </section>
 
-  <section class="itineraries-section">
+  <!-- Intro -->
+  <section class="itineraries-intro">
     <div class="container">
-      <a href="7-days-namibia.html" class="itinerary-card">
-        <div class="itinerary-card-image">
-          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_500,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Namibia Safari">
-        </div>
-        <div class="itinerary-card-content">
-          <span class="itinerary-card-label">Safari & Wilderness</span>
-          <h3>7 Days in Namibia</h3>
-          <div class="itinerary-card-meta">
-            <span>7 Days / 6 Nights</span>
-            <span>From $8,500 pp</span>
-          </div>
-          <p>Etosha wildlife, Onguma luxury, and the endless horizons of the Namibian bush. This itinerary combines world-class game viewing with design-forward accommodation.</p>
-        </div>
-      </a>
-
-      <a href="kenya-coast.html" class="itinerary-card">
-        <div class="itinerary-card-image">
-          <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&h=500&fit=crop&q=80" alt="Kenya Coast">
-        </div>
-        <div class="itinerary-card-content">
-          <span class="itinerary-card-label">Coast + Culture</span>
-          <h3>Kenya: Kilifi to Lamu</h3>
-          <div class="itinerary-card-meta">
-            <span>7 Days / 6 Nights</span>
-            <span>From $4,500 pp</span>
-          </div>
-          <p>Kenya's creative coast and Swahili heritage. From the laid-back vibes of Kilifi to the historic charm of Lamu Island.</p>
-        </div>
-      </a>
-
-      <a href="joburg-gateway.html" class="itinerary-card">
-        <div class="itinerary-card-image">
-          <img src="https://images.unsplash.com/photo-1577948000111-9c970dfe3743?w=800&h=500&fit=crop&q=80" alt="Johannesburg">
-        </div>
-        <div class="itinerary-card-content">
-          <span class="itinerary-card-label">City + Safari</span>
-          <h3>Johannesburg Gateway</h3>
-          <div class="itinerary-card-meta">
-            <span>4 Days / 3 Nights</span>
-            <span>From $2,800 pp</span>
-          </div>
-          <p>Art, culture, and gastronomy in Africa's most dynamic city. The perfect start or end to any Southern African safari.</p>
-        </div>
-      </a>
-
-      <a href="mozambique-island-escape.html" class="itinerary-card">
-        <div class="itinerary-card-image">
-          <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=800&h=500&fit=crop&q=80" alt="Mozambique">
-        </div>
-        <div class="itinerary-card-content">
-          <span class="itinerary-card-label">Island + Beach</span>
-          <h3>Mozambique Island Escape</h3>
-          <div class="itinerary-card-meta">
-            <span>5 Days / 4 Nights</span>
-            <span>From $6,500 pp</span>
-          </div>
-          <p>Pristine beaches and island luxury in the Bazaruto Archipelago. Sandbank picnics, marine adventures, and total relaxation.</p>
-        </div>
-      </a>
+      <p class="text-large">
+        Every itinerary here has been personally experienced by our creators. These aren't theoretical routes—they're real journeys, refined and ready for you to make your own.
+      </p>
     </div>
   </section>
 
-  <section class="cta-section">
+  <!-- Featured Itinerary 1: Namibia -->
+  <a href="namibia-safari.html" class="itinerary-featured">
+    <div class="itinerary-featured-image">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1000,h_800,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Namibia Safari">
+    </div>
+    <div class="itinerary-featured-content">
+      <span class="itinerary-featured-label">Safari & Wilderness</span>
+      <h3>Namibia Safari</h3>
+      <div class="itinerary-featured-meta">
+        <span>3 Days / 2 Nights</span>
+        <span>From $4,500 pp</span>
+      </div>
+      <p>Etosha wildlife, Onguma luxury, and the endless horizons of the Namibian bush. This itinerary combines world-class game viewing with design-forward accommodation.</p>
+      <span class="btn btn-outline-dark" style="align-self: flex-start;">View Itinerary</span>
+    </div>
+  </a>
+
+  <!-- Featured Itinerary 2: Lamu -->
+  <a href="lamu-island.html" class="itinerary-featured reverse">
+    <div class="itinerary-featured-content alt">
+      <span class="itinerary-featured-label">Island Heritage</span>
+      <h3>Lamu Island</h3>
+      <div class="itinerary-featured-meta">
+        <span>4 Days / 3 Nights</span>
+        <span>From $3,500 pp</span>
+      </div>
+      <p>Step back in time on this UNESCO World Heritage island. Swahili architecture, dhow sailing, and the oldest continuously inhabited settlement in East Africa.</p>
+      <span class="btn btn-outline-dark" style="align-self: flex-start;">View Itinerary</span>
+    </div>
+    <div class="itinerary-featured-image">
+      <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=1000&h=800&fit=crop&q=80" alt="Lamu Island">
+    </div>
+  </a>
+
+  <!-- Featured Itinerary 3: Kilifi -->
+  <a href="kilifi-coast.html" class="itinerary-featured">
+    <div class="itinerary-featured-image">
+      <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1000&h=800&fit=crop&q=80" alt="Kilifi Coast">
+    </div>
+    <div class="itinerary-featured-content dark">
+      <span class="itinerary-featured-label" style="color: var(--color-terracotta-soft);">Coast + Culture</span>
+      <h3>Kilifi Coast</h3>
+      <div class="itinerary-featured-meta">
+        <span>3 Days / 2 Nights</span>
+        <span>From $2,500 pp</span>
+      </div>
+      <p>Kenya's creative coast at its most authentic. Boutique stays, Swahili culture, pristine beaches, and the laid-back energy that makes Kilifi special.</p>
+      <span class="btn btn-outline" style="align-self: flex-start;">View Itinerary</span>
+    </div>
+  </a>
+
+  <!-- More Itineraries Grid -->
+  <section class="itineraries-grid-section">
     <div class="container">
+      <div class="section-header-left">
+        <h2>More Itineraries</h2>
+      </div>
+
+      <div class="itineraries-compact-grid">
+        <a href="joburg-gateway.html" class="itinerary-card hover-lift">
+          <div class="itinerary-card-image">
+            <img src="https://images.unsplash.com/photo-1577948000111-9c970dfe3743?w=600&h=375&fit=crop&q=80" alt="Johannesburg">
+          </div>
+          <div class="itinerary-card-content">
+            <span class="itinerary-card-label">City + Culture</span>
+            <h3>Johannesburg Gateway</h3>
+            <div class="itinerary-card-meta">
+              <span>3 Days</span>
+              <span>From $2,500</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="mozambique-island-escape.html" class="itinerary-card hover-lift">
+          <div class="itinerary-card-image">
+            <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&h=375&fit=crop&q=80" alt="Mozambique">
+          </div>
+          <div class="itinerary-card-content">
+            <span class="itinerary-card-label">Beach & Island</span>
+            <h3>Mozambique Island Escape</h3>
+            <div class="itinerary-card-meta">
+              <span>5 Days</span>
+              <span>From $6,000</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="senegal-discovery.html" class="itinerary-card hover-lift">
+          <div class="itinerary-card-image">
+            <img src="https://images.unsplash.com/photo-1591122947157-26bad3a117d2?w=600&h=375&fit=crop&q=80" alt="Senegal">
+          </div>
+          <div class="itinerary-card-content">
+            <span class="itinerary-card-label">Culture & Coast</span>
+            <h3>Senegal Discovery</h3>
+            <div class="itinerary-card-meta">
+              <span>6 Days</span>
+              <span>From $4,800</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Split Section -->
+  <section class="split-section reverse">
+    <div class="split-content centered" style="background-color: var(--color-warm-cream);">
       <h2>Want something custom?</h2>
-      <p class="text-large">These itineraries are starting points. Tell us your vision and we'll create something unique.</p>
-      <a href="../plan-your-trip.html" class="btn btn-dark">Start Planning</a>
+      <hr class="hr-accent centered">
+      <p style="max-width: 400px;">These itineraries are starting points. Tell us your vision and we'll create something unique for you.</p>
+      <a href="../plan-your-trip.html" class="btn btn-outline-dark" style="margin-top: var(--space-md);">Start Planning</a>
+    </div>
+    <div class="split-image">
+      <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=800&h=900&fit=crop&q=80" alt="Custom travel planning">
     </div>
   </section>
 

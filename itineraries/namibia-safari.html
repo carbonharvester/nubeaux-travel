@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="3-day Namibia safari itinerary. Etosha wildlife and Onguma luxury lodges. Curated by NUBEAUX Travel.">
+
+  <title>Namibia Safari | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .itin-hero { position: relative; min-height: 70vh; margin-top: var(--header-height); display: flex; align-items: flex-end; overflow: hidden; }
+    .itin-hero-bg { position: absolute; inset: 0; z-index: 1; }
+    .itin-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .itin-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%); z-index: 2; }
+    .itin-hero-content { position: relative; z-index: 3; padding: var(--space-xl) var(--space-md); color: var(--color-white); width: 100%; }
+    .itin-hero-content .container { max-width: 800px; margin: 0; }
+    .itin-label { font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .itin-hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: var(--space-md); color: var(--color-white); }
+    .itin-hero-meta { display: flex; gap: var(--space-lg); font-size: 1rem; opacity: 0.9; }
+    .itin-content { padding: var(--space-xl) 0; }
+    .itin-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-xl); }
+    .itin-main h2 { margin-bottom: var(--space-md); }
+    .itin-main p { color: var(--color-text-light); line-height: 1.8; margin-bottom: var(--space-md); }
+    .day-block { margin-bottom: var(--space-lg); padding-bottom: var(--space-lg); border-bottom: 1px solid var(--color-light-grey); }
+    .day-block:last-child { border-bottom: none; }
+    .day-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-xs); }
+    .day-title { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: var(--space-sm); }
+    .day-content { color: var(--color-text-light); line-height: 1.8; }
+    .itin-sidebar { background-color: var(--color-sand); padding: var(--space-lg); height: fit-content; position: sticky; top: calc(var(--header-height) + var(--space-md)); }
+    .sidebar-section { margin-bottom: var(--space-lg); }
+    .sidebar-section:last-child { margin-bottom: 0; }
+    .sidebar-title { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .sidebar-content { font-size: 0.9375rem; color: var(--color-text); }
+    .creator-badge { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-md); background: var(--color-sage-light); margin-bottom: var(--space-lg); }
+    .creator-badge img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .creator-badge-content span { display: block; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+    .creator-badge-content strong { font-family: var(--font-serif); font-weight: 400; }
+    .book-cta { background: var(--color-accent); color: var(--color-white); padding: var(--space-md); text-align: center; }
+    .book-cta h3 { font-size: 1.25rem; margin-bottom: var(--space-sm); color: var(--color-white); }
+    .book-cta p { font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md); color: var(--color-white); }
+    .book-cta .btn { background: var(--color-white); color: var(--color-accent); width: 100%; }
+    @media (max-width: 768px) { .itin-grid { grid-template-columns: 1fr; } .itin-sidebar { position: static; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="itin-hero">
+    <div class="itin-hero-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Namibia Safari">
+    </div>
+    <div class="itin-hero-overlay"></div>
+    <div class="itin-hero-content">
+      <div class="container">
+        <span class="itin-label">Safari & Wilderness</span>
+        <h1>Namibia Safari</h1>
+        <div class="itin-hero-meta">
+          <span>3 Days / 2 Nights</span>
+          <span>From $4,500 pp</span>
+          <span>Etosha & Onguma</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="itin-content">
+    <div class="container">
+      <div class="itin-grid">
+        <div class="itin-main">
+          <button class="creator-badge-btn" data-creator="nia">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_96,h_96,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+            <div class="creator-badge-content">
+              <span>Curated by</span>
+              <strong>Nia The Light</strong>
+            </div>
+            <span class="creator-badge-arrow">→</span>
+          </button>
+
+          <h2>The Journey</h2>
+          <p>A concentrated Namibian safari experience at Onguma Game Reserve, bordering Etosha National Park. Three days of world-class game viewing, design-forward accommodation, and the otherworldly beauty of the Namibian landscape.</p>
+
+          <p>This is safari done right: intimate lodges, expert guides, and endless horizons. Perfect for adding to a longer Southern Africa journey or as an immersive standalone experience.</p>
+
+          <h2 style="margin-top: var(--space-lg);">Day by Day</h2>
+
+          <div class="day-block-enhanced">
+            <div class="day-block-text">
+              <span class="day-label">Day 1</span>
+              <h3 class="day-title">Arrival at Onguma</h3>
+              <p class="day-content">Arrive at Onguma's private airstrip or transfer from Windhoek. Check into Onguma Camp Kala in time for lunch. Settle into your suite before an afternoon game drive into Etosha National Park. Sundowners overlooking the pan, followed by dinner under the stars at the lodge.</p>
+              <div class="day-activities">
+                <span class="activity-tag">Lodge Check-in</span>
+                <span class="activity-tag">Game Drive</span>
+                <span class="activity-tag">Sundowners</span>
+              </div>
+            </div>
+            <div class="day-block-images">
+              <div class="day-image large">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Onguma Camp Kala lodge">
+              </div>
+              <div class="day-image">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-45_gajcov.jpg" alt="Safari landscape">
+              </div>
+              <div class="day-image">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-59_lrkzsp.jpg" alt="Sundowner drinks">
+              </div>
+            </div>
+          </div>
+
+          <div class="day-block-enhanced reverse">
+            <div class="day-block-text">
+              <span class="day-label">Day 2</span>
+              <h3 class="day-title">Full Safari Day</h3>
+              <p class="day-content">Early morning game drive into Etosha to catch the best wildlife activity. Return to camp for brunch and pool time during the midday heat. Afternoon drive explores different areas of the park, maximizing your chances of seeing lion, elephant, giraffe, rhino, and countless antelope. Optional night drive on Onguma's private reserve to spot nocturnal wildlife.</p>
+              <div class="day-activities">
+                <span class="activity-tag">Morning Game Drive</span>
+                <span class="activity-tag">Pool & Brunch</span>
+                <span class="activity-tag">Afternoon Safari</span>
+                <span class="activity-tag">Night Drive</span>
+              </div>
+            </div>
+            <div class="day-block-images">
+              <div class="day-image">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-68_qx6dih.jpg" alt="Elephant at waterhole">
+              </div>
+              <div class="day-image">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-72_hkojzt.jpg" alt="Giraffe on safari">
+              </div>
+              <div class="day-image large">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-80_mwxjzl.jpg" alt="Etosha game drive">
+              </div>
+            </div>
+          </div>
+
+          <div class="day-block-enhanced">
+            <div class="day-block-text">
+              <span class="day-label">Day 3</span>
+              <h3 class="day-title">Departure</h3>
+              <p class="day-content">Final morning game drive on Onguma's private reserve, where walking safaris are also possible. Brunch at the lodge before transfer to the airstrip for your onward flight, or extend your journey to Sossusvlei, the Skeleton Coast, or Johannesburg.</p>
+              <div class="day-activities">
+                <span class="activity-tag">Walking Safari</span>
+                <span class="activity-tag">Farewell Brunch</span>
+                <span class="activity-tag">Airport Transfer</span>
+              </div>
+            </div>
+            <div class="day-block-images duo">
+              <div class="day-image">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-90_fk3jqt.jpg" alt="Morning safari walk">
+              </div>
+              <div class="day-image">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-95_blghyd.jpg" alt="Lodge breakfast">
+              </div>
+            </div>
+          </div>
+
+          <h2 style="margin-top: var(--space-lg);">What's Included</h2>
+          <ul style="color: var(--color-text-light); line-height: 1.8; margin-left: 1.5rem;">
+            <li>2 nights Onguma Camp Kala (full board + activities)</li>
+            <li>All game drives in Etosha National Park</li>
+            <li>Night drives on Onguma Reserve</li>
+            <li>Park fees and conservation levies</li>
+            <li>Transfers as per itinerary</li>
+          </ul>
+        </div>
+
+        <div class="itin-sidebar">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Trip Details</h3>
+            <div class="sidebar-content">
+              <p><strong>Duration:</strong> 3 days / 2 nights</p>
+              <p style="margin-top: 0.5rem;"><strong>Starting from:</strong> $4,500 per person</p>
+              <p style="margin-top: 0.5rem;"><strong>Best for:</strong> First safari, photography, couples</p>
+              <p style="margin-top: 0.5rem;"><strong>Activity level:</strong> Easy</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Where You'll Stay</h3>
+            <div class="sidebar-stays">
+              <a href="../stays/onguma-the-fort.html" class="sidebar-stay-card">
+                <div class="sidebar-stay-image">
+                  <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_300,h_200,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-20_yzncpj.jpg" alt="Onguma The Fort">
+                </div>
+                <div class="sidebar-stay-content">
+                  <strong>Onguma The Fort</strong>
+                  <span>Dramatic cliffside lodge</span>
+                </div>
+              </a>
+              <a href="../stays/onguma-camp-kala.html" class="sidebar-stay-card">
+                <div class="sidebar-stay-image">
+                  <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_300,h_200,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Onguma Camp Kala">
+                </div>
+                <div class="sidebar-stay-content">
+                  <strong>Onguma Camp Kala</strong>
+                  <span>Intimate tented camp</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Best Time to Go</h3>
+            <div class="sidebar-content">
+              <p><strong>Peak wildlife:</strong> May - October</p>
+              <p style="margin-top: 0.5rem;"><strong>Best weather:</strong> June - September</p>
+            </div>
+          </div>
+
+          <div class="book-cta">
+            <h3>Get Your Quote</h3>
+            <p>Ready for Namibia? Get a personalized quote for your dates.</p>
+            <a href="../request-quote.html?trip=Namibia%20Safari&price=From%20%244%2C500%20pp" class="btn">Request Quote</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Extend your journey</h2>
+      <p class="text-large">Add Sossusvlei dunes, the Skeleton Coast, or continue to Johannesburg.</p>
+      <a href="../plan-your-trip.html" class="btn btn-outline-dark">Plan Your Trip</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Creator Popup -->
+  <div class="creator-popup-overlay" id="creatorPopup">
+    <div class="creator-popup">
+      <button class="creator-popup-close" aria-label="Close">&times;</button>
+      <div class="creator-popup-image">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_200,h_200,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+      </div>
+      <div class="creator-popup-content">
+        <span class="creator-popup-label">Creator</span>
+        <h3>Nia The Light</h3>
+        <p>Content creator and storyteller with a passion for African luxury, wellness, and solo travel. Every itinerary Nia curates reflects her philosophy: travel should nourish the soul.</p>
+        <a href="../creators/nia.html" class="creator-popup-link">View Full Profile</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Creator popup functionality
+    const creatorBtn = document.querySelector('.creator-badge-btn');
+    const creatorPopup = document.getElementById('creatorPopup');
+    const closeBtn = creatorPopup?.querySelector('.creator-popup-close');
+
+    if (creatorBtn && creatorPopup) {
+      creatorBtn.addEventListener('click', () => {
+        creatorPopup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeBtn?.addEventListener('click', () => {
+        creatorPopup.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+
+      creatorPopup.addEventListener('click', (e) => {
+        if (e.target === creatorPopup) {
+          creatorPopup.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && creatorPopup.classList.contains('active')) {
+          creatorPopup.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

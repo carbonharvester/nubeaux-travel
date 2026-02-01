@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="3-day Kilifi Coast itinerary. Kenya's Swahili coast, boutique stays, and coastal culture. Curated by NUBEAUX Travel.">
+
+  <title>Kilifi Coast | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .itin-hero { position: relative; min-height: 70vh; margin-top: var(--header-height); display: flex; align-items: flex-end; overflow: hidden; }
+    .itin-hero-bg { position: absolute; inset: 0; z-index: 1; }
+    .itin-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .itin-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%); z-index: 2; }
+    .itin-hero-content { position: relative; z-index: 3; padding: var(--space-xl) var(--space-md); color: var(--color-white); width: 100%; }
+    .itin-hero-content .container { max-width: 800px; margin: 0; }
+    .itin-label { font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .itin-hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: var(--space-md); color: var(--color-white); }
+    .itin-hero-meta { display: flex; gap: var(--space-lg); font-size: 1rem; opacity: 0.9; }
+    .itin-content { padding: var(--space-xl) 0; }
+    .itin-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-xl); }
+    .itin-main h2 { margin-bottom: var(--space-md); }
+    .itin-main p { color: var(--color-text-light); line-height: 1.8; margin-bottom: var(--space-md); }
+    .day-block { margin-bottom: var(--space-lg); padding-bottom: var(--space-lg); border-bottom: 1px solid var(--color-light-grey); }
+    .day-block:last-child { border-bottom: none; }
+    .day-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-xs); }
+    .day-title { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: var(--space-sm); }
+    .day-content { color: var(--color-text-light); line-height: 1.8; }
+    .itin-sidebar { background-color: var(--color-sand); padding: var(--space-lg); height: fit-content; position: sticky; top: calc(var(--header-height) + var(--space-md)); }
+    .sidebar-section { margin-bottom: var(--space-lg); }
+    .sidebar-section:last-child { margin-bottom: 0; }
+    .sidebar-title { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .sidebar-content { font-size: 0.9375rem; color: var(--color-text); }
+    .creator-badge { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-md); background: var(--color-sage-light); margin-bottom: var(--space-lg); }
+    .creator-badge img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .creator-badge-content span { display: block; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+    .creator-badge-content strong { font-family: var(--font-serif); font-weight: 400; }
+    .book-cta { background: var(--color-accent); color: var(--color-white); padding: var(--space-md); text-align: center; }
+    .book-cta h3 { font-size: 1.25rem; margin-bottom: var(--space-sm); color: var(--color-white); }
+    .book-cta p { font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md); color: var(--color-white); }
+    .book-cta .btn { background: var(--color-white); color: var(--color-accent); width: 100%; }
+    @media (max-width: 768px) { .itin-grid { grid-template-columns: 1fr; } .itin-sidebar { position: static; } }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <section class="itin-hero">
+    <div class="itin-hero-bg">
+      <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&h=1080&fit=crop&q=80" alt="Kilifi Coast">
+    </div>
+    <div class="itin-hero-overlay"></div>
+    <div class="itin-hero-content">
+      <div class="container">
+        <span class="itin-label">Coast + Culture</span>
+        <h1>Kilifi Coast</h1>
+        <div class="itin-hero-meta">
+          <span>3 Days / 2 Nights</span>
+          <span>From $2,500 pp</span>
+          <span>Kenya's Swahili Coast</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="itin-content">
+    <div class="container">
+      <div class="itin-grid">
+        <div class="itin-main">
+          <button class="creator-badge-btn" data-creator="nia">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_96,h_96,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+            <div class="creator-badge-content">
+              <span>Curated by</span>
+              <strong>Nia The Light</strong>
+            </div>
+            <span class="creator-badge-arrow">→</span>
+          </button>
+
+          <h2>The Journey</h2>
+          <p>Kilifi represents Kenya's coast at its most authentic. This small town on the Indian Ocean has become a magnet for creatives, artists, and those seeking a slower pace. Unlike the busier beach resorts, Kilifi offers genuine Swahili culture alongside pristine beaches and excellent cuisine.</p>
+
+          <p>This itinerary immerses you in coastal Kenyan life: boutique stays overlooking the creek, fresh seafood, water sports, and the laid-back energy that makes this corner of Africa so special.</p>
+
+          <h2 style="margin-top: var(--space-lg);">Day by Day</h2>
+
+          <div class="day-block-enhanced">
+            <div class="day-block-text">
+              <span class="day-label">Day 1</span>
+              <h3 class="day-title">Arrival in Kilifi</h3>
+              <p class="day-content">Transfer from Mombasa airport to your boutique hotel on Kilifi Creek. Check in and settle into the coastal rhythm. Afternoon free to swim, kayak, or simply relax by the pool. Sundowners overlooking the creek as the sun sets over the water. Dinner at the hotel featuring fresh Swahili cuisine.</p>
+              <div class="day-activities">
+                <span class="activity-tag">Hotel Check-in</span>
+                <span class="activity-tag">Pool Time</span>
+                <span class="activity-tag">Sundowners</span>
+              </div>
+            </div>
+            <div class="day-block-images">
+              <div class="day-image large">
+                <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&h=400&fit=crop&q=80" alt="Kilifi Creek view">
+              </div>
+              <div class="day-image">
+                <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400&h=400&fit=crop&q=80" alt="Boutique hotel pool">
+              </div>
+              <div class="day-image">
+                <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=400&h=400&fit=crop&q=80" alt="Sunset cocktails">
+              </div>
+            </div>
+          </div>
+
+          <div class="day-block-enhanced reverse">
+            <div class="day-block-text">
+              <span class="day-label">Day 2</span>
+              <h3 class="day-title">Coastal Exploration</h3>
+              <p class="day-content">Morning boat trip along Kilifi Creek, visiting local fishing villages and learning about traditional boat-building. Lunch at a beachside restaurant in town. Afternoon free for optional activities: snorkeling at the marine park, paddleboarding, or exploring the local arts scene. Evening dinner at one of Kilifi's excellent restaurants known for blending Swahili and international flavors.</p>
+              <div class="day-activities">
+                <span class="activity-tag">Boat Trip</span>
+                <span class="activity-tag">Snorkeling</span>
+                <span class="activity-tag">Paddleboarding</span>
+                <span class="activity-tag">Local Cuisine</span>
+              </div>
+            </div>
+            <div class="day-block-images">
+              <div class="day-image">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=400&fit=crop&q=80" alt="Traditional boat">
+              </div>
+              <div class="day-image">
+                <img src="https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?w=400&h=400&fit=crop&q=80" alt="Snorkeling">
+              </div>
+              <div class="day-image large">
+                <img src="https://images.unsplash.com/photo-1533777324565-a040eb52fac1?w=800&h=400&fit=crop&q=80" alt="Beachside dining">
+              </div>
+            </div>
+          </div>
+
+          <div class="day-block-enhanced">
+            <div class="day-block-text">
+              <span class="day-label">Day 3</span>
+              <h3 class="day-title">Departure</h3>
+              <p class="day-content">Leisurely morning with breakfast overlooking the creek. Time for a final swim or massage before transfer to Mombasa airport, or continue your journey to Lamu Island for a complete Kenyan coast experience.</p>
+              <div class="day-activities">
+                <span class="activity-tag">Creek Breakfast</span>
+                <span class="activity-tag">Spa Treatment</span>
+                <span class="activity-tag">Airport Transfer</span>
+              </div>
+            </div>
+            <div class="day-block-images duo">
+              <div class="day-image">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&h=400&fit=crop&q=80" alt="Breakfast setup">
+              </div>
+              <div class="day-image">
+                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbec6c?w=500&h=400&fit=crop&q=80" alt="Spa relaxation">
+              </div>
+            </div>
+          </div>
+
+          <h2 style="margin-top: var(--space-lg);">What's Included</h2>
+          <ul style="color: var(--color-text-light); line-height: 1.8; margin-left: 1.5rem;">
+            <li>2 nights boutique hotel (B&B)</li>
+            <li>All airport transfers</li>
+            <li>Boat trip along Kilifi Creek</li>
+            <li>Welcome dinner</li>
+          </ul>
+        </div>
+
+        <div class="itin-sidebar">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Trip Details</h3>
+            <div class="sidebar-content">
+              <p><strong>Duration:</strong> 3 days / 2 nights</p>
+              <p style="margin-top: 0.5rem;"><strong>Starting from:</strong> $2,500 per person</p>
+              <p style="margin-top: 0.5rem;"><strong>Best for:</strong> Beach lovers, couples, solo travelers</p>
+              <p style="margin-top: 0.5rem;"><strong>Activity level:</strong> Easy</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Where You'll Stay</h3>
+            <div class="sidebar-stays">
+              <a href="../stays/" class="sidebar-stay-card">
+                <div class="sidebar-stay-image">
+                  <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=300&h=200&fit=crop&q=80" alt="Kilifi boutique hotel">
+                </div>
+                <div class="sidebar-stay-content">
+                  <strong>Boutique Creek Hotel</strong>
+                  <span>Waterfront retreat</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Best Time to Go</h3>
+            <div class="sidebar-content">
+              <p><strong>Best weather:</strong> December - March</p>
+              <p style="margin-top: 0.5rem;"><strong>Also good:</strong> June - October</p>
+              <p style="margin-top: 0.5rem;"><strong>Avoid:</strong> April - May (rainy)</p>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Good to Know</h3>
+            <div class="sidebar-content">
+              <p><strong>Language:</strong> Swahili, English</p>
+              <p style="margin-top: 0.5rem;"><strong>Currency:</strong> Kenyan Shilling</p>
+              <p style="margin-top: 0.5rem;"><strong>Visa:</strong> eVisa required for most</p>
+            </div>
+          </div>
+
+          <div class="book-cta">
+            <h3>Get Your Quote</h3>
+            <p>Ready for Kilifi? Get a personalized quote for your dates.</p>
+            <a href="../request-quote.html?trip=Kilifi%20Coast&price=From%20%242%2C500%20pp" class="btn">Request Quote</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Extend your journey</h2>
+      <p class="text-large">Continue to Lamu Island for the complete Kenyan coast experience.</p>
+      <a href="../plan-your-trip.html" class="btn btn-outline-dark">Plan Your Trip</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Creator Popup -->
+  <div class="creator-popup-overlay" id="creatorPopup">
+    <div class="creator-popup">
+      <button class="creator-popup-close" aria-label="Close">&times;</button>
+      <div class="creator-popup-image">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_200,h_200,q_auto,f_auto/v1/nubeaux/nia_creator" alt="Nia The Light">
+      </div>
+      <div class="creator-popup-content">
+        <span class="creator-popup-label">Creator</span>
+        <h3>Nia The Light</h3>
+        <p>Content creator and storyteller with a passion for African luxury, wellness, and solo travel. Every itinerary Nia curates reflects her philosophy: travel should nourish the soul.</p>
+        <a href="../creators/nia.html" class="creator-popup-link">View Full Profile</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    const creatorBtn = document.querySelector('.creator-badge-btn');
+    const creatorPopup = document.getElementById('creatorPopup');
+    const closeBtn = creatorPopup?.querySelector('.creator-popup-close');
+    if (creatorBtn && creatorPopup) {
+      creatorBtn.addEventListener('click', () => { creatorPopup.classList.add('active'); document.body.style.overflow = 'hidden'; });
+      closeBtn?.addEventListener('click', () => { creatorPopup.classList.remove('active'); document.body.style.overflow = ''; });
+      creatorPopup.addEventListener('click', (e) => { if (e.target === creatorPopup) { creatorPopup.classList.remove('active'); document.body.style.overflow = ''; } });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && creatorPopup.classList.contains('active')) { creatorPopup.classList.remove('active'); document.body.style.overflow = ''; } });
+    }
+  </script>
+</body>
+</html>
