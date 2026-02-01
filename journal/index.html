@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Travel stories, guides, and inspiration from the NUBEAUX Travel team. Authentic experiences from creatives who've been there.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <title>Journal | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .journal-hero {
+      position: relative;
+      min-height: 50vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .journal-hero .hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .journal-hero .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .journal-hero .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+    }
+
+    .journal-hero .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--color-white);
+      padding: var(--space-xl);
+    }
+
+    .journal-hero h1 {
+      color: var(--color-white);
+      margin-bottom: var(--space-sm);
+    }
+
+    .journal-hero p {
+      color: rgba(255,255,255,0.9);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .journal-intro {
+      padding: var(--space-xl) 0;
+      text-align: center;
+      background-color: var(--color-warm-cream);
+    }
+
+    .journal-intro p {
+      font-family: var(--font-serif);
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .journal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .journal-card {
+      display: block;
+      background: var(--color-white);
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .journal-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .journal-card-image {
+      aspect-ratio: 16/10;
+      overflow: hidden;
+    }
+
+    .journal-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .journal-card:hover .journal-card-image img {
+      transform: scale(1.05);
+    }
+
+    .journal-card-content {
+      padding: var(--space-md);
+    }
+
+    .journal-card-meta {
+      display: flex;
+      gap: var(--space-sm);
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .journal-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-sm);
+      line-height: 1.4;
+    }
+
+    .journal-card p {
+      font-size: 0.9375rem;
+      color: var(--color-text-light);
+      line-height: 1.7;
+    }
+
+    .featured-article {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      min-height: 60vh;
+      margin-bottom: var(--space-xl);
+    }
+
+    .featured-article-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-article-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .featured-article:hover .featured-article-image img {
+      transform: scale(1.03);
+    }
+
+    .featured-article-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-2xl);
+      background-color: var(--color-sage-light);
+    }
+
+    .featured-article-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .featured-article h2 {
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      margin-bottom: var(--space-md);
+      line-height: 1.3;
+    }
+
+    .featured-article p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+    }
+
+    .coming-soon-message {
+      text-align: center;
+      padding: var(--space-2xl);
+      background: var(--color-ecru);
+    }
+
+    .coming-soon-message h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .coming-soon-message p {
+      max-width: 500px;
+      margin: 0 auto var(--space-lg);
+      color: var(--color-text-light);
+    }
+
+    @media (max-width: 1024px) {
+      .journal-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .featured-article {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-article-image {
+        min-height: 50vh;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .journal-hero {
+        min-height: 100vh;
+        min-height: 100dvh;
+      }
+
+      .journal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-article-content {
+        padding: var(--space-lg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../journal/">Journal</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../journal/">Journal</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="journal-hero">
+    <div class="hero-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Travel journal">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Journal</h1>
+      <p>Stories, guides, and inspiration from our travels. First-hand experiences from the places we've been.</p>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="journal-intro">
+    <div class="container">
+      <p>Every story here comes from personal experience. These aren't secondhand accounts or researched pieces&mdash;they're real moments from real journeys, shared to inspire yours.</p>
+    </div>
+  </section>
+
+  <!-- Coming Soon -->
+  <section class="section">
+    <div class="container">
+      <div class="coming-soon-message">
+        <h2>Coming Soon</h2>
+        <p>We're curating our travel stories and guides. Check back soon for in-depth articles, destination guides, and behind-the-scenes looks at our journeys.</p>
+        <a href="../plan-your-trip.html" class="btn btn-primary">Plan Your Trip</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="split-section">
+    <div class="split-image">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_900,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Travel planning">
+    </div>
+    <div class="split-content centered" style="background-color: var(--color-warm-cream);">
+      <h2>Ready to travel?</h2>
+      <hr class="hr-accent centered">
+      <p style="max-width: 400px;">Don't wait for the stories. Start writing your own.</p>
+      <a href="../plan-your-trip.html" class="btn btn-primary" style="margin-top: var(--space-md);">Start Planning</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
