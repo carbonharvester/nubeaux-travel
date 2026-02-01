@@ -2783,14 +2783,24 @@ p {
 }
 
 @media (max-width: 768px) {
-  .day-block-text .day-title {
-    font-size: 1.5rem;
+  .day-block-enhanced {
+    display: flex;
+    flex-direction: column;
   }
 
   .day-block-images {
+    order: 1;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     aspect-ratio: 2/1;
+  }
+
+  .day-block-text {
+    order: 2;
+  }
+
+  .day-block-text .day-title {
+    font-size: 1.5rem;
   }
 
   .day-block-images .day-image.large,
