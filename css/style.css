@@ -1403,8 +1403,16 @@ p {
     padding: 0 var(--space-sm);
   }
 
+  /* Hero - fullscreen on mobile like andBeyond */
   .hero {
-    min-height: 85vh;
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+  }
+
+  .hero-minimal {
+    align-items: flex-end;
+    justify-content: flex-start;
   }
 
   .hero-content {
@@ -1412,7 +1420,26 @@ p {
   }
 
   .hero-content-bottom-left {
-    padding: var(--space-lg) var(--space-sm);
+    text-align: left;
+    padding: var(--space-lg) var(--space-md);
+    padding-bottom: calc(var(--space-xl) + env(safe-area-inset-bottom, 0px));
+    max-width: 100%;
+  }
+
+  .hero-content-bottom-left .hero-title {
+    font-size: clamp(2.25rem, 10vw, 3rem);
+    margin-bottom: var(--space-md);
+    line-height: 1.1;
+  }
+
+  /* andBeyond-style outline button on mobile hero */
+  .hero-content-bottom-left .btn-outline {
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 1.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    background: transparent;
+    color: var(--color-white);
   }
 
   .hero-title {
@@ -1422,6 +1449,11 @@ p {
   .hero-subtitle {
     font-size: 1rem;
     margin-bottom: var(--space-md);
+  }
+
+  /* Hide scroll indicator on mobile */
+  .scroll-indicator {
+    display: none;
   }
 
   .destinations-grid,
