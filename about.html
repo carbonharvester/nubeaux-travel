@@ -282,8 +282,16 @@
     }
 
     @media (max-width: 768px) {
+      .about-hero {
+        min-height: 100vh;
+        min-height: 100dvh;
+        min-height: -webkit-fill-available;
+      }
       .about-hero-content {
         padding: var(--space-lg);
+      }
+      .split-section:first-of-type .split-image {
+        display: none;
       }
       .split-content {
         padding: var(--space-lg);
