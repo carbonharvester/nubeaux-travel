@@ -413,32 +413,36 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // ========================================
-  // HORIZONTAL SCROLL PROGRESS BAR
+  // HORIZONTAL SCROLL BAR
   // ========================================
 
   document.querySelectorAll('.scroll-wrapper').forEach(wrapper => {
     const scrollContainer = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll');
-    const progressBar = wrapper.querySelector('.scroll-progress-bar');
+    const track = wrapper.querySelector('.scroll-progress');
+    const thumb = wrapper.querySelector('.scroll-progress-bar');
 
-    if (!scrollContainer || !progressBar) return;
+    if (!scrollContainer || !track || !thumb) return;
 
-    // Update progress bar width based on scroll position
-    const updateProgress = () => {
+    // Move thumb position based on scroll
+    const updateThumb = () => {
       const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
       if (maxScroll <= 0) {
-        progressBar.style.width = '100%';
+        thumb.style.left = '0px';
         return;
       }
-      const percent = (scrollContainer.scrollLeft / maxScroll) * 100;
-      progressBar.style.width = percent + '%';
+      const scrollPercent = scrollContainer.scrollLeft / maxScroll;
+      const trackWidth = track.offsetWidth;
+      const thumbWidth = thumb.offsetWidth;
+      const maxLeft = trackWidth - thumbWidth;
+      thumb.style.left = (scrollPercent * maxLeft) + 'px';
     };
 
     // Listen for scroll
-    scrollContainer.addEventListener('scroll', updateProgress, { passive: true });
+    scrollContainer.addEventListener('scroll', updateThumb, { passive: true });
 
     // Initial update
-    updateProgress();
-    window.addEventListener('load', updateProgress);
+    updateThumb();
+    window.addEventListener('load', updateThumb);
   });
 
   // ========================================

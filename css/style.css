@@ -699,22 +699,24 @@ p {
   padding: var(--space-md);
 }
 
-/* Custom Scroll Progress Bar */
+/* Custom Scroll Bar */
 .scroll-progress {
   width: 200px;
-  height: 2px;
+  height: 3px;
   background-color: var(--color-light-grey);
   margin: var(--space-md) auto 0;
-  border-radius: 1px;
-  overflow: hidden;
+  border-radius: 2px;
+  position: relative;
 }
 
 .scroll-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
-  width: 0%;
+  width: 50px;
   background-color: var(--color-accent);
-  border-radius: 1px;
-  transition: width 0.05s linear;
+  border-radius: 2px;
 }
 
 /* ----- Full-Bleed Image Section ----- */
