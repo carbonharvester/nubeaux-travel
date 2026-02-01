@@ -419,7 +419,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const scrollWrappers = document.querySelectorAll('.scroll-wrapper');
 
   scrollWrappers.forEach(wrapper => {
-    const scrollContainer = wrapper.querySelector('.destinations-scroll, .itineraries-scroll');
+    // Find any horizontal scroll container inside the wrapper
+    const scrollContainer = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll') ||
+                           wrapper.querySelector('[class*="-scroll"]:not(.scroll-track):not(.scroll-thumb)');
     const scrollTrack = wrapper.querySelector('.scroll-track');
     const scrollThumb = wrapper.querySelector('.scroll-thumb');
 

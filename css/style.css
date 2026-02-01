@@ -707,16 +707,20 @@ p {
   background-color: var(--color-light-grey);
   margin: var(--space-md) auto 0;
   border-radius: 1px;
+  overflow: visible;
 }
 
 .scroll-thumb {
   position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
   background-color: var(--color-accent);
   border-radius: 1px;
   width: 30%;
-  left: 0;
-  transition: left 0.1s ease-out;
+  transition: left 0.15s ease-out;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 /* ----- Full-Bleed Image Section ----- */
