@@ -20,21 +20,53 @@
 
   <style>
     .inquiry-hero {
-      background-color: var(--color-slate);
-      color: var(--color-white);
-      padding: var(--space-xl) 0;
+      position: relative;
+      min-height: 50vh;
       margin-top: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      overflow: hidden;
+    }
+
+    .inquiry-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .inquiry-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .inquiry-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+      z-index: 2;
+    }
+
+    .inquiry-hero-content {
+      position: relative;
+      z-index: 3;
+      color: var(--color-white);
+      padding: var(--space-xl) var(--space-md);
+      max-width: 600px;
     }
 
     .inquiry-hero h1 {
+      color: var(--color-white);
       margin-bottom: var(--space-sm);
+      font-size: clamp(2.5rem, 6vw, 4rem);
     }
 
     .inquiry-hero p {
-      opacity: 0.8;
-      max-width: 500px;
-      margin: 0 auto;
+      font-size: 1.125rem;
+      opacity: 0.95;
+      line-height: 1.6;
     }
 
     .inquiry-section {
@@ -126,16 +158,72 @@
     }
 
     @media (max-width: 768px) {
+      .inquiry-hero {
+        min-height: 70vh;
+        min-height: 70dvh;
+      }
+
+      .inquiry-hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: var(--space-md);
+      }
+
+      .inquiry-hero p {
+        font-size: 1rem;
+      }
+
+      .inquiry-section {
+        padding: var(--space-lg) 0;
+      }
+
       .inquiry-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-lg);
+      }
+
+      .inquiry-grid .inquiry-form {
+        order: -1;
       }
 
       .inquiry-info {
         padding-right: 0;
       }
 
+      .inquiry-form {
+        padding: var(--space-md);
+        margin: 0 calc(-1 * var(--space-md));
+        width: calc(100% + var(--space-md) * 2);
+      }
+
       .form-row {
         grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+
+      .form-group {
+        margin-bottom: var(--space-sm);
+      }
+
+      .inquiry-info h2 {
+        font-size: 1.5rem;
+      }
+
+      .inquiry-step {
+        gap: var(--space-sm);
+      }
+
+      .step-number {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+      }
+
+      .step-content h4 {
+        font-size: 0.9375rem;
+      }
+
+      .step-content p {
+        font-size: 0.875rem;
       }
     }
   </style>
@@ -175,9 +263,13 @@
 
   <!-- Hero -->
   <section class="inquiry-hero">
-    <div class="container">
+    <div class="inquiry-hero-bg">
+      <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1920&h=1080&fit=crop&q=80" alt="African safari landscape">
+    </div>
+    <div class="inquiry-hero-overlay"></div>
+    <div class="inquiry-hero-content">
       <h1>Let's plan your journey.</h1>
-      <p>Tell us where you want to go. We'll handle the rest.</p>
+      <p>Tell us where you want to go. We'll craft an experience you'll remember forever.</p>
     </div>
   </section>
 
@@ -343,7 +435,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <span class="logo-text" style="font-size: 1.25rem;">NUBEAUX TRAVEL</span>
+          <img src="assets/logo.svg" alt="NUBEAUX" style="height: 20px; margin-bottom: var(--space-md);">
           <p>Curated luxury travel experiences from creatives who've been there. Part of the NUBEAUX Collective family.</p>
         </div>
 
