@@ -527,5 +527,78 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('mouseup', () => {
       thumbDragging = false;
     });
+
+    // ========================================
+    // TOUCH SUPPORT FOR HORIZONTAL SCROLL
+    // ========================================
+
+    let touchStartX = 0;
+    let touchStartScrollLeft = 0;
+    let isTouchMoving = false;
+
+    scrollContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].pageX;
+      touchStartScrollLeft = scrollContainer.scrollLeft;
+      isTouchMoving = true;
+    }, { passive: true });
+
+    scrollContainer.addEventListener('touchmove', (e) => {
+      if (!isTouchMoving) return;
+      const touchX = e.touches[0].pageX;
+      const diff = touchStartX - touchX;
+      scrollContainer.scrollLeft = touchStartScrollLeft + diff;
+    }, { passive: true });
+
+    scrollContainer.addEventListener('touchend', () => {
+      isTouchMoving = false;
+    }, { passive: true });
   });
+
+  // ========================================
+  // DISABLE PARALLAX ON MOBILE FOR PERFORMANCE
+  // ========================================
+
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (isMobile || prefersReducedMotion) {
+    // Remove parallax transforms on mobile for smoother scrolling
+    document.querySelectorAll('.hero-bg video, .hero-bg img, .parallax-bg').forEach(el => {
+      el.style.transform = 'none';
+    });
+
+    // Disable magnetic buttons on touch devices
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.style.transform = 'none';
+    });
+  }
+
+  // ========================================
+  // MOBILE MENU - CLOSE ON ESCAPE KEY
+  // ========================================
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const menuToggle = document.querySelector('.menu-toggle');
+      if (mobileMenu && mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        menuToggle.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+
+  // ========================================
+  // PREVENT BODY SCROLL WHEN MENU OPEN
+  // ========================================
+
+  const preventBodyScroll = (e) => {
+    const mobileMenu = document.querySelector('.mobile-menu');
+    if (mobileMenu && mobileMenu.classList.contains('active')) {
+      e.preventDefault();
+    }
+  };
+
+  document.addEventListener('touchmove', preventBodyScroll, { passive: false });
 });

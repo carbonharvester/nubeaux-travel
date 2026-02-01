@@ -67,13 +67,25 @@
 
     .dest-hero h1 {
       font-size: clamp(3rem, 8vw, 5rem);
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-sm);
+      color: var(--color-white);
     }
 
     .dest-hero p {
-      font-size: 1.25rem;
-      opacity: 0.9;
-      max-width: 600px;
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 500px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .dest-hero p {
+        display: none;
+      }
+
+      .dest-hero h1 {
+        margin-bottom: var(--space-xs);
+      }
     }
 
     .dest-content {
@@ -332,7 +344,7 @@
 
           <p>Beyond the Mara, Kenya offers remarkable diversity. The Laikipia Plateau has become a conservation success story with some of the most exclusive camps in Africa. Amboseli delivers iconic views of Kilimanjaro with elephants in the foreground. And the coast around Lamu offers Swahili culture and Indian Ocean beauty. This is a country that has been welcoming travellers for over a century, and it shows in the refinement of the experience.</p>
 
-          <h2 style="margin-top: var(--space-lg);">Our Favorite Experiences</h2>
+          <h2 style="margin-top: var(--space-lg);">Nia's Favorite Experiences</h2>
           <ul class="highlight-list">
             <li><strong>Masai Mara</strong> — The world's greatest wildlife reserve</li>
             <li><strong>Great Migration</strong> — River crossings from July to October</li>

@@ -67,13 +67,25 @@
 
     .dest-hero h1 {
       font-size: clamp(3rem, 8vw, 5rem);
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-sm);
+      color: var(--color-white);
     }
 
     .dest-hero p {
-      font-size: 1.25rem;
-      opacity: 0.9;
-      max-width: 600px;
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 500px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .dest-hero p {
+        display: none;
+      }
+
+      .dest-hero h1 {
+        margin-bottom: var(--space-xs);
+      }
     }
 
     .dest-content {
@@ -267,7 +279,7 @@
 
           <p>For travellers, Jozi (as locals call it) serves two purposes: it's a destination in its own right for those seeking urban Africa, and it's the ideal gateway to safari country. Many of our itineraries begin or end here, allowing time to decompress, explore, and experience the city before heading into the bush.</p>
 
-          <h2 style="margin-top: var(--space-lg);">Our Favorite Experiences</h2>
+          <h2 style="margin-top: var(--space-lg);">Nia's Favorite Experiences</h2>
           <ul class="highlight-list">
             <li><strong>Apartheid Museum</strong> — Essential for understanding South Africa's history</li>
             <li><strong>Maboneng District</strong> — Street art, studios, and Sunday markets</li>

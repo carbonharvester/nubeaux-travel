@@ -605,6 +605,36 @@ p {
   transform: translateY(0);
 }
 
+/* Centered Destination Cards */
+.destination-card-centered .destination-card-overlay {
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  padding-bottom: var(--space-lg);
+}
+
+.destination-card-centered h3 {
+  margin-bottom: var(--space-sm);
+}
+
+.btn-discover {
+  display: inline-block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.625rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: var(--color-white);
+  background: transparent;
+  transition: all var(--transition-fast);
+}
+
+.destination-card:hover .btn-discover {
+  background: var(--color-white);
+  color: var(--color-text);
+  border-color: var(--color-white);
+}
+
 /* Horizontal Scroll Wrapper with Custom Scrollbar */
 .scroll-wrapper {
   position: relative;
@@ -865,6 +895,154 @@ p {
 
 .creator-card-link:hover {
   gap: 0.75rem;
+}
+
+/* ----- Must-Do Experiences Section ----- */
+.must-do-section {
+  margin-top: var(--space-xl);
+  padding: var(--space-lg);
+  background-color: var(--color-sage-light);
+}
+
+.must-do-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.must-do-item {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+}
+
+.must-do-item span:first-child {
+  font-size: 1.5rem;
+  font-family: var(--font-serif);
+  color: var(--color-accent);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.must-do-item strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--color-text);
+}
+
+.must-do-item span:last-child {
+  font-size: 0.875rem;
+  color: var(--color-text-light);
+}
+
+@media (max-width: 768px) {
+  .must-do-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .must-do-section {
+    padding: var(--space-md);
+    margin-left: calc(var(--space-sm) * -1);
+    margin-right: calc(var(--space-sm) * -1);
+  }
+}
+
+/* ----- Offers Section ----- */
+.offers-section {
+  background-color: var(--color-sage-light);
+}
+
+.offers-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+.offer-card {
+  background-color: var(--color-white);
+  overflow: hidden;
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.offer-card:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.offer-card-image {
+  position: relative;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+}
+
+.offer-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.offer-card:hover .offer-card-image img {
+  transform: scale(1.05);
+}
+
+.offer-tag {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  font-size: 0.625rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  padding: 0.375rem 0.75rem;
+}
+
+.offer-card-content {
+  padding: var(--space-md);
+}
+
+.offer-label {
+  display: block;
+  font-size: 0.625rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-xs);
+}
+
+.offer-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+.offer-card p {
+  font-size: 0.9375rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-md);
+  line-height: 1.7;
+}
+
+.offer-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.offer-price {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  color: var(--color-text);
+}
+
+@media (max-width: 768px) {
+  .offers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .offer-card h3 {
+    font-size: 1.25rem;
+  }
 }
 
 /* ----- CTA Section ----- */
@@ -1172,6 +1350,13 @@ p {
 
 /* ----- Responsive ----- */
 @media (max-width: 1024px) {
+  :root {
+    --header-height: 70px;
+    --space-xl: 4rem;
+    --space-2xl: 5rem;
+    --space-3xl: 6rem;
+  }
+
   .destinations-grid,
   .stays-grid,
   .itineraries-grid {
@@ -1190,6 +1375,18 @@ p {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --header-height: 60px;
+    --space-lg: 2.5rem;
+    --space-xl: 3rem;
+    --space-2xl: 4rem;
+    --space-3xl: 5rem;
+  }
+
+  html {
+    font-size: 15px;
+  }
+
   .nav {
     display: none;
   }
@@ -1199,11 +1396,32 @@ p {
   }
 
   .header-inner {
-    padding: 0 var(--space-md);
+    padding: 0 var(--space-sm);
+  }
+
+  .container {
+    padding: 0 var(--space-sm);
   }
 
   .hero {
-    min-height: 90vh;
+    min-height: 85vh;
+  }
+
+  .hero-content {
+    padding: var(--space-sm);
+  }
+
+  .hero-content-bottom-left {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
   }
 
   .destinations-grid,
@@ -1211,6 +1429,7 @@ p {
   .values-grid,
   .itineraries-grid {
     grid-template-columns: 1fr;
+    gap: var(--space-sm);
   }
 
   .creators-grid {
@@ -1224,7 +1443,19 @@ p {
 
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: var(--space-lg);
+    gap: var(--space-md);
+  }
+
+  .footer-brand {
+    margin-bottom: var(--space-md);
+  }
+
+  .footer-col {
+    text-align: center;
+  }
+
+  .footer-links {
+    align-items: center;
   }
 
   .footer-bottom {
@@ -1239,13 +1470,402 @@ p {
     gap: var(--space-sm);
   }
 
+  .section-header-left a {
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    font-size: 0.6875rem;
+  }
+
   .destinations-scroll .destination-card {
     flex: 0 0 85vw;
     min-width: unset;
   }
 
+  .itineraries-scroll .itinerary-card-scroll {
+    flex: 0 0 85vw;
+    min-width: unset;
+  }
+
+  .destination-card {
+    aspect-ratio: 3/4;
+  }
+
+  .destination-card-overlay {
+    padding: var(--space-md);
+  }
+
+  .destination-card h3 {
+    font-size: 1.5rem;
+  }
+
+  .full-bleed-section {
+    min-height: 60vh;
+  }
+
   .full-bleed-content {
-    padding: var(--space-lg);
+    padding: var(--space-md) var(--space-sm);
+    max-width: 100%;
+  }
+
+  .full-bleed-content h2 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  /* Buttons - larger touch targets */
+  .btn {
+    padding: 0.875rem 1.75rem;
+    font-size: 0.75rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-cta, .mobile-menu-cta {
+    min-height: 48px;
+  }
+
+  /* Intro statement */
+  .intro-statement {
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    padding: 0 var(--space-xs);
+  }
+
+  .intro-statement br {
+    display: none;
+  }
+
+  /* Feature strip */
+  .feature-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .feature-strip-item {
+    padding: var(--space-md);
+  }
+
+  .feature-strip-item h4 {
+    font-size: 0.9rem;
+  }
+
+  .feature-strip-item p {
+    font-size: 0.75rem;
+  }
+
+  /* Quote section */
+  .quote-section {
+    padding: var(--space-xl) 0;
+  }
+
+  .quote-section blockquote {
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+    padding: 0 var(--space-sm);
+  }
+
+  /* Mosaic grid */
+  .mosaic-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 150px);
+  }
+
+  .mosaic-grid .mosaic-large {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  /* Image CTA */
+  .image-cta-section {
+    min-height: 50vh;
+  }
+
+  .image-cta-content h2 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+  }
+
+  .image-cta-content p {
+    font-size: 0.9375rem;
+  }
+
+  /* Form improvements */
+  .form-input,
+  .form-textarea,
+  .form-select {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+    padding: 0.875rem;
+    min-height: 48px;
+  }
+
+  .form-label {
+    font-size: 0.75rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Scroll track positioning */
+  .scroll-track {
+    width: 120px;
+  }
+
+  /* Improved text readability on mobile */
+  p,
+  .dest-main p,
+  .stay-card p,
+  .sidebar-content,
+  .sidebar-content p {
+    color: var(--color-text);
+  }
+
+  /* Cards - better mobile sizing */
+  .itinerary-card-content,
+  .stay-card-content {
+    padding: var(--space-sm);
+  }
+
+  .itinerary-card h3,
+  .stay-card h3 {
+    font-size: 1.125rem;
+  }
+
+  .itinerary-card-meta {
+    font-size: 0.6875rem;
+    gap: var(--space-sm);
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    bottom: var(--space-md);
+  }
+
+  .scroll-indicator span {
+    font-size: 0.625rem;
+  }
+
+  .scroll-indicator::after {
+    height: 30px;
+  }
+}
+
+/* Mid-size phones (andBeyond-inspired breakpoint) */
+@media (max-width: 576px) {
+  :root {
+    --space-lg: 2.25rem;
+    --space-xl: 2.75rem;
+    --space-2xl: 3.5rem;
+  }
+
+  /* Mobile menu fullscreen takeover */
+  .mobile-menu {
+    padding: var(--space-xl) var(--space-md);
+    background-color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .mobile-menu a {
+    font-size: 1.75rem;
+    text-align: center;
+  }
+
+  .mobile-menu-cta {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    margin-top: var(--space-lg);
+  }
+
+  /* Hero - FULLSCREEN on mobile */
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    min-height: -webkit-fill-available;
+  }
+
+  .hero-minimal {
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .hero-content-bottom-left {
+    text-align: left;
+    padding: var(--space-lg) var(--space-md);
+    padding-bottom: calc(var(--space-xl) + env(safe-area-inset-bottom, 0px));
+    max-width: 100%;
+  }
+
+  .hero-content-bottom-left .hero-title {
+    font-size: clamp(2rem, 10vw, 2.5rem);
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-content-bottom-left .btn {
+    width: auto;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  /* Hide scroll indicator on mobile */
+  .scroll-indicator {
+    display: none;
+  }
+
+  /* Cards - full bleed on mobile */
+  .destinations-grid,
+  .stays-grid,
+  .itineraries-grid {
+    gap: var(--space-xs);
+  }
+
+  .destination-card,
+  .stay-card,
+  .itinerary-card {
+    aspect-ratio: 4/5;
+  }
+
+  .destination-card-overlay {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  /* Improved touch feedback */
+  .btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+
+  /* Section padding adjustments */
+  .section {
+    padding: var(--space-lg) 0;
+  }
+
+  .section-large {
+    padding: var(--space-xl) 0;
+  }
+
+  /* CTA sections */
+  .cta-section {
+    padding: var(--space-xl) 0;
+  }
+
+  .cta-section p {
+    font-size: 0.9375rem;
+  }
+
+  /* Quote section tighter */
+  .quote-section {
+    padding: var(--space-lg) 0;
+  }
+
+  /* Split sections stack better */
+  .split-image {
+    min-height: 45vh;
+  }
+
+  .split-content {
+    padding: var(--space-lg) var(--space-sm);
+  }
+}
+
+/* Small phones (iPhone SE, etc) */
+@media (max-width: 375px) {
+  :root {
+    --space-lg: 2rem;
+    --space-xl: 2.5rem;
+  }
+
+  html {
+    font-size: 14px;
+  }
+
+  .hero-content-bottom-left {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .btn {
+    padding: 0.75rem 1.25rem;
+    width: 100%;
+  }
+
+  .hero-content .btn {
+    width: auto;
+  }
+
+  .intro-statement {
+    font-size: 1.125rem;
+  }
+
+  .feature-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-strip-item {
+    border-right: none;
+    border-bottom: 1px solid var(--color-light-grey);
+  }
+
+  .feature-strip-item:last-child {
+    border-bottom: none;
+  }
+
+  .destinations-scroll .destination-card,
+  .itineraries-scroll .itinerary-card-scroll {
+    flex: 0 0 90vw;
+  }
+
+  .section-header-left h2 {
+    font-size: 1.5rem;
+  }
+
+  .mosaic-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 120px);
+  }
+
+  .mosaic-grid .mosaic-large {
+    grid-column: span 1;
+  }
+}
+
+/* Extra small phones (iPhone SE 1st gen, small Android) */
+@media (max-width: 352px) {
+  html {
+    font-size: 13px;
+  }
+
+  .header-inner {
+    padding: 0 var(--space-xs);
+  }
+
+  .logo img {
+    height: 20px;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .mobile-menu a {
+    font-size: 1.5rem;
+  }
+
+  .btn {
+    padding: 0.625rem 1rem;
+    font-size: 0.6875rem;
+  }
+
+  .destination-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .container {
+    padding: 0 var(--space-xs);
   }
 }
 
@@ -2154,5 +2774,244 @@ p {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   ENHANCED MOBILE EXPERIENCE
+   andBeyond + Belmond Inspired
+   ============================================ */
+
+/* Safe area insets for notched phones */
+@supports (padding: max(0px)) {
+  .header-inner {
+    padding-left: max(var(--space-sm), env(safe-area-inset-left));
+    padding-right: max(var(--space-sm), env(safe-area-inset-right));
+  }
+
+  .mobile-menu {
+    padding-left: max(var(--space-md), env(safe-area-inset-left));
+    padding-right: max(var(--space-md), env(safe-area-inset-right));
+    padding-bottom: max(var(--space-lg), env(safe-area-inset-bottom));
+  }
+
+  .footer {
+    padding-bottom: max(var(--space-lg), env(safe-area-inset-bottom));
+  }
+}
+
+/* Improved mobile scroll behavior */
+@media (max-width: 768px) {
+  /* Prevent overscroll bounce on iOS for cleaner feel */
+  html {
+    overscroll-behavior: none;
+  }
+
+  /* Smoother scrolling sections */
+  .destinations-scroll,
+  .itineraries-scroll {
+    scroll-padding: var(--space-sm);
+    -webkit-scroll-snap-type: x mandatory;
+    scroll-snap-type: x mandatory;
+  }
+
+  /* Better scroll momentum */
+  .destinations-scroll,
+  .itineraries-scroll {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .destinations-scroll::-webkit-scrollbar,
+  .itineraries-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Mobile footer - centered and elegant */
+  .footer {
+    text-align: center;
+    padding: var(--space-xl) 0 var(--space-lg);
+  }
+
+  .footer-brand {
+    margin-bottom: var(--space-lg);
+  }
+
+  .footer-brand p {
+    max-width: none;
+  }
+
+  .footer-heading {
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-sm);
+  }
+
+  .footer-links {
+    align-items: center;
+  }
+
+  .footer-bottom {
+    margin-top: var(--space-lg);
+  }
+
+  /* Mobile page hero - full bleed feel */
+  .page-hero {
+    min-height: 40vh;
+  }
+
+  .page-hero-simple {
+    padding: var(--space-xl) 0;
+  }
+
+  /* Full-bleed image sections on mobile */
+  .full-bleed-section {
+    min-height: 50vh;
+  }
+
+  .full-bleed-content {
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+    padding: var(--space-lg);
+    max-width: 100%;
+  }
+
+  /* Itinerary page mobile */
+  .itin-sidebar {
+    margin-top: var(--space-lg);
+    position: static;
+  }
+
+  .itin-grid {
+    gap: var(--space-md);
+  }
+
+  /* Creator badge mobile */
+  .creator-badge-btn {
+    padding: var(--space-sm);
+  }
+
+  .creator-badge-btn img {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Day blocks mobile */
+  .day-block {
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-md);
+  }
+
+  .day-title {
+    font-size: 1.25rem;
+  }
+
+  /* Image CTA mobile */
+  .image-cta-section {
+    min-height: 45vh;
+  }
+
+  .image-cta-content {
+    padding: var(--space-md);
+  }
+}
+
+/* Touch-friendly interactive states */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects that don't work on touch */
+  .destination-card:hover img,
+  .stay-card:hover .stay-card-image img,
+  .itinerary-card:hover .itinerary-card-image img {
+    transform: none;
+  }
+
+  /* Add active states instead */
+  .destination-card:active img,
+  .stay-card:active .stay-card-image img,
+  .itinerary-card:active .itinerary-card-image img {
+    transform: scale(1.02);
+  }
+
+  /* Button active states */
+  .btn:hover {
+    transform: none;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+    opacity: 0.85;
+  }
+
+  /* Nav link active state */
+  .nav a:active,
+  .mobile-menu a:active {
+    opacity: 0.7;
+  }
+
+  /* Card touch feedback */
+  .destination-card:active,
+  .stay-card:active,
+  .itinerary-card:active {
+    opacity: 0.95;
+  }
+
+  /* Larger tap targets for links */
+  .footer-links a {
+    padding: 0.5rem 0;
+    display: inline-block;
+  }
+}
+
+/* Landscape mobile (phones held sideways) */
+@media (max-width: 896px) and (max-height: 450px) and (orientation: landscape) {
+  .hero {
+    min-height: 100vh;
+  }
+
+  .hero-content {
+    padding: var(--space-sm);
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.875rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+
+  .page-hero {
+    min-height: 100vh;
+  }
+
+  .mobile-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+  }
+
+  .mobile-menu a {
+    font-size: 1.25rem;
+  }
+
+  .mobile-menu-cta {
+    width: auto;
+    margin-top: 0;
+  }
+}
+
+/* High DPI / Retina display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .logo img {
+    image-rendering: -webkit-optimize-contrast;
   }
 }

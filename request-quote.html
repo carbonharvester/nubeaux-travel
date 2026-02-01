@@ -54,30 +54,52 @@
     }
 
     .trip-summary {
-      background: var(--color-ecru);
-      padding: var(--space-lg);
+      background: var(--color-white);
       margin-top: var(--space-lg);
+      overflow: hidden;
+      border: 1px solid var(--color-light-grey);
     }
 
-    .trip-summary h3 {
-      font-size: 1.25rem;
-      margin-bottom: var(--space-md);
+    .trip-summary-image {
+      aspect-ratio: 16/9;
+      overflow: hidden;
     }
 
-    .trip-summary-item {
-      display: flex;
-      justify-content: space-between;
-      padding: var(--space-sm) 0;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-      font-size: 0.9375rem;
+    .trip-summary-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .trip-summary-item:last-child {
-      border-bottom: none;
+    .trip-summary-content {
+      padding: var(--space-md);
     }
 
     .trip-summary-label {
-      color: var(--color-warm-grey);
+      font-size: 0.625rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      display: block;
+      margin-bottom: var(--space-xs);
+    }
+
+    .trip-summary h3 {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .trip-summary-meta {
+      display: flex;
+      gap: var(--space-md);
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+    }
+
+    .trip-summary-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
     }
 
     .quote-form {
@@ -175,14 +197,17 @@
           <p>Once you submit, you'll receive a detailed proposal within 24 hours that you can review, adjust, and book when ready.</p>
 
           <div class="trip-summary" id="tripSummary" style="display: none;">
-            <h3>Selected Trip</h3>
-            <div class="trip-summary-item">
-              <span class="trip-summary-label">Itinerary</span>
-              <span id="summaryTrip">-</span>
+            <div class="trip-summary-image">
+              <img id="summaryImage" src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_340,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Selected Trip">
             </div>
-            <div class="trip-summary-item">
-              <span class="trip-summary-label">Starting From</span>
-              <span id="summaryPrice">-</span>
+            <div class="trip-summary-content">
+              <span class="trip-summary-label">Selected Itinerary</span>
+              <h3 id="summaryTrip">-</h3>
+              <div class="trip-summary-meta">
+                <span id="summaryDuration">3 Days / 2 Nights</span>
+                <span>•</span>
+                <span id="summaryPrice">-</span>
+              </div>
             </div>
           </div>
         </div>

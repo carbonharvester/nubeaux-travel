@@ -67,13 +67,25 @@
 
     .dest-hero h1 {
       font-size: clamp(3rem, 8vw, 5rem);
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-sm);
+      color: var(--color-white);
     }
 
     .dest-hero p {
-      font-size: 1.25rem;
-      opacity: 0.9;
-      max-width: 600px;
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 500px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .dest-hero p {
+        display: none;
+      }
+
+      .dest-hero h1 {
+        margin-bottom: var(--space-xs);
+      }
     }
 
     .dest-content {
@@ -267,11 +279,11 @@
 
           <p>What sets Namibia apart is its accessibility and infrastructure. The roads are excellent, the lodges are world-class, and the experience feels refined without losing its wildness. This is a destination where you can drive yourself through game reserves, stay in architectural marvels built into desert rock, and watch the Milky Way from a bed under the stars.</p>
 
-          <h2 style="margin-top: var(--space-lg);">Our Favorite Experiences</h2>
+          <h2 style="margin-top: var(--space-lg);">Nia's Favorite Experiences</h2>
           <ul class="highlight-list">
             <li><strong>Etosha Game Drives</strong> — Self-drive or guided safaris around the salt pan</li>
             <li><strong>Sossusvlei Sunrise</strong> — The world's tallest dunes at golden hour</li>
-            <li><strong>Onguma Camp Kala</strong> — Design-forward luxury on Etosha's border</li>
+            <li><strong>Onguma The Fort</strong> — Afro-Moroccan tower bar overlooking Fischer's Pan</li>
             <li><strong>Skeleton Coast</strong> — Where desert meets ocean</li>
             <li><strong>Damaraland</strong> — Desert-adapted elephants and ancient rock art</li>
           </ul>
@@ -310,8 +322,8 @@
           <div class="sidebar-section">
             <h3 class="sidebar-title">Trip Length</h3>
             <div class="sidebar-content">
-              <p><strong>Minimum:</strong> 5 nights</p>
-              <p style="margin-top: 0.5rem;"><strong>Recommended:</strong> 7-10 nights</p>
+              <p><strong>Minimum:</strong> 3 nights</p>
+              <p style="margin-top: 0.5rem;"><strong>Recommended:</strong> 5+ nights</p>
             </div>
           </div>
         </div>
@@ -328,36 +340,25 @@
       </div>
 
       <div class="stays-grid">
-        <a href="../stays/onguma-camp-kala.html" class="stay-card">
-          <div class="stay-card-image">
-            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Onguma Camp Kala">
-          </div>
-          <div class="stay-card-content">
-            <span class="stay-card-label">Our Top Pick</span>
-            <h3>Onguma Camp Kala</h3>
-            <p>Design-forward luxury on Etosha's eastern border</p>
-          </div>
-        </a>
-
         <a href="../stays/onguma-the-fort.html" class="stay-card">
           <div class="stay-card-image">
             <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600&h=450&fit=crop&q=80" alt="Onguma The Fort">
           </div>
           <div class="stay-card-content">
-            <span class="stay-card-label">Adventure</span>
+            <span class="stay-card-label">Our Top Pick</span>
             <h3>Onguma The Fort</h3>
-            <p>Moorish-inspired architecture with waterhole views</p>
+            <p>Afro-Moroccan architecture with waterhole views</p>
           </div>
         </a>
 
-        <a href="../stays/" class="stay-card">
+        <a href="../stays/onguma-camp-kala.html" class="stay-card">
           <div class="stay-card-image">
-            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=450&fit=crop&q=80" alt="More Properties">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Onguma Camp Kala">
           </div>
           <div class="stay-card-content">
-            <span class="stay-card-label">View All</span>
-            <h3>More Properties</h3>
-            <p>Explore our curated collection</p>
+            <span class="stay-card-label">Ultra-Exclusive</span>
+            <h3>Onguma Camp Kala</h3>
+            <p>4 suites only. Design-forward luxury on Etosha's border</p>
           </div>
         </a>
       </div>

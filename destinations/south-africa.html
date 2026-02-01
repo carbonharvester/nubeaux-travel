@@ -64,13 +64,25 @@
 
     .dest-hero h1 {
       font-size: clamp(3rem, 8vw, 5rem);
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-sm);
+      color: var(--color-white);
     }
 
     .dest-hero p {
-      font-size: 1.25rem;
-      opacity: 0.9;
-      max-width: 600px;
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 500px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .dest-hero p {
+        display: none;
+      }
+
+      .dest-hero h1 {
+        margin-bottom: var(--space-xs);
+      }
     }
 
     .dest-content {
