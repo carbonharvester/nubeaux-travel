@@ -718,6 +718,7 @@ p {
   background-color: var(--color-accent);
   border-radius: 2px;
   transform: translateX(0);
+  transition: transform 0.1s ease-out;
   will-change: transform;
 }
 

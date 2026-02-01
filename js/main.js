@@ -416,20 +416,26 @@ document.addEventListener('DOMContentLoaded', function() {
   // HORIZONTAL SCROLL BAR
   // ========================================
 
-  document.querySelectorAll('.scroll-wrapper').forEach(wrapper => {
+  const scrollWrappers = document.querySelectorAll('.scroll-wrapper');
+
+  scrollWrappers.forEach(wrapper => {
     const scrollContainer = wrapper.querySelector('.destinations-scroll, .itineraries-scroll, .journal-scroll');
     const track = wrapper.querySelector('.scroll-progress');
     const thumb = wrapper.querySelector('.scroll-progress-bar');
 
-    if (!scrollContainer || !track || !thumb) return;
+    if (!scrollContainer || !track || !thumb) {
+      console.log('Missing scroll elements:', { scrollContainer: !!scrollContainer, track: !!track, thumb: !!thumb });
+      return;
+    }
 
-    // Update thumb position using transform (more reliable than left)
-    const updateThumb = () => {
+    // Update thumb position
+    function updateScrollBar() {
       const scrollWidth = scrollContainer.scrollWidth;
       const clientWidth = scrollContainer.clientWidth;
       const maxScroll = scrollWidth - clientWidth;
 
       if (maxScroll <= 0) {
+        thumb.style.width = '100%';
         thumb.style.transform = 'translateX(0)';
         return;
       }
@@ -438,13 +444,15 @@ document.addEventListener('DOMContentLoaded', function() {
       const trackWidth = track.offsetWidth;
       const thumbWidth = thumb.offsetWidth;
       const maxMove = trackWidth - thumbWidth;
-      const move = Math.round(scrollPercent * maxMove);
+      const moveX = scrollPercent * maxMove;
 
-      thumb.style.transform = `translateX(${move}px)`;
-    };
+      thumb.style.transform = `translateX(${moveX}px)`;
+    }
 
-    // Click on track to scroll
-    track.style.cursor = 'pointer';
+    // Scroll event listener
+    scrollContainer.addEventListener('scroll', updateScrollBar);
+
+    // Click track to scroll
     track.addEventListener('click', (e) => {
       const rect = track.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
@@ -456,22 +464,68 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
-    // Listen for scroll events
-    scrollContainer.addEventListener('scroll', updateThumb, { passive: true });
+    // Drag thumb to scroll
+    let isDragging = false;
+    let startX = 0;
+    let startScrollLeft = 0;
 
-    // Polling backup - catches scroll changes that events miss
-    let lastScroll = -1;
-    const poll = () => {
-      if (scrollContainer.scrollLeft !== lastScroll) {
-        lastScroll = scrollContainer.scrollLeft;
-        updateThumb();
+    thumb.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      startScrollLeft = scrollContainer.scrollLeft;
+      thumb.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - startX;
+      const trackWidth = track.offsetWidth;
+      const thumbWidth = thumb.offsetWidth;
+      const maxMove = trackWidth - thumbWidth;
+      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+      const scrollDelta = (dx / maxMove) * maxScroll;
+      scrollContainer.scrollLeft = startScrollLeft + scrollDelta;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        thumb.style.cursor = 'grab';
       }
-      requestAnimationFrame(poll);
-    };
-    requestAnimationFrame(poll);
+    });
 
-    // Initialize
-    updateThumb();
+    // Touch support for thumb dragging
+    thumb.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      startX = e.touches[0].clientX;
+      startScrollLeft = scrollContainer.scrollLeft;
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const dx = e.touches[0].clientX - startX;
+      const trackWidth = track.offsetWidth;
+      const thumbWidth = thumb.offsetWidth;
+      const maxMove = trackWidth - thumbWidth;
+      const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+      const scrollDelta = (dx / maxMove) * maxScroll;
+      scrollContainer.scrollLeft = startScrollLeft + scrollDelta;
+    }, { passive: true });
+
+    document.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Style thumb as draggable
+    thumb.style.cursor = 'grab';
+    track.style.cursor = 'pointer';
+
+    // Initial update
+    updateScrollBar();
+
+    // Update on window resize
+    window.addEventListener('resize', updateScrollBar);
   });
 
   // ========================================
