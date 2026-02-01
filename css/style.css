@@ -834,41 +834,135 @@ p {
   display: none;
 }
 
-/* ----- Journal Cards ----- */
-.journal-grid {
+/* ----- Journal Editorial Layout ----- */
+.journal-editorial {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-lg);
 }
 
-.journal-card {
+/* Featured Article */
+.journal-featured {
+  display: block;
   background-color: var(--color-white);
   overflow: hidden;
-  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+  transition: box-shadow var(--transition-fast);
 }
 
-.journal-card:hover {
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+.journal-featured:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
 }
 
-.journal-card-image {
+.journal-featured-image {
   aspect-ratio: 3/2;
   overflow: hidden;
 }
 
-.journal-card-image img {
+.journal-featured-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform var(--transition-slow);
 }
 
-.journal-card:hover .journal-card-image img {
+.journal-featured:hover .journal-featured-image img {
+  transform: scale(1.03);
+}
+
+.journal-featured-content {
+  padding: var(--space-lg);
+}
+
+.journal-featured-content h3 {
+  font-size: 1.75rem;
+  margin-bottom: var(--space-sm);
+  line-height: 1.25;
+}
+
+.journal-featured-content p {
+  font-size: 1rem;
+  color: var(--color-text-light);
+  line-height: 1.7;
+  margin-bottom: var(--space-md);
+}
+
+.journal-read-more {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.journal-read-more::after {
+  content: '→';
+  transition: transform var(--transition-fast);
+}
+
+.journal-featured:hover .journal-read-more::after {
+  transform: translateX(4px);
+}
+
+/* Secondary Articles */
+.journal-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.journal-card-compact {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-md);
+  background-color: var(--color-white);
+  padding: var(--space-sm);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.journal-card-compact:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.journal-compact-image {
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.journal-compact-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.journal-card-compact:hover .journal-compact-image img {
   transform: scale(1.05);
 }
 
-.journal-card-content {
-  padding: var(--space-md);
+.journal-compact-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: var(--space-sm);
+}
+
+.journal-compact-content h4 {
+  font-size: 1.125rem;
+  margin-bottom: var(--space-xs);
+  line-height: 1.3;
+}
+
+.journal-compact-content p {
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .journal-card-label {
@@ -880,35 +974,49 @@ p {
   display: block;
 }
 
-.journal-card h3 {
-  font-size: 1.25rem;
-  margin-bottom: var(--space-sm);
-  line-height: 1.3;
-}
-
-.journal-card p {
-  font-size: 0.875rem;
-  color: var(--color-text-light);
-  line-height: 1.6;
-}
-
 @media (max-width: 1024px) {
-  .journal-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .journal-editorial {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .journal-secondary {
+    flex-direction: row;
+  }
+
+  .journal-card-compact {
+    flex: 1;
+    grid-template-columns: 1fr;
+  }
+
+  .journal-compact-image {
+    aspect-ratio: 3/2;
+  }
+
+  .journal-compact-content {
+    padding: var(--space-sm) 0;
   }
 }
 
 @media (max-width: 768px) {
-  .journal-grid {
-    grid-template-columns: 1fr;
+  .journal-featured-content {
+    padding: var(--space-md);
   }
 
-  .journal-card-content {
-    padding: var(--space-sm);
+  .journal-featured-content h3 {
+    font-size: 1.5rem;
   }
 
-  .journal-card h3 {
-    font-size: 1.125rem;
+  .journal-secondary {
+    flex-direction: column;
+  }
+
+  .journal-card-compact {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .journal-compact-content h4 {
+    font-size: 1rem;
   }
 }
 
