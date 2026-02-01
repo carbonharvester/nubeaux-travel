@@ -702,12 +702,13 @@ p {
 /* Horizontal Scroll Bar */
 .scroll-bar {
   width: 200px;
-  height: 6px;
-  background: #e0e0e0;
-  border-radius: 3px;
-  margin: var(--space-lg) auto 0;
+  height: 8px;
+  background: #cccccc !important;
+  border-radius: 4px;
+  margin: 24px auto 0;
   position: relative;
   cursor: pointer;
+  display: block !important;
 }
 
 .scroll-bar-thumb {
@@ -716,13 +717,13 @@ p {
   left: 0;
   height: 100%;
   width: 50px;
-  background: #8B7355;
-  border-radius: 3px;
+  background: #B87333 !important;
+  border-radius: 4px;
   transition: left 0.15s ease-out;
 }
 
 .scroll-bar:hover .scroll-bar-thumb {
-  background: #2d2d2d;
+  background: #333333 !important;
 }
 
 /* ----- Full-Bleed Image Section ----- */
