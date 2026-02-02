@@ -1,5 +1,5 @@
 // Netlify Function to create Veriff verification session
-const fetch = require('node-fetch');
+// Using native fetch (Node 18+)
 
 exports.handler = async (event) => {
   // Only allow POST
