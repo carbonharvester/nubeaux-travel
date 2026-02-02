@@ -702,13 +702,12 @@ p {
 /* Horizontal Scroll Bar */
 .scroll-bar {
   width: 200px;
-  height: 8px;
-  background: #cccccc !important;
-  border-radius: 4px;
+  height: 3px;
+  background: #cccccc;
+  border-radius: 2px;
   margin: 24px auto 0;
   position: relative;
   cursor: pointer;
-  display: block !important;
 }
 
 .scroll-bar-thumb {
@@ -717,8 +716,8 @@ p {
   left: 0;
   height: 100%;
   width: 50px;
-  background: #B87333 !important;
-  border-radius: 4px;
+  background: #B87333;
+  border-radius: 2px;
   transition: left 0.15s ease-out;
 }
 
