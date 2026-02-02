@@ -165,6 +165,55 @@
       gap: var(--space-md);
     }
 
+    /* Filter Styles */
+    .itinerary-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-medium-grey);
+      margin-right: var(--space-xs);
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.8125rem;
+      border: 1px solid var(--color-light-grey);
+      background: var(--color-white);
+      color: var(--color-text);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .filter-btn.active {
+      background: var(--color-text);
+      color: var(--color-white);
+      border-color: var(--color-text);
+    }
+
+    .itinerary-card.hidden {
+      display: none;
+    }
+
     @media (max-width: 1024px) {
       .itinerary-featured,
       .itinerary-featured.reverse {
@@ -303,15 +352,64 @@
     </div>
   </a>
 
-  <!-- More Itineraries Grid -->
+  <!-- All Itineraries Grid -->
   <section class="itineraries-grid-section">
     <div class="container">
       <div class="section-header-left">
-        <h2>Featured Itineraries</h2>
+        <h2>All Itineraries</h2>
+      </div>
+
+      <!-- Filters -->
+      <div class="itinerary-filters">
+        <div class="filter-group">
+          <span class="filter-label">Duration:</span>
+          <button class="filter-btn active" data-filter="duration" data-value="all">All</button>
+          <button class="filter-btn" data-filter="duration" data-value="short">3-4 Days</button>
+          <button class="filter-btn" data-filter="duration" data-value="medium">5-6 Days</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">Region:</span>
+          <button class="filter-btn active" data-filter="region" data-value="all">All</button>
+          <button class="filter-btn" data-filter="region" data-value="namibia">Namibia</button>
+          <button class="filter-btn" data-filter="region" data-value="kenya">Kenya</button>
+          <button class="filter-btn" data-filter="region" data-value="south-africa">South Africa</button>
+          <button class="filter-btn" data-filter="region" data-value="mozambique">Mozambique</button>
+          <button class="filter-btn" data-filter="region" data-value="senegal">Senegal</button>
+        </div>
       </div>
 
       <div class="itineraries-compact-grid">
-        <a href="joburg-gateway.html" class="itinerary-card hover-lift">
+        <a href="namibia-safari.html" class="itinerary-card hover-lift" data-duration="short" data-region="namibia">
+          <div class="itinerary-card-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_375,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Namibia Safari">
+          </div>
+          <div class="itinerary-card-content">
+            <span class="itinerary-card-label">Onguma, Namibia</span>
+            <h3>Wilderness & Wonder</h3>
+          </div>
+        </a>
+
+        <a href="lamu-island.html" class="itinerary-card hover-lift" data-duration="short" data-region="kenya">
+          <div class="itinerary-card-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_375,q_auto,f_auto/v1769949645/RNI-Films-IMG-85112780-9D4C-4BC0-AC22-80A31BF1E813_x2eyd3.jpg" alt="Lamu Island">
+          </div>
+          <div class="itinerary-card-content">
+            <span class="itinerary-card-label">Lamu, Kenya</span>
+            <h3>Island Heritage</h3>
+          </div>
+        </a>
+
+        <a href="kilifi-coast.html" class="itinerary-card hover-lift" data-duration="short" data-region="kenya">
+          <div class="itinerary-card-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_375,q_auto,f_auto/v1769949672/dest_aruba_jewcz4.jpg" alt="Kilifi Coast">
+          </div>
+          <div class="itinerary-card-content">
+            <span class="itinerary-card-label">Kilifi, Kenya</span>
+            <h3>Coastal Retreat</h3>
+          </div>
+        </a>
+
+        <a href="joburg-gateway.html" class="itinerary-card hover-lift" data-duration="short" data-region="south-africa">
           <div class="itinerary-card-image">
             <img src="https://images.unsplash.com/photo-1577948000111-9c970dfe3743?w=600&h=375&fit=crop&q=80" alt="Johannesburg">
           </div>
@@ -321,9 +419,9 @@
           </div>
         </a>
 
-        <a href="mozambique-island-escape.html" class="itinerary-card hover-lift">
+        <a href="mozambique-island-escape.html" class="itinerary-card hover-lift" data-duration="medium" data-region="mozambique">
           <div class="itinerary-card-image">
-            <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&h=375&fit=crop&q=80" alt="Mozambique">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_375,q_auto,f_auto/v1770004990/Mozambique_Klein-192_l7ds4q.jpg" alt="Mozambique">
           </div>
           <div class="itinerary-card-content">
             <span class="itinerary-card-label">Bazaruto, Mozambique</span>
@@ -331,7 +429,7 @@
           </div>
         </a>
 
-        <a href="senegal-discovery.html" class="itinerary-card hover-lift">
+        <a href="senegal-discovery.html" class="itinerary-card hover-lift" data-duration="medium" data-region="senegal">
           <div class="itinerary-card-image">
             <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_375,q_auto,f_auto/v1769949679/dest_senegal_s3ij6n.jpg" alt="Senegal">
           </div>
@@ -401,5 +499,48 @@
   </footer>
 
   <script src="../js/main.js?v=2"></script>
+  <script>
+    // Filter functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll('.itineraries-compact-grid .itinerary-card');
+
+      let activeFilters = {
+        duration: 'all',
+        region: 'all'
+      };
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const filterType = this.dataset.filter;
+          const filterValue = this.dataset.value;
+
+          // Update active state for this filter group
+          document.querySelectorAll(`.filter-btn[data-filter="${filterType}"]`).forEach(b => {
+            b.classList.remove('active');
+          });
+          this.classList.add('active');
+
+          // Update active filters
+          activeFilters[filterType] = filterValue;
+
+          // Apply filters
+          cards.forEach(card => {
+            const cardDuration = card.dataset.duration;
+            const cardRegion = card.dataset.region;
+
+            const matchesDuration = activeFilters.duration === 'all' || cardDuration === activeFilters.duration;
+            const matchesRegion = activeFilters.region === 'all' || cardRegion === activeFilters.region;
+
+            if (matchesDuration && matchesRegion) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+        });
+      });
+    });
+  </script>
 </body>
 </html>
