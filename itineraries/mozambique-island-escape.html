@@ -685,6 +685,14 @@
         likesEl.textContent = likeBtn.classList.contains('liked') ? (currentLikes + 1) + ' likes' : (currentLikes - 1) + ' likes';
       });
 
+      // Comment button - focus input when clicked
+      const commentBtn = carousel.querySelector('.comment-btn');
+      const commentInputField = carousel.querySelector('.ig-comment-input input');
+      commentBtn?.addEventListener('click', () => {
+        commentInputField?.focus();
+        commentInputField?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
       // Comment moderation - auto-block negative words
       const blockedWords = ['hate', 'ugly', 'terrible', 'worst', 'awful', 'bad', 'boring', 'overpriced', 'scam', 'fake', 'sucks'];
       const commentInput = carousel.querySelector('.ig-comment-input input');

@@ -1247,8 +1247,8 @@ p {
 
 .footer-brand img {
   filter: brightness(0) invert(1);
-  height: 24px;
-  margin-bottom: var(--space-lg);
+  height: 18px;
+  margin-bottom: var(--space-md);
 }
 
 .footer-brand .logo-text {
@@ -1273,8 +1273,8 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
@@ -1287,8 +1287,8 @@ p {
 }
 
 .footer-social svg {
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
 }
 
 .footer-col {
