@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Verify your identity to complete your NUBEAUX Travel booking.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Identity Verification | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=3">
+
+  <style>
+    .verify-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-lg);
+      background: linear-gradient(135deg, var(--color-warm-cream) 0%, var(--color-sand) 100%);
+    }
+
+    .verify-card {
+      background: var(--color-white);
+      padding: var(--space-2xl);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    }
+
+    .verify-logo {
+      height: 24px;
+      margin-bottom: var(--space-lg);
+    }
+
+    .verify-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-lg);
+      background: var(--color-sage-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .verify-icon svg {
+      width: 40px;
+      height: 40px;
+      stroke: var(--color-accent);
+    }
+
+    .verify-card h1 {
+      font-size: 1.75rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .verify-card p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+      line-height: 1.7;
+    }
+
+    .verify-steps {
+      text-align: left;
+      background: var(--color-sand);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .verify-steps h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-medium-grey);
+      margin-bottom: var(--space-sm);
+    }
+
+    .verify-steps ol {
+      margin: 0;
+      padding-left: var(--space-md);
+    }
+
+    .verify-steps li {
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-xs);
+      color: var(--color-text);
+    }
+
+    .verify-form {
+      text-align: left;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-sm);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      margin-bottom: var(--space-xs);
+      color: var(--color-text);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 1px solid var(--color-light-grey);
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color var(--transition-fast);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+
+    .verify-btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      margin-top: var(--space-sm);
+    }
+
+    .verify-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .verify-note {
+      font-size: 0.8125rem;
+      color: var(--color-medium-grey);
+      margin-top: var(--space-md);
+    }
+
+    .verify-note a {
+      color: var(--color-accent);
+    }
+
+    .error-message {
+      background: #fee;
+      color: #c00;
+      padding: var(--space-sm);
+      margin-bottom: var(--space-md);
+      font-size: 0.875rem;
+      display: none;
+    }
+
+    .loading {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+
+    .loading.active {
+      display: flex;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--color-light-grey);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .verify-card {
+        padding: var(--space-lg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="verify-page">
+    <div class="verify-card">
+      <img src="assets/logo.svg" alt="NUBEAUX" class="verify-logo">
+
+      <div class="verify-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" />
+        </svg>
+      </div>
+
+      <h1>Verify Your Identity</h1>
+      <p>To complete your booking and ensure secure travel arrangements, we need to verify your identity. This only takes a few minutes.</p>
+
+      <div class="verify-steps">
+        <h3>What you'll need</h3>
+        <ol>
+          <li>A valid government-issued ID (passport, driver's license, or national ID)</li>
+          <li>A device with a camera for a quick selfie</li>
+          <li>Good lighting for clear photos</li>
+        </ol>
+      </div>
+
+      <div class="error-message" id="error-message"></div>
+
+      <form class="verify-form" id="verify-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary verify-btn" id="submit-btn">
+          <span id="btn-text">Start Verification</span>
+          <div class="loading" id="btn-loading">
+            <div class="spinner"></div>
+            <span>Preparing...</span>
+          </div>
+        </button>
+      </form>
+
+      <p class="verify-note">
+        Your data is securely processed by <a href="https://www.veriff.com" target="_blank" rel="noopener">Veriff</a>.
+        By proceeding, you agree to our <a href="privacy.html">Privacy Policy</a>.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('verify-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submit-btn');
+      const btnText = document.getElementById('btn-text');
+      const btnLoading = document.getElementById('btn-loading');
+      const errorMessage = document.getElementById('error-message');
+
+      // Get form data
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      // Get booking ID from URL if present
+      const urlParams = new URLSearchParams(window.location.search);
+      const bookingId = urlParams.get('booking');
+
+      // Show loading state
+      btnText.style.display = 'none';
+      btnLoading.classList.add('active');
+      submitBtn.disabled = true;
+      errorMessage.style.display = 'none';
+
+      try {
+        const response = await fetch('/.netlify/functions/create-verification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            bookingId
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.verificationUrl) {
+          // Redirect to Veriff verification flow
+          window.location.href = data.verificationUrl;
+        } else {
+          throw new Error(data.error || 'Failed to start verification');
+        }
+      } catch (error) {
+        console.error('Verification error:', error);
+        errorMessage.textContent = 'Unable to start verification. Please try again or contact support.';
+        errorMessage.style.display = 'block';
+
+        // Reset button
+        btnText.style.display = 'inline';
+        btnLoading.classList.remove('active');
+        submitBtn.disabled = false;
+      }
+    });
+
+    // Pre-fill from URL params if available
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('email')) {
+      document.getElementById('email').value = urlParams.get('email');
+    }
+    if (urlParams.get('name')) {
+      const nameParts = urlParams.get('name').split(' ');
+      if (nameParts.length >= 1) {
+        document.getElementById('firstName').value = nameParts[0];
+      }
+      if (nameParts.length >= 2) {
+        document.getElementById('lastName').value = nameParts.slice(1).join(' ');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Identity verification complete.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Verification Complete | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=3">
+
+  <style>
+    .complete-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-lg);
+      background: linear-gradient(135deg, var(--color-warm-cream) 0%, var(--color-sand) 100%);
+    }
+
+    .complete-card {
+      background: var(--color-white);
+      padding: var(--space-2xl);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    }
+
+    .complete-logo {
+      height: 24px;
+      margin-bottom: var(--space-lg);
+    }
+
+    .complete-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-lg);
+      background: var(--color-sage-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .complete-icon.success {
+      background: #e8f5e9;
+    }
+
+    .complete-icon.success svg {
+      stroke: #4caf50;
+    }
+
+    .complete-icon.pending {
+      background: #fff8e1;
+    }
+
+    .complete-icon.pending svg {
+      stroke: #ff9800;
+    }
+
+    .complete-icon svg {
+      width: 40px;
+      height: 40px;
+      stroke: var(--color-accent);
+    }
+
+    .complete-card h1 {
+      font-size: 1.75rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .complete-card p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+      line-height: 1.7;
+    }
+
+    .next-steps {
+      text-align: left;
+      background: var(--color-sand);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .next-steps h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-medium-grey);
+      margin-bottom: var(--space-sm);
+    }
+
+    .next-steps ul {
+      margin: 0;
+      padding-left: var(--space-md);
+    }
+
+    .next-steps li {
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-xs);
+      color: var(--color-text);
+    }
+
+    .complete-actions {
+      display: flex;
+      gap: var(--space-sm);
+      justify-content: center;
+    }
+
+    @media (max-width: 500px) {
+      .complete-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="complete-page">
+    <div class="complete-card">
+      <img src="assets/logo.svg" alt="NUBEAUX" class="complete-logo">
+
+      <div class="complete-icon success" id="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+
+      <h1 id="title">Verification Submitted</h1>
+      <p id="message">Thank you for completing the verification process. We're reviewing your documents and will confirm your booking shortly.</p>
+
+      <div class="next-steps">
+        <h3>What happens next</h3>
+        <ul>
+          <li>Verification typically takes 5-15 minutes</li>
+          <li>You'll receive an email confirmation once approved</li>
+          <li>Your travel consultant will reach out with final details</li>
+        </ul>
+      </div>
+
+      <div class="complete-actions">
+        <a href="index.html" class="btn btn-outline-dark">Return Home</a>
+        <a href="mailto:travel@nubeauxtravel.com" class="btn btn-primary">Contact Us</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Check URL params for status
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+
+    const icon = document.getElementById('icon');
+    const title = document.getElementById('title');
+    const message = document.getElementById('message');
+
+    if (status === 'approved') {
+      icon.classList.remove('pending');
+      icon.classList.add('success');
+      title.textContent = 'Verification Approved';
+      message.textContent = 'Your identity has been verified successfully. Your booking is now confirmed and your travel consultant will be in touch soon.';
+    } else if (status === 'declined') {
+      icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+      </svg>`;
+      icon.style.background = '#ffebee';
+      icon.querySelector('svg').style.stroke = '#f44336';
+      title.textContent = 'Verification Unsuccessful';
+      message.textContent = 'We were unable to verify your identity. Please contact us for assistance or try the verification process again.';
+    }
+  </script>
+</body>
+</html>
