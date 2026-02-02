@@ -193,7 +193,25 @@
       }
 
       .itineraries-compact-grid {
-        grid-template-columns: 1fr;
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: var(--space-md);
+        padding-bottom: var(--space-sm);
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .itineraries-compact-grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .itineraries-compact-grid .itinerary-card {
+        flex: 0 0 280px;
+        scroll-snap-align: start;
+      }
+
+      .itinerary-card-content {
+        padding: var(--space-sm);
       }
     }
   </style>
@@ -254,9 +272,6 @@
     <div class="itinerary-featured-content">
       <span class="itinerary-featured-label">Onguma, Namibia</span>
       <h3>Wilderness & Wonder</h3>
-      <div class="itinerary-featured-meta">
-        <span>4 Days / 3 Nights</span>
-      </div>
       <p>Etosha wildlife, Onguma luxury, and the endless horizons of the Namibian bush. This itinerary combines world-class game viewing with design-forward accommodation.</p>
       <span class="btn btn-outline-dark" style="align-self: flex-start;">View Itinerary</span>
     </div>
@@ -267,9 +282,6 @@
     <div class="itinerary-featured-content alt">
       <span class="itinerary-featured-label">Lamu, Kenya</span>
       <h3>Island Heritage</h3>
-      <div class="itinerary-featured-meta">
-        <span>4 Days / 3 Nights</span>
-      </div>
       <p>Step back in time on this UNESCO World Heritage island. Swahili architecture, dhow sailing, and the oldest continuously inhabited settlement in East Africa.</p>
       <span class="btn btn-outline-dark" style="align-self: flex-start;">View Itinerary</span>
     </div>
@@ -286,9 +298,6 @@
     <div class="itinerary-featured-content dark">
       <span class="itinerary-featured-label" style="color: var(--color-terracotta-soft);">Kilifi, Kenya</span>
       <h3>Coastal Retreat</h3>
-      <div class="itinerary-featured-meta">
-        <span>4 Days / 3 Nights</span>
-      </div>
       <p>Kenya's creative coast at its most authentic. Boutique stays, Swahili culture, pristine beaches, and the laid-back energy that makes Kilifi special.</p>
       <span class="btn btn-outline" style="align-self: flex-start;">View Itinerary</span>
     </div>
@@ -298,7 +307,7 @@
   <section class="itineraries-grid-section">
     <div class="container">
       <div class="section-header-left">
-        <h2>More Itineraries</h2>
+        <h2>Featured Itineraries</h2>
       </div>
 
       <div class="itineraries-compact-grid">
@@ -309,9 +318,6 @@
           <div class="itinerary-card-content">
             <span class="itinerary-card-label">Johannesburg, South Africa</span>
             <h3>City Gateway</h3>
-            <div class="itinerary-card-meta">
-              <span>3 Days</span>
-            </div>
           </div>
         </a>
 
@@ -322,9 +328,6 @@
           <div class="itinerary-card-content">
             <span class="itinerary-card-label">Bazaruto, Mozambique</span>
             <h3>Island Escape</h3>
-            <div class="itinerary-card-meta">
-              <span>5 Days</span>
-            </div>
           </div>
         </a>
 
@@ -335,9 +338,6 @@
           <div class="itinerary-card-content">
             <span class="itinerary-card-label">Dakar, Senegal</span>
             <h3>Cultural Discovery</h3>
-            <div class="itinerary-card-meta">
-              <span>6 Days</span>
-            </div>
           </div>
         </a>
       </div>
