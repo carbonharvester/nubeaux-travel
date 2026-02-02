@@ -54,11 +54,8 @@
   <!-- Hero Section with Video -->
   <section class="hero hero-minimal">
     <div class="hero-bg">
-      <!-- Fallback image - always visible -->
-      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Luxury safari in Namibia">
-      <!-- Video overlay - plays on top if supported -->
-      <video autoplay muted loop playsinline>
-        <source src="https://res.cloudinary.com/dng12bd0a/video/upload/v1770020109/Onguma_sunset_02_qg2lic.mp4" type="video/mp4">
+      <video autoplay muted loop playsinline preload="auto">
+        <source src="https://res.cloudinary.com/dng12bd0a/video/upload/q_auto,f_auto/v1770020109/Onguma_sunset_02_qg2lic.mp4" type="video/mp4">
       </video>
     </div>
     <div class="hero-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 50%);"></div>
@@ -321,16 +318,5 @@
   </footer>
 
   <script src="js/main.js?v=2"></script>
-  <script>
-    // Video fallback - show image if video fails to load
-    const video = document.querySelector('.hero-bg video');
-    const fallbackImg = document.querySelector('.hero-bg img');
-    if (video) {
-      video.addEventListener('error', () => {
-        video.style.display = 'none';
-        if (fallbackImg) fallbackImg.style.display = 'block';
-      });
-    }
-  </script>
 </body>
 </html>
