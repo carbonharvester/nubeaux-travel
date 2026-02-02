@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Itinerary | NUBEAUX Creator Portal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #fafafa;
+      --color-white: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-light: #6b6b6b;
+      --color-border: #e5e5e5;
+      --color-accent: #c2703e;
+      --color-accent-light: #f5ebe4;
+      --color-success: #22c55e;
+      --color-error: #ef4444;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      background: transparent;
+      font-size: 0.875rem;
+      color: var(--color-text);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .top-bar-title {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+    }
+
+    .top-bar-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #a85d32;
+    }
+
+    /* Main Layout */
+    .editor-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      margin-top: 60px;
+      min-height: calc(100vh - 60px);
+    }
+
+    .editor-main {
+      padding: 32px 48px;
+      max-width: 900px;
+    }
+
+    .editor-sidebar {
+      background: var(--color-white);
+      border-left: 1px solid var(--color-border);
+      padding: 24px;
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+
+    /* Form Styles */
+    .form-section {
+      margin-bottom: 40px;
+    }
+
+    .form-section-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--color-text);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-family: var(--font-sans);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-light);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* AI Wand */
+    .textarea-wrapper {
+      position: relative;
+    }
+
+    .ai-wand-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      background: var(--color-white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      z-index: 5;
+    }
+
+    .ai-wand-btn:hover {
+      border-color: #8b5cf6;
+      background: #f5f3ff;
+    }
+
+    .ai-wand-btn svg {
+      width: 16px;
+      height: 16px;
+      color: #8b5cf6;
+    }
+
+    .ai-wand-btn.loading {
+      pointer-events: none;
+    }
+
+    .ai-wand-btn.loading svg {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .ai-menu {
+      position: absolute;
+      top: 44px;
+      right: 8px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      min-width: 180px;
+      display: none;
+    }
+
+    .ai-menu.show {
+      display: block;
+    }
+
+    .ai-menu-header {
+      padding: 10px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-light);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ai-menu-header svg {
+      width: 12px;
+      height: 12px;
+      color: #8b5cf6;
+    }
+
+    .ai-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      background: none;
+      font-size: 0.875rem;
+      color: var(--color-text);
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+    }
+
+    .ai-menu-item:hover {
+      background: var(--color-bg);
+    }
+
+    .ai-menu-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--color-text-light);
+    }
+
+    .ai-menu-item:last-child {
+      border-radius: 0 0 8px 8px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-hint {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      margin-top: 6px;
+    }
+
+    /* Hero Image Upload */
+    .hero-upload {
+      border: 2px dashed var(--color-border);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-upload:hover {
+      border-color: var(--color-accent);
+    }
+
+    .hero-upload.has-image {
+      padding: 0;
+      border-style: solid;
+    }
+
+    .hero-upload img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .hero-upload-content {
+      color: var(--color-text-light);
+    }
+
+    .hero-upload-content svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 12px;
+      opacity: 0.4;
+    }
+
+    .hero-upload input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    /* Day Cards */
+    .days-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .day-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .day-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      cursor: pointer;
+    }
+
+    .day-card-header h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .day-number {
+      width: 28px;
+      height: 28px;
+      background: var(--color-accent);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8125rem;
+      font-weight: 600;
+    }
+
+    .day-card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      background: var(--color-white);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .icon-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .day-card-content {
+      padding: 20px;
+    }
+
+    /* Media Grid */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .media-item {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .media-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .media-item-add {
+      border: 2px dashed var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-light);
+      transition: all 0.2s;
+    }
+
+    .media-item-add:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .media-item-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 24px;
+      height: 24px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .media-item:hover .media-item-remove {
+      opacity: 1;
+    }
+
+    .media-item-remove svg {
+      width: 14px;
+      height: 14px;
+      color: white;
+    }
+
+    /* Add Day Button */
+    .add-day-btn {
+      width: 100%;
+      padding: 16px;
+      border: 2px dashed var(--color-border);
+      border-radius: 12px;
+      background: transparent;
+      color: var(--color-text-light);
+      font-size: 0.9375rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .add-day-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    /* Sidebar Sections */
+    .sidebar-section {
+      margin-bottom: 28px;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-light);
+      margin-bottom: 12px;
+    }
+
+    /* Tags Input */
+    .tags-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      min-height: 44px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+      border-radius: 20px;
+      font-size: 0.8125rem;
+    }
+
+    .tag button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .tags-input input {
+      flex: 1;
+      min-width: 80px;
+      border: none;
+      outline: none;
+      font-size: 0.875rem;
+      padding: 4px;
+    }
+
+    /* Preview Panel */
+    .preview-card {
+      background: var(--color-bg);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .preview-card-image {
+      height: 120px;
+      background: var(--color-border);
+    }
+
+    .preview-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-card-content {
+      padding: 16px;
+    }
+
+    .preview-card-content h4 {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .preview-card-content p {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    /* Status Badge */
+    .status-toggle {
+      display: flex;
+      gap: 8px;
+    }
+
+    .status-option {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      background: transparent;
+      font-size: 0.8125rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .status-option.active {
+      border-color: var(--color-accent);
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+    }
+
+    .status-option[data-status="pending"].active {
+      border-color: #8b5cf6;
+      background: #f5f3ff;
+      color: #7c3aed;
+    }
+
+    /* Stays List */
+    .stays-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stay-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 16px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      align-items: start;
+    }
+
+    .stay-item-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .stay-item-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stay-item .form-input {
+      padding: 10px 12px;
+      font-size: 0.875rem;
+    }
+
+    /* Hero image with preview */
+    .hero-preview {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .hero-preview img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-preview-actions {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .hero-preview-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .hero-preview-btn:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-preview-btn svg {
+      width: 18px;
+      height: 18px;
+      color: white;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 16px 24px;
+      background: var(--color-text);
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      background: var(--color-success);
+    }
+
+    @media (max-width: 1024px) {
+      .editor-layout {
+        grid-template-columns: 1fr;
+      }
+      .editor-sidebar {
+        display: none;
+      }
+      .editor-main {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <header class="top-bar">
+    <div class="top-bar-left">
+      <a href="index.html" class="back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back
+      </a>
+      <h1 class="top-bar-title" id="pageTitle">New Itinerary</h1>
+    </div>
+    <div class="top-bar-actions">
+      <button class="btn btn-outline" id="previewBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Preview
+      </button>
+      <button class="btn btn-primary" id="saveBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Save
+      </button>
+    </div>
+  </header>
+
+  <div class="editor-layout">
+    <main class="editor-main">
+      <!-- Basic Info -->
+      <section class="form-section">
+        <h2 class="form-section-title">Basic Information</h2>
+
+        <div class="form-group">
+          <label class="form-label" for="title">Title</label>
+          <input type="text" id="title" class="form-input" placeholder="e.g., Wilderness & Wonder">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="destination">Destination</label>
+            <input type="text" id="destination" class="form-input" placeholder="e.g., Namibia">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="location">Location</label>
+            <input type="text" id="location" class="form-input" placeholder="e.g., Onguma, Etosha">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="duration">Duration</label>
+          <input type="text" id="duration" class="form-input" placeholder="e.g., 4 days / 3 nights">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="intro">Introduction</label>
+          <div class="textarea-wrapper">
+            <textarea id="intro" class="form-textarea" rows="4" placeholder="Write a personal introduction to this itinerary..." style="padding-right: 48px;"></textarea>
+            <button type="button" class="ai-wand-btn" onclick="toggleAiMenu(this)" title="AI Enhance">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8L19 13"/><path d="M15 9h0"/><path d="M17.8 6.2L19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2L11 5"/></svg>
+            </button>
+            <div class="ai-menu">
+              <div class="ai-menu-header">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 4V2M15 16v-2M8 9h2M20 9h2M17.8 11.8L19 13M15 9h0M17.8 6.2L19 5M3 21l9-9M12.2 6.2L11 5"/></svg>
+                AI Enhance
+              </div>
+              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'improve')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                Improve Writing
+              </button>
+              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'shorten')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 12H7"/><path d="m11 8-4 4 4 4"/><path d="m13 8 4 4-4 4"/></svg>
+                Make Shorter
+              </button>
+              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'expand')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12H3"/><path d="m15 6 6 6-6 6"/><path d="m9 6-6 6 6 6"/></svg>
+                Expand & Add Detail
+              </button>
+              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'personal')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                More Personal
+              </button>
+            </div>
+          </div>
+          <p class="form-hint">Tell travelers why you love this destination and what makes it special.</p>
+        </div>
+      </section>
+
+      <!-- Hero Image -->
+      <section class="form-section">
+        <h2 class="form-section-title">Hero Image</h2>
+        <div id="heroImageContainer">
+          <div class="hero-upload" id="heroUpload">
+            <div class="hero-upload-content">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <p>Click to upload or drag image here</p>
+              <p class="form-hint">Recommended: 1920x1080px</p>
+            </div>
+            <input type="file" accept="image/*" id="heroInput">
+          </div>
+        </div>
+        <div class="form-group" style="margin-top: 12px;">
+          <label class="form-label">Or paste image URL</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="url" id="heroUrl" class="form-input" placeholder="https://...">
+            <button type="button" class="btn btn-outline" onclick="loadHeroFromUrl()" style="white-space: nowrap;">Load URL</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stays / Properties -->
+      <section class="form-section">
+        <h2 class="form-section-title">Where You Stayed</h2>
+        <p class="form-hint" style="margin-bottom: 16px;">Add the properties/lodges you stayed at during this trip.</p>
+
+        <div id="staysList" class="stays-list">
+          <!-- Stays will be added here -->
+        </div>
+
+        <button type="button" class="add-day-btn" id="addStayBtn" onclick="addStay()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Property
+        </button>
+      </section>
+
+      <!-- Day-by-Day -->
+      <section class="form-section">
+        <h2 class="form-section-title">Day-by-Day Itinerary</h2>
+
+        <div class="days-list" id="daysList">
+          <!-- Day cards will be added here -->
+        </div>
+
+        <button class="add-day-btn" id="addDayBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Day
+        </button>
+      </section>
+
+      <!-- What's Included -->
+      <section class="form-section">
+        <h2 class="form-section-title">What's Included</h2>
+        <div class="form-group">
+          <textarea id="included" class="form-textarea" rows="6" placeholder="List what's included (one item per line)..."></textarea>
+          <p class="form-hint">Enter each inclusion on a new line</p>
+        </div>
+      </section>
+    </main>
+
+    <aside class="editor-sidebar">
+      <!-- Status -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">Status</h3>
+        <div class="status-toggle" style="flex-direction: column; gap: 8px;">
+          <button class="status-option active" data-status="draft" style="flex: none;">Draft</button>
+          <button class="status-option" data-status="pending" style="flex: none;">Submit for Approval</button>
+        </div>
+        <p class="form-hint" style="margin-top: 8px;">Itineraries require admin approval before going live.</p>
+      </div>
+
+      <!-- Best For -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">Best For</h3>
+        <div class="tags-input" id="bestForTags">
+          <input type="text" placeholder="Add tag...">
+        </div>
+        <p class="form-hint" style="margin-top: 8px;">e.g., First safari, Photography, Couples</p>
+      </div>
+
+      <!-- Preview -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-section-title">Preview</h3>
+        <div class="preview-card">
+          <div class="preview-card-image" id="previewImage">
+            <img src="" alt="" style="display: none;">
+          </div>
+          <div class="preview-card-content">
+            <h4 id="previewTitle">Untitled Itinerary</h4>
+            <p id="previewMeta">Destination - Duration</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <span id="toastMessage">Saved successfully</span>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    // Check auth
+    const session = localStorage.getItem('nubeaux_creator_session');
+    if (!session) {
+      // Allow access for demo purposes
+      // window.location.href = 'login.html';
+    }
+
+    // State
+    let itineraryData = {
+      id: '',
+      title: '',
+      destination: '',
+      location: '',
+      duration: '',
+      priceFrom: 0,
+      intro: '',
+      heroImage: '',
+      days: [],
+      included: [],
+      bestFor: [],
+      bestTimeToVisit: {
+        peakWildlife: '',
+        bestWeather: ''
+      },
+      status: 'draft'
+    };
+
+    let currentStatus = 'draft';
+
+    // Elements
+    const daysList = document.getElementById('daysList');
+    const addDayBtn = document.getElementById('addDayBtn');
+    const heroUpload = document.getElementById('heroUpload');
+    const heroInput = document.getElementById('heroInput');
+    const saveBtn = document.getElementById('saveBtn');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+
+    // Load existing itinerary if editing
+    const urlParams = new URLSearchParams(window.location.search);
+    const editId = urlParams.get('id');
+
+    if (editId && ITINERARIES[editId]) {
+      loadItinerary(ITINERARIES[editId]);
+      document.getElementById('pageTitle').textContent = 'Edit Itinerary';
+    } else {
+      // Add first day by default
+      addDay();
+    }
+
+    function loadItinerary(data) {
+      itineraryData = { ...data };
+
+      document.getElementById('title').value = data.title || '';
+      document.getElementById('destination').value = data.destination || '';
+      document.getElementById('location').value = data.location || '';
+      document.getElementById('duration').value = data.duration || '';
+      document.getElementById('intro').value = data.intro || '';
+      document.getElementById('included').value = (data.included || []).join('\n');
+
+      // Hero image
+      if (data.heroImage) {
+        setHeroImage(data.heroImage);
+      }
+
+      // Status
+      setStatus(data.status || 'draft');
+
+      // Best For tags
+      if (data.bestFor) {
+        data.bestFor.forEach(tag => addTag('bestForTags', tag));
+      }
+
+      // Stays/Properties
+      if (data.stays && data.stays.length > 0) {
+        data.stays.forEach(stay => addStay(stay));
+      }
+
+      // Days
+      if (data.days && data.days.length > 0) {
+        data.days.forEach(day => addDay(day));
+      }
+
+      updatePreview();
+    }
+
+    // Add Day
+    function addDay(dayData = null) {
+      const dayNum = daysList.children.length + 1;
+      const day = dayData || {
+        dayNumber: dayNum,
+        title: '',
+        description: '',
+        activities: [],
+        media: []
+      };
+
+      const dayCard = document.createElement('div');
+      dayCard.className = 'day-card';
+      dayCard.dataset.dayNum = dayNum;
+      dayCard.innerHTML = `
+        <div class="day-card-header">
+          <h3>
+            <span class="day-number">${dayNum}</span>
+            <input type="text" class="form-input" style="border: none; padding: 0; font-weight: 500;" placeholder="Day title..." value="${day.title || ''}">
+          </h3>
+          <div class="day-card-actions">
+            <button class="icon-btn" onclick="toggleDayCard(this)" title="Collapse">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <button class="icon-btn" onclick="removeDay(this)" title="Remove">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="day-card-content">
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <div class="textarea-wrapper">
+              <textarea class="form-textarea day-description" rows="4" placeholder="Describe this day from your personal experience..." style="padding-right: 48px;">${day.description || ''}</textarea>
+              <button type="button" class="ai-wand-btn" onclick="toggleAiMenu(this)" title="AI Enhance">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8L19 13"/><path d="M15 9h0"/><path d="M17.8 6.2L19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2L11 5"/></svg>
+              </button>
+              <div class="ai-menu">
+                <div class="ai-menu-header">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 4V2M15 16v-2M8 9h2M20 9h2M17.8 11.8L19 13M15 9h0M17.8 6.2L19 5M3 21l9-9M12.2 6.2L11 5"/></svg>
+                  AI Enhance
+                </div>
+                <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'improve')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                  Improve Writing
+                </button>
+                <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'shorten')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 12H7"/><path d="m11 8-4 4 4 4"/><path d="m13 8 4 4-4 4"/></svg>
+                  Make Shorter
+                </button>
+                <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'expand')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12H3"/><path d="m15 6 6 6-6 6"/><path d="m9 6-6 6 6 6"/></svg>
+                  Expand & Add Detail
+                </button>
+                <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'personal')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                  More Personal
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Activities</label>
+            <input type="text" class="form-input day-activities" placeholder="e.g., Morning Game Drive, Pool, Sundowners" value="${(day.activities || []).join(', ')}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Media</label>
+            <div class="media-grid">
+              ${(day.media || []).map((m, i) => `
+                <div class="media-item">
+                  <img src="${m.url}" alt="">
+                  <div class="media-item-remove" onclick="removeMedia(this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </div>
+                </div>
+              `).join('')}
+              <div class="media-item media-item-add" onclick="addMedia(this)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      daysList.appendChild(dayCard);
+    }
+
+    function toggleDayCard(btn) {
+      const card = btn.closest('.day-card');
+      const content = card.querySelector('.day-card-content');
+      content.style.display = content.style.display === 'none' ? 'block' : 'none';
+      btn.querySelector('svg').style.transform = content.style.display === 'none' ? 'rotate(-90deg)' : '';
+    }
+
+    function removeDay(btn) {
+      if (daysList.children.length <= 1) {
+        showToast('You need at least one day');
+        return;
+      }
+      btn.closest('.day-card').remove();
+      // Renumber days
+      Array.from(daysList.children).forEach((card, i) => {
+        card.dataset.dayNum = i + 1;
+        card.querySelector('.day-number').textContent = i + 1;
+      });
+    }
+
+    addDayBtn.addEventListener('click', () => addDay());
+
+    // Hero Image
+    const heroContainer = document.getElementById('heroImageContainer');
+    heroInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => setHeroImage(e.target.result);
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function setHeroImage(src) {
+      heroContainer.innerHTML = `
+        <div class="hero-preview">
+          <img src="${src}" alt="Hero">
+          <div class="hero-preview-actions">
+            <button type="button" class="hero-preview-btn" onclick="changeHeroImage()" title="Change Image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </button>
+            <button type="button" class="hero-preview-btn" onclick="removeHeroImage()" title="Remove Image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>
+      `;
+      itineraryData.heroImage = src;
+      updatePreview();
+    }
+
+    function changeHeroImage() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => setHeroImage(e.target.result);
+          reader.readAsDataURL(file);
+        }
+      };
+      input.click();
+    }
+
+    function removeHeroImage() {
+      heroContainer.innerHTML = `
+        <div class="hero-upload" id="heroUpload">
+          <div class="hero-upload-content">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <p>Click to upload or drag image here</p>
+            <p class="form-hint">Recommended: 1920x1080px</p>
+          </div>
+          <input type="file" accept="image/*" id="heroInput">
+        </div>
+      `;
+      document.getElementById('heroInput').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (ev) => setHeroImage(ev.target.result);
+          reader.readAsDataURL(file);
+        }
+      });
+      itineraryData.heroImage = '';
+      updatePreview();
+    }
+
+    function loadHeroFromUrl() {
+      const url = document.getElementById('heroUrl').value.trim();
+      if (!url) {
+        showToast('Please enter an image URL');
+        return;
+      }
+      // Test if URL is valid image
+      const img = new Image();
+      img.onload = () => {
+        setHeroImage(url);
+        document.getElementById('heroUrl').value = '';
+        showToast('Image loaded successfully', 'success');
+      };
+      img.onerror = () => {
+        showToast('Could not load image from URL');
+      };
+      img.src = url;
+    }
+
+    // Stays / Properties
+    const staysList = document.getElementById('staysList');
+
+    function addStay(stayData = null) {
+      const stay = stayData || { name: '', location: '', nights: '', notes: '' };
+      const stayItem = document.createElement('div');
+      stayItem.className = 'stay-item';
+      stayItem.innerHTML = `
+        <div class="stay-item-fields">
+          <input type="text" class="form-input stay-name" placeholder="Property name (e.g., Onguma The Fort)" value="${stay.name || ''}">
+          <div class="stay-item-row">
+            <input type="text" class="form-input stay-location" placeholder="Location" value="${stay.location || ''}">
+            <input type="text" class="form-input stay-nights" placeholder="Nights stayed" value="${stay.nights || ''}">
+          </div>
+          <input type="text" class="form-input stay-notes" placeholder="Notes (optional)" value="${stay.notes || ''}">
+        </div>
+        <button type="button" class="icon-btn" onclick="this.closest('.stay-item').remove()" title="Remove">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      `;
+      staysList.appendChild(stayItem);
+    }
+
+    // Tags
+    function addTag(containerId, tagText) {
+      const container = document.getElementById(containerId);
+      const input = container.querySelector('input');
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.innerHTML = `${tagText} <button onclick="this.parentElement.remove()">&times;</button>`;
+      container.insertBefore(tag, input);
+    }
+
+    document.getElementById('bestForTags').querySelector('input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target.value.trim()) {
+        e.preventDefault();
+        addTag('bestForTags', e.target.value.trim());
+        e.target.value = '';
+      }
+    });
+
+    // Status toggle
+    document.querySelectorAll('.status-option').forEach(btn => {
+      btn.addEventListener('click', () => setStatus(btn.dataset.status));
+    });
+
+    function setStatus(status) {
+      currentStatus = status;
+      document.querySelectorAll('.status-option').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.status === status);
+      });
+    }
+
+    // Preview updates
+    ['title', 'destination', 'duration'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updatePreview);
+    });
+
+    function updatePreview() {
+      const title = document.getElementById('title').value || 'Untitled Itinerary';
+      const destination = document.getElementById('destination').value || 'Destination';
+      const duration = document.getElementById('duration').value || 'Duration';
+
+      document.getElementById('previewTitle').textContent = title;
+      document.getElementById('previewMeta').textContent = `${destination} - ${duration}`;
+
+      const previewImg = document.querySelector('#previewImage img');
+      if (itineraryData.heroImage) {
+        previewImg.src = itineraryData.heroImage;
+        previewImg.style.display = 'block';
+      }
+    }
+
+    // Media
+    function addMedia(btn) {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*,video/*';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const mediaItem = document.createElement('div');
+            mediaItem.className = 'media-item';
+            mediaItem.innerHTML = `
+              <img src="${e.target.result}" alt="">
+              <div class="media-item-remove" onclick="removeMedia(this)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+            `;
+            btn.parentElement.insertBefore(mediaItem, btn);
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+      input.click();
+    }
+
+    function removeMedia(btn) {
+      btn.closest('.media-item').remove();
+    }
+
+    // Save
+    saveBtn.addEventListener('click', () => {
+      // Gather data
+      itineraryData.title = document.getElementById('title').value;
+      itineraryData.destination = document.getElementById('destination').value;
+      itineraryData.location = document.getElementById('location').value;
+      itineraryData.duration = document.getElementById('duration').value;
+      itineraryData.priceFrom = parseInt(document.getElementById('priceFrom').value) || 0;
+      itineraryData.intro = document.getElementById('intro').value;
+      itineraryData.included = document.getElementById('included').value.split('\n').filter(l => l.trim());
+      itineraryData.status = currentStatus;
+
+      itineraryData.bestTimeToVisit = {
+        peakWildlife: document.getElementById('peakWildlife').value,
+        bestWeather: document.getElementById('bestWeather').value
+      };
+
+      // Best for tags
+      itineraryData.bestFor = Array.from(document.querySelectorAll('#bestForTags .tag'))
+        .map(t => t.textContent.trim().replace('×', '').trim());
+
+      // Days
+      itineraryData.days = Array.from(daysList.children).map((card, i) => ({
+        dayNumber: i + 1,
+        title: card.querySelector('.day-card-header input').value,
+        description: card.querySelector('.day-description').value,
+        activities: card.querySelector('.day-activities').value.split(',').map(a => a.trim()).filter(a => a),
+        media: Array.from(card.querySelectorAll('.media-item:not(.media-item-add) img'))
+          .map(img => ({ type: 'image', url: img.src }))
+      }));
+
+      // Save to localStorage for demo
+      const savedItineraries = JSON.parse(localStorage.getItem('nubeaux_itineraries') || '{}');
+      const id = itineraryData.id || itineraryData.title.toLowerCase().replace(/\s+/g, '-');
+      itineraryData.id = id;
+      savedItineraries[id] = itineraryData;
+      localStorage.setItem('nubeaux_itineraries', JSON.stringify(savedItineraries));
+
+      showToast('Itinerary saved successfully!', 'success');
+    });
+
+    // Preview button
+    document.getElementById('previewBtn').addEventListener('click', () => {
+      if (editId) {
+        window.open(`../itineraries/${editId}.html`, '_blank');
+      } else {
+        showToast('Save the itinerary first to preview');
+      }
+    });
+
+    // AI Wand Functions
+    function toggleAiMenu(btn) {
+      // Close all other menus
+      document.querySelectorAll('.ai-menu.show').forEach(menu => {
+        if (menu !== btn.nextElementSibling) {
+          menu.classList.remove('show');
+        }
+      });
+      // Toggle this menu
+      const menu = btn.nextElementSibling;
+      menu.classList.toggle('show');
+    }
+
+    // Close menus when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.textarea-wrapper')) {
+        document.querySelectorAll('.ai-menu.show').forEach(menu => {
+          menu.classList.remove('show');
+        });
+      }
+    });
+
+    async function enhanceText(btn, action) {
+      const wrapper = btn.closest('.textarea-wrapper');
+      const textarea = wrapper.querySelector('textarea');
+      const wandBtn = wrapper.querySelector('.ai-wand-btn');
+      const menu = wrapper.querySelector('.ai-menu');
+      const originalText = textarea.value.trim();
+
+      if (!originalText) {
+        showToast('Please enter some text first');
+        menu.classList.remove('show');
+        return;
+      }
+
+      // Show loading state
+      wandBtn.classList.add('loading');
+      wandBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+      menu.classList.remove('show');
+
+      // Simulate AI processing (replace with actual API call later)
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      let enhancedText = originalText;
+
+      // Demo transformations (will be replaced with real AI)
+      switch (action) {
+        case 'improve':
+          enhancedText = improveWriting(originalText);
+          break;
+        case 'shorten':
+          enhancedText = shortenText(originalText);
+          break;
+        case 'expand':
+          enhancedText = expandText(originalText);
+          break;
+        case 'personal':
+          enhancedText = makePersonal(originalText);
+          break;
+      }
+
+      // Update textarea with animation
+      textarea.style.opacity = '0.5';
+      setTimeout(() => {
+        textarea.value = enhancedText;
+        textarea.style.opacity = '1';
+      }, 150);
+
+      // Reset button
+      wandBtn.classList.remove('loading');
+      wandBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8L19 13"/><path d="M15 9h0"/><path d="M17.8 6.2L19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2L11 5"/></svg>';
+
+      showToast('Text enhanced!', 'success');
+    }
+
+    // Demo text transformations (placeholders for real AI)
+    function improveWriting(text) {
+      // Simple demo: capitalize first letter of sentences, clean up spacing
+      return text
+        .split('. ')
+        .map(s => s.charAt(0).toUpperCase() + s.slice(1))
+        .join('. ')
+        .replace(/\s+/g, ' ')
+        .trim() + (text.endsWith('.') ? '' : '.');
+    }
+
+    function shortenText(text) {
+      // Demo: take first 60% of text
+      const sentences = text.split('. ');
+      const keep = Math.max(1, Math.ceil(sentences.length * 0.6));
+      return sentences.slice(0, keep).join('. ') + '.';
+    }
+
+    function expandText(text) {
+      // Demo: add descriptive phrases
+      const additions = [
+        ' The experience was truly unforgettable.',
+        ' Every moment felt magical.',
+        ' This is what travel dreams are made of.',
+        ' I found myself completely immersed in the moment.'
+      ];
+      const randomAddition = additions[Math.floor(Math.random() * additions.length)];
+      return text + (text.endsWith('.') ? '' : '.') + randomAddition;
+    }
+
+    function makePersonal(text) {
+      // Demo: add personal touch
+      const personalPhrases = ['I remember', 'For me,', 'What struck me most was that', 'I loved how'];
+      const randomPhrase = personalPhrases[Math.floor(Math.random() * personalPhrases.length)];
+      if (!text.toLowerCase().startsWith('i ')) {
+        return randomPhrase + ' ' + text.charAt(0).toLowerCase() + text.slice(1);
+      }
+      return text;
+    }
+
+    // Toast
+    function showToast(message, type = '') {
+      toastMessage.textContent = message;
+      toast.className = `toast show ${type}`;
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+</body>
+</html>

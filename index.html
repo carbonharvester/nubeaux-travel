@@ -16,7 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=20">
 </head>
 <body>
   <!-- Header -->
@@ -54,12 +54,12 @@
   <!-- Hero Section with Video -->
   <section class="hero hero-minimal">
     <div class="hero-bg">
-      <!-- Video background with image fallback -->
+      <!-- Fallback image - always visible -->
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Luxury safari in Namibia">
+      <!-- Video overlay - plays on top if supported -->
       <video autoplay muted loop playsinline>
-        <source src="https://res.cloudinary.com/dng12bd0a/video/upload/q_auto,f_auto/v1/nubeaux/namibia-safari-hero" type="video/mp4">
+        <source src="https://res.cloudinary.com/dng12bd0a/video/upload/v1770020109/Onguma_sunset_02_qg2lic.mp4" type="video/mp4">
       </video>
-      <!-- Fallback image if video doesn't load -->
-      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Luxury safari in Namibia" style="display: none;">
     </div>
     <div class="hero-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 50%);"></div>
     <div class="hero-content hero-content-bottom-left">
@@ -144,7 +144,7 @@
   <!-- Full-Bleed Image Feature -->
   <section class="full-bleed-section">
     <div class="full-bleed-bg">
-      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto,a_hflip/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Luxury safari experience" style="object-position: 20% center;">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto,a_hflip/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Luxury safari experience" style="object-position: 20% center;">
     </div>
     <div class="hero-overlay" style="background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 70%);"></div>
     <div class="full-bleed-content">
@@ -167,7 +167,7 @@
         <div class="itineraries-scroll">
           <a href="itineraries/namibia-safari.html" class="itinerary-card-scroll">
             <div class="itinerary-card-image">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_300,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Namibia Safari">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_400,h_300,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Namibia Safari">
             </div>
             <div class="itinerary-card-content">
               <span class="itinerary-card-label">Onguma, Namibia</span>
@@ -177,7 +177,7 @@
 
           <a href="itineraries/joburg-gateway.html" class="itinerary-card-scroll">
             <div class="itinerary-card-image">
-              <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=400&h=300&fit=crop&q=80" alt="Johannesburg">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_400,h_300,q_auto,f_auto/v1770005011/S_africa_Klein-2_xqck3i.jpg" alt="Johannesburg">
             </div>
             <div class="itinerary-card-content">
               <span class="itinerary-card-label">Johannesburg, South Africa</span>
@@ -187,7 +187,7 @@
 
           <a href="itineraries/mozambique-island-escape.html" class="itinerary-card-scroll">
             <div class="itinerary-card-image">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_300,q_auto,f_auto/v1770004990/Mozambique_Klein-192_l7ds4q.jpg" alt="Mozambique Islands">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_400,h_300,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Mozambique Islands">
             </div>
             <div class="itinerary-card-content">
               <span class="itinerary-card-label">Bazaruto, Mozambique</span>
@@ -262,33 +262,12 @@
     </div>
   </section>
 
-  <!-- Image Mosaic Gallery -->
-  <section class="section" style="padding: 0;">
-    <div class="mosaic-grid">
-      <div class="mosaic-large" style="overflow: hidden;">
-        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_800,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Travel moment">
-      </div>
-      <div style="overflow: hidden;">
-        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769949672/dest_aruba_jewcz4.jpg" alt="Travel moment">
-      </div>
-      <div style="overflow: hidden;">
-        <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=400&h=400&fit=crop&q=80" alt="Travel moment">
-      </div>
-      <div style="overflow: hidden;">
-        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769693581/Namibia_onguma_Klein-124_fkusbn.jpg" alt="Travel moment">
-      </div>
-      <div style="overflow: hidden;">
-        <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=400&h=400&fit=crop&q=80" alt="Travel moment">
-      </div>
-    </div>
-  </section>
-
   <!-- Image CTA Section -->
   <section class="image-cta-section">
-    <div class="hero-bg">
-      <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=1920&h=1080&fit=crop&q=80" alt="Beach luxury">
+    <div class="cta-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1770005043/S_africa_Klein-66_owkdjc.jpg" alt="Safari landscape">
     </div>
-    <div class="hero-overlay"></div>
+    <div class="cta-overlay"></div>
     <div class="image-cta-content">
       <h2>Ready to plan your journey?</h2>
       <p>Tell us where you want to go. We'll craft an experience you'll never forget.</p>
@@ -320,6 +299,7 @@
           <h4 class="footer-heading">Company</h4>
           <div class="footer-links">
             <a href="about.html">About</a>
+            <a href="portal/">Creator Portal</a>
             <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
           </div>
         </div>

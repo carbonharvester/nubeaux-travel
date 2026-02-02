@@ -10,242 +10,65 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=3">
+  <link rel="stylesheet" href="../css/style.css?v=13">
 
   <style>
-    .itin-hero {
-      position: relative;
-      margin-top: var(--header-height);
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-    }
+    .itin-hero { position: relative; margin-top: var(--header-height); display: flex; align-items: flex-end; overflow: hidden; }
+    .itin-hero-bg { position: absolute; inset: 0; z-index: 1; }
+    .itin-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .itin-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%); z-index: 2; }
+    .itin-hero-content { position: relative; z-index: 3; padding: var(--space-xl) var(--space-md); color: var(--color-white); width: 100%; }
+    .itin-hero-content .container { max-width: 800px; margin: 0; }
+    .itin-label { font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .itin-hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: var(--space-md); color: var(--color-white); }
+    .itin-hero-meta { display: flex; gap: var(--space-lg); font-size: 1rem; opacity: 0.9; }
+    .itin-content { padding: var(--space-xl) 0; }
+    .itin-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-xl); overflow: hidden; }
+    .itin-main { overflow: hidden; }
+    .itin-main h2 { margin-bottom: var(--space-md); }
+    .itin-main p { color: var(--color-text-light); line-height: 1.8; margin-bottom: var(--space-md); }
+    .itin-sidebar { background-color: var(--color-sand); padding: var(--space-lg); height: fit-content; position: sticky; top: calc(var(--header-height) + var(--space-md)); }
+    .sidebar-section { margin-bottom: var(--space-lg); }
+    .sidebar-section:last-child { margin-bottom: 0; }
+    .sidebar-title { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .sidebar-content { font-size: 0.9375rem; color: var(--color-text); }
+    .creator-badge { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-md); background: var(--color-sage-light); margin-bottom: var(--space-lg); }
+    .creator-badge img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .creator-badge-content span { display: block; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+    .creator-badge-content strong { font-family: var(--font-serif); font-weight: 400; }
+    .book-cta { background: var(--color-accent); color: var(--color-white); padding: var(--space-md); text-align: center; }
+    .book-cta h3 { font-size: 1.25rem; margin-bottom: var(--space-sm); color: var(--color-white); }
+    .book-cta p { font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md); color: var(--color-white); }
+    .book-cta .btn { background: var(--color-white); color: var(--color-accent); width: 100%; }
 
-    .itin-hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-    }
-
-    .itin-hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .itin-hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%);
-      z-index: 2;
-    }
-
-    .itin-hero-content {
-      position: relative;
-      z-index: 3;
-      padding: var(--space-xl) var(--space-md);
-      color: var(--color-white);
-      width: 100%;
-    }
-
-    .itin-hero-content .container {
-      max-width: 800px;
-      margin: 0;
-    }
-
-    .itin-label {
-      font-size: 0.6875rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--color-terracotta);
-      margin-bottom: var(--space-sm);
-    }
-
-    .itin-hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      margin-bottom: var(--space-md);
-      color: var(--color-white);
-    }
-
-    .itin-hero-meta {
-      display: flex;
-      gap: var(--space-lg);
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-
-    .itin-content {
-      padding: var(--space-xl) 0;
-    }
-
-    .itin-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: var(--space-xl);
-    }
-
-    .itin-main h2 {
-      margin-bottom: var(--space-md);
-    }
-
-    .itin-main p {
-      color: var(--color-warm-grey);
-      line-height: 1.8;
-      margin-bottom: var(--space-md);
-    }
-
-    .day-block {
-      margin-bottom: var(--space-lg);
-      padding-bottom: var(--space-lg);
-      border-bottom: 1px solid var(--color-ecru);
-    }
-
-    .day-block:last-child {
-      border-bottom: none;
-    }
-
-    .day-label {
-      font-size: 0.6875rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--color-terracotta);
-      margin-bottom: var(--space-xs);
-    }
-
-    .day-title {
-      font-family: var(--font-serif);
-      font-size: 1.5rem;
-      margin-bottom: var(--space-sm);
-    }
-
-    .day-content {
-      color: var(--color-warm-grey);
-      line-height: 1.8;
-    }
-
-    .itin-sidebar {
-      background-color: var(--color-ecru);
-      padding: var(--space-lg);
-      height: fit-content;
-      position: sticky;
-      top: calc(var(--header-height) + var(--space-md));
-    }
-
-    .sidebar-section {
-      margin-bottom: var(--space-lg);
-    }
-
-    .sidebar-section:last-child {
-      margin-bottom: 0;
-    }
-
-    .sidebar-title {
-      font-size: 0.6875rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--color-terracotta);
-      margin-bottom: var(--space-sm);
-    }
-
-    .sidebar-content {
-      font-size: 0.9375rem;
-      color: var(--color-charcoal);
-    }
-
-    .creator-badge {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      padding: var(--space-md);
-      background: var(--color-white);
-      margin-bottom: var(--space-lg);
-    }
-
-    .creator-badge img {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .creator-badge-content span {
-      display: block;
-      font-size: 0.6875rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--color-terracotta);
-    }
-
-    .creator-badge-content strong {
-      font-family: var(--font-serif);
-      font-weight: 400;
-    }
-
-    .book-cta {
-      background: var(--color-terracotta);
-      color: var(--color-white);
-      padding: var(--space-md);
-      text-align: center;
-    }
-
-    .book-cta h3 {
-      font-size: 1.25rem;
-      margin-bottom: var(--space-sm);
-    }
-
-    .book-cta p {
-      font-size: 0.875rem;
-      opacity: 0.9;
-      margin-bottom: var(--space-md);
-    }
-
-    .book-cta .btn {
-      background: var(--color-white);
-      color: var(--color-terracotta);
-      width: 100%;
-    }
+    /* Must-Do Sidebar Styles */
+    .must-do-sidebar { display: flex; flex-direction: column; gap: var(--space-sm); }
+    .must-do-item-sidebar { display: flex; gap: var(--space-sm); align-items: flex-start; }
+    .must-do-num { font-size: 0.875rem; font-weight: 500; color: var(--color-accent); min-width: 1.5rem; }
+    .must-do-item-sidebar strong { display: block; font-size: 0.875rem; margin-bottom: 0.125rem; }
+    .must-do-item-sidebar span { font-size: 0.75rem; color: var(--color-text-light); }
 
     @media (max-width: 768px) {
-      .itin-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .itin-sidebar {
-        position: static;
-      }
-
-      .itin-hero-meta {
-        display: none;
-      }
-
-      .itin-hero h1 {
-        margin-bottom: var(--space-xs);
-      }
+      .itin-grid { grid-template-columns: 1fr; }
+      .itin-sidebar { position: static; }
+      .itin-hero-meta { display: none; }
+      .itin-hero h1 { margin-bottom: var(--space-xs); }
     }
   </style>
 </head>
 <body>
   <header class="header">
     <div class="header-inner">
-      <a href="../index.html" class="logo">
-        <img src="../assets/logo.svg" alt="NUBEAUX">
-      </a>
-
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
       <nav class="nav">
         <a href="../destinations/">Destinations</a>
         <a href="../itineraries/">Itineraries</a>
         <a href="../stays/">Stays</a>
         <a href="../journal/">Journal</a>
-        <a href="../journal/">Journal</a>
         <a href="../about.html">About</a>
         <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
       </nav>
-
-      <button class="menu-toggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
   </header>
 
@@ -253,7 +76,6 @@
     <a href="../destinations/">Destinations</a>
     <a href="../itineraries/">Itineraries</a>
     <a href="../stays/">Stays</a>
-        <a href="../journal/">Journal</a>
     <a href="../journal/">Journal</a>
     <a href="../about.html">About</a>
     <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
@@ -261,7 +83,10 @@
 
   <section class="itin-hero">
     <div class="itin-hero-bg">
-      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1770004990/Mozambique_Klein-192_l7ds4q.jpg" alt="Mozambique beaches">
+      <picture>
+        <source media="(max-width: 768px)" srcset="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_800,h_1200,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Mozambique beaches">
+      </picture>
     </div>
     <div class="itin-hero-overlay"></div>
     <div class="itin-hero-content">
@@ -276,96 +101,360 @@
     <div class="container">
       <div class="itin-grid">
         <div class="itin-main">
-          <div class="creator-badge">
+          <button class="creator-badge-btn" data-creator="nia">
             <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_96,h_96,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
             <div class="creator-badge-content">
               <span>Curated by</span>
               <strong>Nia The Light</strong>
             </div>
-          </div>
+            <span class="creator-badge-arrow">→</span>
+          </button>
 
           <h2>The Journey</h2>
           <p>Mozambique offers something increasingly rare: pristine, uncrowded beaches in a setting of genuine luxury. The Bazaruto Archipelago, a chain of islands off the southern coast, feels like the edge of the world. Turquoise waters, endless sandbanks, and a marine national park teeming with life.</p>
 
-          <p>This itinerary centers on Anantara Bazaruto, an island resort that delivers on every front: beautiful villas, exceptional dining, and activities that range from blissful relaxation to ocean adventures. It's the kind of destination where days blur into each other in the best possible way.</p>
+          <p>I designed this escape for anyone who needs to truly unplug. Anantara Bazaruto delivers on every front: beautiful villas, exceptional dining, and activities that range from blissful relaxation to ocean adventures. Days blur into each other in the best possible way.</p>
 
-          <h2 style="margin-top: var(--space-lg);">Day by Day</h2>
-
-          <div class="day-block">
-            <span class="day-label">Day 1</span>
-            <h3 class="day-title">Arrival in Paradise</h3>
-            <p class="day-content">Fly from Johannesburg or Vilanculos to Bazaruto Island. The helicopter transfer from the mainland is an experience in itself, with aerial views of the archipelago's stunning colors. Arrive at Anantara Bazaruto and settle into your beach villa. The afternoon is yours to explore the property or simply collapse onto the beach. Sundowners on the sand, followed by dinner at the main restaurant.</p>
-          </div>
-
-          <div class="day-block">
-            <span class="day-label">Day 2</span>
-            <h3 class="day-title">Ocean Adventures</h3>
-            <p class="day-content">After breakfast, choose your adventure: snorkeling in the marine reserve, a dhow sailing excursion, or deep-sea fishing in waters known for marlin and sailfish. The afternoon brings spa time or pool lounging. As the sun sets, join the beach dinner setup for a private meal on the sand with the Indian Ocean as your backdrop.</p>
-          </div>
-
-          <div class="day-block">
-            <span class="day-label">Day 3</span>
-            <h3 class="day-title">Island Exploration</h3>
-            <p class="day-content">Take a guided walk to discover the island's interior, including freshwater lakes and local villages. The contrast between the lush interior and the endless beaches is striking. Afternoon at leisure before a sunset horse ride along the beach. Dinner at Tartaruga, the resort's seafood restaurant built over the water.</p>
-          </div>
-
-          <div class="day-block">
-            <span class="day-label">Day 4</span>
-            <h3 class="day-title">Sandbank Picnic</h3>
-            <p class="day-content">The signature experience: a boat trip to a private sandbank in the middle of the ocean. Your guide sets up a gourmet picnic on what feels like the most remote beach on Earth. Snorkel the surrounding waters, spot dolphins, and spend hours in complete isolation. Return to the resort for your final sunset and a farewell dinner.</p>
-          </div>
-
-          <div class="day-block">
-            <span class="day-label">Day 5</span>
-            <h3 class="day-title">Departure</h3>
-            <p class="day-content">A leisurely final breakfast before your helicopter transfer back to the mainland. Connect to flights home via Johannesburg, or extend your journey to Cape Town or a safari destination.</p>
-          </div>
-
-          <h2 style="margin-top: var(--space-lg);">What's Included</h2>
-          <ul style="color: var(--color-warm-grey); line-height: 1.8; margin-left: 1.5rem;">
-            <li>4 nights at Anantara Bazaruto Island Resort (Beach Villa)</li>
-            <li>All meals and selected beverages</li>
-            <li>Return helicopter transfers from Vilanculos</li>
-            <li>Sandbank picnic experience</li>
-            <li>Snorkeling equipment and guided excursions</li>
-            <li>Dhow sailing trip</li>
-            <li>One spa treatment per person</li>
-          </ul>
-
-          <div class="must-do-section">
-            <h2>Must-Do Experiences</h2>
-            <p>The moments our creators say you can't miss on this itinerary.</p>
-            <div class="must-do-grid">
-              <div class="must-do-item">
-                <span>01</span>
-                <div>
-                  <strong>Private Sandbank Picnic</strong>
-                  <span>Gourmet lunch on a remote sandbar in the middle of the ocean</span>
-                </div>
+          <!-- Stories Row -->
+          <div class="itin-stories">
+            <div class="story-item">
+              <div class="story-ring">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_100,h_100,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Day 1">
               </div>
-              <div class="must-do-item">
-                <span>02</span>
-                <div>
-                  <strong>Helicopter Arrival</strong>
-                  <span>Aerial views of the archipelago's impossible turquoise waters</span>
-                </div>
+              <span class="story-label">Day 1</span>
+            </div>
+            <div class="story-item">
+              <div class="story-ring">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_100,h_100,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Day 2">
               </div>
-              <div class="must-do-item">
-                <span>03</span>
-                <div>
-                  <strong>Sunset Dhow Sailing</strong>
-                  <span>Traditional boat, golden light, and the Indian Ocean</span>
-                </div>
+              <span class="story-label">Day 2</span>
+            </div>
+            <div class="story-item">
+              <div class="story-ring">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_100,h_100,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Day 3">
               </div>
-              <div class="must-do-item">
-                <span>04</span>
-                <div>
-                  <strong>Dinner at Tartaruga</strong>
-                  <span>Fresh seafood over the water at the resort's signature restaurant</span>
-                </div>
+              <span class="story-label">Day 3</span>
+            </div>
+            <div class="story-item">
+              <div class="story-ring">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_100,h_100,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Day 4">
               </div>
+              <span class="story-label">Day 4</span>
+            </div>
+            <div class="story-item">
+              <div class="story-ring">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_100,h_100,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Day 5">
+              </div>
+              <span class="story-label">Day 5</span>
             </div>
           </div>
+
+          <!-- Day 1 - IG Carousel -->
+          <div class="ig-carousel" data-day="1">
+            <div class="ig-carousel-header">
+              <div class="ig-carousel-avatar">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
+              </div>
+              <div class="ig-carousel-user">
+                <strong>niathelight</strong>
+                <span>Bazaruto Island, Mozambique</span>
+              </div>
+            </div>
+
+            <div class="ig-carousel-images" id="carousel1">
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Arrival"></div>
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Helicopter"></div>
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Villa"></div>
+            </div>
+
+            <div class="ig-carousel-dots" id="dots1">
+              <span class="ig-carousel-dot active"></span>
+              <span class="ig-carousel-dot"></span>
+              <span class="ig-carousel-dot"></span>
+            </div>
+
+            <div class="ig-actions">
+              <button class="ig-action-btn like-btn" aria-label="Like">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+              <button class="ig-action-btn comment-btn" aria-label="Comment">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </button>
+              <button class="ig-action-btn share-btn" aria-label="Share">
+                <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+              </button>
+              <button class="ig-action-btn save-btn" aria-label="Save">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+              </button>
+            </div>
+
+            <div class="ig-likes">312 likes</div>
+
+            <div class="ig-caption">
+              <strong>niathelight</strong> The helicopter transfer from Vilanculos was an experience in itself—aerial views of the archipelago's impossible colors. Arrived at Anantara Bazaruto and immediately understood why people call this paradise. Settled into my beach villa, toes in the sand by sunset. Dinner on the beach as the stars came out. This is what I needed.
+            </div>
+
+            <div class="ig-tags">
+              <span class="ig-tag">Helicopter Transfer</span>
+              <span class="ig-tag">Beach Villa</span>
+              <span class="ig-tag">Sundowners</span>
+            </div>
+
+            <div class="ig-comments">
+              <div class="ig-comment"><strong>luxuryescapes</strong> That helicopter view is unreal</div>
+              <div class="ig-comment"><strong>travelnoire</strong> Adding this to my list immediately</div>
+            </div>
+
+            <div class="ig-comment-input">
+              <input type="text" placeholder="Add a comment..." id="commentInput1">
+              <button type="button">Post</button>
+            </div>
+          </div>
+
+          <!-- Day 2 - IG Carousel -->
+          <div class="ig-carousel" data-day="2">
+            <div class="ig-carousel-header">
+              <div class="ig-carousel-avatar">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
+              </div>
+              <div class="ig-carousel-user">
+                <strong>niathelight</strong>
+                <span>Bazaruto Marine Reserve</span>
+              </div>
+            </div>
+
+            <div class="ig-carousel-images" id="carousel2">
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Snorkeling"></div>
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Dhow"></div>
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Spa"></div>
+            </div>
+
+            <div class="ig-carousel-dots" id="dots2">
+              <span class="ig-carousel-dot active"></span>
+              <span class="ig-carousel-dot"></span>
+              <span class="ig-carousel-dot"></span>
+            </div>
+
+            <div class="ig-actions">
+              <button class="ig-action-btn like-btn" aria-label="Like">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+              <button class="ig-action-btn comment-btn" aria-label="Comment">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </button>
+              <button class="ig-action-btn share-btn" aria-label="Share">
+                <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+              </button>
+              <button class="ig-action-btn save-btn" aria-label="Save">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+              </button>
+            </div>
+
+            <div class="ig-likes">428 likes</div>
+
+            <div class="ig-caption">
+              <strong>niathelight</strong> Today was all about the ocean. Snorkeling in the marine reserve revealed an underwater world I didn't know still existed—pristine coral, schools of tropical fish, even a sea turtle gliding past. Afternoon spa treatment, then a dhow sailing trip as the sun set. Private beach dinner with my feet in the sand. I could stay forever.
+            </div>
+
+            <div class="ig-tags">
+              <span class="ig-tag">Snorkeling</span>
+              <span class="ig-tag">Dhow Sailing</span>
+              <span class="ig-tag">Spa</span>
+              <span class="ig-tag">Beach Dinner</span>
+            </div>
+
+            <div class="ig-comments">
+              <div class="ig-comment"><strong>oceanwanderer</strong> The marine life there is incredible!</div>
+            </div>
+
+            <div class="ig-comment-input">
+              <input type="text" placeholder="Add a comment..." id="commentInput2">
+              <button type="button">Post</button>
+            </div>
+          </div>
+
+          <!-- Day 3 - IG Carousel -->
+          <div class="ig-carousel" data-day="3">
+            <div class="ig-carousel-header">
+              <div class="ig-carousel-avatar">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
+              </div>
+              <div class="ig-carousel-user">
+                <strong>niathelight</strong>
+                <span>Bazaruto Island</span>
+              </div>
+            </div>
+
+            <div class="ig-carousel-images" id="carousel3">
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Island Walk"></div>
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Horse Ride"></div>
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Tartaruga"></div>
+            </div>
+
+            <div class="ig-carousel-dots" id="dots3">
+              <span class="ig-carousel-dot active"></span>
+              <span class="ig-carousel-dot"></span>
+              <span class="ig-carousel-dot"></span>
+            </div>
+
+            <div class="ig-actions">
+              <button class="ig-action-btn like-btn" aria-label="Like">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+              <button class="ig-action-btn comment-btn" aria-label="Comment">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </button>
+              <button class="ig-action-btn share-btn" aria-label="Share">
+                <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+              </button>
+              <button class="ig-action-btn save-btn" aria-label="Save">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+              </button>
+            </div>
+
+            <div class="ig-likes">267 likes</div>
+
+            <div class="ig-caption">
+              <strong>niathelight</strong> Explored the island's interior today—freshwater lakes, local villages, a completely different side of Bazaruto. The contrast between the lush interior and endless beaches is striking. Sunset horse ride along the shore was magical, followed by dinner at Tartaruga. Fresh seafood, ocean breeze, stars appearing one by one.
+            </div>
+
+            <div class="ig-tags">
+              <span class="ig-tag">Island Walk</span>
+              <span class="ig-tag">Horse Ride</span>
+              <span class="ig-tag">Tartaruga Dinner</span>
+            </div>
+
+            <div class="ig-comments">
+              <div class="ig-comment"><strong>theblackexpat</strong> Tartaruga looks incredible!</div>
+            </div>
+
+            <div class="ig-comment-input">
+              <input type="text" placeholder="Add a comment..." id="commentInput3">
+              <button type="button">Post</button>
+            </div>
+          </div>
+
+          <!-- Day 4 - IG Carousel -->
+          <div class="ig-carousel" data-day="4">
+            <div class="ig-carousel-header">
+              <div class="ig-carousel-avatar">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
+              </div>
+              <div class="ig-carousel-user">
+                <strong>niathelight</strong>
+                <span>Private Sandbank</span>
+              </div>
+            </div>
+
+            <div class="ig-carousel-images" id="carousel4">
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Sandbank"></div>
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Picnic"></div>
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Dolphins"></div>
+            </div>
+
+            <div class="ig-carousel-dots" id="dots4">
+              <span class="ig-carousel-dot active"></span>
+              <span class="ig-carousel-dot"></span>
+              <span class="ig-carousel-dot"></span>
+            </div>
+
+            <div class="ig-actions">
+              <button class="ig-action-btn like-btn" aria-label="Like">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+              <button class="ig-action-btn comment-btn" aria-label="Comment">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </button>
+              <button class="ig-action-btn share-btn" aria-label="Share">
+                <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+              </button>
+              <button class="ig-action-btn save-btn" aria-label="Save">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+              </button>
+            </div>
+
+            <div class="ig-likes">589 likes</div>
+
+            <div class="ig-caption">
+              <strong>niathelight</strong> The signature experience: a private sandbank picnic in the middle of the Indian Ocean. They set up a gourmet feast on what felt like the most remote beach on Earth—just white sand, turquoise water, and complete silence. Spotted dolphins on the way back. This is the kind of day you never forget. Farewell dinner under the stars.
+            </div>
+
+            <div class="ig-tags">
+              <span class="ig-tag">Sandbank Picnic</span>
+              <span class="ig-tag">Dolphins</span>
+              <span class="ig-tag">Farewell Dinner</span>
+            </div>
+
+            <div class="ig-comments">
+              <div class="ig-comment"><strong>wanderlust.africa</strong> Actual paradise!</div>
+              <div class="ig-comment"><strong>blackgirlstraveltoo</strong> I need this in my life</div>
+            </div>
+
+            <div class="ig-comment-input">
+              <input type="text" placeholder="Add a comment..." id="commentInput4">
+              <button type="button">Post</button>
+            </div>
+          </div>
+
+          <!-- Day 5 - IG Carousel -->
+          <div class="ig-carousel" data-day="5">
+            <div class="ig-carousel-header">
+              <div class="ig-carousel-avatar">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
+              </div>
+              <div class="ig-carousel-user">
+                <strong>niathelight</strong>
+                <span>Anantara Bazaruto</span>
+              </div>
+            </div>
+
+            <div class="ig-carousel-images" id="carousel5">
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Final Morning"></div>
+              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Departure"></div>
+            </div>
+
+            <div class="ig-carousel-dots" id="dots5">
+              <span class="ig-carousel-dot active"></span>
+              <span class="ig-carousel-dot"></span>
+            </div>
+
+            <div class="ig-actions">
+              <button class="ig-action-btn like-btn" aria-label="Like">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+              <button class="ig-action-btn comment-btn" aria-label="Comment">
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </button>
+              <button class="ig-action-btn share-btn" aria-label="Share">
+                <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+              </button>
+              <button class="ig-action-btn save-btn" aria-label="Save">
+                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+              </button>
+            </div>
+
+            <div class="ig-likes">198 likes</div>
+
+            <div class="ig-caption">
+              <strong>niathelight</strong> A leisurely final breakfast watching the waves roll in, already planning my return. Helicopter back to Vilanculos with one last aerial view of this impossible place. From here you can connect to Cape Town, Jo'burg, or continue to safari. I chose to sit with the feeling a little longer. Mozambique changed something in me.
+            </div>
+
+            <div class="ig-tags">
+              <span class="ig-tag">Final Breakfast</span>
+              <span class="ig-tag">Helicopter Transfer</span>
+              <span class="ig-tag">Until Next Time</span>
+            </div>
+
+            <div class="ig-comments">
+              <div class="ig-comment"><strong>solotraveler</strong> Already booking my trip</div>
+            </div>
+
+            <div class="ig-comment-input">
+              <input type="text" placeholder="Add a comment..." id="commentInput5">
+              <button type="button">Post</button>
+            </div>
+          </div>
+
         </div>
 
         <div class="itin-sidebar">
@@ -375,7 +464,6 @@
               <p><strong>Duration:</strong> 5 days / 4 nights</p>
               <p style="margin-top: 0.5rem;"><strong>Starting from:</strong> $6,500 per person</p>
               <p style="margin-top: 0.5rem;"><strong>Best for:</strong> Couples, honeymoons, relaxation</p>
-              <p style="margin-top: 0.5rem;"><strong>Difficulty:</strong> Easy (relaxation-focused)</p>
             </div>
           </div>
 
@@ -384,29 +472,72 @@
             <div class="sidebar-content">
               <p><strong>Anantara Bazaruto</strong></p>
               <p style="margin-top: 0.5rem;">Beach Villa with private deck and direct beach access.</p>
-              <a href="../stays/anantara-bazaruto.html" style="display: inline-block; margin-top: 0.5rem; color: var(--color-terracotta); font-size: 0.875rem;">View Property</a>
+              <a href="../stays/anantara-bazaruto.html" style="display: inline-block; margin-top: 0.5rem; color: var(--color-accent); font-size: 0.875rem;">View Property →</a>
             </div>
           </div>
 
           <div class="sidebar-section">
             <h3 class="sidebar-title">Best Time to Go</h3>
             <div class="sidebar-content">
-              <p><strong>Peak:</strong> April - November (dry season)</p>
+              <p><strong>Peak:</strong> April - November</p>
               <p style="margin-top: 0.5rem;"><strong>Shoulder:</strong> March, December</p>
-              <p style="margin-top: 0.5rem;"><strong>Avoid:</strong> January - February (cyclone risk)</p>
+              <p style="margin-top: 0.5rem;"><strong>Avoid:</strong> January - February</p>
             </div>
           </div>
 
           <div class="sidebar-section">
-            <h3 class="sidebar-title">Getting There</h3>
+            <h3 class="sidebar-title">What's Included</h3>
             <div class="sidebar-content">
-              <p>Fly to Vilanculos (VNX) via Johannesburg, then helicopter to Bazaruto Island.</p>
+              <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.875rem; line-height: 1.8;">
+                <li>4 nights at Anantara Bazaruto (Beach Villa)</li>
+                <li>All meals and selected beverages</li>
+                <li>Return helicopter transfers</li>
+                <li>Sandbank picnic experience</li>
+                <li>Snorkeling and dhow sailing</li>
+                <li>One spa treatment per person</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Must-Do Experiences</h3>
+            <div class="sidebar-content">
+              <div class="must-do-sidebar">
+                <div class="must-do-item-sidebar">
+                  <span class="must-do-num">01</span>
+                  <div>
+                    <strong>Private Sandbank Picnic</strong>
+                    <span>Gourmet lunch on a remote sandbar</span>
+                  </div>
+                </div>
+                <div class="must-do-item-sidebar">
+                  <span class="must-do-num">02</span>
+                  <div>
+                    <strong>Helicopter Arrival</strong>
+                    <span>Aerial views of turquoise waters</span>
+                  </div>
+                </div>
+                <div class="must-do-item-sidebar">
+                  <span class="must-do-num">03</span>
+                  <div>
+                    <strong>Sunset Dhow Sailing</strong>
+                    <span>Traditional boat, golden light</span>
+                  </div>
+                </div>
+                <div class="must-do-item-sidebar">
+                  <span class="must-do-num">04</span>
+                  <div>
+                    <strong>Dinner at Tartaruga</strong>
+                    <span>Seafood over the water</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           <div class="book-cta">
             <h3>Get Your Quote</h3>
-            <p>Ready to escape to Mozambique? Get a personalized quote for your dates.</p>
+            <p>Ready to escape to Mozambique?</p>
             <a href="../request-quote.html?trip=Mozambique%20Island%20Escape&price=From%20%246%2C500%20pp" class="btn">Request Quote</a>
           </div>
         </div>
@@ -414,15 +545,19 @@
     </div>
   </section>
 
-  <section class="cta-section">
-    <div class="container">
+  <section class="image-cta-section">
+    <div class="cta-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Mozambique beach">
+    </div>
+    <div class="cta-overlay"></div>
+    <div class="image-cta-content">
       <h2>Extend your journey</h2>
-      <p class="text-large">Combine Mozambique with safari in South Africa or Namibia for the ultimate Southern Africa experience.</p>
-      <a href="../plan-your-trip.html" class="btn btn-dark">Plan Your Trip</a>
+      <p>Combine Mozambique with safari in South Africa or Namibia.</p>
+      <a href="../plan-your-trip.html" class="btn btn-primary">Plan Your Trip</a>
     </div>
   </section>
 
-    <footer class="footer">
+  <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -445,7 +580,7 @@
           <h4 class="footer-heading">Company</h4>
           <div class="footer-links">
             <a href="../about.html">About</a>
-            
+            <a href="../portal/">Creator Portal</a>
             <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
           </div>
         </div>
@@ -466,6 +601,117 @@
     </div>
   </footer>
 
+  <!-- Creator Popup -->
+  <div class="creator-popup-overlay" id="creatorPopup">
+    <div class="creator-popup">
+      <button class="creator-popup-close" aria-label="Close">&times;</button>
+      <div class="creator-popup-image">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_200,h_200,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
+      </div>
+      <div class="creator-popup-content">
+        <span class="creator-popup-label">Creator</span>
+        <h3>Nia The Light</h3>
+        <p>Content creator and storyteller with a passion for African luxury, wellness, and solo travel. Every itinerary Nia curates reflects her philosophy: travel should nourish the soul.</p>
+        <a href="https://instagram.com/niathelight" target="_blank" class="creator-popup-link">View Profile</a>
+      </div>
+    </div>
+  </div>
+
   <script src="../js/main.js?v=2"></script>
+  <script>
+    // Creator popup functionality
+    const creatorBtn = document.querySelector('.creator-badge-btn');
+    const creatorPopup = document.getElementById('creatorPopup');
+    const closeBtn = creatorPopup?.querySelector('.creator-popup-close');
+
+    if (creatorBtn && creatorPopup) {
+      creatorBtn.addEventListener('click', () => {
+        creatorPopup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+
+      closeBtn?.addEventListener('click', () => {
+        creatorPopup.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+
+      creatorPopup.addEventListener('click', (e) => {
+        if (e.target === creatorPopup) {
+          creatorPopup.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && creatorPopup.classList.contains('active')) {
+          creatorPopup.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    // IG Carousel functionality
+    document.querySelectorAll('.ig-carousel').forEach(carousel => {
+      const images = carousel.querySelector('.ig-carousel-images');
+      const dots = carousel.querySelectorAll('.ig-carousel-dot');
+
+      // Update dots on scroll and handle video playback
+      const slides = carousel.querySelectorAll('.ig-carousel-slide');
+      images?.addEventListener('scroll', () => {
+        const scrollLeft = images.scrollLeft;
+        const slideWidth = images.offsetWidth;
+        const activeIndex = Math.round(scrollLeft / slideWidth);
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
+
+        // Play/pause videos based on visibility
+        slides.forEach((slide, i) => {
+          const video = slide.querySelector('video');
+          if (video) {
+            if (i === activeIndex) {
+              video.play();
+            } else {
+              video.pause();
+            }
+          }
+        });
+      });
+
+      // Like button
+      const likeBtn = carousel.querySelector('.like-btn');
+      likeBtn?.addEventListener('click', () => {
+        likeBtn.classList.toggle('liked');
+        const likesEl = carousel.querySelector('.ig-likes');
+        const currentLikes = parseInt(likesEl.textContent);
+        likesEl.textContent = likeBtn.classList.contains('liked') ? (currentLikes + 1) + ' likes' : (currentLikes - 1) + ' likes';
+      });
+
+      // Comment moderation - auto-block negative words
+      const blockedWords = ['hate', 'ugly', 'terrible', 'worst', 'awful', 'bad', 'boring', 'overpriced', 'scam', 'fake', 'sucks'];
+      const commentInput = carousel.querySelector('.ig-comment-input input');
+      const postBtn = carousel.querySelector('.ig-comment-input button');
+      const commentsContainer = carousel.querySelector('.ig-comments');
+
+      postBtn?.addEventListener('click', () => {
+        const text = commentInput.value.trim();
+        if (!text) return;
+        if (blockedWords.some(word => text.toLowerCase().includes(word))) {
+          commentInput.value = '';
+          return;
+        }
+        const comment = document.createElement('div');
+        comment.className = 'ig-comment';
+        comment.innerHTML = '<strong>you</strong> ' + text;
+        commentsContainer.appendChild(comment);
+        commentInput.value = '';
+      });
+
+      // Share button
+      carousel.querySelector('.share-btn')?.addEventListener('click', () => {
+        if (navigator.share) {
+          navigator.share({ title: 'Mozambique Island Escape', text: 'Check out this itinerary', url: window.location.href });
+        }
+      });
+    });
+  </script>
 </body>
 </html>

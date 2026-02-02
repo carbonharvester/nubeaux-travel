@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Itineraries | NUBEAUX Creator Portal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #fafafa;
+      --color-white: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-light: #6b6b6b;
+      --color-border: #e5e5e5;
+      --color-accent: #c2703e;
+      --color-accent-light: #f5ebe4;
+      --color-success: #22c55e;
+      --color-warning: #f59e0b;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .portal-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--color-white);
+      border-right: 1px solid var(--color-border);
+      padding: 24px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .sidebar-logo {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      margin-bottom: 32px;
+      color: var(--color-accent);
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      margin-bottom: 4px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+    }
+
+    .sidebar-nav svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .sidebar-profile {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--color-bg);
+      border-radius: 8px;
+    }
+
+    .sidebar-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .sidebar-profile-info strong {
+      display: block;
+      font-size: 0.875rem;
+    }
+
+    .sidebar-profile-info span {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
+    .main-content {
+      padding: 32px 48px;
+      max-width: 1200px;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: var(--color-text-light);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #a85d32;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .tab {
+      padding: 12px 20px;
+      border: none;
+      background: none;
+      font-size: 0.9375rem;
+      color: var(--color-text-light);
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    .tab:hover {
+      color: var(--color-text);
+    }
+
+    .tab.active {
+      color: var(--color-accent);
+    }
+
+    .tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--color-accent);
+    }
+
+    .tab-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      background: var(--color-border);
+      border-radius: 10px;
+      font-size: 0.75rem;
+      margin-left: 8px;
+    }
+
+    .tab.active .tab-count {
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+    }
+
+    /* Itinerary Cards */
+    .itinerary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .itinerary-card {
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 24px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 20px;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .itinerary-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .itinerary-card-image {
+      width: 180px;
+      height: 120px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .itinerary-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .itinerary-card-content h3 {
+      font-size: 1.25rem;
+      margin-bottom: 4px;
+    }
+
+    .itinerary-card-location {
+      color: var(--color-text-light);
+      font-size: 0.9375rem;
+      margin-bottom: 12px;
+    }
+
+    .itinerary-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    .itinerary-card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .itinerary-card-meta svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .itinerary-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .itinerary-status.published {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .itinerary-status.draft {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .itinerary-status.pending {
+      background: #f5f3ff;
+      color: #7c3aed;
+    }
+
+    .itinerary-card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .icon-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 64px 24px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+    }
+
+    .empty-state svg {
+      width: 64px;
+      height: 64px;
+      color: var(--color-text-light);
+      margin-bottom: 16px;
+      opacity: 0.4;
+    }
+
+    .empty-state h3 {
+      font-size: 1.125rem;
+      margin-bottom: 8px;
+    }
+
+    .empty-state p {
+      color: var(--color-text-light);
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .portal-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .main-content {
+        padding: 24px;
+      }
+      .itinerary-card {
+        grid-template-columns: 1fr;
+      }
+      .itinerary-card-image {
+        width: 100%;
+        height: 180px;
+      }
+      .itinerary-card-actions {
+        flex-direction: row;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="portal-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">NUBEAUX Creator</div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="itineraries.html" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          My Itineraries
+        </a>
+        <a href="bookings.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Bookings
+        </a>
+        <a href="media.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Media Library
+        </a>
+        <a href="analytics.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Analytics
+        </a>
+        <a href="settings.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-profile">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_80,h_80,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
+        <div class="sidebar-profile-info">
+          <strong>Nia The Light</strong>
+          <span>@niathelight</span>
+        </div>
+        <button onclick="logout()" style="margin-left: auto; background: none; border: none; cursor: pointer; color: var(--color-text-light);" title="Logout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <h1>My Itineraries</h1>
+          <p>Create and manage your travel itineraries</p>
+        </div>
+        <a href="edit-itinerary.html" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Itinerary
+        </a>
+      </header>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="all">All <span class="tab-count" id="allCount">0</span></button>
+        <button class="tab" data-tab="published">Published <span class="tab-count" id="publishedCount">0</span></button>
+        <button class="tab" data-tab="pending">Pending <span class="tab-count" id="pendingCount">0</span></button>
+        <button class="tab" data-tab="draft">Drafts <span class="tab-count" id="draftCount">0</span></button>
+      </div>
+
+      <div class="itinerary-list" id="itineraryList">
+        <!-- Itineraries will be populated dynamically -->
+      </div>
+
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/>
+          <line x1="9" y1="15" x2="15" y2="15"/>
+        </svg>
+        <h3>No itineraries yet</h3>
+        <p>Create your first itinerary to start sharing your travel experiences</p>
+        <a href="edit-itinerary.html" class="btn btn-primary">Create Itinerary</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    // Check auth
+    const session = localStorage.getItem('nubeaux_creator_session');
+    if (!session) {
+      window.location.href = 'login.html';
+    }
+
+    // Get creator data
+    const sessionData = session ? JSON.parse(session) : null;
+    const creatorId = sessionData?.creatorId || 'nia-the-light';
+    const creator = CREATORS[creatorId];
+
+    let currentTab = 'all';
+    const itineraryList = document.getElementById('itineraryList');
+    const emptyState = document.getElementById('emptyState');
+
+    function renderItineraries() {
+      if (!creator || !creator.itineraries.length) {
+        itineraryList.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      let publishedCount = 0;
+      let pendingCount = 0;
+      let draftCount = 0;
+      let html = '';
+
+      creator.itineraries.forEach(itinId => {
+        const itin = ITINERARIES[itinId];
+        if (!itin) return;
+
+        if (itin.status === 'published') publishedCount++;
+        else if (itin.status === 'pending') pendingCount++;
+        else draftCount++;
+
+        // Filter by tab
+        if (currentTab !== 'all' && itin.status !== currentTab) return;
+
+        html += `
+          <div class="itinerary-card">
+            <div class="itinerary-card-image">
+              <img src="${itin.heroImage || 'https://via.placeholder.com/360x240'}" alt="${itin.title}">
+            </div>
+            <div class="itinerary-card-content">
+              <h3>${itin.title}</h3>
+              <p class="itinerary-card-location">${itin.destination} - ${itin.location}</p>
+              <div class="itinerary-card-meta">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  ${itin.duration}
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  ${itin.views?.toLocaleString() || 0} views
+                </span>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  ${itin.quoteRequests || 0} quotes
+                </span>
+                <span class="itinerary-status ${itin.status}">${itin.status === 'published' ? 'Published' : itin.status === 'pending' ? 'Pending Approval' : 'Draft'}</span>
+              </div>
+            </div>
+            <div class="itinerary-card-actions">
+              <a href="edit-itinerary.html?id=${itin.id}" class="icon-btn" title="Edit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </a>
+              <a href="../itineraries/${itin.id}.html" target="_blank" class="icon-btn" title="View">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+              <button class="icon-btn" title="Duplicate" onclick="duplicateItinerary('${itin.id}')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+
+      // Update counts
+      document.getElementById('allCount').textContent = publishedCount + pendingCount + draftCount;
+      document.getElementById('publishedCount').textContent = publishedCount;
+      document.getElementById('pendingCount').textContent = pendingCount;
+      document.getElementById('draftCount').textContent = draftCount;
+
+      if (html) {
+        itineraryList.innerHTML = html;
+        itineraryList.style.display = 'flex';
+        emptyState.style.display = 'none';
+      } else {
+        itineraryList.style.display = 'none';
+        emptyState.style.display = 'block';
+      }
+    }
+
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentTab = tab.dataset.tab;
+        renderItineraries();
+      });
+    });
+
+    function duplicateItinerary(id) {
+      alert('Duplicate feature coming soon!');
+    }
+
+    function logout() {
+      localStorage.removeItem('nubeaux_creator_session');
+      window.location.href = 'login.html';
+    }
+
+    // Initial render
+    renderItineraries();
+  </script>
+</body>
+</html>

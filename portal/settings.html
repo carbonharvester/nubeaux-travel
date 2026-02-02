@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | NUBEAUX Creator Portal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #fafafa;
+      --color-white: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-light: #6b6b6b;
+      --color-border: #e5e5e5;
+      --color-accent: #c2703e;
+      --color-accent-light: #f5ebe4;
+      --color-success: #22c55e;
+      --color-error: #ef4444;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .portal-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--color-white);
+      border-right: 1px solid var(--color-border);
+      padding: 24px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .sidebar-logo {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      margin-bottom: 32px;
+      color: var(--color-accent);
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      margin-bottom: 4px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+    }
+
+    .sidebar-nav svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .sidebar-profile {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--color-bg);
+      border-radius: 8px;
+    }
+
+    .sidebar-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .sidebar-profile-info strong {
+      display: block;
+      font-size: 0.875rem;
+    }
+
+    .sidebar-profile-info span {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
+    .main-content {
+      padding: 32px 48px;
+      max-width: 800px;
+    }
+
+    .page-header {
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: var(--color-text-light);
+    }
+
+    /* Settings Sections */
+    .settings-section {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .settings-section-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .settings-section-header h2 {
+      font-size: 1.125rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .settings-section-header p {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+    }
+
+    .settings-section-content {
+      padding: 24px;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-family: var(--font-sans);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-light);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-hint {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      margin-top: 6px;
+    }
+
+    /* Avatar Upload */
+    .avatar-upload {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .avatar-preview {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--color-border);
+    }
+
+    .avatar-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #a85d32;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .btn-danger {
+      background: transparent;
+      border: 1px solid var(--color-error);
+      color: var(--color-error);
+    }
+
+    .btn-danger:hover {
+      background: var(--color-error);
+      color: white;
+    }
+
+    /* Toggle Switch */
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .toggle-row:last-child {
+      border-bottom: none;
+    }
+
+    .toggle-info h4 {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .toggle-info p {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--color-border);
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: var(--color-accent);
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 16px 24px;
+      background: var(--color-text);
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      background: var(--color-success);
+    }
+
+    @media (max-width: 1024px) {
+      .portal-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .main-content {
+        padding: 24px;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="portal-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">NUBEAUX Creator</div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="itineraries.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          My Itineraries
+        </a>
+        <a href="bookings.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Bookings
+        </a>
+        <a href="media.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Media Library
+        </a>
+        <a href="analytics.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Analytics
+        </a>
+        <a href="settings.html" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-profile">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_80,h_80,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia" id="sidebarAvatar">
+        <div class="sidebar-profile-info">
+          <strong id="sidebarName">Nia The Light</strong>
+          <span id="sidebarHandle">@niathelight</span>
+        </div>
+        <button onclick="logout()" style="margin-left: auto; background: none; border: none; cursor: pointer; color: var(--color-text-light);" title="Logout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <h1>Settings</h1>
+        <p>Manage your profile and preferences</p>
+      </header>
+
+      <!-- Profile Section -->
+      <div class="settings-section">
+        <div class="settings-section-header">
+          <h2>Profile</h2>
+          <p>Your public creator profile information</p>
+        </div>
+        <div class="settings-section-content">
+          <div class="form-group">
+            <label class="form-label">Profile Photo</label>
+            <div class="avatar-upload">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_160,h_160,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Profile" class="avatar-preview" id="avatarPreview">
+              <div class="avatar-actions">
+                <button class="btn btn-outline" onclick="document.getElementById('avatarInput').click()">Upload new photo</button>
+                <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                <p class="form-hint">JPG or PNG. Max 2MB.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="displayName">Display Name</label>
+              <input type="text" id="displayName" class="form-input" value="Nia The Light">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="handle">Handle</label>
+              <input type="text" id="handle" class="form-input" value="niathelight">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="bio">Bio</label>
+            <textarea id="bio" class="form-textarea" rows="4">Content creator and storyteller with a passion for African luxury, wellness, and solo travel. Every itinerary I curate reflects my philosophy: travel should nourish the soul.</textarea>
+            <p class="form-hint">Brief description for your creator profile. Max 280 characters.</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="instagram">Instagram URL</label>
+            <input type="url" id="instagram" class="form-input" value="https://instagram.com/niathelight">
+          </div>
+
+          <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+        </div>
+      </div>
+
+      <!-- Notifications Section -->
+      <div class="settings-section">
+        <div class="settings-section-header">
+          <h2>Notifications</h2>
+          <p>Choose what notifications you receive</p>
+        </div>
+        <div class="settings-section-content">
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <h4>Quote Requests</h4>
+              <p>Get notified when someone requests a quote on your itinerary</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <h4>Weekly Analytics</h4>
+              <p>Receive a weekly summary of your itinerary performance</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <h4>Commission Updates</h4>
+              <p>Get notified about commission payments and updates</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <h4>Marketing Emails</h4>
+              <p>Tips, news, and updates from NUBEAUX Travel</p>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Section -->
+      <div class="settings-section">
+        <div class="settings-section-header">
+          <h2>Account</h2>
+          <p>Manage your account settings</p>
+        </div>
+        <div class="settings-section-content">
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input type="email" id="email" class="form-input" value="nia@nubeauxcollective.com">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <button class="btn btn-outline">Change Password</button>
+          </div>
+
+          <hr style="border: none; border-top: 1px solid var(--color-border); margin: 24px 0;">
+
+          <div class="form-group">
+            <label class="form-label" style="color: var(--color-error);">Danger Zone</label>
+            <button class="btn btn-danger">Deactivate Account</button>
+            <p class="form-hint">This will hide your profile and itineraries from the public.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <span id="toastMessage">Settings saved</span>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    // Check auth
+    const session = localStorage.getItem('nubeaux_creator_session');
+    if (!session) {
+      window.location.href = 'login.html';
+    }
+
+    // Load creator data
+    const sessionData = session ? JSON.parse(session) : null;
+    const creatorId = sessionData?.creatorId || 'nia-the-light';
+    const creator = CREATORS[creatorId];
+
+    if (creator) {
+      document.getElementById('displayName').value = creator.name;
+      document.getElementById('handle').value = creator.handle;
+      document.getElementById('bio').value = creator.bio;
+      document.getElementById('instagram').value = creator.instagram;
+      document.getElementById('email').value = creator.email;
+      document.getElementById('avatarPreview').src = creator.avatar.replace('w_80,h_80', 'w_160,h_160');
+      document.getElementById('sidebarAvatar').src = creator.avatar;
+      document.getElementById('sidebarName').textContent = creator.name;
+      document.getElementById('sidebarHandle').textContent = '@' + creator.handle;
+    }
+
+    // Avatar upload preview
+    document.getElementById('avatarInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          document.getElementById('avatarPreview').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function saveProfile() {
+      // In a real app, this would save to the backend
+      showToast('Settings saved successfully!', 'success');
+    }
+
+    function showToast(message, type = '') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      toastMessage.textContent = message;
+      toast.className = `toast show ${type}`;
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function logout() {
+      localStorage.removeItem('nubeaux_creator_session');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

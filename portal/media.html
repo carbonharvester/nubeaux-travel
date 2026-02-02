@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Library | NUBEAUX Creator Portal</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #fafafa;
+      --color-white: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-light: #6b6b6b;
+      --color-border: #e5e5e5;
+      --color-accent: #c2703e;
+      --color-accent-light: #f5ebe4;
+      --color-success: #22c55e;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .portal-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--color-white);
+      border-right: 1px solid var(--color-border);
+      padding: 24px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .sidebar-logo {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      margin-bottom: 32px;
+      color: var(--color-accent);
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      margin-bottom: 4px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+    }
+
+    .sidebar-nav svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .sidebar-profile {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--color-bg);
+      border-radius: 8px;
+    }
+
+    .sidebar-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .sidebar-profile-info strong {
+      display: block;
+      font-size: 0.875rem;
+    }
+
+    .sidebar-profile-info span {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
+    .main-content {
+      padding: 32px 48px;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+    }
+
+    .page-header h1 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: var(--color-text-light);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #a85d32;
+    }
+
+    /* Upload Zone */
+    .upload-zone {
+      border: 2px dashed var(--color-border);
+      border-radius: 12px;
+      padding: 48px;
+      text-align: center;
+      margin-bottom: 32px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.dragover {
+      border-color: var(--color-accent);
+      background: var(--color-accent-light);
+    }
+
+    .upload-zone svg {
+      width: 48px;
+      height: 48px;
+      color: var(--color-text-light);
+      margin-bottom: 16px;
+    }
+
+    .upload-zone h3 {
+      font-size: 1.125rem;
+      margin-bottom: 8px;
+    }
+
+    .upload-zone p {
+      color: var(--color-text-light);
+      font-size: 0.875rem;
+    }
+
+    .upload-zone input {
+      display: none;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      background: transparent;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active {
+      background: var(--color-accent);
+      color: white;
+      border-color: var(--color-accent);
+    }
+
+    /* Media Grid */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .media-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--color-border);
+    }
+
+    .media-item img,
+    .media-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .media-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .media-item:hover .media-item-overlay {
+      opacity: 1;
+    }
+
+    .media-item-name {
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .media-item-meta {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.75rem;
+    }
+
+    .media-item-checkbox {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 24px;
+      height: 24px;
+      border: 2px solid white;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .media-item:hover .media-item-checkbox,
+    .media-item.selected .media-item-checkbox {
+      opacity: 1;
+    }
+
+    .media-item.selected .media-item-checkbox {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    .media-item.selected .media-item-checkbox svg {
+      display: block;
+    }
+
+    .media-item-checkbox svg {
+      width: 14px;
+      height: 14px;
+      color: white;
+      display: none;
+    }
+
+    .media-type-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 4px 8px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border-radius: 4px;
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Storage Info */
+    .storage-info {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+
+    .storage-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .storage-header h4 {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .storage-header span {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+    }
+
+    .storage-bar {
+      height: 8px;
+      background: var(--color-border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .storage-bar-fill {
+      height: 100%;
+      background: var(--color-accent);
+      border-radius: 4px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 16px 24px;
+      background: var(--color-text);
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      background: var(--color-success);
+    }
+
+    @media (max-width: 1024px) {
+      .portal-layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        display: none;
+      }
+      .main-content {
+        padding: 24px;
+      }
+      .media-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="portal-layout">
+    <aside class="sidebar">
+      <div class="sidebar-logo">NUBEAUX Creator</div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </a>
+        <a href="itineraries.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          My Itineraries
+        </a>
+        <a href="bookings.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Bookings
+        </a>
+        <a href="media.html" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Media Library
+        </a>
+        <a href="analytics.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Analytics
+        </a>
+        <a href="settings.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-profile">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_80,h_80,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
+        <div class="sidebar-profile-info">
+          <strong>Nia The Light</strong>
+          <span>@niathelight</span>
+        </div>
+        <button onclick="logout()" style="margin-left: auto; background: none; border: none; cursor: pointer; color: var(--color-text-light);" title="Logout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="page-header">
+        <div>
+          <h1>Media Library</h1>
+          <p>Manage your photos and videos</p>
+        </div>
+        <button class="btn btn-primary" onclick="document.getElementById('uploadInput').click()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload
+        </button>
+        <input type="file" id="uploadInput" multiple accept="image/*,video/*" style="display: none;">
+      </header>
+
+      <div class="upload-zone" id="uploadZone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <h3>Drag and drop files here</h3>
+        <p>or click to browse. Supports JPG, PNG, MP4 up to 50MB</p>
+        <input type="file" id="dropInput" multiple accept="image/*,video/*">
+      </div>
+
+      <div class="storage-info">
+        <div class="storage-header">
+          <h4>Storage Used</h4>
+          <span>2.4 GB of 10 GB</span>
+        </div>
+        <div class="storage-bar">
+          <div class="storage-bar-fill" style="width: 24%;"></div>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="image">Photos</button>
+        <button class="filter-btn" data-filter="video">Videos</button>
+      </div>
+
+      <div class="media-grid" id="mediaGrid">
+        <!-- Media items will be populated dynamically -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    <span id="toastMessage">Upload complete</span>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    // Check auth
+    const session = localStorage.getItem('nubeaux_creator_session');
+    if (!session) {
+      window.location.href = 'login.html';
+    }
+
+    // Sample media data (would come from Cloudinary in real app)
+    const mediaItems = [
+      { id: 1, type: 'image', name: 'Namibia-onguma-001.jpg', url: 'https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg', size: '2.4 MB', date: 'Jan 15, 2026' },
+      { id: 2, type: 'image', name: 'Namibia-onguma-002.jpg', url: 'https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769958277/Namibia_onguma_Klein-163_e01x4h.jpg', size: '1.8 MB', date: 'Jan 15, 2026' },
+      { id: 3, type: 'image', name: 'Namibia-onguma-003.jpg', url: 'https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-68_qx6dih.jpg', size: '2.1 MB', date: 'Jan 14, 2026' },
+      { id: 4, type: 'video', name: 'Onguma-sunset.mp4', url: 'https://res.cloudinary.com/dng12bd0a/video/upload/c_fill,w_400,h_400,q_auto/v1770020109/Onguma_sunset_02_qg2lic.mp4', size: '28.5 MB', date: 'Jan 14, 2026' },
+      { id: 5, type: 'image', name: 'Camp-kala-001.jpg', url: 'https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769942667/Namibia_camp_kala_Klein-168_atshty.jpg', size: '1.9 MB', date: 'Jan 13, 2026' },
+      { id: 6, type: 'image', name: 'South-africa-001.jpg', url: 'https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1770005011/S_africa_Klein-2_xqck3i.jpg', size: '2.2 MB', date: 'Jan 12, 2026' },
+      { id: 7, type: 'image', name: 'Mozambique-001.jpg', url: 'https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg', size: '1.7 MB', date: 'Jan 11, 2026' },
+      { id: 8, type: 'image', name: 'Namibia-onguma-004.jpg', url: 'https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg', size: '2.0 MB', date: 'Jan 10, 2026' }
+    ];
+
+    const mediaGrid = document.getElementById('mediaGrid');
+    let currentFilter = 'all';
+
+    function renderMedia() {
+      const filtered = currentFilter === 'all'
+        ? mediaItems
+        : mediaItems.filter(item => item.type === currentFilter);
+
+      mediaGrid.innerHTML = filtered.map(item => `
+        <div class="media-item" data-id="${item.id}" data-type="${item.type}">
+          ${item.type === 'video'
+            ? `<video src="${item.url}" muted></video>`
+            : `<img src="${item.url}" alt="${item.name}">`
+          }
+          <div class="media-item-checkbox">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          ${item.type === 'video' ? '<span class="media-type-badge">Video</span>' : ''}
+          <div class="media-item-overlay">
+            <div class="media-item-name">${item.name}</div>
+            <div class="media-item-meta">${item.size} - ${item.date}</div>
+          </div>
+        </div>
+      `).join('');
+
+      // Add click handlers
+      document.querySelectorAll('.media-item').forEach(item => {
+        item.addEventListener('click', () => {
+          item.classList.toggle('selected');
+        });
+      });
+    }
+
+    renderMedia();
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderMedia();
+      });
+    });
+
+    // Drag and drop
+    const uploadZone = document.getElementById('uploadZone');
+
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('dragover');
+    });
+
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+
+    uploadZone.addEventListener('click', () => {
+      document.getElementById('dropInput').click();
+    });
+
+    document.getElementById('dropInput').addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+    });
+
+    document.getElementById('uploadInput').addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+    });
+
+    function handleFiles(files) {
+      // In a real app, this would upload to Cloudinary
+      showToast(`${files.length} file(s) uploaded successfully!`, 'success');
+    }
+
+    function showToast(message, type = '') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      toastMessage.textContent = message;
+      toast.className = `toast show ${type}`;
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function logout() {
+      localStorage.removeItem('nubeaux_creator_session');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>
