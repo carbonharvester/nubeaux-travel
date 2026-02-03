@@ -84,58 +84,33 @@
   let isCallActive = false;
   let callId = null;
 
-  // Load Retell SDK from CDN
-  function loadRetellSDK() {
-    return new Promise((resolve, reject) => {
-      if (window.RetellWebClient) {
-        resolve();
-        return;
+  // Load Retell SDK using dynamic ESM import
+  async function loadRetellSDK() {
+    if (window.RetellWebClient) {
+      return;
+    }
+
+    try {
+      // Use dynamic import for ESM module
+      const module = await import(`https://cdn.jsdelivr.net/npm/retell-client-js-sdk@${SDK_VERSION}/+esm`);
+      console.log('ESM module loaded:', module);
+      console.log('Module keys:', Object.keys(module));
+
+      // Find RetellWebClient in the module
+      const client = module.RetellWebClient ||
+                    module.default?.RetellWebClient ||
+                    module.default;
+
+      if (client) {
+        window.RetellWebClient = client;
+        console.log('Retell SDK loaded successfully via ESM');
+      } else {
+        throw new Error('RetellWebClient not found in ESM module');
       }
-
-      // Load the Retell SDK with cache busting
-      const retellScript = document.createElement('script');
-      const cacheBust = Date.now();
-      retellScript.src = `https://cdn.jsdelivr.net/npm/retell-client-js-sdk@${SDK_VERSION}/dist/index.umd.js?_=${cacheBust}`;
-
-      retellScript.onload = () => {
-        setTimeout(() => {
-          // Debug: log the SDK structure
-          if (window.retellClientJsSdk) {
-            console.log('retellClientJsSdk keys:', Object.keys(window.retellClientJsSdk));
-            console.log('retellClientJsSdk:', window.retellClientJsSdk);
-          }
-
-          // Check various possible export locations
-          const sdk = window.retellClientJsSdk;
-          const client = window.RetellWebClient ||
-                        window.retellWebClient ||
-                        (sdk && sdk.RetellWebClient) ||
-                        (sdk && sdk.default && sdk.default.RetellWebClient) ||
-                        (sdk && sdk.default) ||
-                        (sdk && typeof sdk === 'function' ? sdk : null) ||
-                        (window.module && window.module.exports && window.module.exports.RetellWebClient) ||
-                        (window.module && window.module.exports && window.module.exports.default);
-
-          if (client) {
-            window.RetellWebClient = client;
-            console.log('Retell SDK loaded successfully, client:', client);
-            resolve();
-          } else {
-            console.error('SDK loaded but RetellWebClient not found');
-            console.error('Available retell-related globals:', Object.keys(window).filter(k => k.toLowerCase().includes('retell')));
-            console.error('module.exports:', window.module ? window.module.exports : 'undefined');
-            reject(new Error('RetellWebClient not found after loading SDK'));
-          }
-        }, 300);
-      };
-
-      retellScript.onerror = (e) => {
-        console.error('Failed to load Retell SDK script:', e);
-        reject(new Error('Failed to load Retell SDK'));
-      };
-
-      document.head.appendChild(retellScript);
-    });
+    } catch (error) {
+      console.error('Failed to load Retell SDK:', error);
+      throw error;
+    }
   }
 
   // Create the widget UI
