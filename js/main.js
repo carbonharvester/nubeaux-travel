@@ -537,4 +537,45 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   document.addEventListener('touchmove', preventBodyScroll, { passive: false });
+
+  // ========================================
+  // PAGE VIEW TRACKING (Supabase)
+  // ========================================
+
+  // Check if we're on an itinerary page and should track views
+  function trackItineraryView() {
+    // Only track if Supabase is configured
+    if (typeof window.SUPABASE_CONFIGURED === 'undefined' || !window.SUPABASE_CONFIGURED) {
+      return;
+    }
+
+    // Check if we're on an itinerary detail page
+    // Look for data-itinerary-id attribute or parse from URL
+    const itineraryElement = document.querySelector('[data-itinerary-id]');
+    let itineraryId = itineraryElement?.getAttribute('data-itinerary-id');
+
+    // Fallback: try to get from URL path
+    if (!itineraryId) {
+      const path = window.location.pathname;
+      const match = path.match(/\/itineraries\/([^\/]+)\.html$/);
+      if (match) {
+        itineraryId = match[1];
+      }
+    }
+
+    if (itineraryId && typeof window.NubeauxDB !== 'undefined') {
+      NubeauxDB.trackPageView(itineraryId)
+        .then(result => {
+          if (result) {
+            console.log('Page view tracked for:', itineraryId);
+          }
+        })
+        .catch(err => {
+          console.error('Failed to track page view:', err);
+        });
+    }
+  }
+
+  // Run tracking after a short delay to ensure supabase.js is loaded
+  setTimeout(trackItineraryView, 100);
 });

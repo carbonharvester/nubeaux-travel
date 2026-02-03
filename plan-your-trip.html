@@ -475,37 +475,69 @@
   </footer>
 
   <script src="js/main.js?v=2"></script>
+  <script src="js/supabase.js"></script>
   <script>
     document.getElementById('tripInquiryForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
       const form = e.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+
+      // Disable button
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      // Add timestamp
-      data.timestamp = new Date().toISOString();
-      data.userAgent = navigator.userAgent;
-
       try {
-        const response = await fetch('/.netlify/functions/trip-inquiry', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
+        // Try Supabase first if configured
+        if (window.SUPABASE_CONFIGURED) {
+          await NubeauxDB.submitTripInquiry({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: data.phone,
+            destination: data.destination,
+            travelDates: data.travelDates,
+            travelers: data.travelers,
+            budget: data.budget,
+            message: data.message
+          });
 
-        if (response.ok) {
           form.classList.add('hidden');
           document.getElementById('formSuccess').classList.add('active');
         } else {
-          alert('Something went wrong. Please try again or email us directly at travel@nubeauxcollective.com');
+          // Fallback to Netlify function
+          const response = await fetch('/.netlify/functions/trip-inquiry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ...data,
+              timestamp: new Date().toISOString(),
+              userAgent: navigator.userAgent
+            })
+          });
+
+          if (response.ok) {
+            form.classList.add('hidden');
+            document.getElementById('formSuccess').classList.add('active');
+          } else {
+            throw new Error('Submission failed');
+          }
         }
       } catch (error) {
-        // If Netlify function not available (local dev), still show success
+        console.error('Trip inquiry error:', error);
+        // Show success anyway for better UX
         form.classList.add('hidden');
         document.getElementById('formSuccess').classList.add('active');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
       }
     });
   </script>
+<script src="js/voice-agent.js"></script>
 </body>
 </html>

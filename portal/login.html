@@ -232,6 +232,7 @@
     <a href="../index.html" class="back-link">Back to NUBEAUX Travel</a>
   </div>
 
+  <script src="../js/supabase.js"></script>
   <script src="data.js"></script>
   <script>
     const loginForm = document.getElementById('loginForm');
@@ -241,7 +242,7 @@
     const passwordError = document.getElementById('passwordError');
     const loginBtn = document.getElementById('loginBtn');
 
-    // Demo credentials
+    // Demo credentials (fallback when Supabase not configured)
     const DEMO_CREDENTIALS = {
       email: 'nia@nubeauxcollective.com',
       password: 'demo123'
@@ -277,27 +278,50 @@
 
       if (hasError) return;
 
-      // Simulate loading
+      // Show loading
       loginBtn.disabled = true;
       loginBtn.textContent = 'Signing in...';
 
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 800));
+      try {
+        // Try Supabase Auth first if configured
+        if (window.SUPABASE_CONFIGURED) {
+          const { user } = await supabase.auth.signIn(email, password);
 
-      // Check credentials
-      if (email === DEMO_CREDENTIALS.email && password === DEMO_CREDENTIALS.password) {
-        // Store session
-        localStorage.setItem('nubeaux_creator_session', JSON.stringify({
-          creatorId: 'nia-the-light',
-          email: email,
-          loggedInAt: new Date().toISOString()
-        }));
+          // Get creator profile
+          const creator = await NubeauxDB.getCreatorByEmail(email);
 
-        // Redirect to dashboard
-        window.location.href = 'index.html';
-      } else {
-        // Show error
-        passwordError.textContent = 'Invalid email or password';
+          if (creator) {
+            // Store session info for easy access
+            localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+              creatorId: creator.id,
+              handle: creator.handle,
+              email: email,
+              loggedInAt: new Date().toISOString()
+            }));
+
+            window.location.href = 'index.html';
+          } else {
+            throw new Error('Creator profile not found');
+          }
+        } else {
+          // Fallback to demo credentials
+          await new Promise(resolve => setTimeout(resolve, 800));
+
+          if (email === DEMO_CREDENTIALS.email && password === DEMO_CREDENTIALS.password) {
+            localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+              creatorId: 'nia-the-light',
+              email: email,
+              loggedInAt: new Date().toISOString()
+            }));
+
+            window.location.href = 'index.html';
+          } else {
+            throw new Error('Invalid email or password');
+          }
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        passwordError.textContent = error.message || 'Invalid email or password';
         passwordError.classList.add('show');
         passwordInput.classList.add('error');
         loginBtn.disabled = false;
@@ -306,8 +330,10 @@
     });
 
     // Check if already logged in
-    const session = localStorage.getItem('nubeaux_creator_session');
-    if (session) {
+    const existingSession = supabase.auth.getSession();
+    const legacySession = localStorage.getItem('nubeaux_creator_session');
+
+    if (existingSession || legacySession) {
       window.location.href = 'index.html';
     }
   </script>

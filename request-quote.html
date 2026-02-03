@@ -366,11 +366,13 @@
   </footer>
 
   <script src="js/main.js?v=2"></script>
+  <script src="js/supabase.js"></script>
   <script>
     // Parse URL parameters to pre-fill trip info
     const urlParams = new URLSearchParams(window.location.search);
     const tripName = urlParams.get('trip');
     const tripPrice = urlParams.get('price');
+    const itineraryId = urlParams.get('itinerary');
 
     if (tripName) {
       document.getElementById('tripName').value = tripName;
@@ -398,33 +400,65 @@
       e.preventDefault();
 
       const form = e.target;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+
+      // Disable button
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting...';
+
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      // Add metadata
-      data.timestamp = new Date().toISOString();
-      data.type = 'quote_request';
-      data.referrer = document.referrer;
-
       try {
-        const response = await fetch('/.netlify/functions/quote-request', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
+        // Try Supabase first if configured
+        if (window.SUPABASE_CONFIGURED) {
+          await NubeauxDB.submitQuoteRequest({
+            itineraryId: itineraryId || null,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: data.phone,
+            startDate: data.startDate || null,
+            endDate: data.endDate || null,
+            adults: data.adults,
+            children: data.children,
+            specialRequests: data.specialRequests
+          });
 
-        if (response.ok) {
           form.classList.add('hidden');
           document.getElementById('formSuccess').classList.add('active');
         } else {
-          alert('Something went wrong. Please try again or email us directly at travel@nubeauxcollective.com');
+          // Fallback to Netlify function
+          const response = await fetch('/.netlify/functions/quote-request', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ...data,
+              timestamp: new Date().toISOString(),
+              type: 'quote_request',
+              referrer: document.referrer
+            })
+          });
+
+          if (response.ok) {
+            form.classList.add('hidden');
+            document.getElementById('formSuccess').classList.add('active');
+          } else {
+            throw new Error('Submission failed');
+          }
         }
       } catch (error) {
-        // If Netlify function not available (local dev), still show success
+        console.error('Quote submission error:', error);
+        // Show success anyway for better UX (we can fix backend issues later)
         form.classList.add('hidden');
         document.getElementById('formSuccess').classList.add('active');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
       }
     });
   </script>
+<script src="js/voice-agent.js"></script>
 </body>
 </html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="The ultimate Cape Town travel guide covering Table Mountain, wine country, beaches, restaurants, and where to stay. Plan your perfect trip to South Africa's Mother City.">
+  <meta name="keywords" content="Cape Town travel guide, Table Mountain, Cape Winelands, Stellenbosch, Cape Town beaches, Cape Town restaurants, where to stay Cape Town">
+  <meta name="author" content="NUBEAUX Travel">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Cape Town City Guide: Table Mountain to Wine Country | NUBEAUX Travel">
+  <meta property="og:description" content="Everything you need for the perfect Cape Town trip: beaches, wine, food, and adventure.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1200&h=630&fit=crop&q=80">
+  <meta property="og:type" content="article">
+
+  <title>Cape Town City Guide: Table Mountain to Wine Country | NUBEAUX Travel</title>
+
+  <link rel="canonical" href="https://nubeauxtravel.com/journal/cape-town-city-guide.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=3">
+
+  <!-- Schema.org Article Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Cape Town City Guide: Table Mountain to Wine Country",
+    "description": "Complete Cape Town travel guide with insider tips on neighborhoods, restaurants, activities, and day trips.",
+    "image": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1200&h=630&fit=crop&q=80",
+    "author": {
+      "@type": "Organization",
+      "name": "NUBEAUX Travel"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "NUBEAUX Travel",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://nubeauxtravel.com/assets/logo.svg"
+      }
+    },
+    "datePublished": "2026-01-15",
+    "dateModified": "2026-02-03"
+  }
+  </script>
+
+  <style>
+    .article-hero {
+      position: relative;
+      margin-top: var(--header-height);
+      min-height: 60vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .article-hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .article-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .article-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%);
+    }
+    .article-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: var(--space-2xl);
+      color: var(--color-white);
+      max-width: 800px;
+    }
+    .article-category {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+    .article-hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--color-white);
+      margin-bottom: var(--space-md);
+      line-height: 1.2;
+    }
+    .article-meta {
+      display: flex;
+      gap: var(--space-md);
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
+    .article-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: var(--space-2xl) var(--space-md);
+    }
+    .article-content h2 {
+      margin-top: var(--space-xl);
+      margin-bottom: var(--space-md);
+    }
+    .article-content h3 {
+      margin-top: var(--space-lg);
+      margin-bottom: var(--space-sm);
+      font-size: 1.25rem;
+    }
+    .article-content p {
+      margin-bottom: var(--space-md);
+      line-height: 1.9;
+      color: var(--color-text-light);
+    }
+    .article-content ul, .article-content ol {
+      margin-bottom: var(--space-md);
+      padding-left: var(--space-lg);
+      color: var(--color-text-light);
+    }
+    .article-content li {
+      margin-bottom: var(--space-sm);
+      line-height: 1.8;
+    }
+    .neighborhood-card {
+      background: var(--color-warm-cream);
+      padding: var(--space-lg);
+      margin: var(--space-lg) 0;
+    }
+    .neighborhood-card h3 {
+      margin-top: 0;
+    }
+    .neighborhood-vibe {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      font-style: italic;
+      margin-bottom: var(--space-sm);
+    }
+    .restaurant-list {
+      background: var(--color-light-grey);
+      padding: var(--space-lg);
+      margin: var(--space-lg) 0;
+    }
+    .restaurant-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-white);
+    }
+    .restaurant-item:last-child {
+      border-bottom: none;
+    }
+    .restaurant-name {
+      font-weight: 500;
+    }
+    .restaurant-type {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+    .tip-box {
+      background: var(--color-warm-cream);
+      border-left: 3px solid var(--color-accent);
+      padding: var(--space-md) var(--space-lg);
+      margin: var(--space-lg) 0;
+    }
+    .tip-box strong {
+      display: block;
+      margin-bottom: var(--space-xs);
+    }
+    .article-cta {
+      background: var(--color-warm-cream);
+      padding: var(--space-xl);
+      text-align: center;
+      margin-top: var(--space-xl);
+    }
+    .article-cta h3 {
+      margin-top: 0;
+    }
+    .related-articles {
+      padding: var(--space-2xl) var(--space-md);
+      background: var(--color-light-grey);
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .related-card {
+      background: var(--color-white);
+    }
+    .related-card img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+    }
+    .related-card-content {
+      padding: var(--space-md);
+    }
+    .related-card h4 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+    }
+    @media (max-width: 768px) {
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+      .article-hero-content {
+        padding: var(--space-lg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../journal/">Journal</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../journal/">Journal</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <article>
+    <section class="article-hero">
+      <div class="article-hero-bg">
+        <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1920&h=1080&fit=crop&q=80" alt="Cape Town with Table Mountain">
+      </div>
+      <div class="article-hero-overlay"></div>
+      <div class="article-hero-content">
+        <span class="article-category">City Guide</span>
+        <h1>Cape Town City Guide: Table Mountain to Wine Country</h1>
+        <div class="article-meta">
+          <span>January 15, 2026</span>
+          <span>20 min read</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="article-content">
+      <p>Few cities can match Cape Town's natural setting. Wedged between the dramatic Table Mountain and the convergence of two oceans, this is a city where wilderness meets world-class restaurants, and where a morning hike can precede an afternoon wine tasting. The Mother City draws visitors from around the globe, and rewards them with experiences that linger long after departure.</p>
+
+      <h2>When to Visit Cape Town</h2>
+
+      <p>Cape Town enjoys a Mediterranean climate, but timing matters:</p>
+
+      <ul>
+        <li><strong>December-February (Summer):</strong> Peak season with hot weather, long days, and busy beaches. Table Mountain cable car operates reliably. Book accommodation well in advance.</li>
+        <li><strong>March-May (Autumn):</strong> Ideal conditions. Warm days, fewer crowds, excellent wine harvest season. Many consider this Cape Town's best time.</li>
+        <li><strong>June-August (Winter):</strong> Rainy season with dramatic skies and lush green landscapes. Whale watching season on the coast. Best hotel rates.</li>
+        <li><strong>September-November (Spring):</strong> Wildflower season transforms the Western Cape. Weather can be changeable but increasingly warm.</li>
+      </ul>
+
+      <div class="tip-box">
+        <strong>Local Tip</strong>
+        The Table Mountain cable car closes in high winds. For guaranteed summit access, book the first car of the day (8:30am) when winds are typically calmer.
+      </div>
+
+      <h2>Cape Town's Best Neighborhoods</h2>
+
+      <div class="neighborhood-card">
+        <h3>Camps Bay</h3>
+        <p class="neighborhood-vibe">Glamorous beach life with mountain backdrop</p>
+        <p>Cape Town's most photogenic beach strip features palm-lined promenades, sunset cocktails, and the Twelve Apostles mountain range as a backdrop. The beach itself can be too cold for swimming (thanks to the Benguela Current), but that doesn't stop the beautiful crowd from gathering. Victoria Road drives connect here to the dramatic Atlantic Seaboard.</p>
+        <p><strong>Stay here if:</strong> You want beach views and upscale dining options</p>
+      </div>
+
+      <div class="neighborhood-card">
+        <h3>Constantia</h3>
+        <p class="neighborhood-vibe">Historic wine estates and leafy luxury</p>
+        <p>Cape Town's oldest wine region offers a more relaxed pace just 20 minutes from the city center. World-class restaurants like La Colombe and Greenhouse sit alongside historic wine estates. The area combines easy access to beaches, mountains, and wine tasting within minutes.</p>
+        <p><strong>Stay here if:</strong> Wine and fine dining are priorities, you prefer quieter surroundings</p>
+      </div>
+
+      <div class="neighborhood-card">
+        <h3>City Bowl</h3>
+        <p class="neighborhood-vibe">Urban energy at the foot of the mountain</p>
+        <p>The City Bowl encompasses the CBD, Gardens, and Tamboerskloof—walkable neighborhoods pressed against Table Mountain. This is where you'll find cultural institutions like the Zeitz MOCAA museum, the Company's Garden, and vibrant Long Street. Easy access to the cable car station.</p>
+        <p><strong>Stay here if:</strong> You want central location and walkable streets</p>
+      </div>
+
+      <div class="neighborhood-card">
+        <h3>Woodstock & Observatory</h3>
+        <p class="neighborhood-vibe">Creative hub with craft and culture</p>
+        <p>Cape Town's arts and design center has transformed industrial spaces into galleries, breweries, and some of the city's most innovative restaurants. The Old Biscuit Mill weekend market remains a Saturday essential. More affordable than coastal areas.</p>
+        <p><strong>Stay here if:</strong> You're interested in arts, design, and emerging food scenes</p>
+      </div>
+
+      <h2>Essential Cape Town Experiences</h2>
+
+      <h3>Table Mountain</h3>
+
+      <p>The cable car offers the quickest route to the summit, but hiking up (and taking the cable car down) provides a more rewarding experience. The Platteklip Gorge route takes 2-3 hours and requires reasonable fitness. At the top, the views stretch from Robben Island to the Cape Peninsula.</p>
+
+      <h3>Cape Peninsula Drive</h3>
+
+      <p>The loop from Cape Town to Cape Point represents one of the world's great coastal drives. Start early, head through Simon's Town (stopping at Boulders Beach for penguins), continue to Cape Point for dramatic cliff walks, then return via Chapman's Peak Drive—a road carved into vertical cliffs above the Atlantic.</p>
+
+      <h3>Wine Country Day Trip</h3>
+
+      <p>The Cape Winelands lie just 45 minutes from central Cape Town. Stellenbosch offers the most famous estates, while Franschhoek combines French heritage with South Africa's finest restaurant scene. Arrange a driver or join a small-group tour to visit 3-4 estates and enjoy long lunches at vineyard restaurants.</p>
+
+      <h2>Where to Eat</h2>
+
+      <p>Cape Town's restaurant scene rivals any global destination. The city excels at farm-to-table dining, innovative fusion, and dishes that reflect its multicultural heritage.</p>
+
+      <h3>Fine Dining</h3>
+
+      <div class="restaurant-list">
+        <div class="restaurant-item">
+          <span class="restaurant-name">The Test Kitchen</span>
+          <span class="restaurant-type">Modern South African</span>
+        </div>
+        <div class="restaurant-item">
+          <span class="restaurant-name">La Colombe</span>
+          <span class="restaurant-type">French-Asian Fusion</span>
+        </div>
+        <div class="restaurant-item">
+          <span class="restaurant-name">Fyn</span>
+          <span class="restaurant-type">Japanese-South African</span>
+        </div>
+        <div class="restaurant-item">
+          <span class="restaurant-name">Greenhouse</span>
+          <span class="restaurant-type">Contemporary Fine Dining</span>
+        </div>
+      </div>
+
+      <h3>Casual & Local</h3>
+
+      <div class="restaurant-list">
+        <div class="restaurant-item">
+          <span class="restaurant-name">Pot Luck Club</span>
+          <span class="restaurant-type">Tapas & City Views</span>
+        </div>
+        <div class="restaurant-item">
+          <span class="restaurant-name">Neighbourgoods Market</span>
+          <span class="restaurant-type">Saturday Food Market</span>
+        </div>
+        <div class="restaurant-item">
+          <span class="restaurant-name">Chefs Warehouse</span>
+          <span class="restaurant-type">Tapas (Multiple Locations)</span>
+        </div>
+        <div class="restaurant-item">
+          <span class="restaurant-name">Woodstock Brewery</span>
+          <span class="restaurant-type">Craft Beer & Food</span>
+        </div>
+      </div>
+
+      <h3>Cape Malay & Heritage</h3>
+
+      <div class="restaurant-list">
+        <div class="restaurant-item">
+          <span class="restaurant-name">Bo-Kaap Kombuis</span>
+          <span class="restaurant-type">Traditional Cape Malay</span>
+        </div>
+        <div class="restaurant-item">
+          <span class="restaurant-name">Karibu</span>
+          <span class="restaurant-type">Pan-African Cuisine</span>
+        </div>
+        <div class="restaurant-item">
+          <span class="restaurant-name">Gold Restaurant</span>
+          <span class="restaurant-type">African with Entertainment</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <strong>Booking Tip</strong>
+        Top restaurants like The Test Kitchen and La Colombe require reservations weeks (sometimes months) in advance. Book before you arrive.
+      </div>
+
+      <h2>Where to Stay</h2>
+
+      <h3>Luxury Hotels</h3>
+
+      <ul>
+        <li><strong>The Silo Hotel:</strong> Thomas Heatherwick-designed landmark above Zeitz MOCAA. Pillowed windows frame Table Mountain views.</li>
+        <li><strong>Ellerman House:</strong> Clifton mansion with museum-quality art collection. Possibly Cape Town's finest address.</li>
+        <li><strong>Belmond Mount Nelson:</strong> Historic pink palace in the City Bowl. Colonial grandeur with modern updates.</li>
+        <li><strong>Twelve Apostles:</strong> Coastal luxury between Table Mountain and the sea. Dramatic cliff-side location.</li>
+      </ul>
+
+      <h3>Boutique Options</h3>
+
+      <ul>
+        <li><strong>More Quarters:</strong> Design-focused hotel in trendy Green Point.</li>
+        <li><strong>Cape View Clifton:</strong> Self-catering apartments with million-dollar views.</li>
+        <li><strong>Mannabay:</strong> Boutique gem in Oranjezicht with personalized service.</li>
+      </ul>
+
+      <h2>Practical Information</h2>
+
+      <h3>Getting Around</h3>
+
+      <p>Cape Town is best explored by rental car or hired driver. Uber operates reliably throughout the city and costs significantly less than metered taxis. The MyCiTi bus connects the airport to the city and serves the Atlantic Seaboard, though coverage is limited.</p>
+
+      <h3>Safety Considerations</h3>
+
+      <p>Exercise standard urban precautions: avoid displaying valuables, be aware of your surroundings, and use reputable transportation. Tourist areas are generally safe, but petty crime exists. Your accommodation can advise on current conditions for specific areas.</p>
+
+      <h3>Budget Estimate</h3>
+
+      <ul>
+        <li><strong>Luxury:</strong> $500-$1,500/night accommodation, $200-$400/person dining</li>
+        <li><strong>Mid-range:</strong> $150-$400/night, $80-$150/person dining</li>
+        <li><strong>Rental car:</strong> $40-$80/day</li>
+        <li><strong>Wine tasting:</strong> $10-$30 per estate</li>
+        <li><strong>Table Mountain cable car:</strong> $25 return</li>
+      </ul>
+
+      <h2>Sample 5-Day Cape Town Itinerary</h2>
+
+      <ul>
+        <li><strong>Day 1:</strong> Arrive, settle into accommodation, sunset drinks at Camps Bay</li>
+        <li><strong>Day 2:</strong> Table Mountain (early morning), afternoon at V&A Waterfront and Zeitz MOCAA</li>
+        <li><strong>Day 3:</strong> Cape Peninsula drive—Boulders Beach, Cape Point, Chapman's Peak. Dinner in Camps Bay</li>
+        <li><strong>Day 4:</strong> Winelands day trip—Stellenbosch and Franschhoek. Long lunch at vineyard restaurant</li>
+        <li><strong>Day 5:</strong> Bo-Kaap walking tour, Neighbourgoods Market (if Saturday), final afternoon at Clifton beaches</li>
+      </ul>
+
+      <div class="article-cta">
+        <h3>Plan Your Cape Town Experience</h3>
+        <p>Let us help you discover Cape Town's best experiences, from Table Mountain adventures to private wine country tours.</p>
+        <a href="../plan-your-trip.html" class="btn btn-primary">Plan Your Trip</a>
+      </div>
+    </div>
+  </article>
+
+  <section class="related-articles">
+    <div class="container">
+      <h2 style="text-align: center; margin-bottom: var(--space-xl);">Related Articles</h2>
+      <div class="related-grid">
+        <a href="african-honeymoon-guide.html" class="related-card">
+          <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&h=400&fit=crop&q=80" alt="Romantic African beach">
+          <div class="related-card-content">
+            <h4>African Honeymoon Guide</h4>
+            <p>Romantic safari and beach combinations</p>
+          </div>
+        </a>
+        <a href="luxury-safari-lodges-southern-africa.html" class="related-card">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Luxury safari lodge">
+          <div class="related-card-content">
+            <h4>Luxury Safari Lodges</h4>
+            <p>Southern Africa's finest properties</p>
+          </div>
+        </a>
+        <a href="what-to-pack-for-safari.html" class="related-card">
+          <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&h=400&fit=crop&q=80" alt="Safari packing">
+          <div class="related-card-content">
+            <h4>What to Pack for Safari</h4>
+            <p>Essential gear and clothing guide</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+          <p>Curated African travel experiences through the lens of creators who know them best.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Explore</h4>
+          <a href="../destinations/">Destinations</a>
+          <a href="../itineraries/">Itineraries</a>
+          <a href="../stays/">Stays</a>
+          <a href="../journal/">Journal</a>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <a href="../about.html">About</a>
+          <a href="../plan-your-trip.html">Plan Your Trip</a>
+        </div>
+        <div class="footer-links">
+          <h4>Connect</h4>
+          <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js?v=2"></script>
+<script src="../js/voice-agent.js"></script>
+</body>
+</html>

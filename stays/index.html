@@ -271,6 +271,79 @@
       line-height: 1.6;
     }
 
+    /* Filter Styles */
+    .stays-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+      padding: var(--space-lg);
+      background: var(--color-white);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-medium-grey);
+      margin-right: var(--space-xs);
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.8125rem;
+      border: 1px solid var(--color-light-grey);
+      background: var(--color-white);
+      color: var(--color-text);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    .filter-btn.active {
+      background: var(--color-text);
+      color: var(--color-white);
+      border-color: var(--color-text);
+    }
+
+    .stay-card.hidden,
+    .featured-stay.hidden {
+      display: none;
+    }
+
+    .region-section.hidden {
+      display: none;
+    }
+
+    /* CTA Simple */
+    .cta-simple {
+      background: var(--color-warm-cream);
+      padding: var(--space-2xl);
+      text-align: center;
+    }
+
+    .cta-simple h2 {
+      margin-bottom: var(--space-sm);
+    }
+
+    .cta-simple p {
+      max-width: 450px;
+      margin: 0 auto var(--space-lg);
+      color: var(--color-text-light);
+    }
+
     /* Responsive */
     @media (max-width: 1024px) {
       .featured-stay,
@@ -341,8 +414,31 @@
     </div>
   </section>
 
+  <!-- Filters -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container">
+      <div class="stays-filters">
+        <div class="filter-group">
+          <span class="filter-label">Type:</span>
+          <button class="filter-btn active" data-filter="type" data-value="all">All</button>
+          <button class="filter-btn" data-filter="type" data-value="safari">Safari Lodge</button>
+          <button class="filter-btn" data-filter="type" data-value="city">City Hotel</button>
+          <button class="filter-btn" data-filter="type" data-value="beach">Beach & Island</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">Region:</span>
+          <button class="filter-btn active" data-filter="region" data-value="all">All</button>
+          <button class="filter-btn" data-filter="region" data-value="namibia">Namibia</button>
+          <button class="filter-btn" data-filter="region" data-value="south-africa">South Africa</button>
+          <button class="filter-btn" data-filter="region" data-value="kenya">Kenya</button>
+          <button class="filter-btn" data-filter="region" data-value="mozambique">Mozambique</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Featured Stay: Onguma Camp Kala -->
-  <a href="onguma-camp-kala.html" class="featured-stay">
+  <a href="onguma-camp-kala.html" class="featured-stay" data-type="safari" data-region="namibia">
     <div class="featured-stay-image">
       <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_900,q_auto,f_auto/v1769942667/Namibia_camp_kala_Klein-168_atshty.jpg" alt="Onguma Camp Kala">
     </div>
@@ -366,7 +462,7 @@
   </a>
 
   <!-- Featured Stay: The Fort -->
-  <a href="onguma-the-fort.html" class="featured-stay reverse">
+  <a href="onguma-the-fort.html" class="featured-stay reverse" data-type="safari" data-region="namibia">
     <div class="featured-stay-content">
       <span class="featured-stay-label">Safari Lodge</span>
       <h2>Onguma The Fort</h2>
@@ -397,9 +493,9 @@
       </div>
 
       <div class="stays-grid">
-        <a href="four-seasons-westcliff.html" class="stay-card">
+        <a href="four-seasons-westcliff.html" class="stay-card" data-type="city" data-region="south-africa">
           <div class="stay-card-image">
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=450&fit=crop&q=80" alt="Four Seasons The Westcliff">
+            <img src="https://www.fourseasons.com/alt/img-opt/~70.0,0000-0,0000-3000,0000-2250,0000/publish/content/dam/fourseasons/images/web/JBG/JBG_141_original.jpg" alt="Four Seasons The Westcliff">
           </div>
           <div class="stay-card-content">
             <span class="stay-card-label">City Hotel</span>
@@ -409,7 +505,7 @@
           </div>
         </a>
 
-        <a href="park-hyatt-johannesburg.html" class="stay-card">
+        <a href="park-hyatt-johannesburg.html" class="stay-card" data-type="city" data-region="south-africa">
           <div class="stay-card-image">
             <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=450&fit=crop&q=80" alt="Park Hyatt Johannesburg">
           </div>
@@ -433,9 +529,9 @@
       </div>
 
       <div class="stays-grid">
-        <a href="the-dhow-house.html" class="stay-card">
+        <a href="the-dhow-house.html" class="stay-card" data-type="beach" data-region="kenya">
           <div class="stay-card-image">
-            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&h=450&fit=crop&q=80" alt="The Dhow House">
+            <img src="https://images.unsplash.com/photo-1596436889106-be35e843f974?w=600&h=450&fit=crop&q=80" alt="The Dhow House Lamu">
           </div>
           <div class="stay-card-content">
             <span class="stay-card-label">Private House</span>
@@ -445,9 +541,9 @@
           </div>
         </a>
 
-        <a href="tarangau-retreat.html" class="stay-card">
+        <a href="tarangau-retreat.html" class="stay-card" data-type="beach" data-region="kenya">
           <div class="stay-card-image">
-            <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&h=450&fit=crop&q=80" alt="Tarangau Retreat">
+            <img src="https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=600&h=450&fit=crop&q=80" alt="Tarangau Retreat Kilifi">
           </div>
           <div class="stay-card-content">
             <span class="stay-card-label">Coastal Retreat</span>
@@ -457,9 +553,9 @@
           </div>
         </a>
 
-        <a href="giraffe-manor.html" class="stay-card">
+        <a href="giraffe-manor.html" class="stay-card" data-type="city" data-region="kenya">
           <div class="stay-card-image">
-            <img src="https://images.unsplash.com/photo-1534177616064-ef1f0f1c9c54?w=600&h=450&fit=crop&q=80" alt="Giraffe Manor">
+            <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=600&h=450&fit=crop&q=80" alt="Giraffe Manor">
           </div>
           <div class="stay-card-content">
             <span class="stay-card-label">Heritage Hotel</span>
@@ -480,7 +576,7 @@
       </div>
 
       <div class="stays-grid">
-        <a href="anantara-bazaruto.html" class="stay-card">
+        <a href="anantara-bazaruto.html" class="stay-card" data-type="beach" data-region="mozambique">
           <div class="stay-card-image">
             <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&h=450&fit=crop&q=80" alt="Anantara Bazaruto">
           </div>
@@ -497,15 +593,11 @@
   </section>
 
   <!-- CTA -->
-  <section class="split-section">
-    <div class="split-image">
-      <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=900&fit=crop&q=80" alt="Luxury hotel pool">
-    </div>
-    <div class="split-content centered" style="background-color: var(--color-warm-cream);">
+  <section class="cta-simple">
+    <div class="container">
       <h2>Need a recommendation?</h2>
-      <hr class="hr-accent centered">
-      <p style="max-width: 400px;">Answer a few questions and we'll match you with the perfect property.</p>
-      <a href="../quiz.html" class="btn btn-outline-dark" style="margin-top: var(--space-md);">Take Our Quiz</a>
+      <p>Answer a few questions and we'll match you with the perfect property for your trip.</p>
+      <a href="../quiz.html" class="btn btn-primary">Take Our Quiz</a>
     </div>
   </section>
 
@@ -553,5 +645,76 @@
   </footer>
 
   <script src="../js/main.js?v=2"></script>
+  <script>
+    // Filter functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const featuredStays = document.querySelectorAll('.featured-stay');
+      const stayCards = document.querySelectorAll('.stay-card');
+      const regionSections = document.querySelectorAll('.region-section');
+
+      let activeFilters = {
+        type: 'all',
+        region: 'all'
+      };
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const filterType = this.dataset.filter;
+          const filterValue = this.dataset.value;
+
+          // Update active state for this filter group
+          document.querySelectorAll(`.filter-btn[data-filter="${filterType}"]`).forEach(b => {
+            b.classList.remove('active');
+          });
+          this.classList.add('active');
+
+          // Update active filters
+          activeFilters[filterType] = filterValue;
+
+          // Apply filters to featured stays
+          featuredStays.forEach(stay => {
+            const stayType = stay.dataset.type;
+            const stayRegion = stay.dataset.region;
+
+            const matchesType = activeFilters.type === 'all' || stayType === activeFilters.type;
+            const matchesRegion = activeFilters.region === 'all' || stayRegion === activeFilters.region;
+
+            if (matchesType && matchesRegion) {
+              stay.classList.remove('hidden');
+            } else {
+              stay.classList.add('hidden');
+            }
+          });
+
+          // Apply filters to stay cards
+          stayCards.forEach(card => {
+            const cardType = card.dataset.type;
+            const cardRegion = card.dataset.region;
+
+            const matchesType = activeFilters.type === 'all' || cardType === activeFilters.type;
+            const matchesRegion = activeFilters.region === 'all' || cardRegion === activeFilters.region;
+
+            if (matchesType && matchesRegion) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+
+          // Hide empty region sections
+          regionSections.forEach(section => {
+            const visibleCards = section.querySelectorAll('.stay-card:not(.hidden)');
+            if (visibleCards.length === 0) {
+              section.classList.add('hidden');
+            } else {
+              section.classList.remove('hidden');
+            }
+          });
+        });
+      });
+    });
+  </script>
+<script src="../js/voice-agent.js"></script>
 </body>
 </html>

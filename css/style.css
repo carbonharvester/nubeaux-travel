@@ -203,7 +203,7 @@ p {
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  padding: 0 var(--space-lg);
+  padding: 0 var(--space-xl);
 }
 
 .logo img {
