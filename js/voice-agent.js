@@ -99,15 +99,26 @@
 
       retellScript.onload = () => {
         setTimeout(() => {
+          // Debug: log the SDK structure
+          if (window.retellClientJsSdk) {
+            console.log('retellClientJsSdk keys:', Object.keys(window.retellClientJsSdk));
+            console.log('retellClientJsSdk:', window.retellClientJsSdk);
+          }
+
           // Check various possible export locations
+          const sdk = window.retellClientJsSdk;
           const client = window.RetellWebClient ||
                         window.retellWebClient ||
-                        (window.retellClientJsSdk && window.retellClientJsSdk.RetellWebClient) ||
-                        (window.module && window.module.exports && window.module.exports.RetellWebClient);
+                        (sdk && sdk.RetellWebClient) ||
+                        (sdk && sdk.default && sdk.default.RetellWebClient) ||
+                        (sdk && sdk.default) ||
+                        (sdk && typeof sdk === 'function' ? sdk : null) ||
+                        (window.module && window.module.exports && window.module.exports.RetellWebClient) ||
+                        (window.module && window.module.exports && window.module.exports.default);
 
           if (client) {
             window.RetellWebClient = client;
-            console.log('Retell SDK loaded successfully');
+            console.log('Retell SDK loaded successfully, client:', client);
             resolve();
           } else {
             console.error('SDK loaded but RetellWebClient not found');
