@@ -71,8 +71,8 @@ const ITINERARIES = {
       }
     ],
     stays: [
-      { name: "Anantara Bazaruto", link: "../stays/anantara-bazaruto.html" },
-      { name: "Azura Benguerra", link: "../stays/azura-benguerra.html" }
+      { name: "Anantara Bazaruto", location: "Bazaruto Island", nights: "4", notes: "All-inclusive beachfront villas" },
+      { name: "Azura Benguerra", location: "Benguerra Island", nights: "Optional extension", notes: "Alternative luxury option" }
     ],
     included: [
       "4 nights luxury island accommodation (full board)",
@@ -137,8 +137,8 @@ const ITINERARIES = {
       }
     ],
     stays: [
-      { name: "Onguma The Fort", link: "../stays/onguma-the-fort.html" },
-      { name: "Onguma Camp Kala", link: "../stays/onguma-camp-kala.html" }
+      { name: "Onguma The Fort", location: "Etosha, Namibia", nights: "2", notes: "Moorish-inspired waterhole lodge" },
+      { name: "Onguma Camp Kala", location: "Etosha, Namibia", nights: "1", notes: "Intimate tented camp" }
     ],
     included: [
       "3 nights at Onguma The Fort or Camp Kala (full board + activities)",

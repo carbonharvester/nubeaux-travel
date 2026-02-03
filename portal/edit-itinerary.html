@@ -743,6 +743,46 @@
       background: var(--color-success);
     }
 
+    /* Stories Edit */
+    .story-edit-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .story-edit-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid var(--color-accent);
+      padding: 2px;
+      background: var(--color-white);
+    }
+
+    .story-edit-ring img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .story-edit-label {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
+    .story-edit-empty {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px dashed var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-light);
+    }
+
     @media (max-width: 1024px) {
       .editor-layout {
         grid-template-columns: 1fr;
@@ -859,6 +899,14 @@
             <button type="button" class="btn btn-outline" onclick="loadHeroFromUrl()" style="white-space: nowrap;">Load URL</button>
           </div>
         </div>
+      </section>
+
+      <!-- Stories -->
+      <section class="form-section">
+        <h2 class="form-section-title">Stories (Day Thumbnails)</h2>
+        <p class="form-hint" style="margin-bottom: 16px;">These circular thumbnails appear at the top of your itinerary. Each one links to that day's content.</p>
+        <div id="storiesList" class="stories-edit-list" style="display: flex; gap: 16px; flex-wrap: wrap;"></div>
+        <p class="form-hint" style="margin-top: 12px;">Story thumbnails are auto-generated from the first media of each day. Add media to your days below to create stories.</p>
       </section>
 
       <!-- Stays / Properties -->
@@ -988,7 +1036,7 @@
 
     if (editId && ITINERARIES[editId]) {
       loadItinerary(ITINERARIES[editId]);
-      document.getElementById('pageTitle').textContent = 'Edit Itinerary';
+      document.getElementById('pageTitle').textContent = ITINERARIES[editId].title || 'Edit Itinerary';
     } else {
       // Add first day by default
       addDay();
@@ -1028,6 +1076,42 @@
       }
 
       updatePreview();
+      updateStoriesPreview();
+    }
+
+    // Update Stories Preview
+    function updateStoriesPreview() {
+      const storiesList = document.getElementById('storiesList');
+      const days = Array.from(daysList.children);
+
+      let html = '';
+      days.forEach((dayCard, i) => {
+        const dayNum = i + 1;
+        const mediaItems = dayCard.querySelectorAll('.media-item:not(.media-item-add) img');
+        const firstMedia = mediaItems.length > 0 ? mediaItems[0].src : null;
+
+        if (firstMedia) {
+          html += `
+            <div class="story-edit-item">
+              <div class="story-edit-ring">
+                <img src="${firstMedia}" alt="Day ${dayNum}">
+              </div>
+              <span class="story-edit-label">Day ${dayNum}</span>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="story-edit-item">
+              <div class="story-edit-empty">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+              <span class="story-edit-label">Day ${dayNum}</span>
+            </div>
+          `;
+        }
+      });
+
+      storiesList.innerHTML = html || '<p style="color: var(--color-text-light);">Add days and media below to see story previews</p>';
     }
 
     // Add Day
@@ -1115,6 +1199,7 @@
       `;
 
       daysList.appendChild(dayCard);
+      updateStoriesPreview();
     }
 
     function toggleDayCard(btn) {
@@ -1135,6 +1220,7 @@
         card.dataset.dayNum = i + 1;
         card.querySelector('.day-number').textContent = i + 1;
       });
+      updateStoriesPreview();
     }
 
     addDayBtn.addEventListener('click', () => addDay());
@@ -1317,6 +1403,7 @@
               </div>
             `;
             btn.parentElement.insertBefore(mediaItem, btn);
+            updateStoriesPreview();
           };
           reader.readAsDataURL(file);
         }
@@ -1326,6 +1413,7 @@
 
     function removeMedia(btn) {
       btn.closest('.media-item').remove();
+      updateStoriesPreview();
     }
 
     // Save
@@ -1335,15 +1423,17 @@
       itineraryData.destination = document.getElementById('destination').value;
       itineraryData.location = document.getElementById('location').value;
       itineraryData.duration = document.getElementById('duration').value;
-      itineraryData.priceFrom = parseInt(document.getElementById('priceFrom').value) || 0;
       itineraryData.intro = document.getElementById('intro').value;
       itineraryData.included = document.getElementById('included').value.split('\n').filter(l => l.trim());
       itineraryData.status = currentStatus;
 
-      itineraryData.bestTimeToVisit = {
-        peakWildlife: document.getElementById('peakWildlife').value,
-        bestWeather: document.getElementById('bestWeather').value
-      };
+      // Gather stays
+      itineraryData.stays = Array.from(staysList.children).map(item => ({
+        name: item.querySelector('.stay-name').value,
+        location: item.querySelector('.stay-location').value,
+        nights: item.querySelector('.stay-nights').value,
+        notes: item.querySelector('.stay-notes').value
+      })).filter(s => s.name);
 
       // Best for tags
       itineraryData.bestFor = Array.from(document.querySelectorAll('#bestForTags .tag'))

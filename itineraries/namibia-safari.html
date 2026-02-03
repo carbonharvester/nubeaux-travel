@@ -551,6 +551,20 @@
       });
     }
 
+    // Stories click functionality - scroll to day carousels
+    document.querySelectorAll('.story-item').forEach((story, index) => {
+      story.style.cursor = 'pointer';
+      story.addEventListener('click', () => {
+        const dayNum = index + 1;
+        const targetCarousel = document.querySelector(`.ig-carousel[data-day="${dayNum}"]`);
+        if (targetCarousel) {
+          targetCarousel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Add visual feedback
+          story.querySelector('.story-ring')?.classList.add('viewed');
+        }
+      });
+    });
+
     // IG Carousel functionality
     document.querySelectorAll('.ig-carousel').forEach(carousel => {
       const images = carousel.querySelector('.ig-carousel-images');
