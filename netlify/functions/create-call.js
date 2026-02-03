@@ -3,6 +3,8 @@
  * Creates a Retell AI web call and returns the access token
  */
 
+const fetch = require('node-fetch');
+
 const RETELL_API_KEY = 'key_a6ee76b112984554800dff4fda95';
 const RETELL_AGENT_ID = 'agent_d260ad3b05df011da73fbbbb4a';
 

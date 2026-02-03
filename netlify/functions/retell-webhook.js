@@ -4,6 +4,8 @@
  * Saves call data to Supabase
  */
 
+const fetch = require('node-fetch');
+
 const SUPABASE_URL = 'https://qnhqtlpkwscbguossfmn.supabase.co';
 const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuaHF0bHBrd3NjYmd1b3NzZm1uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MDA5NzAyMSwiZXhwIjoyMDg1NjczMDIxfQ.7h9SrfrLjeVV-HpKsRcTfp99Z4p2x5wFC-erxxw0VWY';
 
