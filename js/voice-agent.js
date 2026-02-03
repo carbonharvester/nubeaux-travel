@@ -14,7 +14,7 @@
   let isCallActive = false;
   let callId = null;
 
-  // Load Retell SDK from CDN
+  // Load Retell SDK from CDN with required polyfills
   function loadRetellSDK() {
     return new Promise((resolve, reject) => {
       if (window.RetellWebClient) {
@@ -22,14 +22,80 @@
         return;
       }
 
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/retell-client-js-sdk@2.0.7/dist/index.umd.min.js';
-      script.onload = () => {
-        // Wait a bit for the SDK to initialize
-        setTimeout(resolve, 100);
+      // Create EventEmitter polyfill for browser
+      class EventEmitter {
+        constructor() {
+          this._events = {};
+          this._maxListeners = 10;
+        }
+        on(event, listener) {
+          if (!this._events[event]) this._events[event] = [];
+          this._events[event].push(listener);
+          return this;
+        }
+        once(event, listener) {
+          const onceWrapper = (...args) => {
+            this.off(event, onceWrapper);
+            listener.apply(this, args);
+          };
+          return this.on(event, onceWrapper);
+        }
+        off(event, listener) {
+          if (!this._events[event]) return this;
+          if (listener) {
+            this._events[event] = this._events[event].filter(l => l !== listener);
+          } else {
+            delete this._events[event];
+          }
+          return this;
+        }
+        emit(event, ...args) {
+          if (!this._events[event]) return false;
+          this._events[event].slice().forEach(listener => listener.apply(this, args));
+          return true;
+        }
+        removeListener(event, listener) { return this.off(event, listener); }
+        addListener(event, listener) { return this.on(event, listener); }
+        removeAllListeners(event) {
+          if (event) delete this._events[event];
+          else this._events = {};
+          return this;
+        }
+        setMaxListeners(n) { this._maxListeners = n; return this; }
+        listeners(event) { return this._events[event] ? [...this._events[event]] : []; }
+        listenerCount(event) { return this._events[event] ? this._events[event].length : 0; }
+      }
+
+      // Provide events module for UMD require
+      window.events = { EventEmitter, default: { EventEmitter } };
+
+      // Create a mock require for the UMD module
+      const originalRequire = window.require;
+      window.require = function(module) {
+        if (module === 'events') return window.events;
+        if (originalRequire) return originalRequire(module);
+        throw new Error(`Module ${module} not found`);
       };
-      script.onerror = reject;
-      document.head.appendChild(script);
+
+      // Load the Retell SDK
+      const retellScript = document.createElement('script');
+      retellScript.src = 'https://cdn.jsdelivr.net/npm/retell-client-js-sdk@2.0.7/dist/index.umd.js';
+      retellScript.onload = () => {
+        setTimeout(() => {
+          // Check various possible export locations
+          const client = window.RetellWebClient ||
+                        (window.retellClientJsSdk && window.retellClientJsSdk.RetellWebClient);
+          if (client) {
+            window.RetellWebClient = client;
+            resolve();
+          } else {
+            console.error('Available globals:', Object.keys(window).filter(k => k.toLowerCase().includes('retell')));
+            reject(new Error('RetellWebClient not found after loading SDK'));
+          }
+        }, 300);
+      };
+      retellScript.onerror = () => reject(new Error('Failed to load Retell SDK'));
+      document.head.appendChild(retellScript);
     });
   }
 
