@@ -184,7 +184,7 @@
 
     .creators-header {
       text-align: center;
-      margin-bottom: var(--space-xl);
+      margin-bottom: var(--space-md);
     }
 
     .creators-header h2 {
@@ -197,6 +197,8 @@
       font-size: 1.5rem;
       font-weight: 400;
       margin: 0 auto;
+      text-decoration: underline;
+      text-underline-offset: 6px;
     }
 
     .case-study-visual {
@@ -205,7 +207,7 @@
       justify-content: center;
       align-items: center;
       max-width: 900px;
-      margin: 0 auto var(--space-xl);
+      margin: 0 auto var(--space-sm);
       padding: var(--space-xl) 0;
     }
 
@@ -214,7 +216,7 @@
       background: white;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.2);
       cursor: pointer;
       flex-shrink: 0;
       width: 320px;
@@ -299,19 +301,21 @@
       display: flex;
       gap: 10px;
       max-width: 240px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
     }
 
     .floating-card-left {
       top: 20%;
       left: 0;
-      transform: translateX(-30%);
+      transform: translateX(40%);
+      z-index: 2;
     }
 
     .floating-card-right {
       bottom: 25%;
       right: 0;
-      transform: translateX(30%);
+      transform: translateX(-40%);
+      z-index: 2;
     }
 
     .comment-card-avatar {
@@ -379,26 +383,42 @@
 
     @media (max-width: 900px) {
       .case-study-visual {
-        flex-direction: column;
-        padding: var(--space-md) 0;
+        padding: var(--space-lg) var(--space-md);
+        position: relative;
+        flex-direction: row;
+        justify-content: center;
       }
 
       .reel-mockup {
-        width: 280px;
+        width: 240px;
       }
 
       .floating-comment-card {
-        position: relative;
-        max-width: 100%;
-        top: auto;
-        left: auto;
-        right: auto;
-        bottom: auto;
-        transform: none;
+        position: absolute;
+        max-width: 160px;
+        padding: 10px;
       }
 
       .floating-card-left {
-        order: -1;
+        top: 10%;
+        left: 0;
+        transform: translateX(25%);
+      }
+
+      .floating-card-right {
+        bottom: 15%;
+        right: 0;
+        transform: translateX(-25%);
+      }
+
+      .comment-card-avatar {
+        width: 24px;
+        height: 24px;
+      }
+
+      .comment-card-username,
+      .comment-card-text {
+        font-size: 0.6875rem;
       }
     }
 
@@ -1171,6 +1191,10 @@
         font-size: 1rem;
       }
 
+      .full-bleed-section .hero-overlay {
+        display: none;
+      }
+
       .final-cta-buttons {
         flex-direction: column;
       }
@@ -1208,8 +1232,8 @@
       <a href="index.html" class="logo"><img src="assets/logo.svg" alt="NUBEAUX Travel"></a>
 
       <nav class="nav" aria-label="Main navigation">
-        <a href="creators/">For Creators</a>
-        <a href="itineraries/">Explore Trips</a>
+        <a href="creators/index.html">For Creators</a>
+        <a href="trips/">Explore Trips</a>
         <a href="how-it-works.html">How It Works</a>
         <div class="nav-buttons">
           <a href="creators/start.html" class="nav-cta">Sign up</a>
@@ -1227,8 +1251,8 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu">
-    <a href="creators/">For Creators</a>
-    <a href="itineraries/">Explore Trips</a>
+    <a href="creators/index.html">For Creators</a>
+    <a href="trips/">Explore Trips</a>
     <a href="how-it-works.html">How It Works</a>
     <a href="creators/start.html" class="mobile-menu-cta">Sign up</a>
     <a href="login.html" class="mobile-menu-login">Log in</a>
@@ -1265,7 +1289,6 @@
         <div class="creators-header">
           <span class="section-label">For Creators</span>
           <h2 id="creators-heading">Your DMs and comments are full of the same questions.</h2>
-          <h3 class="case-study-heading">1.1 million views. 47K likes. Zero earnings.</h3>
         </div>
 
         <!-- Centered Reel mockup with floating comments -->
@@ -1314,8 +1337,10 @@
           </div>
         </div>
 
+        <h3 class="case-study-heading" style="text-align: center; margin-top: 0; margin-bottom: var(--space-md);">1.1 million views. 47K likes. Zero earnings.</h3>
+
         <p class="creators-pain-text">
-          You reply. You forget. You move on. All that interest, going nowhere. Meanwhile, creator funds are shrinking and brand deals aren't what they used to be. Your content drives real decisions—but you're not seeing the upside. <strong>That changes now.</strong>
+          You reply. They book. The hotel gets paid. The booking platform gets paid. You—the reason they booked—get nothing. Your content drives real revenue, so start earning from it.
         </p>
 
         <div class="creators-cta">
@@ -1366,14 +1391,12 @@
         <div class="earnings-grid animate-on-scroll">
           <div class="earnings-content">
             <span class="section-label">Earnings</span>
-            <h2 id="earnings-heading">Know exactly what you make.</h2>
-            <p class="highlight">You get 40% of the commission on every booking.</p>
-            <p><strong>Real numbers:</strong> $3,000 trip = around $180 for you. $10,000 trip = around $600.</p>
-            <p>Higher tiers unlock as you grow. No fees to join. No fees to list.</p>
+            <h2 id="earnings-heading">Earn from your trips.</h2>
+            <p>Every booking earns you commission. Share a trip once, earn every time someone books it. No fees to join. No fees to list.</p>
             <a href="how-it-works.html#earnings" class="btn-link">See how earnings work</a>
           </div>
           <div class="earnings-visual">
-            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Creator enjoying travel">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_600,q_auto,f_auto/v1770230458/Namibia_onguma_Klein-113_f6iean.jpg" alt="Creator enjoying travel">
           </div>
         </div>
       </div>
@@ -1401,7 +1424,7 @@
           </div>
           <div class="diff-card animate-item">
             <h3>Made for creators</h3>
-            <p>40% commission. Higher tiers as you grow. Simple and transparent.</p>
+            <p>Earn commission on every booking. Higher tiers as you grow.</p>
           </div>
         </div>
         <p class="diff-microcopy">AI handles the back-and-forth. You stay focused on content.</p>
@@ -1430,7 +1453,7 @@
             <span class="section-label">For Travellers</span>
             <h2 id="itineraries-heading">Itineraries</h2>
           </div>
-          <a href="itineraries/">View All</a>
+          <a href="trips/">View All</a>
         </div>
 
         <div class="scroll-wrapper" data-scroll="itineraries">
@@ -1518,7 +1541,7 @@
     <!-- Final CTA -->
     <section class="final-cta" aria-labelledby="final-heading">
       <div class="container">
-        <h2 id="final-heading">Your trips already influence decisions.<br>Now they can drive bookings.</h2>
+        <h2 id="final-heading">Your trips already drive bookings.<br>Now you can earn from them.</h2>
         <div class="final-cta-buttons">
           <a href="creators/start.html" class="btn btn-primary">Create an itinerary</a>
           <a href="itineraries/" class="btn btn-outline">Explore Trips</a>

@@ -3,142 +3,455 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Meet the creators behind NUBEAUX Travel. Creatives who travel beautifully and share their experiences.">
+  <meta name="description" content="Turn your travel content into earnings. Share trips you've taken, earn commission on every booking.">
 
-  <title>Creators | NUBEAUX Travel</title>
+  <title>For Creators | NUBEAUX Travel</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=22">
+  <link rel="stylesheet" href="../css/style.css?v=24">
 
   <style>
-    .page-hero { background-color: var(--color-slate); color: var(--color-white); padding: var(--space-xl) 0; margin-top: var(--header-height); text-align: center; }
-    .page-hero h1 { margin-bottom: var(--space-sm); }
-    .page-hero p { opacity: 0.8; max-width: 600px; margin: 0 auto; }
-    .creators-section { padding: var(--space-xl) 0; }
-    .creator-feature { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); margin-bottom: var(--space-xl); padding-bottom: var(--space-xl); border-bottom: 1px solid var(--color-ecru); }
-    .creator-feature:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .creator-image { aspect-ratio: 1; overflow: hidden; }
-    .creator-image img { width: 100%; height: 100%; object-fit: cover; }
-    .creator-content { display: flex; flex-direction: column; justify-content: center; }
-    .creator-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-terracotta); margin-bottom: var(--space-sm); }
-    .creator-content h2 { margin-bottom: var(--space-md); }
-    .creator-content p { color: var(--color-warm-grey); line-height: 1.8; margin-bottom: var(--space-md); }
-    .creator-specialties { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-lg); }
-    .specialty-tag { font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.5rem 1rem; background: var(--color-ecru); color: var(--color-charcoal); }
-    @media (max-width: 768px) { .creator-feature { grid-template-columns: 1fr; } }
+    /* Header */
+    .header .header-inner {
+      padding: 0 var(--space-lg);
+      max-width: none;
+      margin: 0;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-buttons .nav-cta {
+      padding: 0.5rem 1rem !important;
+      margin-left: 0 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+    }
+
+    .nav-buttons .nav-login {
+      border: 1px solid var(--color-text) !important;
+      padding: 0.5rem 1rem !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+      margin-left: 0 !important;
+      transition: all var(--transition-fast) !important;
+    }
+
+    .nav-buttons .nav-login:hover {
+      background: var(--color-accent) !important;
+      border-color: var(--color-accent) !important;
+      color: var(--color-white) !important;
+    }
+
+    .mobile-menu-cta,
+    .mobile-menu-login {
+      display: inline-block;
+      padding: 1rem 2rem !important;
+      text-align: center;
+      font-size: 0.875rem !important;
+      font-family: var(--font-sans) !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      width: 100%;
+      max-width: 280px;
+      box-sizing: border-box;
+    }
+
+    .mobile-menu-cta {
+      background-color: var(--color-accent);
+      color: var(--color-white) !important;
+      margin-top: var(--space-md);
+    }
+
+    .mobile-menu-login {
+      border: 1px solid var(--color-text);
+      background: transparent;
+      color: var(--color-text) !important;
+      margin-top: var(--space-sm);
+    }
+
+    /* Hero - Full height, bottom-left aligned */
+    .creator-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      color: white;
+    }
+
+    .creator-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .creator-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .creator-hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);
+    }
+
+    .creator-hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      padding: var(--space-2xl);
+    }
+
+    .creator-hero h1 {
+      font-size: 2.5rem;
+      color: white;
+      margin-bottom: var(--space-md);
+    }
+
+    .creator-hero p {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: var(--space-lg);
+      line-height: 1.7;
+    }
+
+    .creator-hero .btn-outline {
+      border-color: rgba(255,255,255,0.7);
+      color: white;
+    }
+
+    .creator-hero .btn-outline:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    /* Value Props - Simple 3 column */
+    .value-section {
+      background: #1a1a1a;
+      color: white;
+      padding: var(--space-xl) 0;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .value-item h3 {
+      font-size: 1rem;
+      color: white;
+      margin-bottom: var(--space-xs);
+    }
+
+    .value-item p {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.7);
+      margin: 0;
+    }
+
+    /* Split CTA */
+    .split-cta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 60vh;
+    }
+
+    .split-cta-image {
+      position: relative;
+    }
+
+    .split-cta-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .split-cta-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-2xl);
+      background: var(--color-off-white);
+    }
+
+    .split-cta-content h2 {
+      margin-bottom: var(--space-md);
+      max-width: 400px;
+    }
+
+    .split-cta-content p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+      line-height: 1.7;
+      max-width: 400px;
+    }
+
+    .split-cta-content .links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .split-cta-content .links a {
+      color: var(--color-text);
+      font-size: 0.875rem;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .split-cta-content .links a:hover {
+      color: var(--color-accent);
+    }
+
+    /* Final CTA */
+    .final-cta {
+      background: #d4c4b0;
+      padding: var(--space-2xl) 0;
+      text-align: center;
+    }
+
+    .final-cta h2 {
+      margin-bottom: var(--space-lg);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .final-cta .btn-primary {
+      background: var(--color-text);
+      color: white;
+    }
+
+    /* Footer */
+    .creator-footer {
+      background: #1a1a1a;
+      color: rgba(255,255,255,0.7);
+      padding: var(--space-xl) 0 var(--space-lg);
+    }
+
+    .creator-footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .creator-footer-brand p {
+      font-size: 0.875rem;
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .creator-footer-col h4 {
+      color: white;
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-md);
+    }
+
+    .creator-footer-col a {
+      display: block;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: var(--space-sm);
+      transition: color var(--transition-fast);
+    }
+
+    .creator-footer-col a:hover {
+      color: white;
+    }
+
+    .creator-footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: var(--space-md);
+      font-size: 0.8125rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .split-cta {
+        grid-template-columns: 1fr;
+      }
+
+      .split-cta-image {
+        min-height: 40vh;
+      }
+
+      .creator-footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-lg);
+      }
+
+      .creator-footer-brand {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .creator-hero-content {
+        padding: var(--space-xl);
+      }
+
+      .creator-hero h1 {
+        font-size: 1.75rem;
+      }
+
+      .creator-hero p {
+        font-size: 1rem;
+      }
+
+      .value-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .split-cta-content {
+        padding: var(--space-xl);
+      }
+
+      .creator-footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .creator-footer-brand {
+        grid-column: auto;
+      }
+    }
   </style>
 </head>
 <body>
   <header class="header">
     <div class="header-inner">
-      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
-      <nav class="nav">
-        <a href="../destinations/">Destinations</a>
-        <a href="../itineraries/">Itineraries</a>
-        <a href="../stays/">Stays</a>
-        <a href="../journal/">Journal</a>
-        <a href="../about.html">About</a>
-        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX Travel"></a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="../creators/index.html">For Creators</a>
+        <a href="../trips/">Explore Trips</a>
+        <a href="../how-it-works.html">How It Works</a>
+        <div class="nav-buttons">
+          <a href="start.html" class="nav-cta">Sign up</a>
+          <a href="../login.html" class="nav-login">Log in</a>
+        </div>
       </nav>
       <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
   </header>
 
   <div class="mobile-menu">
-    <a href="../destinations/">Destinations</a>
-    <a href="../itineraries/">Itineraries</a>
-    <a href="../stays/">Stays</a>
-        <a href="../journal/">Journal</a>
-    <a href="../about.html">About</a>
-    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+    <a href="../creators/index.html">For Creators</a>
+    <a href="../trips/">Explore Trips</a>
+    <a href="../how-it-works.html">How It Works</a>
+    <a href="start.html" class="mobile-menu-cta">Sign up</a>
+    <a href="../login.html" class="mobile-menu-login">Log in</a>
   </div>
 
-  <section class="page-hero">
-    <div class="container">
-      <h1>Meet the Creators</h1>
-      <p>The creatives behind our recommendations. Every destination they suggest, they've experienced. Every property, they've stayed at.</p>
+  <!-- Hero -->
+  <section class="creator-hero">
+    <div class="creator-hero-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1770230458/Namibia_onguma_Klein-113_f6iean.jpg" alt="Travel creator capturing content">
+    </div>
+    <div class="creator-hero-content">
+      <h1>Your trips already drive bookings. Start earning from them.</h1>
+      <p>Share a trip you've taken. We handle everything else. You earn commission every time someone books.</p>
+      <div style="display: flex; gap: var(--space-md); flex-wrap: wrap;">
+        <a href="start.html" class="btn btn-outline">Get started</a>
+      </div>
     </div>
   </section>
 
-  <section class="creators-section">
+  <!-- Value Props -->
+  <section class="value-section">
     <div class="container">
-      <div class="creator-feature">
-        <div class="creator-image">
-          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_800,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
+      <div class="value-grid">
+        <div class="value-item">
+          <h3>No booking admin</h3>
+          <p>We handle enquiries, payments, support</p>
         </div>
-        <div class="creator-content">
-          <span class="creator-label">Content Creator & Storyteller</span>
-          <h2>Nia The Light</h2>
-          <p>Nia is a content creator and storyteller with a passion for African luxury, wellness, and the art of solo travel. Her work captures the beauty of intentional living, from sunrise safari drives to boutique hotel rooms designed for restoration.</p>
-          <p>With an audience of over 430,000 across platforms, Nia brings an elevated eye to every destination she visits. Her travel philosophy centers on slowing down, immersing deeply, and returning transformed.</p>
-          <div class="creator-specialties">
-            <span class="specialty-tag">Solo Travel</span>
-            <span class="specialty-tag">Wellness</span>
-            <span class="specialty-tag">Luxury Hotels</span>
-            <span class="specialty-tag">African Heritage</span>
-          </div>
-          <a href="nia.html" class="btn btn-dark">View Nia's Collection</a>
+        <div class="value-item">
+          <h3>No fees</h3>
+          <p>Free to join. Free to list trips.</p>
+        </div>
+        <div class="value-item">
+          <h3>Earn on every booking</h3>
+          <p>Commission paid automatically</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Split CTA -->
+  <section class="split-cta">
+    <div class="split-cta-image">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_960,h_800,q_auto,f_auto/v1770005195/Mozambique_Klein-57_ruphjt.jpg" alt="Safari experience">
+    </div>
+    <div class="split-cta-content">
+      <h2>Ready to start earning?</h2>
+      <p>Create your first itinerary in minutes. Just tell us about a trip you've taken and loved.</p>
+      <a href="start.html" class="btn btn-primary">Create an itinerary</a>
+      <div class="links" style="margin-top: var(--space-lg);">
+        <a href="../how-it-works.html">How it works in detail</a>
+        <a href="../itineraries/namibia-safari.html">See a live example</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <h2>Share trips you love. Earn when people book.</h2>
+      <a href="start.html" class="btn btn-primary">Get started</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="creator-footer">
+    <div class="container">
+      <div class="creator-footer-grid">
+        <div class="creator-footer-brand">
+          <img src="../assets/logo-white.svg" alt="NUBEAUX" style="height: 20px; margin-bottom: var(--space-md);" onerror="this.src='../assets/logo.svg'; this.style.filter='invert(1)';">
+          <p>Turn your trips into bookable itineraries. We handle everything. You earn when people book.</p>
+        </div>
+
+        <div class="creator-footer-col">
+          <h4>Creators</h4>
+          <a href="start.html">Create an itinerary</a>
+          <a href="../how-it-works.html">How it works</a>
+          <a href="faq.html">Creator FAQ</a>
+        </div>
+
+        <div class="creator-footer-col">
+          <h4>Travellers</h4>
+          <a href="../trips/">Explore trips</a>
+          <a href="../support.html">Support</a>
+        </div>
+
+        <div class="creator-footer-col">
+          <h4>Company</h4>
+          <a href="../about.html">About</a>
+          <a href="mailto:hello@nubeauxtravel.com">Contact</a>
+          <a href="../legal.html">Legal</a>
         </div>
       </div>
 
-    </div>
-  </section>
-
-  <section class="cta-section">
-    <div class="container">
-      <h2>Travel with our creators</h2>
-      <p class="text-large">Let their expertise shape your journey. We'll connect you with the destinations and experiences they love most.</p>
-      <a href="../plan-your-trip.html" class="btn btn-dark">Start Planning</a>
-    </div>
-  </section>
-
-    <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <img src="../assets/logo.svg" alt="NUBEAUX" style="height: 20px; margin-bottom: var(--space-md);">
-          <p>Curated luxury travel experiences from creatives who've been there.</p>
-        </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Explore</h4>
-          <div class="footer-links">
-            <a href="../destinations/">Destinations</a>
-            <a href="../itineraries/">Itineraries</a>
-            <a href="../stays/">Stays</a>
-            <a href="../journal/">Journal</a>
-            <a href="../creators/">Creators</a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Company</h4>
-          <div class="footer-links">
-            <a href="../about.html">About</a>
-            
-            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Connect</h4>
-          <div class="footer-links">
-            <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
-            <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
+      <div class="creator-footer-bottom">
         <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
-        <p>A NUBEAUX Collective Company</p>
       </div>
     </div>
   </footer>
 
   <script src="../js/main.js?v=2"></script>
-  <script src="../js/creator-chat.js?v=1"></script>
 </body>
 </html>

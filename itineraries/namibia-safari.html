@@ -384,26 +384,26 @@
 
     .stays-grid {
       display: grid;
-      gap: var(--space-md);
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
     }
 
     .stay-card {
-      display: grid;
-      grid-template-columns: 280px 1fr;
+      position: relative;
       background: var(--color-white);
-      border: 1px solid var(--color-light-grey);
       overflow: hidden;
-      transition: box-shadow var(--transition-fast);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
     }
 
     .stay-card:hover {
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
     }
 
     .stay-card-image {
-      aspect-ratio: 3/2;
+      position: relative;
+      aspect-ratio: 4/3;
       overflow: hidden;
-      min-height: 200px;
     }
 
     .stay-card-image img {
@@ -417,59 +417,94 @@
       transform: scale(1.05);
     }
 
+    .stay-card-nights {
+      position: absolute;
+      top: var(--space-md);
+      left: var(--space-md);
+      background: white;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
     .stay-card-content {
-      padding: var(--space-lg);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      padding: var(--space-md);
     }
 
     .stay-card-name {
       font-family: var(--font-serif);
-      font-size: 1.25rem;
+      font-size: 1.375rem;
       margin-bottom: var(--space-xs);
+      line-height: 1.3;
     }
 
     .stay-card-location {
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       color: var(--color-text-light);
       margin-bottom: var(--space-sm);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stay-card-location::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='%23888'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M15 10.5a3 3 0 11-6 0 3 3 0 016 0z' /%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z' /%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      flex-shrink: 0;
     }
 
     .stay-card-description {
       font-size: 0.875rem;
       color: var(--color-text-light);
       line-height: 1.6;
-      margin-bottom: var(--space-sm);
+      margin: 0;
     }
 
-    .stay-card-meta {
+    .stay-card-footer {
       display: flex;
       align-items: center;
-      gap: var(--space-md);
+      justify-content: space-between;
+      padding: var(--space-sm) var(--space-md);
+      border-top: 1px solid var(--color-light-grey);
+      background: var(--color-off-white);
+    }
+
+    .stay-card-price {
       font-size: 0.8125rem;
-      flex-wrap: wrap;
+      color: var(--color-text-light);
     }
 
-    .stay-nights {
-      color: var(--color-text);
-    }
-
-    .stay-price-band {
+    .stay-card-price span {
       color: var(--color-accent);
       font-weight: 500;
     }
 
-    .stay-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.6875rem;
+    .stay-card-link {
+      font-size: 0.75rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      padding: 4px 8px;
-      background: #e8f5e9;
-      color: #2e7d32;
+      color: var(--color-text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color var(--transition-fast);
+    }
+
+    .stay-card-link:hover {
+      color: var(--color-accent);
+    }
+
+    .stay-card-link svg {
+      width: 14px;
+      height: 14px;
     }
 
     .stay-status.equivalent {
@@ -1364,31 +1399,39 @@
               <div class="stays-grid">
                 <div class="stay-card">
                   <div class="stay-card-image">
-                    <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_300,q_auto,f_auto/v1769942667/Namibia_camp_kala_Klein-168_atshty.jpg" alt="Onguma Camp Kala">
+                    <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1769942667/Namibia_camp_kala_Klein-168_atshty.jpg" alt="Onguma Camp Kala">
+                    <span class="stay-card-nights">4 nights</span>
                   </div>
                   <div class="stay-card-content">
                     <h3 class="stay-card-name">Onguma Camp Kala</h3>
                     <p class="stay-card-location">Onguma Game Reserve, Namibia</p>
-                    <div class="stay-card-meta">
-                      <span class="stay-nights">4 nights</span>
-                      <span class="stay-price-band">$$$$</span>
-                      <span class="stay-status">Bookable</span>
-                    </div>
+                    <p class="stay-card-description">Intimate tented camp with panoramic views over Fischer's Pan. Private plunge pools and exceptional wildlife viewing.</p>
+                  </div>
+                  <div class="stay-card-footer">
+                    <span class="stay-card-price">From <span>$450</span>/night</span>
+                    <a href="#" class="stay-card-link">
+                      View property
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                    </a>
                   </div>
                 </div>
 
                 <div class="stay-card">
                   <div class="stay-card-image">
-                    <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_300,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-20_yzncpj.jpg" alt="Onguma The Fort">
+                    <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-20_yzncpj.jpg" alt="Onguma The Fort">
+                    <span class="stay-card-nights">3 nights</span>
                   </div>
                   <div class="stay-card-content">
                     <h3 class="stay-card-name">Onguma The Fort</h3>
                     <p class="stay-card-location">Onguma Game Reserve, Namibia</p>
-                    <div class="stay-card-meta">
-                      <span class="stay-nights">3 nights</span>
-                      <span class="stay-price-band">$$$$</span>
-                      <span class="stay-status">Bookable</span>
-                    </div>
+                    <p class="stay-card-description">Moroccan-inspired lodge with stunning architecture. Rooftop terrace overlooking a waterhole frequented by wildlife.</p>
+                  </div>
+                  <div class="stay-card-footer">
+                    <span class="stay-card-price">From <span>$380</span>/night</span>
+                    <a href="#" class="stay-card-link">
+                      View property
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                    </a>
                   </div>
                 </div>
               </div>
