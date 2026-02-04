@@ -1156,6 +1156,16 @@
       animateOnScroll();
     }
 
+    // Stop comments video 0.5s before end and keep final frame
+    const commentsVideo = document.querySelector('.comments-video');
+    if (commentsVideo) {
+      commentsVideo.addEventListener('timeupdate', function() {
+        if (this.duration - this.currentTime <= 0.5) {
+          this.pause();
+        }
+      });
+    }
+
     // Sticky Mobile CTA behavior
     const stickyCta = document.getElementById('stickyMobileCta');
     const heroSection = document.querySelector('.hero');
