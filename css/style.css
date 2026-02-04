@@ -396,7 +396,7 @@ p {
 .hero-content-bottom-left {
   text-align: left;
   padding: var(--space-2xl);
-  max-width: 800px;
+  max-width: 1000px;
 }
 
 .hero-content-bottom-left .hero-title {
