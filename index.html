@@ -1160,7 +1160,7 @@
     const commentsVideo = document.querySelector('.comments-video');
     if (commentsVideo) {
       commentsVideo.addEventListener('timeupdate', function() {
-        if (this.duration - this.currentTime <= 1) {
+        if (this.duration - this.currentTime <= 2) {
           this.pause();
         }
       });
