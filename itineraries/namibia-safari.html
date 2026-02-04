@@ -912,15 +912,105 @@
 
     @media (max-width: 768px) {
       .itin-hero {
-        min-height: 70vh;
+        min-height: 85vh;
+      }
+
+      .itin-hero-content {
+        padding: var(--space-lg) var(--space-md);
+        padding-bottom: calc(var(--space-xl) + env(safe-area-inset-bottom, 0px));
+      }
+
+      .itin-hero-creator {
+        margin-bottom: var(--space-sm);
+      }
+
+      .itin-hero-creator img {
+        width: 40px;
+        height: 40px;
+      }
+
+      .itin-hero-creator span {
+        font-size: 0.75rem;
+      }
+
+      .itin-hero h1 {
+        font-size: clamp(2rem, 8vw, 2.5rem);
+        margin-bottom: var(--space-xs);
+      }
+
+      .itin-hero-location {
+        font-size: 0.9375rem;
+        margin-bottom: var(--space-sm);
+        opacity: 0.9;
+      }
+
+      /* Hide subtitle on mobile - too much text */
+      .itin-hero-subtitle {
+        display: none;
+      }
+
+      .itin-hero-actions {
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
+      .itin-hero-actions .btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 0.875rem 1.5rem;
+        font-size: 0.75rem;
+        text-align: center;
+        justify-content: center;
+      }
+
+      /* Move gallery trigger to top right, smaller */
+      .gallery-trigger {
+        top: var(--space-md);
+        bottom: auto;
+        right: var(--space-md);
+        padding: 0.5rem 0.75rem;
+        font-size: 0.6875rem;
+        background: rgba(0,0,0,0.5);
+        color: white;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+      }
+
+      .gallery-trigger:hover {
+        background: rgba(0,0,0,0.7);
+        transform: none;
+      }
+
+      .gallery-trigger svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .snapshot-bar {
+        padding: var(--space-sm) 0;
       }
 
       .snapshot-grid {
-        gap: var(--space-md);
+        gap: var(--space-sm) var(--space-md);
+        justify-content: flex-start;
       }
 
       .snapshot-item {
-        flex: 1 1 45%;
+        flex: 0 0 auto;
+      }
+
+      /* Hide icons on mobile for cleaner look */
+      .snapshot-icon {
+        display: none;
+      }
+
+      .snapshot-label {
+        font-size: 0.625rem;
+        letter-spacing: 0.08em;
+      }
+
+      .snapshot-value {
+        font-size: 0.8125rem;
       }
 
       .gallery-trigger {
