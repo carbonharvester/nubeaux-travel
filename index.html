@@ -66,32 +66,30 @@
       animation: fadeInUp 0.8s ease forwards;
     }
 
-    .hero-content .btn {
-      animation: fadeInUp 0.8s ease 0.2s forwards;
+    .hero-content .hero-subtext {
+      animation: fadeInUp 0.8s ease 0.15s forwards;
       opacity: 0;
     }
 
-    /* Intro Section */
-    .intro-section {
-      padding: var(--space-xl) 0;
-      background: var(--color-white);
-      text-align: center;
+    .hero-content .hero-ctas {
+      animation: fadeInUp 0.8s ease 0.25s forwards;
+      opacity: 0;
     }
 
-    .intro-section .intro-statement {
-      font-family: var(--font-serif);
-      font-size: 1.5rem;
+    /* Hero subtext */
+    .hero-subtext {
+      font-size: 1.125rem;
       line-height: 1.6;
-      color: var(--color-text);
-      max-width: 600px;
-      margin: 0 auto var(--space-md);
+      color: rgba(255,255,255,0.9);
+      margin-bottom: var(--space-lg);
+      max-width: 500px;
     }
 
-    .intro-section .btn-link {
-      font-size: 0.875rem;
-      color: var(--color-accent);
-      text-decoration: underline;
-      text-underline-offset: 4px;
+    /* Hero CTAs */
+    .hero-ctas {
+      display: flex;
+      gap: var(--space-md);
+      align-items: center;
     }
 
     /* Section Label */
@@ -665,8 +663,14 @@
     }
 
     @media (max-width: 768px) {
-      .intro-section .intro-statement {
-        font-size: 1.25rem;
+      .hero-ctas {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+      }
+
+      .hero-subtext {
+        font-size: 1rem;
       }
 
       .final-cta-buttons {
@@ -767,18 +771,14 @@
       <div class="hero-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);"></div>
       <div class="hero-content hero-content-bottom-left">
         <h1 class="hero-title" style="color: #ffffff;" id="hero-heading">Earn from the trips you already share.</h1>
-        <a href="creators/start.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.7); color: white;">Get started</a>
+        <p class="hero-subtext">Share a trip. We turn it into a bookable itinerary. You earn when people travel.</p>
+        <div class="hero-ctas">
+          <a href="creators/start.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.7); color: white;">Get started</a>
+          <a href="itineraries/namibia-safari.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.7); color: white;">See a live example</a>
+        </div>
       </div>
       <div class="scroll-indicator">
         <span>Scroll</span>
-      </div>
-    </section>
-
-    <!-- Intro Section -->
-    <section class="intro-section">
-      <div class="container">
-        <p class="intro-statement">Share a trip. We turn it into a bookable itinerary.<br>You earn when people travel.</p>
-        <a href="itineraries/namibia-safari.html" class="btn-link">See a live example</a>
       </div>
     </section>
 
