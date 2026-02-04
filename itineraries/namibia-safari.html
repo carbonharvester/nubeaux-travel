@@ -401,8 +401,9 @@
     }
 
     .stay-card-image {
-      aspect-ratio: 4/3;
+      aspect-ratio: 3/2;
       overflow: hidden;
+      min-height: 200px;
     }
 
     .stay-card-image img {
@@ -963,17 +964,21 @@
         justify-content: center;
       }
 
-      /* Move gallery trigger to top right, smaller */
+      /* Move gallery trigger to top right, icon only on mobile */
       .gallery-trigger {
         top: var(--space-md);
         bottom: auto;
         right: var(--space-md);
-        padding: 0.5rem 0.75rem;
-        font-size: 0.6875rem;
+        padding: 0.75rem;
+        font-size: 0;
         background: rgba(0,0,0,0.5);
         color: white;
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        justify-content: center;
       }
 
       .gallery-trigger:hover {
@@ -982,8 +987,8 @@
       }
 
       .gallery-trigger svg {
-        width: 14px;
-        height: 14px;
+        width: 20px;
+        height: 20px;
       }
 
       .snapshot-bar {
@@ -1154,7 +1159,7 @@
 
             <div class="itin-hero-actions">
               <button type="button" class="btn btn-primary open-concierge">Book or customise</button>
-              <a href="mailto:hello@nubeauxtravel.com?subject=Question about Namibia Safari" class="btn btn-secondary">Ask a question</a>
+              <button type="button" class="btn btn-secondary open-chat">Ask a question</button>
             </div>
           </div>
         </div>
@@ -1525,7 +1530,7 @@
               </div>
 
               <button type="button" class="btn open-concierge">Book or customise</button>
-              <a href="mailto:hello@nubeauxtravel.com?subject=Question about Namibia Safari" class="btn btn-secondary">Ask a question</a>
+              <button type="button" class="btn btn-secondary open-chat">Ask a question</button>
 
               <p class="reassurance">No obligation until final confirmation</p>
             </div>
@@ -1541,7 +1546,7 @@
         <p>Book as Nia experienced it, or customise to make it yours. We handle everything.</p>
         <div class="final-cta-buttons">
           <button type="button" class="btn btn-primary open-concierge">Book or customise</button>
-          <a href="mailto:hello@nubeauxtravel.com?subject=Question about Namibia Safari" class="btn btn-outline-dark">Ask a question</a>
+          <button type="button" class="btn btn-outline-dark open-chat">Ask a question</button>
         </div>
         <p class="reassurance">No obligation until final confirmation</p>
       </div>
@@ -1735,6 +1740,31 @@
           gtag('event', 'book_cta_clicked', {
             itinerary_slug: 'namibia-safari',
             location: btn.closest('.sidebar-cta') ? 'sidebar' : (btn.closest('.final-cta') ? 'final' : (btn.closest('.mobile-sticky-cta') ? 'mobile' : 'hero'))
+          });
+        }
+      });
+    });
+
+    // Open live chat when "Ask a question" buttons are clicked
+    document.querySelectorAll('.open-chat').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Try to open Intercom or other chat widget if available
+        if (window.Intercom) {
+          window.Intercom('show');
+        } else if (window.$crisp) {
+          window.$crisp.push(['do', 'chat:open']);
+        } else if (window.drift) {
+          window.drift.api.openChat();
+        } else {
+          // Fallback to email
+          window.location.href = 'mailto:hello@nubeauxtravel.com?subject=Question about Namibia Safari';
+        }
+
+        // Track click
+        if (window.gtag) {
+          gtag('event', 'chat_opened', {
+            itinerary_slug: 'namibia-safari',
+            location: btn.closest('.sidebar-cta') ? 'sidebar' : (btn.closest('.final-cta') ? 'final' : 'hero')
           });
         }
       });

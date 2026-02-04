@@ -176,43 +176,230 @@
       display: block;
     }
 
-    /* Pain Section */
-    .pain-section {
+    /* Creators Section - Centered Layout */
+    .creators-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-off-white);
+    }
+
+    .creators-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .creators-header h2 {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .case-study-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto var(--space-xl);
       padding: var(--space-xl) 0;
     }
 
-    .pain-section .container {
-      max-width: 720px;
-      text-align: center;
+    /* Reel mockup - IG style */
+    .reel-mockup {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+      cursor: pointer;
+      flex-shrink: 0;
+      width: 320px;
     }
 
-    .pain-section h2 {
-      margin-bottom: var(--space-md);
+    .reel-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 12px;
+      border-bottom: 1px solid var(--color-light-grey);
     }
 
-    .pain-quotes {
-      font-family: var(--font-serif);
-      font-size: 1.5rem;
-      font-style: italic;
+    .reel-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .reel-username {
+      font-size: 0.875rem;
+      font-weight: 600;
       color: var(--color-text);
-      line-height: 2;
-      margin-bottom: var(--space-lg);
     }
 
-    .pain-quotes span {
-      display: block;
-      opacity: 0.7;
+    .reel-video {
+      position: relative;
+      aspect-ratio: 4/5;
     }
 
-    .pain-body {
+    .reel-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .reel-mockup:hover .play-button {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: rgba(0,0,0,0.7);
+    }
+
+    .play-button svg {
+      width: 24px;
+      height: 24px;
+      color: white;
+      margin-left: 3px;
+    }
+
+    .reel-caption {
+      padding: 12px;
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .reel-caption p {
+      font-size: 0.8125rem;
+      color: var(--color-text);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Floating comment cards */
+    .floating-comment-card {
+      position: absolute;
+      background: white;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      max-width: 240px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    }
+
+    .floating-card-left {
+      top: 5%;
+      left: 0;
+      transform: translateX(10%);
+    }
+
+    .floating-card-right {
+      bottom: 10%;
+      right: 0;
+      transform: translateX(-10%);
+    }
+
+    .comment-card-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .comment-card-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .comment-card-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .comment-card-username {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .comment-card-time {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
+    .comment-card-badge {
+      font-size: 0.625rem;
+      padding: 2px 6px;
+      background: var(--color-off-white);
+      color: var(--color-text-light);
+      border-radius: 4px;
+    }
+
+    .comment-card-text {
+      font-size: 0.8125rem;
+      color: var(--color-text);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .comment-card-text strong {
+      color: #00376b;
+    }
+
+    .creators-pain-text {
       font-size: 1.0625rem;
       color: var(--color-text-light);
       line-height: 1.7;
-      max-width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
     }
 
-    .pain-body strong {
-      color: var(--color-text);
+    .creators-cta {
+      text-align: center;
+      margin-top: var(--space-xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .creators-cta p {
+      font-size: 1.125rem;
+      margin: 0 0 var(--space-md) 0;
+    }
+
+    @media (max-width: 900px) {
+      .case-study-visual {
+        flex-direction: column;
+        padding: var(--space-md) 0;
+      }
+
+      .reel-mockup {
+        width: 280px;
+      }
+
+      .floating-comment-card {
+        position: relative;
+        max-width: 100%;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        transform: none;
+      }
+
+      .floating-card-left {
+        order: -1;
+      }
     }
 
     /* How It Works */
@@ -576,83 +763,333 @@
       box-shadow: 0 8px 30px rgba(0,0,0,0.08);
     }
 
-    /* Testimonial Section */
-    .testimonial-section {
-      padding: var(--space-2xl) 0;
-      background: var(--color-warm-cream);
-    }
 
-    .testimonial-card {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: var(--space-lg);
-      max-width: 800px;
-      margin: 0 auto;
-      align-items: center;
-    }
-
-    .testimonial-image {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
+    /* Instagram Post Mockup */
+    .ig-post-mockup {
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      border-radius: 8px;
+      max-width: 400px;
+      width: 100%;
       overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
 
-    .testimonial-image img {
+    .ig-post-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .ig-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .ig-post-user {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .ig-username {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .ig-location {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
+    .ig-post-image {
+      position: relative;
+      aspect-ratio: 4/5;
+      background: #000;
+    }
+
+    .ig-post-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .testimonial-content blockquote {
-      font-family: var(--font-serif);
-      font-size: 1.375rem;
-      font-style: italic;
-      line-height: 1.6;
+    .ig-play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ig-play-icon svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+      margin-left: 4px;
+    }
+
+    .ig-post-mockup {
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .ig-post-mockup:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+
+    .ig-post-engagement {
+      padding: var(--space-sm) var(--space-md);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .ig-engagement-row {
+      display: flex;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xs);
+    }
+
+    .ig-engagement-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ig-engagement-item svg {
+      width: 18px;
+      height: 18px;
+      color: var(--color-text);
+    }
+
+    .ig-engagement-item span {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .ig-views {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-top: var(--space-xs);
+    }
+
+    .ig-post-caption {
+      padding: var(--space-sm) var(--space-md) var(--space-md);
+      font-size: 0.875rem;
+      color: var(--color-text);
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    .ig-post-caption .ig-username {
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    /* Video Lightbox */
+    .video-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .video-lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .video-lightbox-close {
+      position: absolute;
+      top: var(--space-lg);
+      right: var(--space-lg);
+      width: 48px;
+      height: 48px;
+      background: none;
+      border: none;
+      color: var(--color-white);
+      cursor: pointer;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .video-lightbox-content {
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .video-lightbox-content video {
+      max-width: 400px;
+      max-height: 80vh;
+      border-radius: 12px;
+      background: #000;
+    }
+
+    @media (max-width: 600px) {
+      .video-lightbox-content video {
+        max-width: 90vw;
+      }
+    }
+
+    /* Comment Thread */
+    .ig-comment-thread {
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      border-radius: 8px;
+      padding: var(--space-md);
+    }
+
+    .ig-comment {
+      display: flex;
+      gap: var(--space-sm);
       margin-bottom: var(--space-md);
     }
 
-    .testimonial-author {
+    .ig-comment:last-child {
+      margin-bottom: 0;
+    }
+
+    .ig-comment-reply {
+      margin-left: var(--space-lg);
+    }
+
+    .ig-comment-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .ig-comment-content {
+      flex: 1;
+      text-align: left;
+    }
+
+    .ig-comment-header {
       display: flex;
       align-items: center;
-      gap: var(--space-md);
+      gap: var(--space-xs);
+      margin-bottom: 2px;
     }
 
-    .testimonial-author-info strong {
-      display: block;
-      font-size: 1rem;
+    .ig-comment-username {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text);
     }
 
-    .testimonial-author-info span {
-      font-size: 0.875rem;
+    .ig-comment-time {
+      font-size: 0.75rem;
       color: var(--color-text-light);
     }
 
-    .testimonial-link {
-      margin-left: auto;
+    .ig-comment-badge {
+      font-size: 0.625rem;
+      padding: 2px 6px;
+      background: var(--color-off-white);
+      color: var(--color-text-light);
+      border-radius: 4px;
     }
 
-    /* Comments Video */
-    .comments-video-container {
-      max-width: 800px;
-      margin: 0 auto var(--space-md);
-      border-radius: 12px;
-      overflow: hidden;
+    .ig-comment-verified {
+      color: #3897f0;
+      font-size: 0.75rem;
     }
 
-    .comments-video {
-      width: 100%;
-      height: auto;
+    .ig-comment-text {
+      font-size: 0.8125rem;
+      color: var(--color-text);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .ig-comment-text strong {
+      color: #00376b;
+    }
+
+    /* Result Breakdown */
+    .result-breakdown {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .result-item {
+      flex: 1;
+      background: var(--color-white);
+      border: 2px solid var(--color-light-grey);
+      padding: var(--space-md);
+      text-align: center;
+    }
+
+    .result-item.result-hotel {
+      border-color: #2e7d32;
+    }
+
+    .result-item.result-hotel .result-value {
+      color: #2e7d32;
+    }
+
+    .result-item.result-creator {
+      border-color: var(--color-accent);
+    }
+
+    .result-item.result-creator .result-value {
+      color: var(--color-accent);
+    }
+
+    .result-label {
       display: block;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-xs);
     }
 
-    @media (max-width: 480px) {
-      .comments-video-container {
+    .result-value {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      .ig-post-mockup {
         max-width: 100%;
       }
-      height: 24px;
-      background: #e1e1e1;
-      border-radius: 50%;
+
+      .ig-comment-thread {
+        max-width: 100%;
+      }
+
+      .ig-comment-reply {
+        margin-left: var(--space-md);
+      }
+
+      .result-value {
+        font-size: 1.5rem;
+      }
     }
 
     /* FAQ Section */
@@ -755,25 +1192,6 @@
         display: none;
       }
 
-      .testimonial-card {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .testimonial-image {
-        margin: 0 auto;
-      }
-
-      .testimonial-author {
-        flex-direction: column;
-        gap: var(--space-sm);
-      }
-
-      .testimonial-link {
-        margin-left: 0;
-      }
-
-
       .faq-grid {
         grid-template-columns: 1fr;
       }
@@ -833,7 +1251,7 @@
         <p class="hero-subtext">Share a trip. We turn it into a bookable itinerary. You earn when people travel.</p>
         <div class="hero-ctas">
           <a href="creators/start.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.7); color: white;">Get started</a>
-          <a href="itineraries/namibia-safari.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.7); color: white;">See a live example</a>
+          <a href="itineraries/namibia-safari-example.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.7); color: white;">See a live example</a>
         </div>
       </div>
       <div class="scroll-indicator">
@@ -841,40 +1259,67 @@
       </div>
     </section>
 
-    <!-- Creator Pain Section -->
-    <section class="pain-section animate-on-scroll" aria-labelledby="pain-heading">
+    <!-- For Creators Section -->
+    <section class="creators-section" aria-labelledby="creators-heading">
       <div class="container">
-        <span class="section-label">For Creators</span>
-        <h2 id="pain-heading">Your DMs and comments are full of the same questions.</h2>
-        <div class="comments-video-container">
-          <video autoplay muted playsinline class="comments-video">
-            <source src="assets/instagram-comments.mp4" type="video/mp4">
-            <source src="assets/instagram-comments.mov" type="video/quicktime">
-          </video>
+        <div class="creators-header">
+          <span class="section-label">For Creators</span>
+          <h2 id="creators-heading">1.1 million views. 47K likes. Zero earnings.</h2>
         </div>
-        <p class="pain-body">
-          You reply. You forget. You move on. All that interest, going nowhere. Meanwhile, creator funds are shrinking and brand deals aren't what they used to be. Your content drives real decisions—but you're not seeing the upside. <strong>That changes now.</strong>
-        </p>
-      </div>
-    </section>
 
-    <!-- Creator Testimonial -->
-    <section class="testimonial-section animate-on-scroll" aria-labelledby="testimonial-heading">
-      <div class="container">
-        <div class="testimonial-card">
-          <div class="testimonial-image">
-            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_240,h_240,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
-          </div>
-          <div class="testimonial-content">
-            <blockquote id="testimonial-heading">"I get asked about my trips constantly. Now I can share a link instead of typing the same response over and over. And I actually earn when people book."</blockquote>
-            <div class="testimonial-author">
-              <div class="testimonial-author-info">
-                <strong>Nia The Light</strong>
-                <span>430K+ followers across platforms</span>
+        <!-- Centered Reel mockup with floating comments -->
+        <div class="case-study-visual">
+          <!-- Floating comment card - Question -->
+          <div class="floating-comment-card floating-card-left">
+            <img src="https://ui-avatars.com/api/?name=M&background=e0e0e0&color=666&size=64" alt="" class="comment-card-avatar">
+            <div class="comment-card-content">
+              <div class="comment-card-header">
+                <span class="comment-card-username">michaelbfood</span>
+                <span class="comment-card-time">86w</span>
               </div>
-              <a href="itineraries/namibia-safari.html" class="btn-link testimonial-link">See her Namibia itinerary</a>
+              <p class="comment-card-text">Wow!!! What is the name of this hotel you stayed? On Shela island or? Looks spectacular!</p>
             </div>
           </div>
+
+          <!-- Reel mockup -->
+          <div class="reel-mockup" id="lamuPostTrigger" data-video="assets/lamu_daydream.mp4">
+            <div class="reel-header">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia" class="reel-avatar">
+              <span class="reel-username">niathelight</span>
+            </div>
+            <div class="reel-video">
+              <img src="assets/lamu_daydream.jpg" alt="Nia in Lamu, Kenya" class="reel-image">
+              <div class="play-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="reel-caption">
+              <p>LAMU lives in my head rent free. I day dream about @dhow_house all the time, it's truly a beautiful place that your soul and mind won't be able to forget.</p>
+            </div>
+          </div>
+
+          <!-- Floating comment card - Reply -->
+          <div class="floating-comment-card floating-card-right">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia" class="comment-card-avatar">
+            <div class="comment-card-content">
+              <div class="comment-card-header">
+                <span class="comment-card-username">niathelight</span>
+                <span class="comment-card-badge">Author</span>
+              </div>
+              <p class="comment-card-text">Hello! It was Shela island, contact <strong>@dhow_house</strong> to book</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="creators-pain-text">
+          You reply. You forget. You move on. All that interest, going nowhere. Meanwhile, creator funds are shrinking and brand deals aren't what they used to be. Your content drives real decisions—but you're not seeing the upside.
+        </p>
+
+        <div class="creators-cta">
+          <p><strong>That changes now.</strong></p>
+          <a href="creators/start.html" class="btn btn-primary">Start earning from your trips</a>
         </div>
       </div>
     </section>
@@ -1125,6 +1570,16 @@
     <a href="creators/start.html" class="btn btn-primary">Start earning</a>
   </div>
 
+  <!-- Video Lightbox -->
+  <div class="video-lightbox" id="videoLightbox">
+    <button class="video-lightbox-close" id="videoLightboxClose">&times;</button>
+    <div class="video-lightbox-content">
+      <video id="lightboxVideo" controls playsinline>
+        <source id="lightboxVideoSrc" src="" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
   <script src="js/main.js?v=2"></script>
   <script>
     // Scroll animations
@@ -1154,12 +1609,57 @@
       animateOnScroll();
     }
 
-    // Stop comments video 0.5s before end and keep final frame
+    // Stop comments video 2s before end and keep final frame
     const commentsVideo = document.querySelector('.comments-video');
     if (commentsVideo) {
       commentsVideo.addEventListener('timeupdate', function() {
         if (this.duration - this.currentTime <= 2) {
           this.pause();
+        }
+      });
+    }
+
+    // Video Lightbox for case study
+    const lamuPost = document.getElementById('lamuPostTrigger');
+    const videoLightbox = document.getElementById('videoLightbox');
+    const lightboxVideo = document.getElementById('lightboxVideo');
+    const lightboxVideoSrc = document.getElementById('lightboxVideoSrc');
+    const videoLightboxClose = document.getElementById('videoLightboxClose');
+
+    if (lamuPost && videoLightbox) {
+      lamuPost.addEventListener('click', () => {
+        const videoUrl = lamuPost.dataset.video;
+        if (videoUrl) {
+          lightboxVideoSrc.src = videoUrl;
+          lightboxVideo.load();
+          videoLightbox.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          lightboxVideo.play();
+        }
+      });
+
+      videoLightboxClose.addEventListener('click', () => {
+        videoLightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        lightboxVideo.pause();
+        lightboxVideo.currentTime = 0;
+      });
+
+      videoLightbox.addEventListener('click', (e) => {
+        if (e.target === videoLightbox) {
+          videoLightbox.classList.remove('active');
+          document.body.style.overflow = '';
+          lightboxVideo.pause();
+          lightboxVideo.currentTime = 0;
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && videoLightbox.classList.contains('active')) {
+          videoLightbox.classList.remove('active');
+          document.body.style.overflow = '';
+          lightboxVideo.pause();
+          lightboxVideo.currentTime = 0;
         }
       });
     }
