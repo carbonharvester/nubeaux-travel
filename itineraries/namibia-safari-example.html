@@ -14,6 +14,68 @@
   <link rel="stylesheet" href="../css/style.css?v=23">
 
   <style>
+    /* Header */
+    .header .header-inner {
+      padding: 0 var(--space-lg);
+      max-width: none;
+      margin: 0;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-buttons .nav-cta {
+      padding: 0.5rem 1rem !important;
+      margin-left: 0 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+    }
+
+    .nav-buttons .nav-login {
+      border: 1px solid var(--color-text) !important;
+      padding: 0.5rem 1rem !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+      margin-left: 0 !important;
+      transition: all var(--transition-fast) !important;
+    }
+
+    .nav-buttons .nav-login:hover {
+      background: var(--color-accent) !important;
+      border-color: var(--color-accent) !important;
+      color: var(--color-white) !important;
+    }
+
+    .mobile-menu-cta,
+    .mobile-menu-login {
+      display: inline-block;
+      padding: 1rem 2rem !important;
+      text-align: center;
+      font-size: 0.875rem !important;
+      font-family: var(--font-sans) !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      width: 100%;
+      max-width: 280px;
+      box-sizing: border-box;
+    }
+
+    .mobile-menu-cta {
+      background-color: var(--color-accent);
+      color: var(--color-white) !important;
+      margin-top: var(--space-md);
+    }
+
+    .mobile-menu-login {
+      border: 1px solid var(--color-text);
+      background: transparent;
+      color: var(--color-text) !important;
+      margin-top: var(--space-sm);
+    }
+
     /* Itinerary Page Styles */
 
     /* Hero */
@@ -1150,22 +1212,26 @@
   <!-- Minimal Header -->
   <header class="header">
     <div class="header-inner">
-      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
-      <nav class="nav">
-        <a href="../index.html">For Creators</a>
-        <a href="../creators/start.html">Get Started</a>
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX Travel"></a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="../creators/index.html">For Creators</a>
+        <a href="../trips/">Explore Trips</a>
+        <a href="../how-it-works.html">How It Works</a>
+        <div class="nav-buttons">
+          <a href="../creators/start.html" class="nav-cta">Sign up</a>
+          <a href="../login.html" class="nav-login">Log in</a>
+        </div>
       </nav>
-      <button class="menu-toggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
   </header>
 
   <div class="mobile-menu">
-    <a href="../index.html">For Creators</a>
-    <a href="../creators/start.html">Get Started</a>
+    <a href="../creators/index.html">For Creators</a>
+    <a href="../trips/">Explore Trips</a>
+    <a href="../how-it-works.html">How It Works</a>
+    <a href="../creators/start.html" class="mobile-menu-cta">Sign up</a>
+    <a href="../login.html" class="mobile-menu-login">Log in</a>
   </div>
 
   <main>
