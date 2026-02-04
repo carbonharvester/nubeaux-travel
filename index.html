@@ -44,23 +44,29 @@
     }
 
     /* Nav button group */
-    .nav a.nav-cta {
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-buttons .nav-cta {
       padding: 0.5rem 1rem !important;
-      margin-left: var(--space-sm) !important;
+      margin-left: 0 !important;
       font-size: 0.75rem !important;
       letter-spacing: 0.08em !important;
     }
 
     /* Login button style */
-    .nav-login {
+    .nav-buttons .nav-login {
       border: 1px solid var(--color-text) !important;
       padding: 0.5rem 1rem !important;
       font-size: 0.75rem !important;
       letter-spacing: 0.08em !important;
-      margin-left: 0.5rem !important;
+      margin-left: 0 !important;
       transition: all var(--transition-fast) !important;
     }
-    .nav-login:hover {
+    .nav-buttons .nav-login:hover {
       background: var(--color-accent) !important;
       border-color: var(--color-accent) !important;
       color: var(--color-white) !important;
@@ -754,8 +760,10 @@
         <a href="creators/">For Creators</a>
         <a href="itineraries/">Explore Trips</a>
         <a href="how-it-works.html">How It Works</a>
-        <a href="creators/start.html" class="nav-cta">Sign up</a>
-        <a href="login.html" class="nav-login">Log in</a>
+        <div class="nav-buttons">
+          <a href="creators/start.html" class="nav-cta">Sign up</a>
+          <a href="login.html" class="nav-login">Log in</a>
+        </div>
       </nav>
 
       <button class="menu-toggle" aria-label="Toggle menu">
