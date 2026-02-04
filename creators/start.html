@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create and share your travel experiences with NUBEAUX. Turn your trips into bookable itineraries.">
+
+  <title>Create an Itinerary | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=22">
+
+  <style>
+    body {
+      background: var(--color-ecru);
+    }
+
+    .auth-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    /* Left side - Visual */
+    .auth-visual {
+      position: relative;
+      background: var(--color-slate);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-xl);
+      overflow: hidden;
+    }
+
+    .auth-visual-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .auth-visual-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+    }
+
+    .auth-visual-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
+    }
+
+    .auth-visual-content {
+      position: relative;
+      z-index: 2;
+      color: white;
+    }
+
+    .auth-visual-logo {
+      position: absolute;
+      top: var(--space-lg);
+      left: var(--space-lg);
+      z-index: 2;
+    }
+
+    .auth-visual-logo img {
+      height: 24px;
+      filter: brightness(0) invert(1);
+    }
+
+    .auth-visual h2 {
+      font-size: 2rem;
+      margin-bottom: var(--space-md);
+      color: white;
+    }
+
+    .auth-visual p {
+      font-size: 1rem;
+      opacity: 1;
+      max-width: 400px;
+      line-height: 1.7;
+      color: white;
+    }
+
+    .auth-benefits {
+      margin-top: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .auth-benefit {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+
+    .auth-benefit svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-terracotta);
+      flex-shrink: 0;
+    }
+
+    /* Right side - Form */
+    .auth-form-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-xl);
+      background: var(--color-white);
+    }
+
+    .auth-form-inner {
+      max-width: 400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .auth-header h1 {
+      font-size: 1.75rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .auth-header p {
+      color: var(--color-warm-grey);
+      font-size: 0.9375rem;
+    }
+
+    /* Auth tabs */
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--color-light-grey);
+      margin-bottom: var(--space-lg);
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: var(--space-sm) 0;
+      text-align: center;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--color-warm-grey);
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.2s ease;
+    }
+
+    .auth-tab:hover {
+      color: var(--color-charcoal);
+    }
+
+    .auth-tab.active {
+      color: var(--color-charcoal);
+      border-bottom-color: var(--color-terracotta);
+    }
+
+    /* Social auth buttons */
+    .social-auth {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 0.875rem 1rem;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      border-radius: 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .social-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .social-btn-google {
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      color: var(--color-charcoal);
+    }
+
+    .social-btn-google:hover {
+      background: var(--color-ecru);
+      border-color: var(--color-charcoal);
+    }
+
+    .social-btn-instagram {
+      background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+      border: none;
+      color: white;
+    }
+
+    .social-btn-instagram:hover {
+      opacity: 0.9;
+    }
+
+    /* Divider */
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+      color: var(--color-warm-grey);
+      font-size: 0.8125rem;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-light-grey);
+    }
+
+    /* Form */
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .auth-form .form-group {
+      margin-bottom: 0;
+    }
+
+    .auth-form .form-input {
+      padding: 0.875rem 1rem;
+    }
+
+    .auth-form .btn {
+      margin-top: var(--space-sm);
+      padding: 0.875rem 1rem;
+    }
+
+    /* Password toggle */
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--color-warm-grey);
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .password-toggle:hover {
+      color: var(--color-charcoal);
+    }
+
+    /* Error state */
+    .form-error {
+      color: #dc3545;
+      font-size: 0.8125rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .form-error.visible {
+      display: block;
+    }
+
+    .form-input.error {
+      border-color: #dc3545;
+    }
+
+    /* Global error */
+    .auth-error {
+      padding: var(--space-sm) var(--space-md);
+      background: #fff5f5;
+      border: 1px solid #dc3545;
+      color: #dc3545;
+      font-size: 0.875rem;
+      margin-bottom: var(--space-md);
+      display: none;
+    }
+
+    .auth-error.visible {
+      display: block;
+    }
+
+    /* Footer links */
+    .auth-footer {
+      text-align: center;
+      margin-top: var(--space-xl);
+      font-size: 0.8125rem;
+      color: var(--color-warm-grey);
+    }
+
+    .auth-footer a {
+      color: var(--color-charcoal);
+    }
+
+    .auth-legal {
+      margin-top: var(--space-lg);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .auth-legal-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+      font-size: 0.75rem;
+      color: var(--color-warm-grey);
+    }
+
+    .auth-legal-links a {
+      color: var(--color-warm-grey);
+    }
+
+    .auth-legal-links a:hover {
+      color: var(--color-charcoal);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .auth-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .auth-visual {
+        min-height: 200px;
+        padding: var(--space-lg);
+      }
+
+      .auth-visual h2 {
+        font-size: 1.5rem;
+      }
+
+      .auth-benefits {
+        display: none;
+      }
+
+      .auth-form-container {
+        padding: var(--space-lg);
+      }
+
+      .auth-header h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* Loading state */
+    .btn.loading {
+      position: relative;
+      color: transparent;
+      pointer-events: none;
+    }
+
+    .btn.loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      top: 50%;
+      left: 50%;
+      margin-top: -10px;
+      margin-left: -10px;
+    }
+
+    .btn-dark.loading::after {
+      border-top-color: white;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Animations */
+    .auth-form-inner {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .auth-visual-content {
+      animation: fadeInUp 0.6s ease 0.2s forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-layout">
+    <!-- Left - Visual -->
+    <div class="auth-visual">
+      <div class="auth-visual-bg">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_960,h_1200,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Creator sharing travel experiences">
+      </div>
+      <div class="auth-visual-overlay"></div>
+
+      <a href="../index.html" class="auth-visual-logo">
+        <img src="../assets/logo.svg" alt="NUBEAUX">
+      </a>
+
+      <div class="auth-visual-content">
+        <h2>Share trips you love. Earn when they book.</h2>
+        <p>Turn your travel content into bookable experiences. We handle enquiries, payments, and support.</p>
+
+        <div class="auth-benefits">
+          <div class="auth-benefit">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            <span>No booking admin</span>
+          </div>
+          <div class="auth-benefit">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            <span>Publish in minutes</span>
+          </div>
+          <div class="auth-benefit">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            <span>Earn 40% of commission on bookings</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right - Form -->
+    <div class="auth-form-container">
+      <div class="auth-form-inner">
+        <div class="auth-header">
+          <h1>Create an itinerary</h1>
+          <p>Sign up or sign in to get started.</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="auth-tabs" role="tablist">
+          <button class="auth-tab active" role="tab" aria-selected="true" data-tab="signup">Sign up</button>
+          <button class="auth-tab" role="tab" aria-selected="false" data-tab="signin">Sign in</button>
+        </div>
+
+        <!-- Global error -->
+        <div class="auth-error" id="authError" role="alert" aria-live="polite"></div>
+
+        <!-- Social auth -->
+        <div class="social-auth">
+          <button type="button" class="social-btn social-btn-google" id="googleAuth">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Continue with Google
+          </button>
+        </div>
+
+        <div class="auth-divider">or</div>
+
+        <!-- Sign Up Form -->
+        <form class="auth-form" id="signupForm">
+          <div class="form-group">
+            <label class="form-label" for="signupEmail">Email</label>
+            <input type="email" id="signupEmail" name="email" class="form-input" required autocomplete="email">
+            <span class="form-error" id="signupEmailError"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signupPassword">Password</label>
+            <div class="password-wrapper">
+              <input type="password" id="signupPassword" name="password" class="form-input" required minlength="8" autocomplete="new-password">
+              <button type="button" class="password-toggle" aria-label="Show password">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+            </div>
+            <span class="form-error" id="signupPasswordError"></span>
+          </div>
+
+          <button type="submit" class="btn btn-dark">Create account</button>
+
+          <p style="font-size: 0.75rem; color: var(--color-warm-grey); text-align: center; margin-top: var(--space-sm);">
+            By signing up, you agree to our <a href="../terms.html">Terms</a> and <a href="../privacy.html">Privacy Policy</a>.
+          </p>
+        </form>
+
+        <!-- Sign In Form -->
+        <form class="auth-form" id="signinForm" style="display: none;">
+          <div class="form-group">
+            <label class="form-label" for="signinEmail">Email</label>
+            <input type="email" id="signinEmail" name="email" class="form-input" required autocomplete="email">
+            <span class="form-error" id="signinEmailError"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signinPassword">Password</label>
+            <div class="password-wrapper">
+              <input type="password" id="signinPassword" name="password" class="form-input" required autocomplete="current-password">
+              <button type="button" class="password-toggle" aria-label="Show password">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+            </div>
+            <span class="form-error" id="signinPasswordError"></span>
+          </div>
+
+          <button type="submit" class="btn btn-dark">Sign in</button>
+
+          <p style="font-size: 0.8125rem; text-align: center; margin-top: var(--space-sm);">
+            <a href="../forgot-password.html" style="color: var(--color-terracotta);">Forgot password?</a>
+          </p>
+        </form>
+
+        <div class="auth-legal">
+          <div class="auth-legal-links">
+            <a href="../terms.html">Terms</a>
+            <a href="../privacy.html">Privacy</a>
+            <a href="mailto:support@nubeauxtravel.com">Support</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/main.js?v=2"></script>
+  <script>
+    // Tab switching
+    const tabs = document.querySelectorAll('.auth-tab');
+    const signupForm = document.getElementById('signupForm');
+    const signinForm = document.getElementById('signinForm');
+    const authError = document.getElementById('authError');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        // Hide error
+        authError.classList.remove('visible');
+        authError.textContent = '';
+
+        // Show correct form
+        if (tab.dataset.tab === 'signup') {
+          signupForm.style.display = 'flex';
+          signinForm.style.display = 'none';
+        } else {
+          signupForm.style.display = 'none';
+          signinForm.style.display = 'flex';
+        }
+      });
+    });
+
+    // Password toggle
+    document.querySelectorAll('.password-toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const input = toggle.previousElementSibling;
+        const type = input.type === 'password' ? 'text' : 'password';
+        input.type = type;
+        toggle.setAttribute('aria-label', type === 'password' ? 'Show password' : 'Hide password');
+      });
+    });
+
+    // Google auth
+    document.getElementById('googleAuth').addEventListener('click', async () => {
+      const btn = document.getElementById('googleAuth');
+      btn.classList.add('loading');
+
+      // Track analytics
+      if (window.gtag) gtag('event', 'auth_provider_selected', { provider: 'google' });
+
+      // Simulate Google OAuth redirect
+      // In production, this would redirect to your auth endpoint
+      try {
+        // await signInWithGoogle();
+        console.log('Google auth initiated');
+        // Redirect to onboarding after success
+        // window.location.href = '/creators/onboarding.html';
+      } catch (error) {
+        showError('Google sign in failed. Please try again.');
+        btn.classList.remove('loading');
+      }
+    });
+
+    // Show error helper
+    function showError(message) {
+      authError.textContent = message;
+      authError.classList.add('visible');
+    }
+
+    // Clear errors
+    function clearErrors() {
+      authError.classList.remove('visible');
+      authError.textContent = '';
+      document.querySelectorAll('.form-input.error').forEach(input => {
+        input.classList.remove('error');
+      });
+      document.querySelectorAll('.form-error').forEach(error => {
+        error.classList.remove('visible');
+        error.textContent = '';
+      });
+    }
+
+    // Sign up form
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErrors();
+
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const btn = signupForm.querySelector('button[type="submit"]');
+
+      // Validation
+      if (!email || !email.includes('@')) {
+        document.getElementById('signupEmail').classList.add('error');
+        document.getElementById('signupEmailError').textContent = 'Please enter a valid email.';
+        document.getElementById('signupEmailError').classList.add('visible');
+        return;
+      }
+
+      if (password.length < 8) {
+        document.getElementById('signupPassword').classList.add('error');
+        document.getElementById('signupPasswordError').textContent = 'Password must be at least 8 characters.';
+        document.getElementById('signupPasswordError').classList.add('visible');
+        return;
+      }
+
+      btn.classList.add('loading');
+
+      // Track analytics
+      if (window.gtag) gtag('event', 'auth_provider_selected', { provider: 'email' });
+
+      try {
+        // In production, call your auth API
+        // await signUpWithEmail(email, password);
+        console.log('Sign up:', { email });
+
+        // Simulate success - redirect to onboarding
+        setTimeout(() => {
+          window.location.href = 'onboarding.html';
+        }, 1000);
+      } catch (error) {
+        if (error.code === 'email_exists') {
+          showError('An account with this email already exists. Try signing in instead.');
+        } else {
+          showError('Sign up failed. Please try again.');
+        }
+        btn.classList.remove('loading');
+      }
+    });
+
+    // Sign in form
+    signinForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErrors();
+
+      const email = document.getElementById('signinEmail').value;
+      const password = document.getElementById('signinPassword').value;
+      const btn = signinForm.querySelector('button[type="submit"]');
+
+      if (!email || !email.includes('@')) {
+        document.getElementById('signinEmail').classList.add('error');
+        document.getElementById('signinEmailError').textContent = 'Please enter a valid email.';
+        document.getElementById('signinEmailError').classList.add('visible');
+        return;
+      }
+
+      btn.classList.add('loading');
+
+      try {
+        // In production, call your auth API
+        // await signInWithEmail(email, password);
+        console.log('Sign in:', { email });
+
+        // Check if user has creator profile
+        // If yes, go to itinerary creation
+        // If no, go to onboarding
+        setTimeout(() => {
+          window.location.href = 'onboarding.html';
+        }, 1000);
+      } catch (error) {
+        if (error.code === 'invalid_credentials') {
+          showError('Invalid email or password. Please try again.');
+        } else {
+          showError('Sign in failed. Please try again.');
+        }
+        btn.classList.remove('loading');
+      }
+    });
+
+    // Track page view
+    if (window.gtag) {
+      gtag('event', 'page_view', { page_title: 'Creator Auth' });
+    }
+  </script>
+</body>
+</html>

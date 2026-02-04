@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Explore curated travel itineraries from creators who have personally taken these trips. Safari, beach, city, wellness and more. Book as-is or customise.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Explore Trips | NUBEAUX Travel</title>
+
+  <link rel="canonical" href="https://www.nubeauxtravel.com/trips/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=23">
+
+  <style>
+    /* Explore Trips Page Styles */
+
+    /* Page Hero - Lightweight */
+    .explore-hero {
+      padding: calc(var(--header-height) + var(--space-xl)) 0 var(--space-lg);
+      background: var(--color-white);
+      text-align: center;
+    }
+
+    .explore-hero h1 {
+      margin-bottom: var(--space-sm);
+    }
+
+    .explore-hero p {
+      font-size: 1.0625rem;
+      color: var(--color-text-light);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* Search and Filters Section */
+    .filters-section {
+      position: sticky;
+      top: var(--header-height);
+      z-index: 100;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-light-grey);
+      padding: var(--space-md) 0;
+    }
+
+    .filters-inner {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    /* Search Input */
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      max-width: 320px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.875rem 1rem 0.875rem 2.75rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--color-text);
+      background: var(--color-sand);
+      border: 1px solid transparent;
+      transition: all var(--transition-fast);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-text);
+      background: var(--color-white);
+    }
+
+    .search-input::placeholder {
+      color: var(--color-medium-grey);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: var(--color-medium-grey);
+      pointer-events: none;
+    }
+
+    /* Filter Chips Container */
+    .filter-chips {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      flex: 1;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .filter-chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Filter Dropdown Trigger */
+    .filter-dropdown {
+      position: relative;
+    }
+
+    .filter-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-text);
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .filter-trigger:hover {
+      border-color: var(--color-text);
+    }
+
+    .filter-trigger.active {
+      background: var(--color-text);
+      color: var(--color-white);
+      border-color: var(--color-text);
+    }
+
+    .filter-trigger svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Filter Panel */
+    .filter-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 200px;
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all var(--transition-fast);
+      z-index: 200;
+    }
+
+    .filter-dropdown.open .filter-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .filter-option {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-text);
+      background: none;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+
+    .filter-option:hover {
+      background: var(--color-sand);
+    }
+
+    .filter-option.selected {
+      color: var(--color-accent);
+      font-weight: 500;
+    }
+
+    /* Selected Filter Chips */
+    .selected-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--color-text);
+      background: var(--color-sand);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .selected-chip:hover {
+      background: var(--color-light-grey);
+    }
+
+    .selected-chip svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Clear All */
+    .clear-all {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      white-space: nowrap;
+      transition: color var(--transition-fast);
+    }
+
+    .clear-all:hover {
+      color: var(--color-text);
+    }
+
+    /* Sort Dropdown */
+    .sort-wrapper {
+      margin-left: auto;
+    }
+
+    .sort-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color var(--transition-fast);
+    }
+
+    .sort-trigger:hover {
+      color: var(--color-text);
+    }
+
+    .sort-trigger svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Results Section */
+    .results-section {
+      padding: var(--space-lg) 0 var(--space-2xl);
+      background: var(--color-sand);
+      min-height: 60vh;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-md);
+    }
+
+    .results-count {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    /* Trips Grid */
+    .trips-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      list-style: none;
+    }
+
+    /* Trip Card */
+    .trip-card {
+      background: var(--color-white);
+      display: block;
+      transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .trip-card:hover {
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+      transform: translateY(-4px);
+    }
+
+    .trip-card-image {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .trip-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .trip-card:hover .trip-card-image img {
+      transform: scale(1.05);
+    }
+
+    /* Trust Badge */
+    .trip-badge {
+      position: absolute;
+      top: var(--space-sm);
+      left: var(--space-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 10px;
+      font-size: 0.5625rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-white);
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+    }
+
+    .trip-badge svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .trip-card-content {
+      padding: var(--space-md);
+    }
+
+    .trip-card-destination {
+      font-size: 0.625rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+
+    .trip-card-title {
+      font-size: 1.375rem;
+      margin-bottom: var(--space-xs);
+      line-height: 1.25;
+    }
+
+    .trip-card-meta {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .trip-card-meta span:not(:last-child)::after {
+      content: '\00b7';
+      margin: 0 0.5rem;
+      color: var(--color-medium-grey);
+    }
+
+    /* Style Tags */
+    .trip-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .trip-tag {
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.5rem;
+      background: var(--color-sand);
+      color: var(--color-text-light);
+    }
+
+    /* Creator Attribution */
+    .trip-card-creator {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding-top: var(--space-sm);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .trip-card-creator img {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .trip-card-creator span {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
+    .trip-card-price {
+      margin-left: auto;
+      font-size: 0.8125rem;
+      color: var(--color-text);
+      font-weight: 500;
+    }
+
+    /* Load More */
+    .load-more-wrapper {
+      text-align: center;
+      margin-top: var(--space-xl);
+    }
+
+    .btn-load-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text);
+      background: var(--color-white);
+      border: 1px solid var(--color-text);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-load-more:hover {
+      background: var(--color-text);
+      color: var(--color-white);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: var(--space-2xl) var(--space-md);
+    }
+
+    .empty-state-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-md);
+      color: var(--color-light-grey);
+    }
+
+    .empty-state h2 {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .empty-state p {
+      color: var(--color-text-light);
+      margin: 0 auto var(--space-lg);
+      max-width: 400px;
+    }
+
+    .empty-state-actions {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+
+    /* Skeleton Loaders */
+    .skeleton {
+      background: linear-gradient(90deg, var(--color-light-grey) 25%, var(--color-sand) 50%, var(--color-light-grey) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .skeleton-card {
+      background: var(--color-white);
+    }
+
+    .skeleton-image {
+      aspect-ratio: 4/3;
+    }
+
+    .skeleton-text {
+      height: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .skeleton-text-sm {
+      height: 0.75rem;
+      width: 60%;
+    }
+
+    /* Mobile Filter Button */
+    .mobile-filter-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.25rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-text);
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      cursor: pointer;
+    }
+
+    .mobile-filter-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Mobile Filter Bottom Sheet */
+    .filter-sheet-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: all var(--transition-fast);
+      z-index: 1000;
+    }
+
+    .filter-sheet-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .filter-sheet {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-height: 85vh;
+      background: var(--color-white);
+      border-radius: 16px 16px 0 0;
+      transform: translateY(100%);
+      transition: transform var(--transition-medium);
+      z-index: 1001;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .filter-sheet-overlay.active .filter-sheet {
+      transform: translateY(0);
+    }
+
+    .filter-sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .filter-sheet-header h3 {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .filter-sheet-close {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text);
+    }
+
+    .filter-sheet-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-md);
+    }
+
+    .filter-group {
+      margin-bottom: var(--space-lg);
+    }
+
+    .filter-group-title {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .filter-group-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-chip {
+      padding: 0.625rem 1rem;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      color: var(--color-text);
+      background: var(--color-sand);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-chip:hover {
+      border-color: var(--color-text);
+    }
+
+    .filter-chip.selected {
+      background: var(--color-text);
+      color: var(--color-white);
+    }
+
+    .filter-sheet-footer {
+      padding: var(--space-md);
+      border-top: 1px solid var(--color-light-grey);
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .filter-sheet-footer button {
+      flex: 1;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.animated {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .animate-stagger .animate-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .animate-stagger.animated .animate-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .animate-stagger.animated .animate-item:nth-child(1) { transition-delay: 0s; }
+    .animate-stagger.animated .animate-item:nth-child(2) { transition-delay: 0.05s; }
+    .animate-stagger.animated .animate-item:nth-child(3) { transition-delay: 0.1s; }
+    .animate-stagger.animated .animate-item:nth-child(4) { transition-delay: 0.15s; }
+    .animate-stagger.animated .animate-item:nth-child(5) { transition-delay: 0.2s; }
+    .animate-stagger.animated .animate-item:nth-child(6) { transition-delay: 0.25s; }
+
+    /* Hero entrance animation */
+    .explore-hero h1 {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .explore-hero p {
+      animation: fadeInUp 0.8s ease 0.15s forwards;
+      opacity: 0;
+    }
+
+    /* Card hover effects */
+    .trip-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .trip-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .trips-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .explore-hero {
+        padding: calc(var(--header-height) + var(--space-lg)) 0 var(--space-md);
+      }
+
+      .explore-hero h1 {
+        font-size: 2rem;
+      }
+
+      .explore-hero p {
+        font-size: 0.9375rem;
+      }
+
+      .filters-section {
+        padding: var(--space-sm) 0;
+      }
+
+      .filters-inner {
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+      }
+
+      .search-wrapper {
+        max-width: none;
+        order: 1;
+        flex-basis: 100%;
+      }
+
+      .filter-chips {
+        display: none;
+      }
+
+      .sort-wrapper {
+        margin-left: 0;
+        order: 3;
+      }
+
+      .mobile-filter-btn {
+        display: flex;
+        order: 2;
+      }
+
+      /* Selected chips on mobile */
+      .mobile-selected-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-xs);
+        padding: var(--space-sm) 0 0;
+        order: 4;
+        flex-basis: 100%;
+      }
+
+      .trips-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+
+      .results-section {
+        padding: var(--space-md) 0 var(--space-xl);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="../trips/" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+
+      <nav class="nav">
+        <a href="../trips/" class="nav-active">Explore trips</a>
+        <a href="../destinations/">Destinations</a>
+        <a href="mailto:support@nubeauxtravel.com">Support</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="../trips/">Explore trips</a>
+    <a href="../destinations/">Destinations</a>
+    <a href="mailto:support@nubeauxtravel.com">Support</a>
+  </div>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="explore-hero">
+      <div class="container">
+        <h1>Explore trips</h1>
+        <p>Real itineraries curated by creators. Book as-is or customise.</p>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters-section">
+      <div class="container">
+        <div class="filters-inner">
+          <!-- Search -->
+          <div class="search-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+            <input type="search" class="search-input" placeholder="Search destinations or trips" id="searchInput" aria-label="Search destinations or trips">
+          </div>
+
+          <!-- Filter Dropdowns (Desktop) -->
+          <div class="filter-chips" id="filterChips">
+            <!-- Region Filter -->
+            <div class="filter-dropdown" data-filter="region">
+              <button class="filter-trigger" aria-expanded="false" aria-haspopup="listbox">
+                Region
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              <div class="filter-panel" role="listbox">
+                <button class="filter-option" data-value="africa">Africa</button>
+                <button class="filter-option" data-value="europe">Europe</button>
+                <button class="filter-option" data-value="middle-east">Middle East</button>
+                <button class="filter-option" data-value="asia">Asia</button>
+                <button class="filter-option" data-value="americas">Americas</button>
+              </div>
+            </div>
+
+            <!-- Style Filter -->
+            <div class="filter-dropdown" data-filter="style">
+              <button class="filter-trigger" aria-expanded="false" aria-haspopup="listbox">
+                Style
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              <div class="filter-panel" role="listbox">
+                <button class="filter-option" data-value="safari">Safari</button>
+                <button class="filter-option" data-value="beach">Beach</button>
+                <button class="filter-option" data-value="city">City</button>
+                <button class="filter-option" data-value="wellness">Wellness</button>
+                <button class="filter-option" data-value="adventure">Adventure</button>
+                <button class="filter-option" data-value="culture">Culture</button>
+              </div>
+            </div>
+
+            <!-- Duration Filter -->
+            <div class="filter-dropdown" data-filter="duration">
+              <button class="filter-trigger" aria-expanded="false" aria-haspopup="listbox">
+                Duration
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              <div class="filter-panel" role="listbox">
+                <button class="filter-option" data-value="weekend">Weekend (2-4 nights)</button>
+                <button class="filter-option" data-value="week">5-7 nights</button>
+                <button class="filter-option" data-value="extended">8-10 nights</button>
+                <button class="filter-option" data-value="long">10+ nights</button>
+              </div>
+            </div>
+
+            <!-- Best For Filter -->
+            <div class="filter-dropdown" data-filter="bestFor">
+              <button class="filter-trigger" aria-expanded="false" aria-haspopup="listbox">
+                Best for
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              <div class="filter-panel" role="listbox">
+                <button class="filter-option" data-value="couples">Couples</button>
+                <button class="filter-option" data-value="solo">Solo</button>
+                <button class="filter-option" data-value="friends">Friends</button>
+                <button class="filter-option" data-value="family">Family</button>
+              </div>
+            </div>
+
+            <!-- Creator Filter -->
+            <div class="filter-dropdown" data-filter="creator">
+              <button class="filter-trigger" aria-expanded="false" aria-haspopup="listbox">
+                Creator
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              <div class="filter-panel" role="listbox">
+                <button class="filter-option" data-value="nia-the-light">Nia The Light</button>
+              </div>
+            </div>
+
+            <!-- Selected Chips Area -->
+            <div id="selectedChips"></div>
+
+            <!-- Clear All (hidden until filters selected) -->
+            <button class="clear-all" id="clearAll" style="display: none;">Clear all</button>
+          </div>
+
+          <!-- Mobile Filter Button -->
+          <button class="mobile-filter-btn" id="mobileFilterBtn" aria-label="Open filters">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+            </svg>
+            Filters
+          </button>
+
+          <!-- Sort -->
+          <div class="sort-wrapper">
+            <div class="filter-dropdown" data-filter="sort">
+              <button class="sort-trigger" aria-expanded="false" aria-haspopup="listbox">
+                Sort: Recommended
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+              <div class="filter-panel" role="listbox" style="right: 0; left: auto;">
+                <button class="filter-option selected" data-value="recommended">Recommended</button>
+                <button class="filter-option" data-value="popular">Most popular</button>
+                <button class="filter-option" data-value="new">New</button>
+                <button class="filter-option" data-value="shortest">Shortest</button>
+                <button class="filter-option" data-value="longest">Longest</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Selected Chips -->
+          <div class="mobile-selected-chips" id="mobileSelectedChips"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="results-section">
+      <div class="container">
+        <div class="results-header">
+          <p class="results-count" id="resultsCount">12 trips</p>
+        </div>
+
+        <!-- Trips Grid -->
+        <div class="trips-grid animate-stagger" id="tripsGrid">
+          <!-- Trip Card 1 -->
+          <a href="../itineraries/namibia-safari.html" class="trip-card animate-item"
+             data-region="africa"
+             data-style="safari"
+             data-duration="week"
+             data-best-for="solo couples"
+             data-creator="nia-the-light"
+             data-title="Wilderness & Wonder"
+             data-destination="Onguma Namibia">
+            <div class="trip-card-image">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_450,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Namibia Safari" loading="lazy">
+              <span class="trip-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Personally taken
+              </span>
+            </div>
+            <div class="trip-card-content">
+              <span class="trip-card-destination">Onguma, Namibia</span>
+              <h3 class="trip-card-title">Wilderness & Wonder</h3>
+              <p class="trip-card-meta">
+                <span>3 nights</span>
+                <span>Safari</span>
+              </p>
+              <div class="trip-card-tags">
+                <span class="trip-tag">Safari</span>
+                <span class="trip-tag">Wildlife</span>
+                <span class="trip-tag">Luxury</span>
+              </div>
+              <div class="trip-card-creator">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Nia The Light">
+                <span>Nia The Light</span>
+                <span class="trip-card-price">From $4,200</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Trip Card 2 -->
+          <a href="../itineraries/joburg-gateway.html" class="trip-card animate-item"
+             data-region="africa"
+             data-style="city"
+             data-duration="weekend"
+             data-best-for="solo couples friends"
+             data-creator="nia-the-light"
+             data-title="City Gateway"
+             data-destination="Johannesburg South Africa">
+            <div class="trip-card-image">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_450,q_auto,f_auto/v1770005011/S_africa_Klein-2_xqck3i.jpg" alt="Johannesburg" loading="lazy">
+              <span class="trip-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Personally taken
+              </span>
+            </div>
+            <div class="trip-card-content">
+              <span class="trip-card-destination">Johannesburg, South Africa</span>
+              <h3 class="trip-card-title">City Gateway</h3>
+              <p class="trip-card-meta">
+                <span>3 nights</span>
+                <span>City</span>
+              </p>
+              <div class="trip-card-tags">
+                <span class="trip-tag">City</span>
+                <span class="trip-tag">Culture</span>
+                <span class="trip-tag">Art</span>
+              </div>
+              <div class="trip-card-creator">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Nia The Light">
+                <span>Nia The Light</span>
+                <span class="trip-card-price">From $1,800</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Trip Card 3 -->
+          <a href="../itineraries/mozambique-island-escape.html" class="trip-card animate-item"
+             data-region="africa"
+             data-style="beach"
+             data-duration="week"
+             data-best-for="couples"
+             data-creator="nia-the-light"
+             data-title="Island Escape"
+             data-destination="Bazaruto Mozambique">
+            <div class="trip-card-image">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_450,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Mozambique" loading="lazy">
+              <span class="trip-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Personally taken
+              </span>
+            </div>
+            <div class="trip-card-content">
+              <span class="trip-card-destination">Bazaruto, Mozambique</span>
+              <h3 class="trip-card-title">Island Escape</h3>
+              <p class="trip-card-meta">
+                <span>5 nights</span>
+                <span>Beach</span>
+              </p>
+              <div class="trip-card-tags">
+                <span class="trip-tag">Beach</span>
+                <span class="trip-tag">Island</span>
+                <span class="trip-tag">Diving</span>
+              </div>
+              <div class="trip-card-creator">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Nia The Light">
+                <span>Nia The Light</span>
+                <span class="trip-card-price">From $3,500</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Trip Card 4 -->
+          <a href="../itineraries/kilifi-coast.html" class="trip-card animate-item"
+             data-region="africa"
+             data-style="beach wellness"
+             data-duration="weekend"
+             data-best-for="solo couples"
+             data-creator="nia-the-light"
+             data-title="Coastal Retreat"
+             data-destination="Kilifi Kenya">
+            <div class="trip-card-image">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1769949672/dest_aruba_jewcz4.jpg" alt="Kilifi Coast" loading="lazy">
+              <span class="trip-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Personally taken
+              </span>
+            </div>
+            <div class="trip-card-content">
+              <span class="trip-card-destination">Kilifi, Kenya</span>
+              <h3 class="trip-card-title">Coastal Retreat</h3>
+              <p class="trip-card-meta">
+                <span>4 nights</span>
+                <span>Beach</span>
+              </p>
+              <div class="trip-card-tags">
+                <span class="trip-tag">Beach</span>
+                <span class="trip-tag">Wellness</span>
+              </div>
+              <div class="trip-card-creator">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Nia The Light">
+                <span>Nia The Light</span>
+                <span class="trip-card-price">From $2,400</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Trip Card 5 -->
+          <a href="../itineraries/lamu-island.html" class="trip-card animate-item"
+             data-region="africa"
+             data-style="culture"
+             data-duration="week"
+             data-best-for="solo couples"
+             data-creator="nia-the-light"
+             data-title="Island Heritage"
+             data-destination="Lamu Kenya">
+            <div class="trip-card-image">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1769949645/RNI-Films-IMG-85112780-9D4C-4BC0-AC22-80A31BF1E813_x2eyd3.jpg" alt="Lamu Island" loading="lazy">
+              <span class="trip-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Personally taken
+              </span>
+            </div>
+            <div class="trip-card-content">
+              <span class="trip-card-destination">Lamu, Kenya</span>
+              <h3 class="trip-card-title">Island Heritage</h3>
+              <p class="trip-card-meta">
+                <span>5 nights</span>
+                <span>Culture</span>
+              </p>
+              <div class="trip-card-tags">
+                <span class="trip-tag">Culture</span>
+                <span class="trip-tag">Heritage</span>
+                <span class="trip-tag">Island</span>
+              </div>
+              <div class="trip-card-creator">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Nia The Light">
+                <span>Nia The Light</span>
+                <span class="trip-card-price">From $2,800</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Trip Card 6 -->
+          <a href="../itineraries/senegal-discovery.html" class="trip-card animate-item"
+             data-region="africa"
+             data-style="culture"
+             data-duration="week"
+             data-best-for="solo friends"
+             data-creator="nia-the-light"
+             data-title="Cultural Discovery"
+             data-destination="Dakar Senegal">
+            <div class="trip-card-image">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1769949679/dest_senegal_s3ij6n.jpg" alt="Senegal" loading="lazy">
+              <span class="trip-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Personally taken
+              </span>
+            </div>
+            <div class="trip-card-content">
+              <span class="trip-card-destination">Dakar, Senegal</span>
+              <h3 class="trip-card-title">Cultural Discovery</h3>
+              <p class="trip-card-meta">
+                <span>6 nights</span>
+                <span>Culture</span>
+              </p>
+              <div class="trip-card-tags">
+                <span class="trip-tag">Culture</span>
+                <span class="trip-tag">Music</span>
+                <span class="trip-tag">Food</span>
+              </div>
+              <div class="trip-card-creator">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_56,h_56,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Nia The Light">
+                <span>Nia The Light</span>
+                <span class="trip-card-price">From $3,200</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Empty State (hidden by default) -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+          <svg class="empty-state-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+          </svg>
+          <h2>No trips match your filters</h2>
+          <p>Try removing a filter or searching a broader region.</p>
+          <div class="empty-state-actions">
+            <button class="btn btn-outline-dark" id="emptyStateClear">Clear all filters</button>
+            <a href="../trips/" class="btn btn-primary">Explore all trips</a>
+          </div>
+        </div>
+
+        <!-- Load More -->
+        <div class="load-more-wrapper" id="loadMoreWrapper">
+          <button class="btn-load-more" id="loadMoreBtn">
+            Load more trips
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile Filter Bottom Sheet -->
+  <div class="filter-sheet-overlay" id="filterSheet">
+    <div class="filter-sheet">
+      <div class="filter-sheet-header">
+        <h3>Filters</h3>
+        <button class="filter-sheet-close" id="filterSheetClose" aria-label="Close filters">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="filter-sheet-body">
+        <!-- Region -->
+        <div class="filter-group">
+          <p class="filter-group-title">Region</p>
+          <div class="filter-group-options">
+            <button class="filter-chip" data-filter="region" data-value="africa">Africa</button>
+            <button class="filter-chip" data-filter="region" data-value="europe">Europe</button>
+            <button class="filter-chip" data-filter="region" data-value="middle-east">Middle East</button>
+            <button class="filter-chip" data-filter="region" data-value="asia">Asia</button>
+            <button class="filter-chip" data-filter="region" data-value="americas">Americas</button>
+          </div>
+        </div>
+
+        <!-- Style -->
+        <div class="filter-group">
+          <p class="filter-group-title">Style</p>
+          <div class="filter-group-options">
+            <button class="filter-chip" data-filter="style" data-value="safari">Safari</button>
+            <button class="filter-chip" data-filter="style" data-value="beach">Beach</button>
+            <button class="filter-chip" data-filter="style" data-value="city">City</button>
+            <button class="filter-chip" data-filter="style" data-value="wellness">Wellness</button>
+            <button class="filter-chip" data-filter="style" data-value="adventure">Adventure</button>
+            <button class="filter-chip" data-filter="style" data-value="culture">Culture</button>
+          </div>
+        </div>
+
+        <!-- Duration -->
+        <div class="filter-group">
+          <p class="filter-group-title">Duration</p>
+          <div class="filter-group-options">
+            <button class="filter-chip" data-filter="duration" data-value="weekend">Weekend</button>
+            <button class="filter-chip" data-filter="duration" data-value="week">5-7 nights</button>
+            <button class="filter-chip" data-filter="duration" data-value="extended">8-10 nights</button>
+            <button class="filter-chip" data-filter="duration" data-value="long">10+ nights</button>
+          </div>
+        </div>
+
+        <!-- Best For -->
+        <div class="filter-group">
+          <p class="filter-group-title">Best for</p>
+          <div class="filter-group-options">
+            <button class="filter-chip" data-filter="bestFor" data-value="couples">Couples</button>
+            <button class="filter-chip" data-filter="bestFor" data-value="solo">Solo</button>
+            <button class="filter-chip" data-filter="bestFor" data-value="friends">Friends</button>
+            <button class="filter-chip" data-filter="bestFor" data-value="family">Family</button>
+          </div>
+        </div>
+
+        <!-- Creator -->
+        <div class="filter-group">
+          <p class="filter-group-title">Creator</p>
+          <div class="filter-group-options">
+            <button class="filter-chip" data-filter="creator" data-value="nia-the-light">Nia The Light</button>
+          </div>
+        </div>
+      </div>
+      <div class="filter-sheet-footer">
+        <button class="btn btn-outline-dark" id="filterSheetClear">Clear all</button>
+        <button class="btn btn-primary" id="filterSheetApply">Show results</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo.svg" alt="NUBEAUX">
+          <p>Curated luxury travel experiences from creatives who've been there. Authentic journeys across Africa and beyond.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Explore</h4>
+          <div class="footer-links">
+            <a href="../trips/">Trips</a>
+            <a href="../destinations/">Destinations</a>
+            <a href="../stays/">Stays</a>
+            <a href="../journal/">Journal</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="../about.html">About</a>
+            <a href="mailto:support@nubeauxtravel.com">Support</a>
+            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Connect</h4>
+          <div class="footer-links">
+            <a href="mailto:hello@nubeauxtravel.com">hello@nubeauxtravel.com</a>
+            <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
+            <a href="https://tiktok.com/@nubeauxtravel" target="_blank">TikTok</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a> Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js?v=2"></script>
+  <script src="../js/voice-agent.js?v=4"></script>
+  <script>
+    // Filter and search functionality
+    (function() {
+      'use strict';
+
+      // State
+      const state = {
+        filters: {
+          region: null,
+          style: null,
+          duration: null,
+          bestFor: null,
+          creator: null
+        },
+        sort: 'recommended',
+        search: ''
+      };
+
+      // DOM elements
+      const filterDropdowns = document.querySelectorAll('.filter-dropdown');
+      const searchInput = document.getElementById('searchInput');
+      const clearAllBtn = document.getElementById('clearAll');
+      const selectedChipsContainer = document.getElementById('selectedChips');
+      const mobileSelectedChips = document.getElementById('mobileSelectedChips');
+      const mobileFilterBtn = document.getElementById('mobileFilterBtn');
+      const filterSheet = document.getElementById('filterSheet');
+      const filterSheetClose = document.getElementById('filterSheetClose');
+      const filterSheetClear = document.getElementById('filterSheetClear');
+      const filterSheetApply = document.getElementById('filterSheetApply');
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      const emptyStateClear = document.getElementById('emptyStateClear');
+
+      // Filter dropdown toggle
+      filterDropdowns.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.filter-trigger, .sort-trigger');
+        const panel = dropdown.querySelector('.filter-panel');
+
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = dropdown.classList.contains('open');
+
+          // Close all dropdowns
+          filterDropdowns.forEach(d => d.classList.remove('open'));
+
+          // Toggle current
+          if (!isOpen) {
+            dropdown.classList.add('open');
+            trigger.setAttribute('aria-expanded', 'true');
+            trackEvent('Filter_Opened', { filter: dropdown.dataset.filter });
+          } else {
+            trigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Handle option selection
+        panel.querySelectorAll('.filter-option').forEach(option => {
+          option.addEventListener('click', () => {
+            const filterType = dropdown.dataset.filter;
+            const value = option.dataset.value;
+
+            if (filterType === 'sort') {
+              state.sort = value;
+              panel.querySelectorAll('.filter-option').forEach(o => o.classList.remove('selected'));
+              option.classList.add('selected');
+              trigger.innerHTML = `Sort: ${option.textContent} <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>`;
+              trackEvent('Sort_Changed', { sort: value });
+            } else {
+              state.filters[filterType] = value;
+              trigger.classList.add('active');
+              trackEvent('Filter_Applied', { filter: filterType, value: value });
+            }
+
+            dropdown.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+            updateSelectedChips();
+            applyFilters();
+          });
+        });
+      });
+
+      // Close dropdowns on outside click
+      document.addEventListener('click', () => {
+        filterDropdowns.forEach(d => {
+          d.classList.remove('open');
+          const trigger = d.querySelector('.filter-trigger, .sort-trigger');
+          trigger.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      // Search input
+      let searchTimeout;
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          state.search = e.target.value;
+          if (state.search) {
+            trackEvent('Search_Used', { query: state.search });
+          }
+          applyFilters();
+        }, 300);
+      });
+
+      // Update selected chips display
+      function updateSelectedChips() {
+        const chips = [];
+        const hasFilters = Object.values(state.filters).some(v => v !== null);
+
+        Object.entries(state.filters).forEach(([key, value]) => {
+          if (value) {
+            chips.push(`
+              <button class="selected-chip" data-filter="${key}">
+                ${formatFilterValue(value)}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            `);
+          }
+        });
+
+        selectedChipsContainer.innerHTML = chips.join('');
+        mobileSelectedChips.innerHTML = chips.join('');
+
+        // Show/hide clear all
+        clearAllBtn.style.display = hasFilters ? 'inline' : 'none';
+
+        // Add click handlers to chips
+        document.querySelectorAll('.selected-chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            const filterType = chip.dataset.filter;
+            state.filters[filterType] = null;
+
+            // Reset trigger style
+            const dropdown = document.querySelector(`.filter-dropdown[data-filter="${filterType}"]`);
+            if (dropdown) {
+              dropdown.querySelector('.filter-trigger').classList.remove('active');
+            }
+
+            updateSelectedChips();
+            applyFilters();
+          });
+        });
+      }
+
+      // Format filter value for display
+      function formatFilterValue(value) {
+        const labels = {
+          'africa': 'Africa',
+          'europe': 'Europe',
+          'middle-east': 'Middle East',
+          'asia': 'Asia',
+          'americas': 'Americas',
+          'safari': 'Safari',
+          'beach': 'Beach',
+          'city': 'City',
+          'wellness': 'Wellness',
+          'adventure': 'Adventure',
+          'culture': 'Culture',
+          'weekend': 'Weekend',
+          'week': '5-7 nights',
+          'extended': '8-10 nights',
+          'long': '10+ nights',
+          'couples': 'Couples',
+          'solo': 'Solo',
+          'friends': 'Friends',
+          'family': 'Family',
+          'nia-the-light': 'Nia The Light'
+        };
+        return labels[value] || value;
+      }
+
+      // Clear all filters
+      function clearFilters() {
+        state.filters = {
+          region: null,
+          style: null,
+          duration: null,
+          bestFor: null,
+          creator: null
+        };
+        state.search = '';
+        searchInput.value = '';
+
+        filterDropdowns.forEach(d => {
+          const trigger = d.querySelector('.filter-trigger');
+          if (trigger) trigger.classList.remove('active');
+        });
+
+        // Clear mobile filter chips
+        document.querySelectorAll('.filter-chip.selected').forEach(chip => {
+          chip.classList.remove('selected');
+        });
+
+        updateSelectedChips();
+        applyFilters();
+        trackEvent('Filter_Cleared');
+      }
+
+      clearAllBtn.addEventListener('click', clearFilters);
+      emptyStateClear.addEventListener('click', clearFilters);
+      filterSheetClear.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip.selected').forEach(chip => {
+          chip.classList.remove('selected');
+        });
+      });
+
+      // Apply filters
+      function applyFilters() {
+        // Update URL params
+        const params = new URLSearchParams();
+        Object.entries(state.filters).forEach(([key, value]) => {
+          if (value) params.set(key, value);
+        });
+        if (state.search) params.set('q', state.search);
+        if (state.sort !== 'recommended') params.set('sort', state.sort);
+
+        const newUrl = params.toString()
+          ? `${window.location.pathname}?${params.toString()}`
+          : window.location.pathname;
+
+        window.history.replaceState({}, '', newUrl);
+
+        // Get all trip cards
+        const tripCards = document.querySelectorAll('.trip-card');
+        const tripsGrid = document.getElementById('tripsGrid');
+        const emptyState = document.getElementById('emptyState');
+        const loadMoreWrapper = document.getElementById('loadMoreWrapper');
+        const resultsCount = document.getElementById('resultsCount');
+
+        let visibleCount = 0;
+
+        tripCards.forEach(card => {
+          let isVisible = true;
+
+          // Check region filter
+          if (state.filters.region && isVisible) {
+            const cardRegion = card.dataset.region;
+            isVisible = cardRegion && cardRegion.includes(state.filters.region);
+          }
+
+          // Check style filter
+          if (state.filters.style && isVisible) {
+            const cardStyle = card.dataset.style;
+            isVisible = cardStyle && cardStyle.includes(state.filters.style);
+          }
+
+          // Check duration filter
+          if (state.filters.duration && isVisible) {
+            const cardDuration = card.dataset.duration;
+            isVisible = cardDuration && cardDuration.includes(state.filters.duration);
+          }
+
+          // Check bestFor filter
+          if (state.filters.bestFor && isVisible) {
+            const cardBestFor = card.dataset.bestFor;
+            isVisible = cardBestFor && cardBestFor.includes(state.filters.bestFor);
+          }
+
+          // Check creator filter
+          if (state.filters.creator && isVisible) {
+            const cardCreator = card.dataset.creator;
+            isVisible = cardCreator && cardCreator.includes(state.filters.creator);
+          }
+
+          // Check search query
+          if (state.search && isVisible) {
+            const searchLower = state.search.toLowerCase();
+            const title = (card.dataset.title || '').toLowerCase();
+            const destination = (card.dataset.destination || '').toLowerCase();
+            isVisible = title.includes(searchLower) || destination.includes(searchLower);
+          }
+
+          // Show/hide card
+          if (isVisible) {
+            card.style.display = '';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Update results count
+        resultsCount.textContent = `${visibleCount} trip${visibleCount !== 1 ? 's' : ''}`;
+
+        // Show empty state if no results
+        if (visibleCount === 0) {
+          tripsGrid.style.display = 'none';
+          emptyState.style.display = 'block';
+          loadMoreWrapper.style.display = 'none';
+        } else {
+          tripsGrid.style.display = '';
+          emptyState.style.display = 'none';
+          loadMoreWrapper.style.display = visibleCount >= 6 ? '' : 'none';
+        }
+      }
+
+      // Mobile filter sheet
+      mobileFilterBtn.addEventListener('click', () => {
+        filterSheet.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+
+      function closeFilterSheet() {
+        filterSheet.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      filterSheetClose.addEventListener('click', closeFilterSheet);
+      filterSheet.addEventListener('click', (e) => {
+        if (e.target === filterSheet) closeFilterSheet();
+      });
+
+      // Mobile filter chips
+      document.querySelectorAll('.filter-sheet .filter-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const filterType = chip.dataset.filter;
+          const value = chip.dataset.value;
+
+          // Toggle selection
+          if (chip.classList.contains('selected')) {
+            chip.classList.remove('selected');
+            state.filters[filterType] = null;
+          } else {
+            // Deselect others in same group
+            document.querySelectorAll(`.filter-chip[data-filter="${filterType}"]`).forEach(c => {
+              c.classList.remove('selected');
+            });
+            chip.classList.add('selected');
+            state.filters[filterType] = value;
+          }
+        });
+      });
+
+      filterSheetApply.addEventListener('click', () => {
+        // Sync mobile selections to desktop
+        Object.entries(state.filters).forEach(([key, value]) => {
+          const dropdown = document.querySelector(`.filter-dropdown[data-filter="${key}"]`);
+          if (dropdown) {
+            const trigger = dropdown.querySelector('.filter-trigger');
+            if (value) {
+              trigger.classList.add('active');
+              trackEvent('Filter_Applied', { filter: key, value: value });
+            } else {
+              trigger.classList.remove('active');
+            }
+          }
+        });
+
+        updateSelectedChips();
+        applyFilters();
+        closeFilterSheet();
+      });
+
+      // Load more
+      loadMoreBtn.addEventListener('click', () => {
+        trackEvent('LoadMore_Click');
+        // In production, this would load more trips
+        loadMoreBtn.textContent = 'Loading...';
+        setTimeout(() => {
+          loadMoreBtn.textContent = 'Load more trips';
+        }, 1000);
+      });
+
+      // Analytics tracking
+      function trackEvent(eventName, params = {}) {
+        if (window.gtag) {
+          gtag('event', eventName, params);
+        }
+        console.log('Track:', eventName, params);
+      }
+
+      // Track page view
+      trackEvent('ExploreTrips_View');
+
+      // Track card clicks
+      document.querySelectorAll('.trip-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const title = card.querySelector('.trip-card-title').textContent;
+          trackEvent('ItineraryCard_Click', { title: title });
+        });
+      });
+
+      // Parse URL params on load
+      function parseUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+
+        ['region', 'style', 'duration', 'bestFor', 'creator'].forEach(key => {
+          const value = params.get(key);
+          if (value) {
+            state.filters[key] = value;
+            const dropdown = document.querySelector(`.filter-dropdown[data-filter="${key}"]`);
+            if (dropdown) {
+              dropdown.querySelector('.filter-trigger').classList.add('active');
+            }
+            // Also select the mobile filter chip
+            const mobileChip = document.querySelector(`.filter-chip[data-filter="${key}"][data-value="${value}"]`);
+            if (mobileChip) {
+              mobileChip.classList.add('selected');
+            }
+          }
+        });
+
+        const search = params.get('q');
+        if (search) {
+          state.search = search;
+          searchInput.value = search;
+        }
+
+        const sort = params.get('sort');
+        if (sort) {
+          state.sort = sort;
+        }
+
+        updateSelectedChips();
+        applyFilters();
+      }
+
+      parseUrlParams();
+
+      // Keyboard navigation for filters
+      filterDropdowns.forEach(dropdown => {
+        const trigger = dropdown.querySelector('.filter-trigger, .sort-trigger');
+        const options = dropdown.querySelectorAll('.filter-option');
+
+        trigger.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            trigger.click();
+          }
+        });
+
+        options.forEach((option, index) => {
+          option.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown') {
+              e.preventDefault();
+              const next = options[index + 1] || options[0];
+              next.focus();
+            } else if (e.key === 'ArrowUp') {
+              e.preventDefault();
+              const prev = options[index - 1] || options[options.length - 1];
+              prev.focus();
+            } else if (e.key === 'Escape') {
+              dropdown.classList.remove('open');
+              trigger.focus();
+            }
+          });
+        });
+      });
+    })();
+  </script>
+
+  <script>
+    // Scroll animations
+    const animateOnScroll = () => {
+      const options = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, options);
+
+      document.querySelectorAll('.animate-on-scroll, .animate-stagger').forEach(el => {
+        observer.observe(el);
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', animateOnScroll);
+    } else {
+      animateOnScroll();
+    }
+  </script>
+</body>
+</html>

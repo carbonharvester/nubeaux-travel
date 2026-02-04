@@ -3,365 +3,377 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="Explore our curated destinations across Africa and beyond. Luxury travel experiences from creatives who've been there.">
+  <meta name="description" content="Explore travel destinations by region. Discover curated itineraries from creators who have personally taken these trips across Africa, Europe, Asia, and beyond.">
   <meta name="theme-color" content="#ffffff">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
   <title>Destinations | NUBEAUX Travel</title>
+
+  <link rel="canonical" href="https://www.nubeauxtravel.com/destinations/">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=22">
+  <link rel="stylesheet" href="../css/style.css?v=23">
 
   <style>
-    .page-hero-full {
-      position: relative;
-      margin-top: var(--header-height);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .page-hero-full .hero-bg {
-      position: absolute;
-      inset: 0;
-    }
-
-    .page-hero-full .hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .page-hero-full .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%);
-    }
-
-    .page-hero-full .hero-content {
-      position: relative;
-      z-index: 2;
+    /* Destinations Index Page */
+    .dest-hero {
+      padding: calc(var(--header-height) + var(--space-xl)) 0 var(--space-lg);
+      background: var(--color-white);
       text-align: center;
-      color: var(--color-white);
-      padding: var(--space-xl);
     }
 
-    .page-hero-full h1 {
-      color: var(--color-white);
+    .dest-hero h1 {
       margin-bottom: var(--space-sm);
     }
 
-    .page-hero-full p {
-      color: rgba(255,255,255,0.9);
-      max-width: 600px;
+    .dest-hero p {
+      font-size: 1.0625rem;
+      color: var(--color-text-light);
+      max-width: 400px;
       margin: 0 auto;
     }
 
-    .destinations-intro {
-      padding: var(--space-xl) 0;
-      text-align: center;
+    /* Regions Grid */
+    .regions-section {
+      padding: var(--space-lg) 0 var(--space-2xl);
+      background: var(--color-sand);
     }
 
-    .destinations-intro p {
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .region-section {
-      padding: var(--space-xl) 0;
-    }
-
-    .region-section.alt-bg {
-      background-color: var(--color-sage-light);
-    }
-
-    .region-header {
-      display: flex;
-      align-items: center;
-      gap: var(--space-md);
-      margin-bottom: var(--space-lg);
-    }
-
-    .region-header h2 {
-      font-size: 0.875rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      font-family: var(--font-sans);
-      font-weight: 500;
-    }
-
-    .region-header::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background-color: var(--color-light-grey);
-    }
-
-    /* Uniform Grid Layout */
-    .destinations-uniform-grid {
+    .regions-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: var(--space-md);
     }
 
-    .dest-card {
+    /* Region Card */
+    .region-card {
       position: relative;
-      aspect-ratio: 4/5;
+      display: block;
+      aspect-ratio: 16/10;
       overflow: hidden;
-      background-color: var(--color-light-grey);
+      background: var(--color-light-grey);
     }
 
-    .dest-card img {
+    .region-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform var(--transition-slow);
     }
 
-    .dest-card:hover img {
+    .region-card:hover img {
       transform: scale(1.05);
     }
 
-    .dest-card-overlay {
+    .region-card-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      align-items: flex-start;
-      padding: var(--space-md);
-      padding-bottom: var(--space-sm);
+      padding: var(--space-lg);
+      transition: background var(--transition-fast);
+    }
+
+    .region-card:hover .region-card-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0.05) 100%);
+    }
+
+    .region-card-content {
       color: var(--color-white);
-      transition: background var(--transition-medium);
     }
 
-    .dest-card:hover .dest-card-overlay {
-      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 60%);
+    .region-card h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      color: var(--color-white);
+      margin-bottom: var(--space-xs);
     }
 
-    .dest-card-overlay span {
-      font-size: 0.625rem;
-      letter-spacing: 0.15em;
+    .region-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: var(--space-xs);
-    }
-
-    .dest-card-overlay h3 {
-      font-size: 1.5rem;
       color: var(--color-white);
+      opacity: 0.9;
+      transition: opacity var(--transition-fast);
+    }
+
+    .region-card:hover .region-card-cta {
+      opacity: 1;
+    }
+
+    .region-card-cta svg {
+      width: 16px;
+      height: 16px;
+      transition: transform var(--transition-fast);
+    }
+
+    .region-card:hover .region-card-cta svg {
+      transform: translateX(4px);
+    }
+
+    /* Featured region (first card spans full width) */
+    .region-card.featured {
+      grid-column: 1 / -1;
+      aspect-ratio: 21/9;
+    }
+
+    .region-card.featured .region-card-overlay {
+      padding: var(--space-xl);
+    }
+
+    .region-card.featured h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    /* Trip count badge */
+    .region-trip-count {
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.8);
       margin-bottom: var(--space-xs);
     }
 
-    .dest-card-overlay p {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.85);
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all var(--transition-fast);
-      max-width: none;
+    /* Browse All Section */
+    .browse-all-section {
+      padding: var(--space-xl) 0;
+      text-align: center;
+      background: var(--color-white);
     }
 
-    .dest-card:hover .dest-card-overlay p {
+    .browse-all-section p {
+      margin-bottom: var(--space-md);
+      max-width: none;
+      color: var(--color-text-light);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dest-hero h1 {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .dest-hero p {
+      animation: fadeInUp 0.8s ease 0.1s forwards;
+      opacity: 0;
+    }
+
+    .animate-stagger .animate-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .animate-stagger.animated .animate-item {
       opacity: 1;
       transform: translateY(0);
     }
 
-    @media (max-width: 1024px) {
-      .destinations-uniform-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+    .animate-stagger.animated .animate-item:nth-child(1) { transition-delay: 0s; }
+    .animate-stagger.animated .animate-item:nth-child(2) { transition-delay: 0.1s; }
+    .animate-stagger.animated .animate-item:nth-child(3) { transition-delay: 0.15s; }
+    .animate-stagger.animated .animate-item:nth-child(4) { transition-delay: 0.2s; }
+    .animate-stagger.animated .animate-item:nth-child(5) { transition-delay: 0.25s; }
 
-    @media (max-width: 600px) {
-      .destinations-uniform-grid {
+    /* Responsive */
+    @media (max-width: 768px) {
+      .dest-hero {
+        padding: calc(var(--header-height) + var(--space-lg)) 0 var(--space-md);
+      }
+
+      .dest-hero h1 {
+        font-size: 2rem;
+      }
+
+      .regions-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-sm);
       }
 
-      .dest-card {
-        aspect-ratio: 3/4;
+      .region-card {
+        aspect-ratio: 16/9;
+      }
+
+      .region-card.featured {
+        aspect-ratio: 16/9;
+      }
+
+      .region-card-overlay {
+        padding: var(--space-md);
+      }
+
+      .region-card.featured .region-card-overlay {
+        padding: var(--space-md);
       }
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header class="header">
     <div class="header-inner">
-      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+      <a href="../trips/" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+
       <nav class="nav">
-        <a href="../destinations/">Destinations</a>
-        <a href="../itineraries/">Itineraries</a>
-        <a href="../stays/">Stays</a>
-        <a href="../journal/">Journal</a>
-        <a href="../about.html">About</a>
-        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+        <a href="../trips/">Explore trips</a>
+        <a href="./" class="nav-active">Destinations</a>
+        <a href="mailto:support@nubeauxtravel.com">Support</a>
       </nav>
-      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
+  <!-- Mobile Menu -->
   <div class="mobile-menu">
-    <a href="../destinations/">Destinations</a>
-    <a href="../itineraries/">Itineraries</a>
-    <a href="../stays/">Stays</a>
-        <a href="../journal/">Journal</a>
-    <a href="../about.html">About</a>
-    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+    <a href="../trips/">Explore trips</a>
+    <a href="./">Destinations</a>
+    <a href="mailto:support@nubeauxtravel.com">Support</a>
   </div>
 
-  <!-- Hero -->
-  <section class="page-hero-full">
-    <div class="hero-bg">
-      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Safari landscape">
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>Destinations</h1>
-      <p>Every place we recommend, we've experienced firsthand. Discover our curated selection across Africa and beyond.</p>
-    </div>
-  </section>
-
-  <!-- Intro -->
-  <section class="destinations-intro">
-    <div class="container">
-      <p class="text-large">
-        We don't recommend destinations we haven't experienced ourselves. Each location here has been personally vetted—and loved—by our creators.
-      </p>
-    </div>
-  </section>
-
-  <!-- Southern Africa -->
-  <section class="region-section">
-    <div class="container">
-      <div class="region-header">
-        <h2>Southern Africa</h2>
+  <main>
+    <!-- Hero -->
+    <section class="dest-hero">
+      <div class="container">
+        <h1>Destinations</h1>
+        <p>Explore trips by place. Curated by creators.</p>
       </div>
+    </section>
 
-      <div class="destinations-uniform-grid">
-        <a href="namibia.html" class="dest-card">
-          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_750,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Namibia">
-          <div class="dest-card-overlay">
-            <span>Safari & Desert</span>
-            <h3>Namibia</h3>
-          </div>
-        </a>
+    <!-- Regions Grid -->
+    <section class="regions-section">
+      <div class="container">
+        <div class="regions-grid animate-stagger" id="regionsGrid">
+          <!-- Africa (Featured) -->
+          <a href="africa/" class="region-card featured animate-item">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1400,h_600,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="African savanna with wildlife" loading="eager">
+            <div class="region-card-overlay">
+              <div class="region-card-content">
+                <span class="region-trip-count">6 trips available</span>
+                <h2>Africa</h2>
+                <span class="region-card-cta">
+                  Explore
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
 
-        <a href="south-africa.html" class="dest-card">
-          <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=600&h=750&fit=crop&q=80" alt="South Africa">
-          <div class="dest-card-overlay">
-            <span>Safari & City</span>
-            <h3>South Africa</h3>
-          </div>
-        </a>
+          <!-- Europe -->
+          <a href="europe/" class="region-card animate-item">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_700,h_440,q_auto,f_auto/v1769949659/dest_europe_mqvhzc.jpg" alt="European architecture and landscape" loading="lazy">
+            <div class="region-card-overlay">
+              <div class="region-card-content">
+                <span class="region-trip-count">Coming soon</span>
+                <h2>Europe</h2>
+                <span class="region-card-cta">
+                  Explore
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
 
-        <a href="mozambique.html" class="dest-card">
-          <img src="https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?w=600&h=750&fit=crop&q=80" alt="Mozambique">
-          <div class="dest-card-overlay">
-            <span>Beach & Island</span>
-            <h3>Mozambique</h3>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
+          <!-- Middle East -->
+          <a href="middle-east/" class="region-card animate-item">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_700,h_440,q_auto,f_auto/v1769949666/dest_middle_east_dtmnxk.jpg" alt="Middle Eastern architecture" loading="lazy">
+            <div class="region-card-overlay">
+              <div class="region-card-content">
+                <span class="region-trip-count">Coming soon</span>
+                <h2>Middle East</h2>
+                <span class="region-card-cta">
+                  Explore
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
 
-  <!-- East Africa -->
-  <section class="region-section alt-bg">
-    <div class="container">
-      <div class="region-header">
-        <h2>East Africa</h2>
-      </div>
+          <!-- Asia -->
+          <a href="asia/" class="region-card animate-item">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_700,h_440,q_auto,f_auto/v1769949653/dest_asia_qxyljw.jpg" alt="Asian temple and landscape" loading="lazy">
+            <div class="region-card-overlay">
+              <div class="region-card-content">
+                <span class="region-trip-count">Coming soon</span>
+                <h2>Asia</h2>
+                <span class="region-card-cta">
+                  Explore
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
 
-      <div class="destinations-uniform-grid">
-        <a href="kenya.html" class="dest-card">
-          <img src="https://images.unsplash.com/photo-1547970810-dc1eac37d174?w=600&h=750&fit=crop&q=80" alt="Kenya">
-          <div class="dest-card-overlay">
-            <span>Classic Safari</span>
-            <h3>Kenya</h3>
-          </div>
-        </a>
-
+          <!-- Americas -->
+          <a href="americas/" class="region-card animate-item">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_700,h_440,q_auto,f_auto/v1769949672/dest_aruba_jewcz4.jpg" alt="Caribbean beach and coastline" loading="lazy">
+            <div class="region-card-overlay">
+              <div class="region-card-content">
+                <span class="region-trip-count">Coming soon</span>
+                <h2>Americas</h2>
+                <span class="region-card-cta">
+                  Explore
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
         </div>
-    </div>
-  </section>
-
-  <!-- West Africa & Beyond -->
-  <section class="region-section">
-    <div class="container">
-      <div class="region-header">
-        <h2>West Africa</h2>
       </div>
+    </section>
 
-      <div class="destinations-uniform-grid">
-        <a href="senegal.html" class="dest-card">
-          <img src="https://images.unsplash.com/photo-1591122947157-26bad3a117d2?w=600&h=750&fit=crop&q=80" alt="Senegal">
-          <div class="dest-card-overlay">
-            <span>Culture & Coast</span>
-            <h3>Senegal</h3>
-          </div>
-        </a>
+    <!-- Browse All CTA -->
+    <section class="browse-all-section">
+      <div class="container">
+        <p>Looking for something specific?</p>
+        <a href="../trips/" class="btn btn-dark">Browse all trips</a>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- Custom Trip Request -->
-  <section class="section section-cream">
-    <div class="container" style="text-align: center;">
-      <h2>Somewhere else in mind?</h2>
-      <hr class="hr-accent centered">
-      <p style="max-width: 500px; margin: 0 auto var(--space-lg);">We can curate trips to destinations beyond our personal collection. Tell us where you want to go and we'll make it happen.</p>
-      <a href="../plan-your-trip.html" class="btn btn-primary">Request Custom Trip</a>
-    </div>
-  </section>
-
-  <!-- Creator Custom Itinerary -->
-  <section class="section" style="background-color: var(--color-sage-light);">
-    <div class="container" style="text-align: center;">
-      <span style="font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); display: block; margin-bottom: var(--space-sm);">Premium Service</span>
-      <h2>Travel Like Your Favorite Creator</h2>
-      <hr class="hr-accent centered">
-      <p style="max-width: 600px; margin: 0 auto var(--space-lg); color: var(--color-text-light);">
-        Want to experience a destination exactly how Nia or one of our other creators did? Request a custom itinerary crafted by the creator themselves—same stays, same experiences, same insider access. This is travel that goes beyond inspiration.
-      </p>
-      <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
-        <a href="../plan-your-trip.html" class="btn btn-primary">Request Creator Itinerary</a>
-        <a href="../creators/" class="btn btn-outline-dark">Meet Our Creators</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Quiz CTA -->
-  <section class="section" style="background-color: var(--color-warm-cream); text-align: center;">
-    <div class="container">
-      <h2>Not sure where to go?</h2>
-      <hr class="hr-accent centered">
-      <p style="max-width: 400px; margin: 0 auto var(--space-lg); color: var(--color-text-light);">Answer a few questions and we'll match you with your perfect destination.</p>
-      <a href="../quiz.html" class="btn btn-outline-dark">Take Our Quiz</a>
-    </div>
-  </section>
-
-    <footer class="footer">
+  <!-- Footer -->
+  <footer class="footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="../assets/logo.svg" alt="NUBEAUX" style="height: 20px; margin-bottom: var(--space-md);">
-          <p>Curated luxury travel experiences from creatives who've been there.</p>
+          <img src="../assets/logo.svg" alt="NUBEAUX">
+          <p>Curated luxury travel experiences from creatives who've been there. Authentic journeys across Africa and beyond.</p>
         </div>
 
         <div class="footer-col">
           <h4 class="footer-heading">Explore</h4>
           <div class="footer-links">
-            <a href="../destinations/">Destinations</a>
-            <a href="../itineraries/">Itineraries</a>
-            <a href="../stays/">Stays</a>
-            <a href="../journal/">Journal</a>
-            <a href="../creators/">Creators</a>
+            <a href="../trips/">Trips</a>
+            <a href="./">Destinations</a>
           </div>
         </div>
 
@@ -369,7 +381,7 @@
           <h4 class="footer-heading">Company</h4>
           <div class="footer-links">
             <a href="../about.html">About</a>
-            
+            <a href="mailto:support@nubeauxtravel.com">Support</a>
             <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
           </div>
         </div>
@@ -377,20 +389,67 @@
         <div class="footer-col">
           <h4 class="footer-heading">Connect</h4>
           <div class="footer-links">
-            <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
+            <a href="mailto:hello@nubeauxtravel.com">hello@nubeauxtravel.com</a>
             <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
+            <a href="https://tiktok.com/@nubeauxtravel" target="_blank">TikTok</a>
           </div>
         </div>
       </div>
 
       <div class="footer-bottom">
         <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
-        <p>A NUBEAUX Collective Company</p>
+        <p>A <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a> Company</p>
       </div>
     </div>
   </footer>
 
   <script src="../js/main.js?v=2"></script>
-<script src="../js/voice-agent.js?v=4"></script>
+  <script src="../js/voice-agent.js?v=4"></script>
+  <script>
+    // Analytics
+    function trackEvent(eventName, params = {}) {
+      if (window.gtag) {
+        gtag('event', eventName, params);
+      }
+      console.log('Track:', eventName, params);
+    }
+
+    trackEvent('Destinations_Index_View');
+
+    // Track region clicks
+    document.querySelectorAll('.region-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const region = card.querySelector('h2').textContent;
+        trackEvent('Region_Click', { region: region });
+      });
+    });
+
+    // Scroll animations
+    const animateOnScroll = () => {
+      const options = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, options);
+
+      document.querySelectorAll('.animate-stagger').forEach(el => {
+        observer.observe(el);
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', animateOnScroll);
+    } else {
+      animateOnScroll();
+    }
+  </script>
 </body>
 </html>

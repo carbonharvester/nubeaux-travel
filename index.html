@@ -17,6 +17,82 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css?v=22">
+
+  <style>
+    /* Scroll Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.animated {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .animate-stagger .animate-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .animate-stagger.animated .animate-item:nth-child(1) { transition-delay: 0s; }
+    .animate-stagger.animated .animate-item:nth-child(2) { transition-delay: 0.1s; }
+    .animate-stagger.animated .animate-item:nth-child(3) { transition-delay: 0.15s; }
+    .animate-stagger.animated .animate-item:nth-child(4) { transition-delay: 0.2s; }
+
+    .animate-stagger.animated .animate-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero entrance */
+    .hero-content h1 {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .hero-content .btn {
+      animation: fadeInUp 0.8s ease 0.2s forwards;
+      opacity: 0;
+    }
+
+    /* Card hover effects */
+    .itinerary-card-scroll {
+      transition: transform 0.3s ease;
+    }
+
+    .itinerary-card-scroll:hover {
+      transform: translateY(-4px);
+    }
+
+    .destination-card {
+      transition: transform 0.3s ease;
+    }
+
+    .destination-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature-strip-item {
+      transition: transform 0.3s ease;
+    }
+
+    .feature-strip-item:hover {
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -73,7 +149,7 @@
 
   <!-- Introduction -->
   <section class="section-large" style="background: #ffffff;">
-    <div class="container" style="text-align: center;">
+    <div class="container animate-on-scroll" style="text-align: center;">
       <p class="intro-statement">
         Every destination we recommend, our creators have experienced.<br>
         Every property we suggest, they've stayed at.<br>
@@ -85,7 +161,7 @@
   <!-- Curated Itineraries -->
   <section class="section-large itineraries-section">
     <div class="container">
-      <div class="section-header-left">
+      <div class="section-header-left animate-on-scroll">
         <h2>Creator Curated Itineraries</h2>
         <a href="itineraries/">View All</a>
       </div>
@@ -166,7 +242,7 @@
       <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto,a_hflip/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Luxury safari experience" style="object-position: 20% center;">
     </div>
     <div class="hero-overlay" style="background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 70%);"></div>
-    <div class="full-bleed-content">
+    <div class="full-bleed-content animate-on-scroll">
       <span class="text-xs" style="color: rgba(255,255,255,0.7); display: block; margin-bottom: var(--space-sm);">Featured Experience</span>
       <h2 style="color: var(--color-white); margin-bottom: var(--space-md);">Wilderness & Wonder</h2>
       <p style="color: rgba(255,255,255,0.9); margin-bottom: var(--space-lg);">Four days in Namibia's most exclusive camps. Wake to wildlife, dine under stars, experience Africa at its most intimate.</p>
@@ -177,7 +253,7 @@
   <!-- Featured Destinations -->
   <section class="section">
     <div class="container">
-      <div class="section-header-left">
+      <div class="section-header-left animate-on-scroll">
         <h2>Destinations</h2>
         <a href="destinations/">View All</a>
       </div>
@@ -233,27 +309,27 @@
   </section>
 
   <!-- Feature Strip -->
-  <section class="feature-strip">
-    <div class="feature-strip-item">
+  <section class="feature-strip animate-stagger">
+    <div class="feature-strip-item animate-item">
       <h4>Personal Curation</h4>
       <p>Every trip tailored to you</p>
     </div>
-    <div class="feature-strip-item">
+    <div class="feature-strip-item animate-item">
       <h4>First-Hand Experience</h4>
       <p>We've been everywhere we recommend</p>
     </div>
-    <div class="feature-strip-item">
+    <div class="feature-strip-item animate-item">
       <h4>24/7 Support</h4>
       <p>We're with you every step</p>
     </div>
-    <div class="feature-strip-item">
+    <div class="feature-strip-item animate-item">
       <h4>Best Rate Guarantee</h4>
       <p>Premium service, competitive pricing</p>
     </div>
   </section>
   <!-- Quote Section -->
   <section class="quote-section">
-    <div class="container">
+    <div class="container animate-on-scroll">
       <blockquote>
         "Travel should transform, not just transport. Every trip should return you changed for the better."
       </blockquote>
@@ -267,7 +343,7 @@
       <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Safari landscape">
     </div>
     <div class="cta-overlay"></div>
-    <div class="image-cta-content">
+    <div class="image-cta-content animate-on-scroll">
       <h2>Ready to plan your journey?</h2>
       <p>Tell us where you want to go. We'll craft an experience you'll never forget.</p>
       <a href="plan-your-trip.html" class="btn btn-primary">Start Planning</a>
@@ -320,6 +396,34 @@
   </footer>
 
   <script src="js/main.js?v=2"></script>
-<script src="js/voice-agent.js?v=4"></script>
+  <script src="js/creator-chat.js?v=1"></script>
+<script>
+  // Scroll animations
+  const animateOnScroll = () => {
+    const options = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animated');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    document.querySelectorAll('.animate-on-scroll, .animate-stagger').forEach(el => {
+      observer.observe(el);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', animateOnScroll);
+  } else {
+    animateOnScroll();
+  }
+</script>
 </body>
 </html>

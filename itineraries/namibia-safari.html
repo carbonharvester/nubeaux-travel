@@ -2,648 +2,1680 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="3-day Namibia safari itinerary. Etosha wildlife and Onguma luxury lodges. Curated by NUBEAUX Travel.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Wilderness & Wonder: A 3-night Namibia safari curated by Nia The Light. Etosha wildlife and Onguma luxury lodges. Book or customise this trip.">
+  <meta name="theme-color" content="#ffffff">
 
-  <title>Namibia Safari | NUBEAUX Travel</title>
+  <title>Wilderness & Wonder | Namibia Safari | NUBEAUX Travel</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css?v=22">
+  <link rel="stylesheet" href="../css/style.css?v=23">
 
   <style>
-    .itin-hero { position: relative; margin-top: var(--header-height); display: flex; align-items: flex-end; overflow: hidden; }
-    .itin-hero-bg { position: absolute; inset: 0; z-index: 1; }
-    .itin-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
-    .itin-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%); z-index: 2; }
-    .itin-hero-content { position: relative; z-index: 3; padding: var(--space-xl) var(--space-md); color: var(--color-white); width: 100%; }
-    .itin-hero-content .container { max-width: 800px; margin: 0; }
-    .itin-label { font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
-    .itin-hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: var(--space-md); color: var(--color-white); }
-    .itin-hero-meta { display: flex; gap: var(--space-lg); font-size: 1rem; opacity: 0.9; }
-    .itin-content { padding: var(--space-xl) 0; }
-    .itin-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-xl); overflow: hidden; }
-    .itin-main { overflow: hidden; }
-    .itin-main h2 { margin-bottom: var(--space-md); }
-    .itin-main p { color: var(--color-text-light); line-height: 1.8; margin-bottom: var(--space-md); }
-    .day-block { margin-bottom: var(--space-lg); padding-bottom: var(--space-lg); border-bottom: 1px solid var(--color-light-grey); }
-    .day-block:last-child { border-bottom: none; }
-    .day-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-xs); }
-    .day-title { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: var(--space-sm); }
-    .day-content { color: var(--color-text-light); line-height: 1.8; }
-    .itin-sidebar { background-color: var(--color-sand); padding: var(--space-lg); height: fit-content; position: sticky; top: calc(var(--header-height) + var(--space-md)); }
-    .sidebar-section { margin-bottom: var(--space-lg); }
-    .sidebar-section:last-child { margin-bottom: 0; }
-    .sidebar-title { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
-    .sidebar-content { font-size: 0.9375rem; color: var(--color-text); }
-    .creator-badge { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-md); background: var(--color-sage-light); margin-bottom: var(--space-lg); }
-    .creator-badge img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
-    .creator-badge-content span { display: block; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
-    .creator-badge-content strong { font-family: var(--font-serif); font-weight: 400; }
-    .book-cta { background: var(--color-accent); color: var(--color-white); padding: var(--space-md); text-align: center; }
-    .book-cta h3 { font-size: 1.25rem; margin-bottom: var(--space-sm); color: var(--color-white); }
-    .book-cta p { font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md); color: var(--color-white); }
-    .book-cta .btn { background: var(--color-white); color: var(--color-accent); width: 100%; }
-    /* Must-Do Sidebar Styles */
-    .must-do-sidebar { display: flex; flex-direction: column; gap: var(--space-sm); }
-    .must-do-item-sidebar { display: flex; gap: var(--space-sm); align-items: flex-start; }
-    .must-do-num { font-size: 0.875rem; font-weight: 500; color: var(--color-accent); min-width: 1.5rem; }
-    .must-do-item-sidebar strong { display: block; font-size: 0.875rem; margin-bottom: 0.125rem; }
-    .must-do-item-sidebar span { font-size: 0.75rem; color: var(--color-text-light); }
+    /* Itinerary Page Styles */
+
+    /* Hero */
+    .itin-hero {
+      position: relative;
+      min-height: 85vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .itin-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .itin-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .itin-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.2) 100%);
+      z-index: 2;
+    }
+
+    .itin-hero-content {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      padding: var(--space-2xl) var(--space-md);
+      color: var(--color-white);
+    }
+
+    .itin-hero-inner {
+      max-width: 700px;
+    }
+
+    .itin-hero-creator {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .itin-hero-creator img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.5);
+    }
+
+    .itin-hero-creator span {
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+    }
+
+    .itin-hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--color-white);
+      margin-bottom: var(--space-sm);
+      line-height: 1.1;
+    }
+
+    .itin-hero-location {
+      font-size: 1.125rem;
+      color: #ffffff;
+      margin-bottom: var(--space-md);
+    }
+
+    .itin-hero-subtitle {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ffffff;
+      max-width: 500px;
+      margin-bottom: var(--space-lg);
+    }
+
+    .itin-hero-actions {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .itin-hero-actions .btn-primary {
+      background: var(--color-white);
+      color: var(--color-text);
+    }
+
+    .itin-hero-actions .btn-primary:hover {
+      background: var(--color-cream);
+    }
+
+    .itin-hero-actions .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.6);
+      color: var(--color-white);
+    }
+
+    .itin-hero-actions .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--color-white);
+    }
+
+    /* Snapshot Bar */
+    .snapshot-bar {
+      background: var(--color-sand);
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .snapshot-grid {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-xl);
+      flex-wrap: wrap;
+    }
+
+    .snapshot-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      text-align: left;
+    }
+
+    .snapshot-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-white);
+      border-radius: 50%;
+    }
+
+    .snapshot-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-accent);
+    }
+
+    .snapshot-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-medium-grey);
+      display: block;
+    }
+
+    .snapshot-value {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    /* Gallery Link */
+    .gallery-trigger {
+      position: absolute;
+      bottom: var(--space-lg);
+      right: var(--space-lg);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 0.75rem 1.25rem;
+      background: rgba(255,255,255,0.95);
+      color: var(--color-text);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border: none;
+      transition: all var(--transition-fast);
+    }
+
+    .gallery-trigger:hover {
+      background: var(--color-white);
+      transform: translateY(-2px);
+    }
+
+    .gallery-trigger svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Main Content Layout */
+    .itin-content {
+      padding: var(--space-xl) 0;
+    }
+
+    .itin-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: var(--space-xl);
+    }
+
+    .itin-main {
+      min-width: 0;
+    }
+
+    /* Creator Voice */
+    .creator-voice {
+      background: var(--color-sage-light);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+
+    .creator-voice-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .creator-voice-header img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .creator-voice-header .name {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+    }
+
+    .creator-voice-header .label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .creator-voice blockquote {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    /* Section Titles */
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    /* Itinerary Accordion */
+    .itinerary-accordion {
+      margin-bottom: var(--space-xl);
+    }
+
+    .accordion-item {
+      border: 1px solid var(--color-light-grey);
+      margin-bottom: -1px;
+    }
+
+    .accordion-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-white);
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background var(--transition-fast);
+    }
+
+    .accordion-header:hover {
+      background: var(--color-cream);
+    }
+
+    .accordion-header-content {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .accordion-days {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      min-width: 80px;
+    }
+
+    .accordion-title {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+    }
+
+    .accordion-location {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    .accordion-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--color-text-light);
+      transition: transform var(--transition-fast);
+    }
+
+    .accordion-item.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-panel {
+      display: none;
+      padding: var(--space-lg);
+      background: var(--color-off-white);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .accordion-item.active .accordion-panel {
+      display: block;
+    }
+
+    .accordion-panel p {
+      line-height: 1.8;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-md);
+    }
+
+    .accordion-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-top: var(--space-md);
+    }
+
+    .highlight-tag {
+      font-size: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      color: var(--color-text);
+    }
+
+    .accordion-stay-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-top: var(--space-md);
+      font-size: 0.8125rem;
+      color: var(--color-accent);
+      font-weight: 500;
+    }
+
+    .accordion-stay-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Stays Section */
+    .stays-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .stays-grid {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .stay-card {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      overflow: hidden;
+      transition: box-shadow var(--transition-fast);
+    }
+
+    .stay-card:hover {
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .stay-card-image {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .stay-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .stay-card:hover .stay-card-image img {
+      transform: scale(1.05);
+    }
+
+    .stay-card-content {
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .stay-card-name {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .stay-card-location {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .stay-card-description {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      line-height: 1.6;
+      margin-bottom: var(--space-sm);
+    }
+
+    .stay-card-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      font-size: 0.8125rem;
+      flex-wrap: wrap;
+    }
+
+    .stay-nights {
+      color: var(--color-text);
+    }
+
+    .stay-price-band {
+      color: var(--color-accent);
+      font-weight: 500;
+    }
+
+    .stay-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.6875rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .stay-status.equivalent {
+      background: #fff3e0;
+      color: #e65100;
+    }
+
+    /* Included Section */
+    .included-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .included-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    .included-column h4 {
+      font-size: 0.8125rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text);
+      margin-bottom: var(--space-md);
+    }
+
+    .included-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .included-column li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      font-size: 0.9375rem;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-sm);
+      line-height: 1.5;
+    }
+
+    .included-column li svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .included-column.included li svg {
+      color: #2e7d32;
+    }
+
+    .included-column.not-included li svg {
+      color: var(--color-medium-grey);
+    }
+
+    /* Customise Section */
+    .customise-section {
+      background: var(--color-warm-cream);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .customise-section h3 {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .customise-section > p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+    }
+
+    .customise-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .customise-option {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 0.9375rem;
+    }
+
+    .customise-option svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-accent);
+    }
+
+    .customise-reassurance {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      margin-top: var(--space-md);
+    }
+
+    /* How Booking Works */
+    .booking-steps-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .booking-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .booking-step {
+      text-align: center;
+    }
+
+    .booking-step-number {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-md);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--color-white);
+      background: var(--color-accent);
+      border-radius: 50%;
+    }
+
+    .booking-step h4 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .booking-step p {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+    }
+
+    /* Sidebar */
+    .itin-sidebar {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-md));
+      height: fit-content;
+    }
+
+    .sidebar-cta {
+      background: var(--color-accent);
+      color: var(--color-white);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-md);
+    }
+
+    .sidebar-cta h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--color-white);
+      margin-bottom: var(--space-sm);
+    }
+
+    .sidebar-cta .price {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 400;
+      color: var(--color-white);
+      margin-bottom: var(--space-xs);
+    }
+
+    .sidebar-cta .price-note {
+      font-size: 0.8125rem;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: var(--space-lg);
+    }
+
+    .sidebar-cta .btn {
+      width: 100%;
+      background: var(--color-white);
+      color: var(--color-text);
+      margin-bottom: var(--space-sm);
+    }
+
+    .sidebar-cta .btn:hover {
+      background: var(--color-cream);
+    }
+
+    .sidebar-cta .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      color: var(--color-white);
+    }
+
+    .sidebar-cta .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--color-white);
+    }
+
+    .sidebar-cta .reassurance {
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: var(--space-sm);
+    }
+
+    .sidebar-cta-meta {
+      padding: var(--space-sm) 0;
+      margin-bottom: var(--space-md);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar-cta-meta p {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0;
+    }
+
+    .sidebar-cta-meta p + p {
+      margin-top: 0.25rem;
+    }
+
+    .sidebar-cta-meta strong {
+      color: var(--color-white);
+    }
+
+    .sidebar-info {
+      background: var(--color-sand);
+      padding: var(--space-lg);
+    }
+
+    .sidebar-info-item {
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .sidebar-info-item:last-child {
+      border-bottom: none;
+    }
+
+    .sidebar-info-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+    }
+
+    .sidebar-info-value {
+      font-size: 0.9375rem;
+      color: var(--color-text);
+    }
+
+    /* Final CTA */
+    .final-cta {
+      background: var(--color-warm-cream);
+      padding: var(--space-2xl) 0;
+      text-align: center;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .final-cta p {
+      font-size: 1rem;
+      color: var(--color-text-light);
+      max-width: 500px;
+      margin: 0 auto var(--space-lg);
+    }
+
+    .final-cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .final-cta .reassurance {
+      font-size: 0.8125rem;
+      color: var(--color-medium-grey);
+    }
+
+    /* Gallery Modal */
+    .gallery-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-modal.active {
+      display: flex;
+    }
+
+    .gallery-close {
+      position: absolute;
+      top: var(--space-lg);
+      right: var(--space-lg);
+      width: 48px;
+      height: 48px;
+      background: none;
+      border: none;
+      color: var(--color-white);
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .gallery-container {
+      width: 100%;
+      max-width: 1000px;
+      padding: var(--space-lg);
+    }
+
+    .gallery-main-image {
+      width: 100%;
+      aspect-ratio: 16/10;
+      margin-bottom: var(--space-md);
+    }
+
+    .gallery-main-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .gallery-thumbs {
+      display: flex;
+      gap: var(--space-xs);
+      overflow-x: auto;
+      padding-bottom: var(--space-sm);
+    }
+
+    .gallery-thumb {
+      width: 80px;
+      height: 60px;
+      flex-shrink: 0;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity var(--transition-fast);
+    }
+
+    .gallery-thumb.active,
+    .gallery-thumb:hover {
+      opacity: 1;
+    }
+
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Gallery Navigation Arrows */
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      color: var(--color-white);
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition-fast);
+      z-index: 10;
+    }
+
+    .gallery-nav:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .gallery-nav-prev {
+      left: var(--space-lg);
+    }
+
+    .gallery-nav-next {
+      right: var(--space-lg);
+    }
 
     @media (max-width: 768px) {
-      .itin-grid { grid-template-columns: 1fr; }
-      .itin-sidebar { position: static; }
-      .itin-hero-meta { display: none; }
-      .itin-hero h1 { margin-bottom: var(--space-xs); }
+      .gallery-nav {
+        width: 40px;
+        height: 40px;
+      }
+
+      .gallery-nav-prev {
+        left: var(--space-sm);
+      }
+
+      .gallery-nav-next {
+        right: var(--space-sm);
+      }
+    }
+
+    /* Mobile Sticky CTA */
+    .mobile-sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--color-white);
+      padding: var(--space-sm) var(--space-md);
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .mobile-sticky-cta .btn {
+      width: 100%;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .itin-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .itin-sidebar {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+      }
+
+      .stay-card {
+        grid-template-columns: 220px 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .itin-hero {
+        min-height: 70vh;
+      }
+
+      .snapshot-grid {
+        gap: var(--space-md);
+      }
+
+      .snapshot-item {
+        flex: 1 1 45%;
+      }
+
+      .gallery-trigger {
+        bottom: var(--space-md);
+        right: var(--space-md);
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+      }
+
+      .itin-sidebar {
+        grid-template-columns: 1fr;
+      }
+
+      .included-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .customise-options {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-steps {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+      }
+
+      .stay-card {
+        grid-template-columns: 1fr;
+      }
+
+      .stay-card-image {
+        aspect-ratio: 16/9;
+      }
+
+      .mobile-sticky-cta {
+        display: block;
+      }
+
+      .mobile-sticky-cta.hidden {
+        display: none;
+      }
+
+      /* Hide desktop CTA button on mobile when sticky is visible */
+      .sidebar-cta {
+        display: none;
+      }
+    }
+
+    /* Minimal footer for itinerary */
+    .itin-footer {
+      padding: var(--space-lg) 0;
+      background: var(--color-white);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .itin-footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .itin-footer-links {
+      display: flex;
+      gap: var(--space-lg);
+    }
+
+    .itin-footer-links a {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    .itin-footer-links a:hover {
+      color: var(--color-text);
+    }
+
+    .itin-footer-copyright {
+      font-size: 0.8125rem;
+      color: var(--color-medium-grey);
+    }
+
+    @media (max-width: 768px) {
+      .itin-footer .container {
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+      }
+
+      .itin-footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Minimal Header -->
   <header class="header">
     <div class="header-inner">
-      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+      <a href="../trips/" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
       <nav class="nav">
+        <a href="../trips/">Explore trips</a>
         <a href="../destinations/">Destinations</a>
-        <a href="../itineraries/">Itineraries</a>
-        <a href="../stays/">Stays</a>
-        <a href="../journal/">Journal</a>
-        <a href="../about.html">About</a>
-        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+        <a href="mailto:support@nubeauxtravel.com">Support</a>
       </nav>
-      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
   <div class="mobile-menu">
+    <a href="../trips/">Explore trips</a>
     <a href="../destinations/">Destinations</a>
-    <a href="../itineraries/">Itineraries</a>
-    <a href="../stays/">Stays</a>
-        <a href="../journal/">Journal</a>
-    <a href="../about.html">About</a>
-    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+    <a href="mailto:support@nubeauxtravel.com">Support</a>
   </div>
 
-  <section class="itin-hero">
-    <div class="itin-hero-bg">
-      <picture>
-        <source media="(max-width: 768px)" srcset="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_800,h_1200,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg">
-        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Namibia Safari">
-      </picture>
-    </div>
-    <div class="itin-hero-overlay"></div>
-    <div class="itin-hero-content">
+  <main>
+    <!-- Hero -->
+    <section class="itin-hero">
+      <div class="itin-hero-bg">
+        <picture>
+          <source media="(max-width: 768px)" srcset="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_800,h_1200,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Namibia Safari at Onguma">
+        </picture>
+      </div>
+      <div class="itin-hero-overlay"></div>
+
+      <div class="itin-hero-content">
+        <div class="container">
+          <div class="itin-hero-inner">
+            <a href="../nia-the-light.html" class="itin-hero-creator">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_80,h_80,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
+              <span>Curated by Nia The Light</span>
+            </a>
+
+            <h1>Wilderness & Wonder</h1>
+            <p class="itin-hero-location">Onguma Game Reserve, Namibia</p>
+            <p class="itin-hero-subtitle">A 3-night journey into Namibia's wild heart. Drive through vast landscapes, stay at Onguma's luxury camps, and experience Etosha's incredible wildlife.</p>
+
+            <div class="itin-hero-actions">
+              <button type="button" class="btn btn-primary open-concierge">Book or customise</button>
+              <a href="mailto:hello@nubeauxtravel.com?subject=Question about Namibia Safari" class="btn btn-secondary">Ask a question</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="gallery-trigger" id="galleryTrigger">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+        </svg>
+        View gallery
+      </button>
+    </section>
+
+    <!-- Snapshot Bar -->
+    <section class="snapshot-bar">
       <div class="container">
-        <span class="itin-label">Onguma, Namibia</span>
-        <h1>Wilderness & Wonder</h1>
-      </div>
-    </div>
-  </section>
+        <div class="snapshot-grid">
+          <div class="snapshot-item">
+            <div class="snapshot-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+              </svg>
+            </div>
+            <div>
+              <span class="snapshot-label">Duration</span>
+              <span class="snapshot-value">3 nights</span>
+            </div>
+          </div>
 
-  <section class="itin-content">
+          <div class="snapshot-item">
+            <div class="snapshot-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+              </svg>
+            </div>
+            <div>
+              <span class="snapshot-label">Style</span>
+              <span class="snapshot-value">Safari & Wellness</span>
+            </div>
+          </div>
+
+          <div class="snapshot-item">
+            <div class="snapshot-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <span class="snapshot-label">From</span>
+              <span class="snapshot-value">$4,200 per person</span>
+            </div>
+          </div>
+
+          <div class="snapshot-item">
+            <div class="snapshot-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+              </svg>
+            </div>
+            <div>
+              <span class="snapshot-label">Best for</span>
+              <span class="snapshot-value">Couples, Solo, First Safari</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="itin-content">
+      <div class="container">
+        <div class="itin-grid">
+          <div class="itin-main">
+            <!-- Creator Voice -->
+            <div class="creator-voice">
+              <div class="creator-voice-header">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_112,h_112,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
+                <div>
+                  <span class="label">Why I curated this</span>
+                  <p class="name">Nia The Light</p>
+                </div>
+              </div>
+              <blockquote>
+                "Onguma was my introduction to safari and it changed everything. The lodges are design-forward without sacrificing soul. The wildlife is abundant but never crowded. I wanted to create something for travellers who want safari done right: intimate, immersive, unforgettable. This itinerary is exactly what I wish someone had handed me."
+              </blockquote>
+            </div>
+
+            <!-- The Itinerary -->
+            <div class="itinerary-accordion">
+              <h2 class="section-title">The Itinerary</h2>
+
+              <div class="accordion-item active">
+                <button class="accordion-header" aria-expanded="true">
+                  <div class="accordion-header-content">
+                    <span class="accordion-days">Day 1</span>
+                    <div>
+                      <h3 class="accordion-title">The Road to Onguma</h3>
+                      <span class="accordion-location">Windhoek to Onguma Game Reserve</span>
+                    </div>
+                  </div>
+                  <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </button>
+                <div class="accordion-panel">
+                  <p>I landed in Windhoek and picked up my rental car for the 6.5 hour drive north to Onguma. The road itself became part of the experience. Stopping at roadside stalls, watching the landscape shift from bushveld to open savanna. By the time I reached Onguma, the light was golden.</p>
+                  <p>I checked into Camp Kala, an intimate tented camp overlooking Fisher's Pan. That first evening, I just sat on my deck watching elephants gather at the waterhole as the sun set. No game drive needed. The wildlife came to me.</p>
+                  <div class="accordion-highlights">
+                    <span class="highlight-tag">Road trip from Windhoek</span>
+                    <span class="highlight-tag">Scenic drive</span>
+                    <span class="highlight-tag">Waterhole sundowners</span>
+                  </div>
+                  <a href="../stays/onguma-camp-kala.html" class="accordion-stay-link">
+                    View Camp Kala →
+                  </a>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false">
+                  <div class="accordion-header-content">
+                    <span class="accordion-days">Day 2</span>
+                    <div>
+                      <h3 class="accordion-title">Into Etosha</h3>
+                      <span class="accordion-location">Etosha National Park</span>
+                    </div>
+                  </div>
+                  <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </button>
+                <div class="accordion-panel">
+                  <p>I woke before dawn for my first proper game drive into Etosha. The guides knew exactly where to find the animals. Within the first hour, I'd seen a pride of lions lazing in the morning light and a tower of giraffes crossing the salt pan.</p>
+                  <p>The afternoon drive took me deeper into the park. Zebra, oryx, springbok everywhere. I ended the day with a night drive on Onguma's private reserve, spotting species I'd never see by day. Dinner was under the stars, surrounded by the sounds of the bush.</p>
+                  <div class="accordion-highlights">
+                    <span class="highlight-tag">Sunrise game drive</span>
+                    <span class="highlight-tag">Big Five sightings</span>
+                    <span class="highlight-tag">Salt pan landscapes</span>
+                    <span class="highlight-tag">Night safari</span>
+                  </div>
+                  <a href="../stays/onguma-camp-kala.html" class="accordion-stay-link">
+                    View Camp Kala →
+                  </a>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false">
+                  <div class="accordion-header-content">
+                    <span class="accordion-days">Day 3</span>
+                    <div>
+                      <h3 class="accordion-title">The Fort</h3>
+                      <span class="accordion-location">Onguma Game Reserve</span>
+                    </div>
+                  </div>
+                  <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </button>
+                <div class="accordion-panel">
+                  <p>I moved to Onguma The Fort for my last night. This place is special. It's built directly over a waterhole, so I spent hours just watching from my balcony as elephants, zebra, and antelope came to drink. No need to go anywhere.</p>
+                  <p>I did one last game drive into Etosha in the afternoon, then came back for sundowners on the viewing deck. Watching the waterhole come alive at dusk, with a drink in hand, was the perfect way to end this trip.</p>
+                  <div class="accordion-highlights">
+                    <span class="highlight-tag">Waterhole lodge</span>
+                    <span class="highlight-tag">Wildlife from your room</span>
+                    <span class="highlight-tag">Sunset deck</span>
+                  </div>
+                  <a href="../stays/onguma-the-fort.html" class="accordion-stay-link">
+                    View The Fort →
+                  </a>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <button class="accordion-header" aria-expanded="false">
+                  <div class="accordion-header-content">
+                    <span class="accordion-days">Day 4</span>
+                    <div>
+                      <h3 class="accordion-title">Departure</h3>
+                      <span class="accordion-location">Onguma to onward journey</span>
+                    </div>
+                  </div>
+                  <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </button>
+                <div class="accordion-panel">
+                  <p>I took one final morning walk around the reserve before brunch at the lodge. The drive back to Windhoek gave me time to process everything I'd seen. Three nights felt like the perfect amount of time to disconnect and really experience this place.</p>
+                  <div class="accordion-highlights">
+                    <span class="highlight-tag">Morning walk</span>
+                    <span class="highlight-tag">Brunch</span>
+                    <span class="highlight-tag">Return drive</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stays Section -->
+            <div class="stays-section">
+              <h2 class="section-title">Where You Stay</h2>
+
+              <div class="stays-grid">
+                <div class="stay-card">
+                  <div class="stay-card-image">
+                    <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_300,q_auto,f_auto/v1769942667/Namibia_camp_kala_Klein-168_atshty.jpg" alt="Onguma Camp Kala">
+                  </div>
+                  <div class="stay-card-content">
+                    <h3 class="stay-card-name">Onguma Camp Kala</h3>
+                    <p class="stay-card-location">Onguma Game Reserve, Namibia</p>
+                    <div class="stay-card-meta">
+                      <span class="stay-nights">4 nights</span>
+                      <span class="stay-price-band">$$$$</span>
+                      <span class="stay-status">Bookable</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="stay-card">
+                  <div class="stay-card-image">
+                    <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_300,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-20_yzncpj.jpg" alt="Onguma The Fort">
+                  </div>
+                  <div class="stay-card-content">
+                    <h3 class="stay-card-name">Onguma The Fort</h3>
+                    <p class="stay-card-location">Onguma Game Reserve, Namibia</p>
+                    <div class="stay-card-meta">
+                      <span class="stay-nights">3 nights</span>
+                      <span class="stay-price-band">$$$$</span>
+                      <span class="stay-status">Bookable</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- What's Included -->
+            <div class="included-section">
+              <h2 class="section-title">What's Included</h2>
+
+              <div class="included-grid">
+                <div class="included-column included">
+                  <h4>Included</h4>
+                  <ul>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                      3 nights accommodation (full board)
+                    </li>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                      All meals and house beverages
+                    </li>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                      Twice-daily game drives
+                    </li>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                      Night drives on private reserve
+                    </li>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                      Park fees and conservation levies
+                    </li>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                      Internal transfers as per itinerary
+                    </li>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                      24/7 travel support
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="included-column not-included">
+                  <h4>Not Included</h4>
+                  <ul>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      International flights
+                    </li>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      Travel insurance
+                    </li>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      Premium wines and spirits
+                    </li>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      Gratuities
+                    </li>
+                    <li>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      Visa fees (if applicable)
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customise Section -->
+            <div class="customise-section">
+              <h3>Make It Yours</h3>
+              <p>This itinerary is a starting point. Want to extend your stay, add destinations, or adjust the pace? We'll tailor it to you.</p>
+
+              <button type="button" class="btn btn-primary open-concierge">Customise this itinerary</button>
+            </div>
+
+            <!-- How Booking Works -->
+            <div class="booking-steps-section">
+              <h2 class="section-title">How Booking Works</h2>
+
+              <div class="booking-steps">
+                <div class="booking-step">
+                  <div class="booking-step-number">1</div>
+                  <h4>Tell us what you want</h4>
+                  <p>Keep the itinerary as-is or let us know what to change.</p>
+                </div>
+                <div class="booking-step">
+                  <div class="booking-step-number">2</div>
+                  <h4>Receive your proposal</h4>
+                  <p>We send a tailored quote with confirmed availability.</p>
+                </div>
+                <div class="booking-step">
+                  <div class="booking-step-number">3</div>
+                  <h4>Confirm and travel</h4>
+                  <p>Book when ready. We support you before, during, and after.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <aside class="itin-sidebar">
+            <div class="sidebar-cta" id="book">
+              <h3>Book This Trip</h3>
+              <p class="price">From $1,400</p>
+              <p class="price-note">per person per night</p>
+
+              <div class="sidebar-cta-meta">
+                <p><strong>3 nights / 4 days</strong></p>
+                <p>Best time: May to October</p>
+              </div>
+
+              <button type="button" class="btn open-concierge">Book or customise</button>
+              <a href="mailto:hello@nubeauxtravel.com?subject=Question about Namibia Safari" class="btn btn-secondary">Ask a question</a>
+
+              <p class="reassurance">No obligation until final confirmation</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+      <div class="container">
+        <h2>Ready to travel this route?</h2>
+        <p>Book as Nia experienced it, or customise to make it yours. We handle everything.</p>
+        <div class="final-cta-buttons">
+          <button type="button" class="btn btn-primary open-concierge">Book or customise</button>
+          <a href="mailto:hello@nubeauxtravel.com?subject=Question about Namibia Safari" class="btn btn-outline-dark">Ask a question</a>
+        </div>
+        <p class="reassurance">No obligation until final confirmation</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile Sticky CTA -->
+  <div class="mobile-sticky-cta" id="mobileCta">
+    <button type="button" class="btn btn-primary open-concierge">Book or customise</button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="itin-footer">
     <div class="container">
-      <div class="itin-grid">
-        <div class="itin-main">
-          <button class="creator-badge-btn" data-creator="nia">
-            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_96,h_96,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
-            <div class="creator-badge-content">
-              <span>Curated by</span>
-              <strong>Nia The Light</strong>
-            </div>
-            <span class="creator-badge-arrow">→</span>
-          </button>
-
-          <h2>The Journey</h2>
-          <p>This is my favorite introduction to safari in Southern Africa. Onguma Game Reserve borders Etosha National Park, giving you the best of both worlds—world-class game viewing and design-forward lodges that feel like home.</p>
-
-          <p>I designed this itinerary for anyone who wants safari done right: intimate, immersive, and unforgettable. Whether you're adding it to a longer journey or making it your main event, these three days will change how you see the world.</p>
-
-          <!-- Stories Row -->
-          <div class="itin-stories">
-            <div class="story-item">
-              <div class="story-ring">
-                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_100,h_100,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Day 1">
-              </div>
-              <span class="story-label">Day 1</span>
-            </div>
-            <div class="story-item">
-              <div class="story-ring">
-                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_100,h_100,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-68_qx6dih.jpg" alt="Day 2">
-              </div>
-              <span class="story-label">Day 2</span>
-            </div>
-            <div class="story-item">
-              <div class="story-ring">
-                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_100,h_100,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-90_fk3jqt.jpg" alt="Day 3">
-              </div>
-              <span class="story-label">Day 3</span>
-            </div>
-          </div>
-
-          <!-- Day 1 - IG Carousel -->
-          <div class="ig-carousel" data-day="1">
-            <div class="ig-carousel-header">
-              <div class="ig-carousel-avatar">
-                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
-              </div>
-              <div class="ig-carousel-user">
-                <strong>niathelight</strong>
-                <span>Onguma, Namibia</span>
-              </div>
-            </div>
-
-            <div class="ig-carousel-images" id="carousel1">
-              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Arrival"></div>
-              <div class="ig-carousel-slide"><video src="https://res.cloudinary.com/dng12bd0a/video/upload/c_fill,w_600,h_600,q_auto/v1770034281/WhatsApp_Video_2026-02-02_at_15.44.05_cjzpgc.mp4" playsinline muted loop></video></div>
-              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-45_gajcov.jpg" alt="Lodge"></div>
-              <div class="ig-carousel-slide"><video src="https://res.cloudinary.com/dng12bd0a/video/upload/c_fill,w_600,h_600,q_auto/v1770034268/WhatsApp_Video_2026-02-02_at_15.43.49_ajy76r.mp4" playsinline muted loop></video></div>
-              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-59_lrkzsp.jpg" alt="Sundowners"></div>
-              <div class="ig-carousel-slide"><video src="https://res.cloudinary.com/dng12bd0a/video/upload/c_fill,w_600,h_600,q_auto/v1770034262/WhatsApp_Video_2026-02-02_at_15.43.46_ac5tyx.mp4" playsinline muted loop></video></div>
-              <div class="ig-carousel-slide"><video src="https://res.cloudinary.com/dng12bd0a/video/upload/c_fill,w_600,h_600,q_auto/v1770034261/WhatsApp_Video_2026-02-02_at_15.43.51_xhfkvq.mp4" playsinline muted loop></video></div>
-            </div>
-
-            <div class="ig-carousel-dots" id="dots1">
-              <span class="ig-carousel-dot active"></span>
-              <span class="ig-carousel-dot"></span>
-              <span class="ig-carousel-dot"></span>
-              <span class="ig-carousel-dot"></span>
-              <span class="ig-carousel-dot"></span>
-              <span class="ig-carousel-dot"></span>
-              <span class="ig-carousel-dot"></span>
-            </div>
-
-            <div class="ig-actions">
-              <button class="ig-action-btn like-btn" aria-label="Like">
-                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-              </button>
-              <button class="ig-action-btn comment-btn" aria-label="Comment">
-                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-              </button>
-              <button class="ig-action-btn share-btn" aria-label="Share">
-                <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
-              </button>
-              <button class="ig-action-btn save-btn" aria-label="Save">
-                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-              </button>
-            </div>
-
-            <div class="ig-likes">247 likes</div>
-
-            <div class="ig-caption">
-              <strong>niathelight</strong>
-              <span class="ig-caption-text">I landed at Onguma's private airstrip and immediately felt the magic of Namibia. After checking into Camp Kala, I had just enough time to settle into my suite before our afternoon game drive into Etosha. We ended the day with sundowners overlooking the pan—watching the sky turn pink while elephants gathered at the waterhole. Dinner under the stars was the perfect first night.</span>
-              <button class="more-btn">more</button>
-            </div>
-
-            <div class="ig-tags">
-              <span class="ig-tag">Lodge Check-in</span>
-              <span class="ig-tag">Game Drive</span>
-              <span class="ig-tag">Sundowners</span>
-            </div>
-
-            <div class="ig-comments">
-              <div class="ig-comment"><strong>travelnoire</strong> This looks incredible! Adding to my list</div>
-              <div class="ig-comment"><strong>luxurywanderer</strong> Camp Kala is a dream</div>
-            </div>
-
-            <div class="ig-comment-input">
-              <input type="text" placeholder="Add a comment..." id="commentInput1">
-              <button type="button">Post</button>
-            </div>
-          </div>
-
-          <!-- Day 2 - IG Carousel -->
-          <div class="ig-carousel" data-day="2">
-            <div class="ig-carousel-header">
-              <div class="ig-carousel-avatar">
-                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
-              </div>
-              <div class="ig-carousel-user">
-                <strong>niathelight</strong>
-                <span>Etosha National Park</span>
-              </div>
-            </div>
-
-            <div class="ig-carousel-images" id="carousel2">
-              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-68_qx6dih.jpg" alt="Wildlife"></div>
-              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-72_hkojzt.jpg" alt="Giraffe"></div>
-              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-80_mwxjzl.jpg" alt="Game Drive"></div>
-              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1769942667/Namibia_camp_kala_Klein-168_atshty.jpg" alt="Pool"></div>
-            </div>
-
-            <div class="ig-carousel-dots" id="dots2">
-              <span class="ig-carousel-dot active"></span>
-              <span class="ig-carousel-dot"></span>
-              <span class="ig-carousel-dot"></span>
-              <span class="ig-carousel-dot"></span>
-            </div>
-
-            <div class="ig-actions">
-              <button class="ig-action-btn like-btn" aria-label="Like">
-                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-              </button>
-              <button class="ig-action-btn comment-btn" aria-label="Comment">
-                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-              </button>
-              <button class="ig-action-btn share-btn" aria-label="Share">
-                <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
-              </button>
-              <button class="ig-action-btn save-btn" aria-label="Save">
-                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-              </button>
-            </div>
-
-            <div class="ig-likes">312 likes</div>
-
-            <div class="ig-caption">
-              <strong>niathelight</strong>
-              <span class="ig-caption-text">Up before sunrise for my morning game drive—this is when the animals are most active and the light is everything. We spotted lions, giraffes, and a parade of elephants heading to the waterhole. I spent the midday heat by the pool before heading back out for an afternoon drive. The night drive on Onguma's private reserve was surreal—seeing nocturnal wildlife under the stars felt like being on another planet.</span>
-              <button class="more-btn">more</button>
-            </div>
-
-            <div class="ig-tags">
-              <span class="ig-tag">Morning Game Drive</span>
-              <span class="ig-tag">Pool & Brunch</span>
-              <span class="ig-tag">Afternoon Safari</span>
-              <span class="ig-tag">Night Drive</span>
-            </div>
-
-            <div class="ig-comments">
-              <div class="ig-comment"><strong>safariqueens</strong> The golden hour light in Etosha is unmatched</div>
-              <div class="ig-comment"><strong>wanderlust.africa</strong> Night drives are the best kept secret!</div>
-            </div>
-
-            <div class="ig-comment-input">
-              <input type="text" placeholder="Add a comment..." id="commentInput2">
-              <button type="button">Post</button>
-            </div>
-          </div>
-
-          <!-- Day 3 - IG Carousel -->
-          <div class="ig-carousel" data-day="3">
-            <div class="ig-carousel-header">
-              <div class="ig-carousel-avatar">
-                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
-              </div>
-              <div class="ig-carousel-user">
-                <strong>niathelight</strong>
-                <span>Onguma Game Reserve</span>
-              </div>
-            </div>
-
-            <div class="ig-carousel-images" id="carousel3">
-              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-90_fk3jqt.jpg" alt="Morning"></div>
-              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-95_blghyd.jpg" alt="Brunch"></div>
-              <div class="ig-carousel-slide"><img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_600,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Farewell"></div>
-            </div>
-
-            <div class="ig-carousel-dots" id="dots3">
-              <span class="ig-carousel-dot active"></span>
-              <span class="ig-carousel-dot"></span>
-              <span class="ig-carousel-dot"></span>
-            </div>
-
-            <div class="ig-actions">
-              <button class="ig-action-btn like-btn" aria-label="Like">
-                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-              </button>
-              <button class="ig-action-btn comment-btn" aria-label="Comment">
-                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-              </button>
-              <button class="ig-action-btn share-btn" aria-label="Share">
-                <svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
-              </button>
-              <button class="ig-action-btn save-btn" aria-label="Save">
-                <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-              </button>
-            </div>
-
-            <div class="ig-likes">189 likes</div>
-
-            <div class="ig-caption">
-              <strong>niathelight</strong>
-              <span class="ig-caption-text">My final morning started with a walking safari on Onguma's private reserve—there's something profound about being on foot in the bush, feeling the earth beneath you. I savored one last brunch at the lodge, already planning my return. From here you can continue to Sossusvlei, the Skeleton Coast, or fly back through Johannesburg. I left a piece of my heart in Namibia.</span>
-              <button class="more-btn">more</button>
-            </div>
-
-            <div class="ig-tags">
-              <span class="ig-tag">Walking Safari</span>
-              <span class="ig-tag">Farewell Brunch</span>
-              <span class="ig-tag">Onward Journey</span>
-            </div>
-
-            <div class="ig-comments">
-              <div class="ig-comment"><strong>theblackexpat</strong> Walking safaris hit different</div>
-            </div>
-
-            <div class="ig-comment-input">
-              <input type="text" placeholder="Add a comment..." id="commentInput3">
-              <button type="button">Post</button>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="itin-sidebar">
-          <div class="sidebar-section">
-            <h3 class="sidebar-title">Trip Details</h3>
-            <div class="sidebar-content">
-              <p><strong>Duration:</strong> 4 days / 3 nights</p>
-              <p style="margin-top: 0.5rem;"><strong>Starting from:</strong> $4,500 per person</p>
-              <p style="margin-top: 0.5rem;"><strong>Best for:</strong> First safari, photography, couples</p>
-            </div>
-          </div>
-
-          <div class="sidebar-section">
-            <h3 class="sidebar-title">Where You'll Stay</h3>
-            <div class="sidebar-stays">
-              <a href="../stays/onguma-the-fort.html" class="sidebar-stay-card">
-                <div class="sidebar-stay-image">
-                  <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_300,h_200,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-20_yzncpj.jpg" alt="Onguma The Fort">
-                </div>
-                <div class="sidebar-stay-content">
-                  <strong>Onguma The Fort</strong>
-                  <span>Moorish-inspired waterhole lodge</span>
-                </div>
-              </a>
-              <a href="../stays/onguma-camp-kala.html" class="sidebar-stay-card">
-                <div class="sidebar-stay-image">
-                  <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_300,h_200,q_auto,f_auto/v1769942667/Namibia_camp_kala_Klein-168_atshty.jpg" alt="Onguma Camp Kala">
-                </div>
-                <div class="sidebar-stay-content">
-                  <strong>Onguma Camp Kala</strong>
-                  <span>Intimate tented camp</span>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <div class="sidebar-section">
-            <h3 class="sidebar-title">Best Time to Go</h3>
-            <div class="sidebar-content">
-              <p><strong>Peak wildlife:</strong> May - October</p>
-              <p style="margin-top: 0.5rem;"><strong>Best weather:</strong> June - September</p>
-            </div>
-          </div>
-
-          <div class="sidebar-section">
-            <h3 class="sidebar-title">What's Included</h3>
-            <div class="sidebar-content">
-              <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.875rem; line-height: 1.8;">
-                <li>3 nights at Onguma (full board + activities)</li>
-                <li>All game drives in Etosha</li>
-                <li>Night drives on Onguma Reserve</li>
-                <li>Park fees and conservation levies</li>
-                <li>Transfers as per itinerary</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="sidebar-section">
-            <h3 class="sidebar-title">Must-Do Experiences</h3>
-            <div class="sidebar-content">
-              <div class="must-do-sidebar">
-                <div class="must-do-item-sidebar">
-                  <span class="must-do-num">01</span>
-                  <div>
-                    <strong>Sunrise at Fisher's Pan</strong>
-                    <span>Elephants silhouetted against the dawn</span>
-                  </div>
-                </div>
-                <div class="must-do-item-sidebar">
-                  <span class="must-do-num">02</span>
-                  <div>
-                    <strong>Waterhole Sunset</strong>
-                    <span>Sundowners at The Fort</span>
-                  </div>
-                </div>
-                <div class="must-do-item-sidebar">
-                  <span class="must-do-num">03</span>
-                  <div>
-                    <strong>Night Drive</strong>
-                    <span>Nocturnal wildlife on the reserve</span>
-                  </div>
-                </div>
-                <div class="must-do-item-sidebar">
-                  <span class="must-do-num">04</span>
-                  <div>
-                    <strong>Star Bath</strong>
-                    <span>Camp Kala's outdoor tub</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="book-cta">
-            <h3>Get Your Quote</h3>
-            <p>Ready for Namibia? Get a personalized quote for your dates.</p>
-            <a href="../request-quote.html?trip=Namibia%20Safari&price=From%20%244%2C500%20pp" class="btn">Request Quote</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="image-cta-section">
-    <div class="cta-bg">
-      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Namibia landscape">
-    </div>
-    <div class="cta-overlay"></div>
-    <div class="image-cta-content">
-      <h2>Extend your journey</h2>
-      <p>Add Sossusvlei dunes, the Skeleton Coast, or continue to Johannesburg.</p>
-      <a href="../plan-your-trip.html" class="btn btn-primary">Plan Your Trip</a>
-    </div>
-  </section>
-
-    <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <img src="../assets/logo.svg" alt="NUBEAUX" style="height: 20px; margin-bottom: var(--space-md);">
-          <p>Curated luxury travel experiences from creatives who've been there.</p>
-        </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Explore</h4>
-          <div class="footer-links">
-            <a href="../destinations/">Destinations</a>
-            <a href="../itineraries/">Itineraries</a>
-            <a href="../stays/">Stays</a>
-            <a href="../journal/">Journal</a>
-            <a href="../creators/">Creators</a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Company</h4>
-          <div class="footer-links">
-            <a href="../about.html">About</a>
-            <a href="../portal/">Creator Portal</a>
-            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
-          </div>
-        </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Connect</h4>
-          <div class="footer-links">
-            <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
-            <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
-        <p>A NUBEAUX Collective Company</p>
-      </div>
+      <nav class="itin-footer-links">
+        <a href="mailto:support@nubeauxtravel.com">Support</a>
+        <a href="mailto:hello@nubeauxtravel.com">Contact</a>
+        <a href="../terms.html">Terms</a>
+        <a href="../privacy.html">Privacy</a>
+      </nav>
+      <p class="itin-footer-copyright">&copy; 2026 NUBEAUX Travel</p>
     </div>
   </footer>
 
-  <!-- Creator Popup -->
-  <div class="creator-popup-overlay" id="creatorPopup">
-    <div class="creator-popup">
-      <button class="creator-popup-close" aria-label="Close">&times;</button>
-      <div class="creator-popup-image">
-        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_200,h_200,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
+  <!-- Gallery Modal -->
+  <div class="gallery-modal" id="galleryModal">
+    <button class="gallery-close" aria-label="Close gallery">&times;</button>
+    <button class="gallery-nav gallery-nav-prev" id="galleryPrev" aria-label="Previous image">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+      </svg>
+    </button>
+    <button class="gallery-nav gallery-nav-next" id="galleryNext" aria-label="Next image">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="24" height="24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+      </svg>
+    </button>
+    <div class="gallery-container">
+      <div class="gallery-main-image">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_750,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Gallery image" id="galleryMainImg">
       </div>
-      <div class="creator-popup-content">
-        <span class="creator-popup-label">Creator</span>
-        <h3>Nia The Light</h3>
-        <p>Content creator and storyteller with a passion for African luxury, wellness, and solo travel. Every itinerary Nia curates reflects her philosophy: travel should nourish the soul.</p>
-        <a href="https://instagram.com/niathelight" target="_blank" class="creator-popup-link">View Profile</a>
+      <div class="gallery-thumbs" id="galleryThumbs">
+        <div class="gallery-thumb active" data-src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_750,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_160,h_120,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Thumbnail">
+        </div>
+        <div class="gallery-thumb" data-src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_750,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_160,h_120,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Thumbnail">
+        </div>
+        <div class="gallery-thumb" data-src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_750,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-68_qx6dih.jpg">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_160,h_120,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-68_qx6dih.jpg" alt="Thumbnail">
+        </div>
+        <div class="gallery-thumb" data-src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_750,q_auto,f_auto/v1769942667/Namibia_camp_kala_Klein-168_atshty.jpg">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_160,h_120,q_auto,f_auto/v1769942667/Namibia_camp_kala_Klein-168_atshty.jpg" alt="Thumbnail">
+        </div>
+        <div class="gallery-thumb" data-src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_750,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-45_gajcov.jpg">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_160,h_120,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-45_gajcov.jpg" alt="Thumbnail">
+        </div>
+        <div class="gallery-thumb" data-src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_750,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-72_hkojzt.jpg">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_160,h_120,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-72_hkojzt.jpg" alt="Thumbnail">
+        </div>
+        <div class="gallery-thumb" data-src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_750,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-20_yzncpj.jpg">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_160,h_120,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-20_yzncpj.jpg" alt="Thumbnail">
+        </div>
+        <div class="gallery-thumb" data-src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_750,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_160,h_120,q_auto,f_auto/v1769677162/Namibia_onguma_Klein-38_eg57nf.jpg" alt="Thumbnail">
+        </div>
       </div>
     </div>
   </div>
 
-  <script src="../js/supabase.js"></script>
   <script src="../js/main.js?v=3"></script>
   <script>
-    // Creator popup functionality
-    const creatorBtn = document.querySelector('.creator-badge-btn');
-    const creatorPopup = document.getElementById('creatorPopup');
-    const closeBtn = creatorPopup?.querySelector('.creator-popup-close');
+    // Accordion functionality
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        const isActive = item.classList.contains('active');
 
-    if (creatorBtn && creatorPopup) {
-      creatorBtn.addEventListener('click', () => {
-        creatorPopup.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
+        // Close all
+        document.querySelectorAll('.accordion-item').forEach(i => {
+          i.classList.remove('active');
+          i.querySelector('.accordion-header').setAttribute('aria-expanded', 'false');
+        });
 
-      closeBtn?.addEventListener('click', () => {
-        creatorPopup.classList.remove('active');
-        document.body.style.overflow = '';
-      });
-
-      creatorPopup.addEventListener('click', (e) => {
-        if (e.target === creatorPopup) {
-          creatorPopup.classList.remove('active');
-          document.body.style.overflow = '';
+        // Open clicked (if wasn't active)
+        if (!isActive) {
+          item.classList.add('active');
+          header.setAttribute('aria-expanded', 'true');
         }
       });
+    });
 
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && creatorPopup.classList.contains('active')) {
-          creatorPopup.classList.remove('active');
-          document.body.style.overflow = '';
-        }
+    // Gallery modal
+    const galleryTrigger = document.getElementById('galleryTrigger');
+    const galleryModal = document.getElementById('galleryModal');
+    const galleryClose = galleryModal.querySelector('.gallery-close');
+    const galleryMainImg = document.getElementById('galleryMainImg');
+    const galleryThumbs = document.querySelectorAll('.gallery-thumb');
+    const galleryPrev = document.getElementById('galleryPrev');
+    const galleryNext = document.getElementById('galleryNext');
+    let currentGalleryIndex = 0;
+
+    function updateGalleryImage(index) {
+      const thumbs = Array.from(galleryThumbs);
+      if (index < 0) index = thumbs.length - 1;
+      if (index >= thumbs.length) index = 0;
+      currentGalleryIndex = index;
+
+      thumbs.forEach((t, i) => {
+        t.classList.toggle('active', i === index);
       });
+      galleryMainImg.src = thumbs[index].dataset.src;
     }
 
-    // Stories click functionality - scroll to day carousels
-    document.querySelectorAll('.story-item').forEach((story, index) => {
-      story.style.cursor = 'pointer';
-      story.addEventListener('click', () => {
-        const dayNum = index + 1;
-        const targetCarousel = document.querySelector(`.ig-carousel[data-day="${dayNum}"]`);
-        if (targetCarousel) {
-          targetCarousel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          // Add visual feedback
-          story.querySelector('.story-ring')?.classList.add('viewed');
-        }
+    galleryTrigger.addEventListener('click', () => {
+      galleryModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    galleryClose.addEventListener('click', () => {
+      galleryModal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    galleryModal.addEventListener('click', (e) => {
+      if (e.target === galleryModal) {
+        galleryModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Arrow navigation
+    galleryPrev.addEventListener('click', () => {
+      updateGalleryImage(currentGalleryIndex - 1);
+    });
+
+    galleryNext.addEventListener('click', () => {
+      updateGalleryImage(currentGalleryIndex + 1);
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!galleryModal.classList.contains('active')) return;
+
+      if (e.key === 'Escape') {
+        galleryModal.classList.remove('active');
+        document.body.style.overflow = '';
+      } else if (e.key === 'ArrowLeft') {
+        updateGalleryImage(currentGalleryIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        updateGalleryImage(currentGalleryIndex + 1);
+      }
+    });
+
+    galleryThumbs.forEach((thumb, index) => {
+      thumb.addEventListener('click', () => {
+        updateGalleryImage(index);
       });
     });
 
-    // IG Carousel functionality
-    document.querySelectorAll('.ig-carousel').forEach(carousel => {
-      const images = carousel.querySelector('.ig-carousel-images');
-      const dots = carousel.querySelectorAll('.ig-carousel-dot');
+    // Mobile sticky CTA - show after scrolling past hero
+    const mobileCta = document.getElementById('mobileCta');
+    const hero = document.querySelector('.itin-hero');
 
-      // Caption "more" button
-      const moreBtn = carousel.querySelector('.more-btn');
-      const captionText = carousel.querySelector('.ig-caption-text');
-      moreBtn?.addEventListener('click', () => {
-        captionText.classList.toggle('expanded');
-        moreBtn.textContent = captionText.classList.contains('expanded') ? 'less' : 'more';
-      });
-
-      // Update dots on scroll and handle video playback
-      const slides = carousel.querySelectorAll('.ig-carousel-slide');
-      images?.addEventListener('scroll', () => {
-        const scrollLeft = images.scrollLeft;
-        const slideWidth = images.offsetWidth;
-        const activeIndex = Math.round(scrollLeft / slideWidth);
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
-
-        // Play/pause videos based on visibility
-        slides.forEach((slide, i) => {
-          const video = slide.querySelector('video');
-          if (video) {
-            if (i === activeIndex) {
-              video.play();
-            } else {
-              video.pause();
-            }
+    if (mobileCta && hero) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            mobileCta.classList.add('hidden');
+          } else {
+            mobileCta.classList.remove('hidden');
           }
         });
-      });
+      }, { threshold: 0 });
 
-      // Like button
-      const likeBtn = carousel.querySelector('.like-btn');
-      likeBtn?.addEventListener('click', () => {
-        likeBtn.classList.toggle('liked');
-        const likesEl = carousel.querySelector('.ig-likes');
-        likesEl.textContent = likeBtn.classList.contains('liked') ? '248 likes' : '247 likes';
-      });
+      observer.observe(hero);
+    }
 
-      // Comment button - focus input when clicked
-      const commentBtn = carousel.querySelector('.comment-btn');
-      const commentInputField = carousel.querySelector('.ig-comment-input input');
-      commentBtn?.addEventListener('click', () => {
-        commentInputField?.focus();
-        commentInputField?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-
-      // Comment moderation - auto-block negative words
-      const blockedWords = ['hate', 'ugly', 'terrible', 'worst', 'awful', 'bad', 'boring', 'overpriced', 'scam', 'fake', 'sucks'];
-      const commentInput = carousel.querySelector('.ig-comment-input input');
-      const postBtn = carousel.querySelector('.ig-comment-input button');
-      const commentsContainer = carousel.querySelector('.ig-comments');
-
-      postBtn?.addEventListener('click', () => {
-        const text = commentInput.value.trim();
-        if (!text) return;
-        if (blockedWords.some(word => text.toLowerCase().includes(word))) {
-          commentInput.value = '';
-          return;
+    // Open concierge when "Book or customise" buttons are clicked
+    document.querySelectorAll('.open-concierge').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panel = document.getElementById('voicePanel');
+        const tooltip = document.querySelector('.voice-tooltip');
+        if (panel) {
+          panel.classList.add('visible');
+          if (tooltip) tooltip.classList.add('hidden');
         }
-        const comment = document.createElement('div');
-        comment.className = 'ig-comment';
-        comment.innerHTML = '<strong>you</strong> ' + text;
-        commentsContainer.appendChild(comment);
-        commentInput.value = '';
-      });
 
-      // Share button
-      carousel.querySelector('.share-btn')?.addEventListener('click', () => {
-        if (navigator.share) {
-          navigator.share({ title: 'Namibia Safari', text: 'Check out this itinerary', url: window.location.href });
+        // Track click
+        if (window.gtag) {
+          gtag('event', 'book_cta_clicked', {
+            itinerary_slug: 'namibia-safari',
+            location: btn.closest('.sidebar-cta') ? 'sidebar' : (btn.closest('.final-cta') ? 'final' : (btn.closest('.mobile-sticky-cta') ? 'mobile' : 'hero'))
+          });
         }
       });
     });
+
+    // Analytics
+    if (window.gtag) {
+      gtag('event', 'itinerary_page_viewed', {
+        itinerary_slug: 'namibia-safari',
+        creator_handle: 'nia-the-light'
+      });
+
+      // Track gallery open
+      galleryTrigger.addEventListener('click', () => {
+        gtag('event', 'gallery_opened', { itinerary_slug: 'namibia-safari' });
+      });
+
+      // Track accordion opens
+      document.querySelectorAll('.accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const title = header.querySelector('.accordion-title').textContent;
+          gtag('event', 'itinerary_section_expanded', {
+            itinerary_slug: 'namibia-safari',
+            section: title
+          });
+        });
+      });
+    }
   </script>
-<script src="../js/voice-agent.js?v=4"></script>
+
+  <!-- Voice Concierge -->
+  <script src="../js/voice-agent.js"></script>
 </body>
 </html>

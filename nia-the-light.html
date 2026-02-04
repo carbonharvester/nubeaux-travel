@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Travel itineraries by Nia The Light. Explore trips she has personally taken across Africa.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Nia The Light | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=23">
+
+  <style>
+    /* Creator Storefront Specific Styles */
+
+    /* Creator Header Section */
+    .creator-header-section {
+      padding: var(--space-xl) 0 var(--space-lg);
+      margin-top: var(--header-height);
+      background: var(--color-white);
+    }
+
+    .creator-profile {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-lg);
+    }
+
+    .creator-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 3px solid var(--color-white);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .creator-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .creator-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .creator-name {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: var(--space-xs);
+    }
+
+    .creator-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .creator-badge svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .creator-bio {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-text-light);
+      max-width: 550px;
+      margin-bottom: var(--space-md);
+    }
+
+    .creator-social {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .creator-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--color-light-grey);
+      border-radius: 50%;
+      color: var(--color-text-light);
+      transition: all var(--transition-fast);
+    }
+
+    .creator-social a:hover {
+      border-color: var(--color-text);
+      color: var(--color-text);
+      background: var(--color-cream);
+    }
+
+    .creator-social svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Trips Section */
+    .trips-section {
+      padding: var(--space-lg) 0 var(--space-2xl);
+      background: var(--color-sand);
+    }
+
+    .trips-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      list-style: none;
+    }
+
+    /* Trip Card - extending itinerary-card */
+    .trip-card {
+      background: var(--color-white);
+      display: block;
+      transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .trip-card:hover {
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+      transform: translateY(-4px);
+    }
+
+    .trip-card-image {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+
+    .trip-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .trip-card:hover .trip-card-image img {
+      transform: scale(1.05);
+    }
+
+    /* Personally Taken Stamp */
+    .trip-stamp {
+      position: absolute;
+      top: var(--space-sm);
+      left: var(--space-sm);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 10px;
+      font-size: 0.5625rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-white);
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+    }
+
+    .trip-stamp svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .trip-card-content {
+      padding: var(--space-md);
+    }
+
+    .trip-card-destination {
+      font-size: 0.625rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+
+    .trip-card-title {
+      font-size: 1.375rem;
+      margin-bottom: var(--space-xs);
+      line-height: 1.25;
+    }
+
+    .trip-card-meta {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .trip-card-meta span:not(:last-child)::after {
+      content: '·';
+      margin: 0 0.5rem;
+      color: var(--color-medium-grey);
+    }
+
+    .trip-card-price {
+      font-size: 0.875rem;
+      color: var(--color-text);
+      margin-bottom: var(--space-md);
+    }
+
+    .trip-card-cta {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text);
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--color-text);
+      transition: all var(--transition-fast);
+    }
+
+    .trip-card:hover .trip-card-cta {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    /* How Booking Works */
+    .booking-info-section {
+      padding: var(--space-xl) 0;
+      background: var(--color-warm-cream);
+    }
+
+    .booking-accordion {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .accordion-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+      font-weight: 400;
+      color: var(--color-text);
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .accordion-trigger:hover {
+      border-color: var(--color-text);
+    }
+
+    .accordion-trigger svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-text-light);
+      transition: transform var(--transition-fast);
+    }
+
+    .accordion-trigger[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+
+    .accordion-panel {
+      display: none;
+      padding: var(--space-lg);
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      border-top: none;
+    }
+
+    .accordion-panel.active {
+      display: block;
+    }
+
+    .booking-steps {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .booking-step {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-white);
+      background: var(--color-accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .step-content {
+      flex: 1;
+      padding-top: 2px;
+    }
+
+    .step-title {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--color-text);
+      margin-bottom: 4px;
+    }
+
+    .step-description {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      line-height: 1.5;
+    }
+
+    /* Minimal Footer for Storefront */
+    .storefront-footer {
+      padding: var(--space-lg) 0;
+      background: var(--color-white);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .storefront-footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .storefront-footer-links {
+      display: flex;
+      gap: var(--space-lg);
+    }
+
+    .storefront-footer-links a {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      transition: color var(--transition-fast);
+    }
+
+    .storefront-footer-links a:hover {
+      color: var(--color-text);
+    }
+
+    .storefront-footer-copyright {
+      font-size: 0.8125rem;
+      color: var(--color-medium-grey);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .trips-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .creator-header-section {
+        padding: var(--space-lg) 0 var(--space-md);
+      }
+
+      .creator-profile {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .creator-avatar {
+        width: 100px;
+        height: 100px;
+      }
+
+      .creator-bio {
+        max-width: 100%;
+      }
+
+      .creator-social {
+        justify-content: center;
+      }
+
+      .trips-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .storefront-footer .container {
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+      }
+
+      .storefront-footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header (using site standard) -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="trips/" class="logo"><img src="assets/logo.svg" alt="NUBEAUX"></a>
+      <nav class="nav">
+        <a href="trips/">Explore trips</a>
+        <a href="destinations/">Destinations</a>
+        <a href="mailto:support@nubeauxtravel.com">Support</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="trips/">Explore trips</a>
+    <a href="destinations/">Destinations</a>
+    <a href="mailto:support@nubeauxtravel.com">Support</a>
+  </div>
+
+  <main>
+    <!-- Creator Header -->
+    <section class="creator-header-section">
+      <div class="container">
+        <div class="creator-profile">
+          <div class="creator-avatar">
+            <img
+              src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_240,h_240,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg"
+              alt="Nia The Light"
+              width="120"
+              height="120"
+            >
+          </div>
+          <div class="creator-info">
+            <h1 class="creator-name">Nia The Light</h1>
+            <span class="creator-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+              </svg>
+              Personally taken
+            </span>
+            <p class="creator-bio">Solo traveller and storyteller. I share trips I have actually taken across Africa, focused on luxury, wellness, and meaningful experiences.</p>
+            <div class="creator-social">
+              <a href="https://instagram.com/niathelight" target="_blank" rel="noopener" aria-label="Follow on Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+              </a>
+              <a href="https://tiktok.com/@niathelight" target="_blank" rel="noopener" aria-label="Follow on TikTok">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trips Grid -->
+    <section class="trips-section">
+      <div class="container">
+        <div class="section-header-left">
+          <h2>Trips by Nia</h2>
+        </div>
+
+        <ul class="trips-grid" role="list">
+          <!-- Namibia -->
+          <li>
+            <a href="itineraries/namibia-safari.html" class="trip-card">
+              <div class="trip-card-image">
+                <img
+                  src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg"
+                  alt="Onguma, Namibia"
+                  width="600"
+                  height="450"
+                  loading="eager"
+                >
+                <span class="trip-stamp">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                  </svg>
+                  Personally taken
+                </span>
+              </div>
+              <div class="trip-card-content">
+                <span class="trip-card-destination">Onguma, Namibia</span>
+                <h3 class="trip-card-title">Wilderness & Wonder</h3>
+                <p class="trip-card-meta">
+                  <span>7 nights</span>
+                  <span>Safari</span>
+                  <span>Wellness</span>
+                </p>
+                <p class="trip-card-price">From $4,200</p>
+                <span class="trip-card-cta">View itinerary</span>
+              </div>
+            </a>
+          </li>
+
+          <!-- Zanzibar -->
+          <li>
+            <a href="itineraries/zanzibar-wellness.html" class="trip-card">
+              <div class="trip-card-image">
+                <img
+                  src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1769949645/RNI-Films-IMG-85112780-9D4C-4BC0-AC22-80A31BF1E813_x2eyd3.jpg"
+                  alt="Zanzibar, Tanzania"
+                  width="600"
+                  height="450"
+                  loading="eager"
+                >
+                <span class="trip-stamp">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                  </svg>
+                  Personally taken
+                </span>
+              </div>
+              <div class="trip-card-content">
+                <span class="trip-card-destination">Zanzibar, Tanzania</span>
+                <h3 class="trip-card-title">Island Restoration</h3>
+                <p class="trip-card-meta">
+                  <span>5 nights</span>
+                  <span>Beach</span>
+                  <span>Wellness</span>
+                </p>
+                <p class="trip-card-price">From $2,800</p>
+                <span class="trip-card-cta">View itinerary</span>
+              </div>
+            </a>
+          </li>
+
+          <!-- Mozambique -->
+          <li>
+            <a href="itineraries/mozambique-island-escape.html" class="trip-card">
+              <div class="trip-card-image">
+                <img
+                  src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg"
+                  alt="Bazaruto, Mozambique"
+                  width="600"
+                  height="450"
+                  loading="lazy"
+                >
+                <span class="trip-stamp">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                  </svg>
+                  Personally taken
+                </span>
+              </div>
+              <div class="trip-card-content">
+                <span class="trip-card-destination">Bazaruto, Mozambique</span>
+                <h3 class="trip-card-title">Archipelago Dreams</h3>
+                <p class="trip-card-meta">
+                  <span>6 nights</span>
+                  <span>Island</span>
+                  <span>Marine</span>
+                </p>
+                <p class="trip-card-price">From $5,400</p>
+                <span class="trip-card-cta">View itinerary</span>
+              </div>
+            </a>
+          </li>
+
+          <!-- Kenya -->
+          <li>
+            <a href="itineraries/kilifi-coast.html" class="trip-card">
+              <div class="trip-card-image">
+                <img
+                  src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_450,q_auto,f_auto/v1749400855/KleinNettoh--8_1_gtxyvk.jpg"
+                  alt="Kilifi, Kenya"
+                  width="600"
+                  height="450"
+                  loading="lazy"
+                >
+                <span class="trip-stamp">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                  </svg>
+                  Personally taken
+                </span>
+              </div>
+              <div class="trip-card-content">
+                <span class="trip-card-destination">Kilifi, Kenya</span>
+                <h3 class="trip-card-title">Coastal Retreat</h3>
+                <p class="trip-card-meta">
+                  <span>4 nights</span>
+                  <span>Beach</span>
+                  <span>Culture</span>
+                </p>
+                <p class="trip-card-price">From $1,900</p>
+                <span class="trip-card-cta">View itinerary</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- How Booking Works -->
+    <section class="booking-info-section">
+      <div class="container">
+        <div class="booking-accordion">
+          <button
+            class="accordion-trigger"
+            aria-expanded="false"
+            aria-controls="booking-panel"
+          >
+            How booking works
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+          <div class="accordion-panel" id="booking-panel" aria-hidden="true">
+            <div class="booking-steps">
+              <div class="booking-step">
+                <span class="step-number">1</span>
+                <div class="step-content">
+                  <p class="step-title">Choose a trip</p>
+                  <p class="step-description">Browse itineraries and find one that fits. Each trip has been personally taken by its creator.</p>
+                </div>
+              </div>
+              <div class="booking-step">
+                <span class="step-number">2</span>
+                <div class="step-content">
+                  <p class="step-title">Request to book</p>
+                  <p class="step-description">Submit an enquiry. We'll confirm availability, discuss dates, and share a detailed quote. No commitment yet.</p>
+                </div>
+              </div>
+              <div class="booking-step">
+                <span class="step-number">3</span>
+                <div class="step-content">
+                  <p class="step-title">Customise if you like</p>
+                  <p class="step-description">Want to extend your stay, swap a property, or adjust the pace? We'll tailor it to you.</p>
+                </div>
+              </div>
+              <div class="booking-step">
+                <span class="step-number">4</span>
+                <div class="step-content">
+                  <p class="step-title">Confirm and pay</p>
+                  <p class="step-description">Once you're happy, secure your trip with a deposit. We handle all bookings on your behalf.</p>
+                </div>
+              </div>
+              <div class="booking-step">
+                <span class="step-number">5</span>
+                <div class="step-content">
+                  <p class="step-title">Travel with support</p>
+                  <p class="step-description">Receive your full itinerary and 24/7 support throughout your trip.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.svg" alt="NUBEAUX">
+          <p>Curated luxury travel experiences from creatives who've been there. Authentic journeys across Africa and beyond.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Explore</h4>
+          <div class="footer-links">
+            <a href="trips/">Trips</a>
+            <a href="destinations/">Destinations</a>
+            <a href="stays/">Stays</a>
+            <a href="journal/">Journal</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="mailto:support@nubeauxtravel.com">Support</a>
+            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Connect</h4>
+          <div class="footer-links">
+            <a href="mailto:hello@nubeauxtravel.com">hello@nubeauxtravel.com</a>
+            <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
+            <a href="https://tiktok.com/@nubeauxtravel" target="_blank">TikTok</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a> Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+  <script src="js/voice-agent.js?v=4"></script>
+  <script>
+    // Accordion
+    const accordionTrigger = document.querySelector('.accordion-trigger');
+    const accordionPanel = document.getElementById('booking-panel');
+
+    accordionTrigger.addEventListener('click', () => {
+      const isExpanded = accordionTrigger.getAttribute('aria-expanded') === 'true';
+      accordionTrigger.setAttribute('aria-expanded', !isExpanded);
+      accordionPanel.classList.toggle('active');
+      accordionPanel.setAttribute('aria-hidden', isExpanded);
+    });
+
+    // Analytics
+    if (window.gtag) {
+      gtag('event', 'creator_page_viewed', {
+        creator_handle: 'nia-the-light',
+        itinerary_count: 4
+      });
+    }
+  </script>
+</body>
+</html>

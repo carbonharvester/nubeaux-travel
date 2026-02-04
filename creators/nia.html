@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Travel with Nia The Light. Explore her curated itineraries across Africa - luxury safari, wellness retreats, and solo travel experiences.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Nia The Light | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=23">
+
+  <style>
+    /* Hero - matching itineraries page */
+    .page-hero-full {
+      position: relative;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .page-hero-full .hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .page-hero-full .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .page-hero-full .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+    }
+
+    .page-hero-full .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--color-white);
+      padding: var(--space-xl);
+    }
+
+    .page-hero-full h1 {
+      color: var(--color-white);
+      margin-bottom: var(--space-sm);
+    }
+
+    .page-hero-full p {
+      color: rgba(255,255,255,0.9);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Creator Profile Section */
+    .creator-intro {
+      padding: var(--space-xl) 0;
+      text-align: center;
+      background-color: var(--color-warm-cream);
+    }
+
+    .creator-intro-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .creator-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--color-white);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .creator-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .creator-intro p {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .creator-stats {
+      display: flex;
+      gap: var(--space-xl);
+      margin-top: var(--space-sm);
+    }
+
+    .creator-stat {
+      text-align: center;
+    }
+
+    .creator-stat-value {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--color-charcoal);
+    }
+
+    .creator-stat-label {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--color-medium-grey);
+    }
+
+    .creator-social {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-sm);
+    }
+
+    .creator-social a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    .creator-social a:hover {
+      color: var(--color-accent);
+    }
+
+    .creator-social svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Featured Itineraries - matching itineraries page */
+    .itinerary-featured {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+    }
+
+    .itinerary-featured.reverse {
+      grid-template-columns: 1fr 1.2fr;
+    }
+
+    .itinerary-featured-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .itinerary-featured-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .itinerary-featured:hover .itinerary-featured-image img {
+      transform: scale(1.03);
+    }
+
+    .itinerary-featured-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-2xl);
+      background-color: var(--color-white);
+    }
+
+    .itinerary-featured-content.alt {
+      background-color: var(--color-sage-light);
+    }
+
+    .itinerary-featured-content.dark {
+      background-color: var(--color-text);
+      color: var(--color-white);
+    }
+
+    .itinerary-featured-content.dark h3,
+    .itinerary-featured-content.dark p {
+      color: var(--color-white);
+    }
+
+    .itinerary-featured-content.dark p {
+      opacity: 0.8;
+    }
+
+    .itinerary-featured-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .itinerary-featured h3 {
+      font-size: 2rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .itinerary-featured-meta {
+      display: flex;
+      gap: var(--space-md);
+      font-size: 0.875rem;
+      color: var(--color-medium-grey);
+      margin-bottom: var(--space-md);
+    }
+
+    .itinerary-featured-content.dark .itinerary-featured-meta {
+      color: rgba(255,255,255,0.6);
+    }
+
+    .itinerary-featured p {
+      color: var(--color-text-light);
+      line-height: 1.8;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Coming Soon Badge */
+    .coming-soon-badge {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-md);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 0.5rem 1rem;
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .itinerary-featured.coming-soon {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    /* All Itineraries Grid */
+    .itineraries-grid-section {
+      padding: var(--space-xl) 0;
+      background-color: var(--color-sand);
+    }
+
+    .itineraries-compact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .itinerary-card {
+      background: var(--color-white);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .itinerary-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+
+    .itinerary-card-image {
+      aspect-ratio: 16/10;
+      overflow: hidden;
+    }
+
+    .itinerary-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .itinerary-card:hover .itinerary-card-image img {
+      transform: scale(1.05);
+    }
+
+    .itinerary-card-content {
+      padding: var(--space-md);
+    }
+
+    .itinerary-card-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+
+    .itinerary-card h3 {
+      font-size: 1.125rem;
+      margin: 0;
+    }
+
+    .itinerary-card.coming-soon {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .itinerary-card.coming-soon .itinerary-card-image {
+      position: relative;
+    }
+
+    .itinerary-card.coming-soon .itinerary-card-image::after {
+      content: 'Coming Soon';
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-sm);
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* CTA Section */
+    .section-cream {
+      padding: var(--space-xl) 0;
+      background-color: var(--color-warm-cream);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .itinerary-featured,
+      .itinerary-featured.reverse {
+        grid-template-columns: 1fr;
+      }
+
+      .itinerary-featured.reverse .itinerary-featured-content {
+        order: 2;
+      }
+
+      .itinerary-featured.reverse .itinerary-featured-image {
+        order: 1;
+      }
+
+      .itineraries-compact-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .itinerary-featured-content {
+        padding: var(--space-lg);
+      }
+
+      .creator-stats {
+        gap: var(--space-lg);
+      }
+
+      .itineraries-compact-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: var(--space-md);
+        padding-bottom: var(--space-sm);
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .itineraries-compact-grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .itineraries-compact-grid .itinerary-card {
+        flex: 0 0 280px;
+        scroll-snap-align: start;
+      }
+
+      .itinerary-card-content {
+        padding: var(--space-sm);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+      <nav class="nav">
+        <a href="../destinations/">Destinations</a>
+        <a href="../itineraries/">Itineraries</a>
+        <a href="../stays/">Stays</a>
+        <a href="../journal/">Journal</a>
+        <a href="../about.html">About</a>
+        <a href="../plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../destinations/">Destinations</a>
+    <a href="../itineraries/">Itineraries</a>
+    <a href="../stays/">Stays</a>
+    <a href="../journal/">Journal</a>
+    <a href="../about.html">About</a>
+    <a href="../plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="page-hero-full">
+    <div class="hero-bg">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Nia in Namibia">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Travel with Nia The Light</h1>
+      <p>Curated itineraries from my personal travels. Every trip I share, I've lived. Every stay, I've experienced.</p>
+    </div>
+  </section>
+
+  <!-- Creator Intro -->
+  <section class="creator-intro">
+    <div class="container">
+      <div class="creator-intro-content">
+        <div class="creator-avatar">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_240,h_240,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
+        </div>
+        <p class="text-large">
+          Content creator and storyteller with a passion for African luxury, wellness, and the art of solo travel. My philosophy: slow down, immerse deeply, and return transformed.
+        </p>
+        <div class="creator-stats">
+          <div class="creator-stat">
+            <div class="creator-stat-value">430K+</div>
+            <div class="creator-stat-label">Followers</div>
+          </div>
+          <div class="creator-stat">
+            <div class="creator-stat-value">4</div>
+            <div class="creator-stat-label">Itineraries</div>
+          </div>
+        </div>
+        <div class="creator-social">
+          <a href="https://instagram.com/niathelight" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            @niathelight
+          </a>
+          <a href="https://tiktok.com/@niathelight" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+            @niathelight
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Itinerary 1: Namibia -->
+  <a href="../itineraries/namibia-safari.html" class="itinerary-featured">
+    <div class="itinerary-featured-image">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1000,h_800,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Namibia Safari">
+    </div>
+    <div class="itinerary-featured-content">
+      <span class="itinerary-featured-label">Onguma, Namibia</span>
+      <h3>Wilderness & Wonder</h3>
+      <div class="itinerary-featured-meta">
+        <span>7 nights</span>
+        <span>Safari & Wellness</span>
+      </div>
+      <p>Etosha wildlife, Onguma luxury, and the endless horizons of the Namibian bush. This itinerary combines world-class game viewing with design-forward accommodation.</p>
+      <span class="btn btn-outline-dark" style="align-self: flex-start;">View Itinerary</span>
+    </div>
+  </a>
+
+  <!-- Featured Itinerary 2: Zanzibar -->
+  <a href="../itineraries/zanzibar-wellness.html" class="itinerary-featured reverse">
+    <div class="itinerary-featured-content alt">
+      <span class="itinerary-featured-label">Zanzibar, Tanzania</span>
+      <h3>Island Restoration</h3>
+      <div class="itinerary-featured-meta">
+        <span>5 nights</span>
+        <span>Beach & Wellness</span>
+      </div>
+      <p>Stone Town explorations, spice farm visits, and beachfront wellness. The ultimate island reset for those seeking restoration and discovery.</p>
+      <span class="btn btn-outline-dark" style="align-self: flex-start;">View Itinerary</span>
+    </div>
+    <div class="itinerary-featured-image">
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1000,h_800,q_auto,f_auto/v1769949645/RNI-Films-IMG-85112780-9D4C-4BC0-AC22-80A31BF1E813_x2eyd3.jpg" alt="Zanzibar">
+    </div>
+  </a>
+
+  <!-- Featured Itinerary 3: Mozambique (Coming Soon) -->
+  <div class="itinerary-featured coming-soon">
+    <div class="itinerary-featured-image">
+      <span class="coming-soon-badge">Coming Soon</span>
+      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1000,h_800,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Mozambique">
+    </div>
+    <div class="itinerary-featured-content dark">
+      <span class="itinerary-featured-label" style="color: var(--color-terracotta-soft);">Bazaruto, Mozambique</span>
+      <h3>Archipelago Dreams</h3>
+      <div class="itinerary-featured-meta">
+        <span>6 nights</span>
+        <span>Island & Marine</span>
+      </div>
+      <p>Remote island paradise. Dhow sailing, world-class diving, and barefoot luxury on pristine beaches. An escape from everything.</p>
+      <span class="btn btn-outline" style="align-self: flex-start;">Coming Soon</span>
+    </div>
+  </div>
+
+  <!-- All Itineraries Grid -->
+  <section class="itineraries-grid-section">
+    <div class="container">
+      <div class="section-header-left">
+        <h2>All Itineraries by Nia</h2>
+      </div>
+
+      <div class="itineraries-compact-grid">
+        <a href="../itineraries/namibia-safari.html" class="itinerary-card hover-lift">
+          <div class="itinerary-card-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_375,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Namibia Safari">
+          </div>
+          <div class="itinerary-card-content">
+            <span class="itinerary-card-label">Onguma, Namibia</span>
+            <h3>Wilderness & Wonder</h3>
+          </div>
+        </a>
+
+        <a href="../itineraries/zanzibar-wellness.html" class="itinerary-card hover-lift">
+          <div class="itinerary-card-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_375,q_auto,f_auto/v1769949645/RNI-Films-IMG-85112780-9D4C-4BC0-AC22-80A31BF1E813_x2eyd3.jpg" alt="Zanzibar">
+          </div>
+          <div class="itinerary-card-content">
+            <span class="itinerary-card-label">Zanzibar, Tanzania</span>
+            <h3>Island Restoration</h3>
+          </div>
+        </a>
+
+        <a href="#" class="itinerary-card coming-soon">
+          <div class="itinerary-card-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_600,h_375,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Mozambique">
+          </div>
+          <div class="itinerary-card-content">
+            <span class="itinerary-card-label">Bazaruto, Mozambique</span>
+            <h3>Archipelago Dreams</h3>
+          </div>
+        </a>
+
+        <a href="#" class="itinerary-card coming-soon">
+          <div class="itinerary-card-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_375,q_auto,f_auto/v1769949672/dest_aruba_jewcz4.jpg" alt="Kenya">
+          </div>
+          <div class="itinerary-card-content">
+            <span class="itinerary-card-label">Maasai Mara, Kenya</span>
+            <h3>Safari & Coast</h3>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section-cream" style="text-align: center;">
+    <div class="container">
+      <h2>Want to travel like Nia?</h2>
+      <hr class="hr-accent centered">
+      <p style="max-width: 500px; margin: 0 auto var(--space-lg);">Book one of her itineraries as-is, or customise it to fit your schedule. We handle everything.</p>
+      <a href="../plan-your-trip.html" class="btn btn-primary">Start Planning</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo.svg" alt="NUBEAUX" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>Curated luxury travel experiences from creatives who've been there.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Explore</h4>
+          <div class="footer-links">
+            <a href="../destinations/">Destinations</a>
+            <a href="../itineraries/">Itineraries</a>
+            <a href="../stays/">Stays</a>
+            <a href="../journal/">Journal</a>
+            <a href="../creators/">Creators</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="../about.html">About</a>
+            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Connect</h4>
+          <div class="footer-links">
+            <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
+            <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js?v=2"></script>
+</body>
+</html>

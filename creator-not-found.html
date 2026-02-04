@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+
+  <title>Creator Not Found | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-white: #ffffff;
+      --color-light-grey: #e0e0e0;
+      --color-warm-grey: #6b6b6b;
+      --color-text: #1a1a1a;
+      --color-terracotta: #a67c5b;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --space-sm: 1rem;
+      --space-md: 1.5rem;
+      --space-lg: 2rem;
+      --space-xl: 3rem;
+      --header-height: 64px;
+      --transition-fast: 0.15s ease;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--color-text);
+      background-color: var(--color-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Navigation */
+    .nav-header {
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo img {
+      height: 18px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-lg);
+    }
+
+    .nav-link {
+      font-size: 0.875rem;
+      color: var(--color-warm-grey);
+      transition: color var(--transition-fast);
+    }
+
+    .nav-link:hover {
+      color: var(--color-text);
+    }
+
+    /* Main content */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xl);
+    }
+
+    .error-container {
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .error-code {
+      font-family: var(--font-serif);
+      font-size: 4rem;
+      color: var(--color-light-grey);
+      line-height: 1;
+      margin-bottom: var(--space-md);
+    }
+
+    .error-heading {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: var(--space-sm);
+    }
+
+    .error-body {
+      font-size: 0.9375rem;
+      color: var(--color-warm-grey);
+      margin-bottom: var(--space-lg);
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.875rem 2rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-white);
+      background: var(--color-text);
+      border: none;
+      transition: background var(--transition-fast);
+    }
+
+    .btn-primary:hover {
+      background: #2c2c2c;
+    }
+
+    /* Footer */
+    .page-footer {
+      padding: var(--space-lg);
+      border-top: 1px solid var(--color-light-grey);
+      text-align: center;
+    }
+
+    .footer-copyright {
+      font-size: 0.8125rem;
+      color: var(--color-warm-grey);
+    }
+
+    @media (max-width: 768px) {
+      .nav-inner {
+        padding: 0 var(--space-sm);
+      }
+
+      .error-code {
+        font-size: 3rem;
+      }
+
+      .error-heading {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav-header">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="assets/logo.svg" alt="NUBEAUX Travel">
+      </a>
+      <div class="nav-links">
+        <a href="itineraries/" class="nav-link">Explore trips</a>
+        <a href="mailto:support@nubeauxtravel.com" class="nav-link">Support</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="error-container">
+      <p class="error-code">404</p>
+      <h1 class="error-heading">Creator not found</h1>
+      <p class="error-body">This page does not exist.</p>
+      <a href="itineraries/" class="btn-primary">Explore trips</a>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <p class="footer-copyright">&copy; 2026 NUBEAUX Travel</p>
+  </footer>
+
+  <script>
+    // Analytics
+    if (window.gtag) {
+      gtag('event', 'creator_page_404', {
+        attempted_handle: window.location.pathname.replace('/', '')
+      });
+    }
+  </script>
+</body>
+</html>

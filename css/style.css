@@ -203,7 +203,9 @@ p {
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  padding: 0 var(--space-xl);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
 }
 
 .logo img {
@@ -234,6 +236,10 @@ p {
 }
 
 .nav a:hover {
+  color: var(--color-text);
+}
+
+.nav a.nav-active {
   color: var(--color-text);
 }
 

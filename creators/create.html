@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create a new itinerary on NUBEAUX Travel.">
+
+  <title>Create Itinerary | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=22">
+
+  <style>
+    body {
+      background: var(--color-ecru);
+      min-height: 100vh;
+    }
+
+    .create-header {
+      padding: var(--space-md) var(--space-lg);
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-light-grey);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .create-header .logo img {
+      height: 20px;
+    }
+
+    .create-header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .save-status {
+      font-size: 0.8125rem;
+      color: var(--color-warm-grey);
+    }
+
+    .create-container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: var(--space-xl);
+    }
+
+    .create-hero {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .create-hero h1 {
+      font-size: 2rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .create-hero p {
+      color: var(--color-warm-grey);
+      font-size: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Import banner */
+    .import-banner {
+      background: linear-gradient(135deg, #405DE6, #833AB4, #C13584);
+      color: white;
+      padding: var(--space-lg);
+      margin-bottom: var(--space-xl);
+      display: none;
+      animation: fadeInUp 0.4s ease forwards;
+    }
+
+    .import-banner.visible {
+      display: block;
+    }
+
+    .import-banner h3 {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-sm);
+      color: white;
+    }
+
+    .import-banner p {
+      font-size: 0.875rem;
+      opacity: 0.9;
+      margin-bottom: var(--space-md);
+    }
+
+    .import-progress {
+      background: rgba(255,255,255,0.2);
+      height: 4px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .import-progress-bar {
+      background: white;
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Form card */
+    .create-form {
+      background: var(--color-white);
+      padding: var(--space-xl);
+      animation: fadeInUp 0.5s ease 0.1s forwards;
+      opacity: 0;
+    }
+
+    .form-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .form-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-section-header {
+      margin-bottom: var(--space-md);
+    }
+
+    .form-section-header h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .form-section-header p {
+      font-size: 0.875rem;
+      color: var(--color-warm-grey);
+    }
+
+    /* Destination input with suggestions */
+    .destination-wrapper {
+      position: relative;
+    }
+
+    .destination-suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      border-top: none;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      z-index: 10;
+    }
+
+    .destination-suggestions.visible {
+      display: block;
+    }
+
+    .destination-suggestion {
+      padding: var(--space-sm) var(--space-md);
+      cursor: pointer;
+      font-size: 0.9375rem;
+    }
+
+    .destination-suggestion:hover {
+      background: var(--color-ecru);
+    }
+
+    .destination-suggestion-sub {
+      font-size: 0.8125rem;
+      color: var(--color-warm-grey);
+    }
+
+    /* Upload area */
+    .upload-area {
+      border: 2px dashed var(--color-light-grey);
+      padding: var(--space-xl);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .upload-area:hover {
+      border-color: var(--color-charcoal);
+      background: var(--color-ecru);
+    }
+
+    .upload-area.dragover {
+      border-color: var(--color-terracotta);
+      background: #fff9f7;
+    }
+
+    .upload-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto var(--space-md);
+      background: var(--color-ecru);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .upload-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-charcoal);
+    }
+
+    .upload-area h4 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .upload-area p {
+      font-size: 0.8125rem;
+      color: var(--color-warm-grey);
+    }
+
+    /* Uploaded files */
+    .uploaded-files {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: var(--space-sm);
+      margin-top: var(--space-md);
+    }
+
+    .uploaded-file {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--color-ecru);
+    }
+
+    .uploaded-file img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .uploaded-file-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 24px;
+      height: 24px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .uploaded-file-remove:hover {
+      background: #dc3545;
+    }
+
+    /* Links section */
+    .links-input {
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .links-input .form-input {
+      flex: 1;
+    }
+
+    .added-links {
+      margin-top: var(--space-md);
+    }
+
+    .added-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm);
+      background: var(--color-ecru);
+      margin-bottom: var(--space-xs);
+      font-size: 0.875rem;
+    }
+
+    .added-link-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .added-link span {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .added-link button {
+      background: none;
+      border: none;
+      color: var(--color-warm-grey);
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .added-link button:hover {
+      color: #dc3545;
+    }
+
+    /* Submit section */
+    .submit-section {
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .submit-section .btn {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+
+    .submit-note {
+      text-align: center;
+      margin-top: var(--space-md);
+      font-size: 0.8125rem;
+      color: var(--color-warm-grey);
+    }
+
+    /* Loading state */
+    .btn.loading {
+      position: relative;
+      color: transparent;
+      pointer-events: none;
+    }
+
+    .btn.loading::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border: 3px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      top: 50%;
+      left: 50%;
+      margin-top: -12px;
+      margin-left: -12px;
+    }
+
+    .btn-dark.loading::after {
+      border-top-color: white;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .create-container {
+        padding: var(--space-lg);
+      }
+
+      .create-hero h1 {
+        font-size: 1.5rem;
+      }
+
+      .create-form {
+        padding: var(--space-lg);
+      }
+
+      .links-input {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="create-header">
+    <a href="../index.html" class="logo">
+      <img src="../assets/logo.svg" alt="NUBEAUX">
+    </a>
+    <div class="create-header-actions">
+      <span class="save-status" id="saveStatus"></span>
+      <a href="../itineraries/" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">Cancel</a>
+    </div>
+  </header>
+
+  <main class="create-container">
+    <div class="create-hero">
+      <h1>Share a trip you have taken</h1>
+      <p>Tell us about your trip. We will turn it into a bookable itinerary for your audience.</p>
+    </div>
+
+    <!-- Import banner (shown if coming from import flow) -->
+    <div class="import-banner" id="importBanner">
+      <h3>Building your itinerary...</h3>
+      <p>We are extracting details from your Instagram links. This may take a moment.</p>
+      <div class="import-progress">
+        <div class="import-progress-bar" id="importProgressBar"></div>
+      </div>
+    </div>
+
+    <form class="create-form" id="createForm">
+      <!-- Destination -->
+      <div class="form-section">
+        <div class="form-section-header">
+          <h2>Where did you go?</h2>
+          <p>The primary destination of your trip.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="destination">Destination</label>
+          <div class="destination-wrapper">
+            <input type="text" id="destination" name="destination" class="form-input" placeholder="e.g. Namibia, Kenya, Zanzibar" required autocomplete="off">
+            <div class="destination-suggestions" id="destinationSuggestions">
+              <div class="destination-suggestion" data-value="Namibia">
+                Namibia
+                <span class="destination-suggestion-sub">Southern Africa</span>
+              </div>
+              <div class="destination-suggestion" data-value="Kenya">
+                Kenya
+                <span class="destination-suggestion-sub">East Africa</span>
+              </div>
+              <div class="destination-suggestion" data-value="Tanzania">
+                Tanzania
+                <span class="destination-suggestion-sub">East Africa</span>
+              </div>
+              <div class="destination-suggestion" data-value="Zanzibar">
+                Zanzibar
+                <span class="destination-suggestion-sub">Tanzania</span>
+              </div>
+              <div class="destination-suggestion" data-value="South Africa">
+                South Africa
+                <span class="destination-suggestion-sub">Southern Africa</span>
+              </div>
+              <div class="destination-suggestion" data-value="Mozambique">
+                Mozambique
+                <span class="destination-suggestion-sub">Southern Africa</span>
+              </div>
+              <div class="destination-suggestion" data-value="Senegal">
+                Senegal
+                <span class="destination-suggestion-sub">West Africa</span>
+              </div>
+              <div class="destination-suggestion" data-value="Morocco">
+                Morocco
+                <span class="destination-suggestion-sub">North Africa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photos/Videos -->
+      <div class="form-section">
+        <div class="form-section-header">
+          <h2>Photos and videos</h2>
+          <p>Upload your best content from the trip. We will use these in your itinerary.</p>
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+          <input type="file" id="fileInput" multiple accept="image/*,video/*" style="display: none;">
+          <div class="upload-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+            </svg>
+          </div>
+          <h4>Drag and drop or click to upload</h4>
+          <p>JPG, PNG, MP4, MOV up to 50MB each</p>
+        </div>
+
+        <div class="uploaded-files" id="uploadedFiles">
+          <!-- Uploaded files will appear here -->
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div class="form-section">
+        <div class="form-section-header">
+          <h2>Links (optional)</h2>
+          <p>Add links to Instagram posts, reels, or other content from this trip.</p>
+        </div>
+
+        <div class="links-input">
+          <input type="text" id="linkInput" class="form-input" placeholder="https://instagram.com/p/...">
+          <button type="button" class="btn btn-dark" id="addLinkBtn">Add</button>
+        </div>
+
+        <div class="added-links" id="addedLinks">
+          <!-- Links will appear here -->
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="form-section submit-section">
+        <button type="submit" class="btn btn-dark" id="submitBtn">Build my itinerary</button>
+        <p class="submit-note">We will create a draft for you to review and edit before publishing.</p>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    // State
+    let uploadedFiles = [];
+    let addedLinks = [];
+
+    // Check for import mode
+    const urlParams = new URLSearchParams(window.location.search);
+    const isImportMode = urlParams.get('import') === 'true';
+
+    // Get stored profile data
+    const profileData = JSON.parse(sessionStorage.getItem('creatorProfile') || '{}');
+
+    // If import mode and we have links, start import
+    if (isImportMode && profileData.importedLinks && profileData.importedLinks.length > 0) {
+      addedLinks = profileData.importedLinks;
+      renderLinks();
+      startImport();
+    }
+
+    function startImport() {
+      const banner = document.getElementById('importBanner');
+      const progressBar = document.getElementById('importProgressBar');
+
+      banner.classList.add('visible');
+
+      // Simulate import progress
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress > 100) progress = 100;
+        progressBar.style.width = progress + '%';
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            banner.innerHTML = `
+              <h3>Import complete</h3>
+              <p>We extracted details from ${addedLinks.length} links. Review and complete the form below.</p>
+            `;
+
+            // Prefill some data (in production, this comes from the import)
+            document.getElementById('destination').value = 'Namibia';
+          }, 500);
+        }
+      }, 300);
+
+      // Track
+      if (window.gtag) {
+        gtag('event', 'instagram_import_started', { links_count: addedLinks.length });
+      }
+    }
+
+    // Destination suggestions
+    const destinationInput = document.getElementById('destination');
+    const suggestions = document.getElementById('destinationSuggestions');
+
+    destinationInput.addEventListener('focus', () => {
+      suggestions.classList.add('visible');
+    });
+
+    destinationInput.addEventListener('blur', () => {
+      setTimeout(() => suggestions.classList.remove('visible'), 200);
+    });
+
+    destinationInput.addEventListener('input', () => {
+      const value = destinationInput.value.toLowerCase();
+      const items = suggestions.querySelectorAll('.destination-suggestion');
+
+      items.forEach(item => {
+        const text = item.dataset.value.toLowerCase();
+        item.style.display = text.includes(value) ? 'block' : 'none';
+      });
+    });
+
+    suggestions.querySelectorAll('.destination-suggestion').forEach(item => {
+      item.addEventListener('click', () => {
+        destinationInput.value = item.dataset.value;
+        suggestions.classList.remove('visible');
+      });
+    });
+
+    // File upload
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const uploadedFilesContainer = document.getElementById('uploadedFiles');
+
+    uploadArea.addEventListener('click', () => fileInput.click());
+
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', () => {
+      handleFiles(fileInput.files);
+    });
+
+    function handleFiles(files) {
+      Array.from(files).forEach(file => {
+        if (file.size > 50 * 1024 * 1024) {
+          alert('File too large. Maximum size is 50MB.');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          uploadedFiles.push({
+            name: file.name,
+            type: file.type,
+            data: e.target.result
+          });
+          renderUploadedFiles();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderUploadedFiles() {
+      uploadedFilesContainer.innerHTML = uploadedFiles.map((file, i) => `
+        <div class="uploaded-file">
+          ${file.type.startsWith('image/')
+            ? `<img src="${file.data}" alt="${file.name}">`
+            : `<video src="${file.data}"></video>`
+          }
+          <button type="button" class="uploaded-file-remove" onclick="removeFile(${i})" aria-label="Remove file">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    window.removeFile = function(index) {
+      uploadedFiles.splice(index, 1);
+      renderUploadedFiles();
+    };
+
+    // Links
+    const linkInput = document.getElementById('linkInput');
+    const addLinkBtn = document.getElementById('addLinkBtn');
+    const addedLinksContainer = document.getElementById('addedLinks');
+
+    addLinkBtn.addEventListener('click', addLink);
+    linkInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        addLink();
+      }
+    });
+
+    function addLink() {
+      const url = linkInput.value.trim();
+      if (!url) return;
+
+      addedLinks.push(url);
+      renderLinks();
+      linkInput.value = '';
+    }
+
+    function renderLinks() {
+      const getIcon = (url) => {
+        if (url.includes('instagram.com')) {
+          return `<svg class="added-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>`;
+        }
+        return `<svg class="added-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>`;
+      };
+
+      addedLinksContainer.innerHTML = addedLinks.map((link, i) => `
+        <div class="added-link">
+          ${getIcon(link)}
+          <span>${link}</span>
+          <button type="button" onclick="removeLink(${i})" aria-label="Remove link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    window.removeLink = function(index) {
+      addedLinks.splice(index, 1);
+      renderLinks();
+    };
+
+    // Form submission
+    document.getElementById('createForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const destination = document.getElementById('destination').value.trim();
+      if (!destination) {
+        document.getElementById('destination').focus();
+        return;
+      }
+
+      const btn = document.getElementById('submitBtn');
+      btn.classList.add('loading');
+
+      // Track
+      if (window.gtag) {
+        gtag('event', 'itinerary_creation_started', {
+          destination: destination,
+          files_count: uploadedFiles.length,
+          links_count: addedLinks.length
+        });
+      }
+
+      // Build form data
+      const formData = {
+        destination,
+        files: uploadedFiles,
+        links: addedLinks,
+        creatorProfile: profileData
+      };
+
+      console.log('Creating itinerary:', formData);
+
+      // In production, send to API
+      // const response = await fetch('/api/itineraries/create', {
+      //   method: 'POST',
+      //   body: JSON.stringify(formData)
+      // });
+
+      // Simulate processing
+      document.getElementById('saveStatus').textContent = 'Building itinerary...';
+
+      setTimeout(() => {
+        // Track
+        if (window.gtag) {
+          gtag('event', 'itinerary_draft_generated', {
+            destination: destination
+          });
+        }
+
+        // Redirect to edit page (in production, use the returned itinerary ID)
+        alert('Itinerary draft created! In production, you would be redirected to the edit page.');
+        // window.location.href = `/creators/edit.html?id=${itineraryId}`;
+      }, 2000);
+    });
+
+    // Track page view
+    if (window.gtag) {
+      gtag('event', 'page_view', { page_title: 'Create Itinerary' });
+    }
+  </script>
+</body>
+</html>

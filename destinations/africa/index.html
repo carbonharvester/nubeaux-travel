@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Explore Africa with curated travel itineraries. Discover safari, beach, and cultural trips across Namibia, Kenya, South Africa, Mozambique, and Senegal.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Africa | Destinations | NUBEAUX Travel</title>
+
+  <link rel="canonical" href="https://www.nubeauxtravel.com/destinations/africa/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/style.css?v=23">
+
+  <style>
+    /* Region Page Styles */
+    .region-hero {
+      padding: calc(var(--header-height) + var(--space-xl)) 0 var(--space-lg);
+      background: var(--color-white);
+    }
+
+    .region-hero .container {
+      max-width: 800px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-medium-grey);
+      margin-bottom: var(--space-md);
+    }
+
+    .breadcrumb a {
+      color: var(--color-medium-grey);
+      transition: color var(--transition-fast);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--color-text);
+    }
+
+    .breadcrumb svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .region-hero h1 {
+      margin-bottom: var(--space-md);
+    }
+
+    .region-intro {
+      font-size: 1.0625rem;
+      color: var(--color-text-light);
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    /* Countries Section */
+    .countries-section {
+      padding: var(--space-lg) 0 var(--space-2xl);
+      background: var(--color-sand);
+    }
+
+    .section-header {
+      margin-bottom: var(--space-lg);
+    }
+
+    .section-header h2 {
+      font-size: 0.8125rem;
+      font-family: var(--font-sans);
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-text-light);
+    }
+
+    /* Countries Grid */
+    .countries-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    /* Country Card */
+    .country-card {
+      position: relative;
+      display: block;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      background: var(--color-light-grey);
+    }
+
+    .country-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .country-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .country-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--space-md);
+      transition: background var(--transition-fast);
+    }
+
+    .country-card:hover .country-card-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%);
+    }
+
+    .country-card-content {
+      color: var(--color-white);
+    }
+
+    .country-trip-count {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: var(--space-xs);
+    }
+
+    .country-card h3 {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      color: var(--color-white);
+      margin-bottom: var(--space-xs);
+    }
+
+    .country-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-white);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .country-card:hover .country-card-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .country-card-cta svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* Browse All Section */
+    .browse-all-section {
+      padding: var(--space-xl) 0;
+      text-align: center;
+      background: var(--color-white);
+    }
+
+    .browse-all-section p {
+      margin-bottom: var(--space-md);
+      max-width: none;
+      color: var(--color-text-light);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .region-hero h1 {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .region-intro {
+      animation: fadeInUp 0.8s ease 0.1s forwards;
+      opacity: 0;
+    }
+
+    .animate-stagger .animate-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .animate-stagger.animated .animate-item {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .animate-stagger.animated .animate-item:nth-child(1) { transition-delay: 0s; }
+    .animate-stagger.animated .animate-item:nth-child(2) { transition-delay: 0.05s; }
+    .animate-stagger.animated .animate-item:nth-child(3) { transition-delay: 0.1s; }
+    .animate-stagger.animated .animate-item:nth-child(4) { transition-delay: 0.15s; }
+    .animate-stagger.animated .animate-item:nth-child(5) { transition-delay: 0.2s; }
+    .animate-stagger.animated .animate-item:nth-child(6) { transition-delay: 0.25s; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .countries-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .region-hero {
+        padding: calc(var(--header-height) + var(--space-lg)) 0 var(--space-md);
+      }
+
+      .region-hero h1 {
+        font-size: 2rem;
+      }
+
+      .countries-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+      }
+
+      .country-card {
+        aspect-ratio: 3/2;
+      }
+
+      .country-card-cta {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="../../trips/" class="logo"><img src="../../assets/logo.svg" alt="NUBEAUX"></a>
+
+      <nav class="nav">
+        <a href="../../trips/">Explore trips</a>
+        <a href="../" class="nav-active">Destinations</a>
+        <a href="mailto:support@nubeauxtravel.com">Support</a>
+      </nav>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <a href="../../trips/">Explore trips</a>
+    <a href="../">Destinations</a>
+    <a href="mailto:support@nubeauxtravel.com">Support</a>
+  </div>
+
+  <main>
+    <!-- Hero -->
+    <section class="region-hero">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="../">Destinations</a>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+          <span>Africa</span>
+        </nav>
+        <h1>Africa</h1>
+        <p class="region-intro">The world's second-largest continent spans deserts, savannas, coastlines, and rainforests. Travellers come for wildlife encounters, ancient cultures, and landscapes found nowhere else on Earth.</p>
+      </div>
+    </section>
+
+    <!-- Countries Grid -->
+    <section class="countries-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Countries</h2>
+        </div>
+
+        <div class="countries-grid animate-stagger" id="countriesGrid">
+          <!-- Namibia -->
+          <a href="namibia.html" class="country-card animate-item">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_625,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Namibia landscape with wildlife" loading="eager">
+            <div class="country-card-overlay">
+              <div class="country-card-content">
+                <span class="country-trip-count">1 trip</span>
+                <h3>Namibia</h3>
+                <span class="country-card-cta">
+                  View trips
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <!-- South Africa -->
+          <a href="south-africa.html" class="country-card animate-item">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_625,q_auto,f_auto/v1770005011/S_africa_Klein-2_xqck3i.jpg" alt="South African landscape" loading="lazy">
+            <div class="country-card-overlay">
+              <div class="country-card-content">
+                <span class="country-trip-count">1 trip</span>
+                <h3>South Africa</h3>
+                <span class="country-card-cta">
+                  View trips
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Mozambique -->
+          <a href="mozambique.html" class="country-card animate-item">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_625,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Mozambique beach" loading="lazy">
+            <div class="country-card-overlay">
+              <div class="country-card-content">
+                <span class="country-trip-count">1 trip</span>
+                <h3>Mozambique</h3>
+                <span class="country-card-cta">
+                  View trips
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Kenya -->
+          <a href="kenya.html" class="country-card animate-item">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_625,q_auto,f_auto/v1769949645/RNI-Films-IMG-85112780-9D4C-4BC0-AC22-80A31BF1E813_x2eyd3.jpg" alt="Kenya coastal scene" loading="lazy">
+            <div class="country-card-overlay">
+              <div class="country-card-content">
+                <span class="country-trip-count">2 trips</span>
+                <h3>Kenya</h3>
+                <span class="country-card-cta">
+                  View trips
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Senegal -->
+          <a href="senegal.html" class="country-card animate-item">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_625,q_auto,f_auto/v1769949679/dest_senegal_s3ij6n.jpg" alt="Senegal cultural scene" loading="lazy">
+            <div class="country-card-overlay">
+              <div class="country-card-content">
+                <span class="country-trip-count">1 trip</span>
+                <h3>Senegal</h3>
+                <span class="country-card-cta">
+                  View trips
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Browse All CTA -->
+    <section class="browse-all-section">
+      <div class="container">
+        <p>Want to see all African trips at once?</p>
+        <a href="../../trips/?region=africa" class="btn btn-dark">Browse all Africa trips</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../../assets/logo.svg" alt="NUBEAUX">
+          <p>Curated luxury travel experiences from creatives who've been there. Authentic journeys across Africa and beyond.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Explore</h4>
+          <div class="footer-links">
+            <a href="../../trips/">Trips</a>
+            <a href="../">Destinations</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="../../about.html">About</a>
+            <a href="mailto:support@nubeauxtravel.com">Support</a>
+            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Connect</h4>
+          <div class="footer-links">
+            <a href="mailto:hello@nubeauxtravel.com">hello@nubeauxtravel.com</a>
+            <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
+            <a href="https://tiktok.com/@nubeauxtravel" target="_blank">TikTok</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a> Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js?v=2"></script>
+  <script src="../../js/voice-agent.js?v=4"></script>
+  <script>
+    // Analytics
+    function trackEvent(eventName, params = {}) {
+      if (window.gtag) {
+        gtag('event', eventName, params);
+      }
+      console.log('Track:', eventName, params);
+    }
+
+    trackEvent('Region_View', { region: 'Africa' });
+
+    // Track country clicks
+    document.querySelectorAll('.country-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const country = card.querySelector('h3').textContent;
+        trackEvent('Country_Click', { region: 'Africa', country: country });
+      });
+    });
+
+    // Scroll animations
+    const animateOnScroll = () => {
+      const options = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, options);
+
+      document.querySelectorAll('.animate-stagger').forEach(el => {
+        observer.observe(el);
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', animateOnScroll);
+    } else {
+      animateOnScroll();
+    }
+  </script>
+</body>
+</html>
