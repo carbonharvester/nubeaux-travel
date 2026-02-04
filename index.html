@@ -108,12 +108,35 @@
       display: flex;
       gap: var(--space-md);
       align-items: center;
+      flex-wrap: nowrap;
     }
 
     .hero-ctas .btn-outline:hover {
       background: var(--color-accent) !important;
       border-color: var(--color-accent) !important;
       color: white !important;
+    }
+
+    /* Mobile: Keep CTAs on same line, smaller */
+    @media (max-width: 768px) {
+      .hero-ctas {
+        gap: var(--space-sm);
+      }
+      .hero-ctas .btn {
+        padding: 0.7rem 1rem !important;
+        font-size: 0.65rem !important;
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .hero-ctas {
+        gap: 0.5rem;
+      }
+      .hero-ctas .btn {
+        padding: 0.6rem 0.75rem !important;
+        font-size: 0.6rem !important;
+      }
     }
 
     /* Section Label */
@@ -1090,7 +1113,7 @@
 
   <!-- Sticky Mobile CTA -->
   <div class="sticky-mobile-cta hidden" id="stickyMobileCta">
-    <a href="creators/start.html" class="btn btn-primary">Create an itinerary</a>
+    <a href="creators/start.html" class="btn btn-primary">Start earning</a>
   </div>
 
   <script src="js/main.js?v=2"></script>
