@@ -632,31 +632,24 @@
       margin-left: auto;
     }
 
-    /* DM Mockups */
-    .dm-mockups {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-md);
-      margin-bottom: var(--space-lg);
-      flex-wrap: wrap;
+    /* Comments Video */
+    .comments-video-container {
+      max-width: 400px;
+      margin: 0 auto var(--space-lg);
+      border-radius: 12px;
+      overflow: hidden;
     }
 
-    .dm-bubble {
-      background: #f0f0f0;
-      padding: var(--space-sm) var(--space-md);
-      border-radius: 18px;
-      border-bottom-left-radius: 4px;
-      font-size: 0.9375rem;
-      max-width: 280px;
-      position: relative;
+    .comments-video {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
-    .dm-bubble::before {
-      content: '';
-      position: absolute;
-      top: -8px;
-      left: 12px;
-      width: 24px;
+    @media (max-width: 480px) {
+      .comments-video-container {
+        max-width: 100%;
+      }
       height: 24px;
       background: #e1e1e1;
       border-radius: 50%;
@@ -786,10 +779,6 @@
         margin-left: 0;
       }
 
-      .dm-mockups {
-        flex-direction: column;
-        align-items: center;
-      }
 
       .faq-grid {
         grid-template-columns: 1fr;
@@ -863,10 +852,10 @@
       <div class="container">
         <span class="section-label">For Creators</span>
         <h2 id="pain-heading">Your DMs are full of the same question.</h2>
-        <div class="dm-mockups">
-          <div class="dm-bubble">"Where did you stay in Namibia? I need details!"</div>
-          <div class="dm-bubble">"Can you send me the full itinerary?"</div>
-          <div class="dm-bubble">"How do I actually book this trip?"</div>
+        <div class="comments-video-container">
+          <video autoplay muted loop playsinline class="comments-video">
+            <source src="assets/instagram-comments.mov" type="video/quicktime">
+          </video>
         </div>
         <p class="pain-body">
           You reply. You forget. You move on. All that interest, going nowhere.<br><br>
