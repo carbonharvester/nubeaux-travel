@@ -1068,6 +1068,28 @@
       .sidebar-cta {
         display: none;
       }
+
+      /* Stay cards on mobile */
+      .stays-scroll {
+        scroll-padding-left: calc(50% - 140px);
+        padding-left: calc(50% - 140px);
+        padding-right: calc(50% - 140px);
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-medium-grey) var(--color-light-grey);
+      }
+
+      .stay-card {
+        scroll-snap-align: center;
+      }
+
+      .stay-card-location,
+      .stay-card-nights {
+        display: none;
+      }
+
+      .stay-card-name {
+        margin-bottom: 0;
+      }
     }
 
     /* Minimal footer for itinerary */
