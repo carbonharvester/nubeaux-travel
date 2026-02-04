@@ -36,9 +36,19 @@
       top: 0;
     }
 
-    /* Header padding fix */
+    /* Header - remove max-width to align logo with hero */
     .header .header-inner {
       padding: 0 var(--space-lg);
+      max-width: none;
+      margin: 0;
+    }
+
+    /* Nav button group */
+    .nav a.nav-cta {
+      padding: 0.5rem 1rem !important;
+      margin-left: var(--space-sm) !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
     }
 
     /* Login button style */
@@ -47,6 +57,7 @@
       padding: 0.5rem 1rem !important;
       font-size: 0.75rem !important;
       letter-spacing: 0.08em !important;
+      margin-left: var(--space-xs) !important;
       transition: all var(--transition-fast) !important;
     }
     .nav-login:hover {
