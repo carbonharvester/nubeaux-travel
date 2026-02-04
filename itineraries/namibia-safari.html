@@ -410,6 +410,8 @@
     .stay-card {
       flex: 0 0 280px;
       scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
     }
 
     .stay-card-header {
@@ -443,7 +445,8 @@
 
     .stay-card-image {
       position: relative;
-      aspect-ratio: 1/1;
+      flex: 1;
+      min-height: 280px;
       overflow: hidden;
       margin-bottom: var(--space-sm);
     }
