@@ -60,39 +60,32 @@
       animation: fadeInUp 0.8s ease forwards;
     }
 
-    .hero-content .lead {
-      animation: fadeInUp 0.8s ease 0.15s forwards;
-      opacity: 0;
-    }
-
     .hero-content .btn {
       animation: fadeInUp 0.8s ease 0.2s forwards;
       opacity: 0;
     }
 
-    .hero-content .hero-trust {
-      animation: fadeInUp 0.8s ease 0.3s forwards;
-      opacity: 0;
+    /* Intro Section */
+    .intro-section {
+      padding: var(--space-xl) 0;
+      background: var(--color-white);
+      text-align: center;
     }
 
-    .hero-content .lead {
-      font-size: 1.25rem;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.9);
-      margin-bottom: var(--space-lg);
-      max-width: 500px;
+    .intro-section .intro-statement {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      line-height: 1.6;
+      color: var(--color-text);
+      max-width: 600px;
+      margin: 0 auto var(--space-md);
     }
 
-    .hero-ctas {
-      display: flex;
-      gap: var(--space-md);
-      align-items: center;
-      margin-bottom: var(--space-md);
-    }
-
-    .hero-trust {
+    .intro-section .btn-link {
       font-size: 0.875rem;
-      color: rgba(255,255,255,0.7);
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-underline-offset: 4px;
     }
 
 
@@ -773,13 +766,8 @@
     }
 
     @media (max-width: 768px) {
-      .hero-ctas {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .hero-ctas .btn {
-        text-align: center;
+      .intro-section .intro-statement {
+        font-size: 1.25rem;
       }
 
       .final-cta-buttons {
@@ -877,18 +865,21 @@
           <source src="https://res.cloudinary.com/dng12bd0a/video/upload/v1770020109/Onguma_sunset_02_qg2lic.mp4" type="video/mp4">
         </video>
       </div>
-      <div class="hero-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);"></div>
+      <div class="hero-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);"></div>
       <div class="hero-content hero-content-bottom-left">
-        <h1 class="hero-title" style="color: #ffffff;" id="hero-heading">Earn from the trips you already share.</h1>
-        <p class="lead">Share a trip. We handle the DMs, bookings, and payments. You earn when people book.</p>
-        <div class="hero-ctas">
-          <a href="creators/start.html" class="btn btn-primary">Create an itinerary</a>
-          <a href="itineraries/namibia-safari.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.5); color: white;">See a live example</a>
-        </div>
-        <p class="hero-trust">No admin. We've got you.</p>
+        <h1 class="hero-title" style="color: #ffffff;" id="hero-heading">Earn from the trips<br>you already share.</h1>
+        <a href="creators/start.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.7); color: white;">Create an itinerary</a>
       </div>
       <div class="scroll-indicator">
         <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- Intro Section -->
+    <section class="intro-section">
+      <div class="container">
+        <p class="intro-statement">Share a trip. We handle the DMs, bookings, and payments.<br>You earn when people book.</p>
+        <a href="itineraries/namibia-safari.html" class="btn-link">See a live example</a>
       </div>
     </section>
 
