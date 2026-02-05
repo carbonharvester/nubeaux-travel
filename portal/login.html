@@ -370,12 +370,18 @@
       }
     });
 
-    // Check if already logged in
-    const existingSession = supabase.auth.getSession();
-    const legacySession = localStorage.getItem('nubeaux_creator_session');
-
-    if (existingSession || legacySession) {
-      window.location.href = 'index.html';
+    // Check if already logged in (only redirect if valid session exists)
+    // Skip auto-redirect if ?logout param is present (allows manual logout)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has('logout')) {
+      const existingSession = supabase.auth.getSession();
+      if (existingSession && existingSession.accessToken) {
+        window.location.href = 'index.html';
+      }
+    } else {
+      // Clear session if logout param present
+      localStorage.removeItem('nubeaux_creator_session');
+      supabase.auth.signOut();
     }
   </script>
 </body>
