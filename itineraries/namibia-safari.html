@@ -1315,6 +1315,298 @@
         justify-content: center;
       }
     }
+
+    /* Instagram-style Profile Section */
+    .ig-profile-section {
+      background: var(--color-white);
+      padding: var(--space-lg) 0 var(--space-md);
+    }
+
+    .ig-profile-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      max-width: 1200px;
+      margin: 0 auto var(--space-md);
+      padding: 0 var(--space-md);
+    }
+
+    .ig-profile-avatar {
+      width: 77px;
+      height: 77px;
+      border-radius: 50%;
+      border: 1px solid var(--color-light-grey);
+      flex-shrink: 0;
+    }
+
+    .ig-profile-info {
+      flex: 1;
+    }
+
+    .ig-profile-label {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .ig-profile-username {
+      color: var(--color-text);
+      font-size: 1.125rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .ig-verified {
+      width: 16px;
+      height: 16px;
+      color: #3897f0;
+    }
+
+    .ig-profile-bio {
+      color: var(--color-text-light);
+      font-size: 0.8125rem;
+      line-height: 1.4;
+    }
+
+    /* Stories Carousel */
+    .stories-section {
+      background: var(--color-white);
+      padding: 0 var(--space-md);
+      max-width: 1200px;
+      margin: 0 auto;
+      box-sizing: content-box;
+    }
+
+    .stories-scroll {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 0 var(--space-sm);
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .stories-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .story-item {
+      flex: 0 0 auto !important;
+      scroll-snap-align: start;
+      cursor: pointer;
+      text-align: center;
+      width: 233px !important;
+      min-width: 233px !important;
+    }
+
+    .story-ring {
+      width: 188px !important;
+      height: 188px !important;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #F77737 100%);
+      margin: 0 auto 8px;
+    }
+
+    .story-ring-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid var(--color-white);
+      overflow: hidden;
+    }
+
+    .story-ring-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .story-label {
+      font-size: 0.8125rem;
+      color: var(--color-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+      margin: 0 auto;
+    }
+
+    /* Stories Lightbox */
+    .stories-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.98);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .stories-lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .stories-viewer {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      height: 90vh;
+      max-height: 700px;
+    }
+
+    .stories-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      gap: 4px;
+      padding: var(--space-sm);
+      z-index: 10;
+    }
+
+    .stories-progress-bar {
+      flex: 1;
+      height: 3px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .stories-progress-fill {
+      height: 100%;
+      background: var(--color-white);
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .stories-progress-bar.complete .stories-progress-fill {
+      width: 100%;
+    }
+
+    .stories-progress-bar.active .stories-progress-fill {
+      animation: storyProgress 5s linear forwards;
+    }
+
+    @keyframes storyProgress {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    .stories-media {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .stories-media img,
+    .stories-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stories-close {
+      position: absolute;
+      top: var(--space-lg);
+      right: var(--space-md);
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      color: var(--color-white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 15;
+    }
+
+    .stories-nav {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .stories-nav.prev { left: 0; }
+    .stories-nav.next { right: 0; }
+
+    .stories-header-info {
+      position: absolute;
+      top: var(--space-lg);
+      left: var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      z-index: 10;
+    }
+
+    .stories-header-info img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .stories-header-info span {
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* Posts/Reels Tabs */
+    .ig-tabs {
+      display: flex;
+      justify-content: center;
+      border-top: 1px solid var(--color-light-grey);
+      background: var(--color-white);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .ig-tab {
+      padding: var(--space-sm) var(--space-lg);
+      color: var(--color-medium-grey);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-top: 1px solid transparent;
+      margin-top: -1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ig-tab.active {
+      color: var(--color-text);
+      border-top-color: var(--color-text);
+    }
+
+    .ig-tab svg {
+      width: 12px;
+      height: 12px;
+    }
   </style>
 </head>
 <body>
@@ -1379,6 +1671,88 @@
         View gallery
       </button>
     </section>
+
+    <!-- Instagram-style Profile Section -->
+    <section class="ig-profile-section">
+      <div class="ig-profile-header">
+        <img class="ig-profile-avatar" src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_172,h_172,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
+        <div class="ig-profile-info">
+          <span class="ig-profile-label">Curated by</span>
+          <h3 class="ig-profile-username">
+            niathelight
+            <svg class="ig-verified" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </h3>
+          <p class="ig-profile-bio">Namibia, 2024</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stories Carousel -->
+    <section class="stories-section">
+      <div class="stories-scroll" id="storiesScroll">
+        <div class="story-item" data-story-group="wildlife">
+          <div class="story-ring">
+            <div class="story-ring-inner">
+              <img src="../assets/namibia-content/born-in-africa.jpg" alt="Wildlife">
+            </div>
+          </div>
+          <span class="story-label">Wildlife</span>
+        </div>
+        <div class="story-item" data-story-group="lodge">
+          <div class="story-ring">
+            <div class="story-ring-inner">
+              <img src="../assets/namibia-content/moving-to-africa.jpg" alt="The Lodge">
+            </div>
+          </div>
+          <span class="story-label">The Lodge</span>
+        </div>
+        <div class="story-item" data-story-group="safari">
+          <div class="story-ring">
+            <div class="story-ring-inner">
+              <img src="../assets/namibia-content/born-in-africa.jpg" alt="Safari">
+            </div>
+          </div>
+          <span class="story-label">Safari</span>
+        </div>
+        <div class="story-item" data-story-group="sunsets">
+          <div class="story-ring">
+            <div class="story-ring-inner">
+              <img src="../assets/namibia-content/moving-to-africa.jpg" alt="Sunsets">
+            </div>
+          </div>
+          <span class="story-label">Sunsets</span>
+        </div>
+        <div class="story-item" data-story-group="etosha">
+          <div class="story-ring">
+            <div class="story-ring-inner">
+              <img src="../assets/namibia-content/born-in-africa.jpg" alt="Etosha">
+            </div>
+          </div>
+          <span class="story-label">Etosha</span>
+        </div>
+        <div class="story-item" data-story-group="moments">
+          <div class="story-ring">
+            <div class="story-ring-inner">
+              <img src="../assets/namibia-content/moving-to-africa.jpg" alt="Moments">
+            </div>
+          </div>
+          <span class="story-label">Moments</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Gallery -->
+    <section class="content-gallery-section">
+      <div class="ig-tabs">
+        <div class="ig-tab active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Posts
+        </div>
+        <div class="ig-tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          Reels
+        </div>
+      </div>
 
     <!-- Snapshot Bar -->
     <section class="snapshot-bar">
