@@ -614,13 +614,29 @@
       });
     });
 
-    // Google auth - coming soon
+    // Google auth via Supabase OAuth
     document.getElementById('googleAuth').addEventListener('click', async () => {
+      const btn = document.getElementById('googleAuth');
+      btn.classList.add('loading');
+
       // Track analytics
       if (window.gtag) gtag('event', 'auth_provider_selected', { provider: 'google' });
 
-      // Show coming soon message
-      showError('Google sign-in coming soon! Please use email and password for now.');
+      try {
+        // Redirect to Supabase Google OAuth
+        const supabaseUrl = window.SUPABASE_URL || 'https://qnhqtlpkwscbguossfmn.supabase.co';
+        const redirectUrl = window.location.origin + '/creators/onboarding.html';
+
+        // Build OAuth URL
+        const authUrl = `${supabaseUrl}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(redirectUrl)}`;
+
+        // Redirect to Google OAuth
+        window.location.href = authUrl;
+      } catch (error) {
+        console.error('Google auth error:', error);
+        showError('Google sign in failed. Please try again or use email.');
+        btn.classList.remove('loading');
+      }
     });
 
     // Show error helper
@@ -672,19 +688,46 @@
       if (window.gtag) gtag('event', 'auth_provider_selected', { provider: 'email' });
 
       try {
-        // In production, call your auth API
-        // await signUpWithEmail(email, password);
-        console.log('Sign up:', { email });
+        // Sign up with Supabase Auth
+        const response = await fetch(`${window.SUPABASE_URL || 'https://qnhqtlpkwscbguossfmn.supabase.co'}/auth/v1/signup`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuaHF0bHBrd3NjYmd1b3NzZm1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwOTcwMjEsImV4cCI6MjA4NTY3MzAyMX0.yxFPvTLJnmCD0zxl_ub_ms7xXafcmR5rC6JuSm3Vzik'
+          },
+          body: JSON.stringify({ email, password })
+        });
 
-        // Simulate success - redirect to onboarding
-        setTimeout(() => {
-          window.location.href = 'onboarding.html';
-        }, 1000);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw { code: data.error_code || 'unknown', message: data.msg || data.error_description || 'Sign up failed' };
+        }
+
+        // Store session
+        if (data.access_token) {
+          localStorage.setItem('nubeaux_auth', JSON.stringify({
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token,
+            user: data.user,
+            expiresAt: Date.now() + (data.expires_in * 1000)
+          }));
+        }
+
+        // Store creator session
+        localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+          email: email,
+          loggedInAt: new Date().toISOString()
+        }));
+
+        // Redirect to onboarding
+        window.location.href = 'onboarding.html';
       } catch (error) {
-        if (error.code === 'email_exists') {
+        console.error('Signup error:', error);
+        if (error.message?.includes('already registered') || error.code === 'user_already_exists') {
           showError('An account with this email already exists. Try signing in instead.');
         } else {
-          showError('Sign up failed. Please try again.');
+          showError(error.message || 'Sign up failed. Please try again.');
         }
         btn.classList.remove('loading');
       }
