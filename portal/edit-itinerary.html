@@ -1539,8 +1539,15 @@
             <h3>Step 1: Sync Your Profile</h3>
           </div>
           <div class="ig-import-body">
-            <div style="display: flex; gap: 12px; margin-bottom: 12px;">
-              <input type="text" id="igProfileUrl" class="form-input" placeholder="instagram.com/yourusername" style="flex: 1;">
+            <div style="display: flex; gap: 12px; margin-bottom: 12px; align-items: center;">
+              <div style="position: relative; flex: 1; display: flex; align-items: center;">
+                <span style="position: absolute; left: 12px; color: var(--color-text-light);">@</span>
+                <input type="text" id="igProfileUrl" class="form-input" placeholder="Your verified Instagram" style="flex: 1; padding-left: 28px;">
+                <span id="verifiedBadge" style="display: none; position: absolute; right: 12px; color: #28a745; font-size: 0.75rem; display: flex; align-items: center; gap: 4px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  Verified
+                </span>
+              </div>
               <button type="button" class="ig-import-btn secondary" id="loadSavedBtn" onclick="loadSavedPosts()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 8l-5-5-5 5M12 3v12"/>
@@ -1857,6 +1864,24 @@
     const syncBanner = document.getElementById('syncBanner');
     const syncSpinner = document.getElementById('syncSpinner');
     const syncMessage = document.getElementById('syncMessage');
+
+    // Auto-fill verified Instagram (locked - can't be changed)
+    const sessionData = session ? JSON.parse(session) : null;
+    const verifiedInstagram = sessionData?.instagram || localStorage.getItem('nubeaux_verified_instagram') ? JSON.parse(localStorage.getItem('nubeaux_verified_instagram') || '{}').username : null;
+
+    if (verifiedInstagram) {
+      const igProfileInput = document.getElementById('igProfileUrl');
+      const verifiedBadge = document.getElementById('verifiedBadge');
+      igProfileInput.value = verifiedInstagram;
+      igProfileInput.readOnly = true;
+      igProfileInput.style.backgroundColor = '#f0fdf4';
+      igProfileInput.style.borderColor = '#86efac';
+      igProfileInput.style.cursor = 'not-allowed';
+      igProfileInput.title = 'Verified Instagram account (cannot be changed)';
+      if (verifiedBadge) {
+        verifiedBadge.style.display = 'flex';
+      }
+    }
 
     // Check and display sync status on page load
     checkSyncStatus();
