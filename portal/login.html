@@ -318,47 +318,53 @@
       loginBtn.textContent = 'Signing in...';
 
       try {
+        let loginSuccess = false;
+        let creator = null;
+
         // Try Supabase Auth first if configured
         if (window.SUPABASE_CONFIGURED) {
-          const { user } = await supabase.auth.signIn(email, password);
-
-          // Get creator profile
-          const creator = await NubeauxDB.getCreatorByEmail(email);
-
-          if (creator) {
-            // Store session info for easy access
-            localStorage.setItem('nubeaux_creator_session', JSON.stringify({
-              creatorId: creator.id,
-              handle: creator.handle,
-              email: email,
-              instagram: creator.instagram,
-              sync_status: creator.sync_status || 'pending',
-              loggedInAt: new Date().toISOString()
-            }));
-
-            // Trigger background sync if needed
-            await triggerBackgroundSyncIfNeeded(creator);
-
-            window.location.href = 'index.html';
-          } else {
-            throw new Error('Creator profile not found');
+          try {
+            const { user } = await supabase.auth.signIn(email, password);
+            // Get creator profile from database
+            creator = await NubeauxDB.getCreatorByEmail(email);
+            if (creator) {
+              loginSuccess = true;
+            }
+          } catch (supabaseError) {
+            console.log('Supabase auth failed, trying demo credentials...', supabaseError.message);
           }
-        } else {
-          // Fallback to demo credentials
-          await new Promise(resolve => setTimeout(resolve, 800));
+        }
 
+        // Fallback to demo credentials if Supabase auth failed or not configured
+        if (!loginSuccess) {
           if (email === DEMO_CREDENTIALS.email && password === DEMO_CREDENTIALS.password) {
-            localStorage.setItem('nubeaux_creator_session', JSON.stringify({
-              creatorId: 'nia-the-light',
-              email: email,
-              sync_status: 'pending',
-              loggedInAt: new Date().toISOString()
-            }));
-
-            window.location.href = 'index.html';
-          } else {
-            throw new Error('Invalid email or password');
+            // Try to get creator from database even for demo login
+            if (window.SUPABASE_CONFIGURED) {
+              creator = await NubeauxDB.getCreatorByEmail(email);
+            }
+            loginSuccess = true;
           }
+        }
+
+        if (loginSuccess) {
+          // Store session info
+          localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+            creatorId: creator?.id || 'nia-the-light',
+            handle: creator?.handle || 'niathelight',
+            email: email,
+            instagram: creator?.instagram || 'niathelight',
+            sync_status: creator?.sync_status || 'pending',
+            loggedInAt: new Date().toISOString()
+          }));
+
+          // Trigger background sync if needed
+          if (creator) {
+            await triggerBackgroundSyncIfNeeded(creator);
+          }
+
+          window.location.href = 'index.html';
+        } else {
+          throw new Error('Invalid email or password');
         }
       } catch (error) {
         console.error('Login error:', error);
