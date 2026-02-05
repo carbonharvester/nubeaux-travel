@@ -127,7 +127,9 @@ async function startApifyRun(username, dateFrom) {
     const requestBody = {
       directUrls: [`https://www.instagram.com/${username}/`],
       // Filter posts by date - defaults to 6 months if not specified
-      onlyPostsNewerThan: dateFrom || '6 months'
+      onlyPostsNewerThan: dateFrom || '6 months',
+      // Fetch more posts (default is often limited)
+      resultsLimit: 100
     };
 
     console.log('Apify request:', JSON.stringify(requestBody));
