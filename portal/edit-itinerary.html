@@ -1849,7 +1849,9 @@
     const syncSpinner = document.getElementById('syncSpinner');
     const syncMessage = document.getElementById('syncMessage');
 
-    // Auto-fill verified Instagram (locked - can't be changed)
+    // Auto-fill verified Instagram
+    // TODO: Re-enable lock after testing - remove editable flag
+    const TESTING_MODE = true; // Set to false to lock Instagram input
     const sessionData = session ? JSON.parse(session) : null;
     const verifiedInstagram = sessionData?.instagram || localStorage.getItem('nubeaux_verified_instagram') ? JSON.parse(localStorage.getItem('nubeaux_verified_instagram') || '{}').username : null;
 
@@ -1857,13 +1859,20 @@
       const igProfileInput = document.getElementById('igProfileUrl');
       const verifiedBadge = document.getElementById('verifiedBadge');
       igProfileInput.value = verifiedInstagram;
-      igProfileInput.readOnly = true;
-      igProfileInput.style.backgroundColor = '#f0fdf4';
-      igProfileInput.style.borderColor = '#86efac';
-      igProfileInput.style.cursor = 'not-allowed';
-      igProfileInput.title = 'Verified Instagram account (cannot be changed)';
-      if (verifiedBadge) {
-        verifiedBadge.style.display = 'flex';
+
+      if (!TESTING_MODE) {
+        // Lock the input in production
+        igProfileInput.readOnly = true;
+        igProfileInput.style.backgroundColor = '#f0fdf4';
+        igProfileInput.style.borderColor = '#86efac';
+        igProfileInput.style.cursor = 'not-allowed';
+        igProfileInput.title = 'Verified Instagram account (cannot be changed)';
+        if (verifiedBadge) {
+          verifiedBadge.style.display = 'flex';
+        }
+      } else {
+        // Testing mode - allow editing
+        igProfileInput.title = 'Testing mode: You can change this';
       }
     }
 
