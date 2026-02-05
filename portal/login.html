@@ -337,11 +337,17 @@
 
         // Fallback to demo credentials if Supabase auth failed or not configured
         if (!loginSuccess) {
-          if (email === DEMO_CREDENTIALS.email && password === DEMO_CREDENTIALS.password) {
+          console.log('Checking demo credentials...');
+          console.log('Input email:', email, 'Expected:', DEMO_CREDENTIALS.email);
+          console.log('Match:', email === DEMO_CREDENTIALS.email && password === DEMO_CREDENTIALS.password);
+
+          if (email.toLowerCase() === DEMO_CREDENTIALS.email.toLowerCase() && password === DEMO_CREDENTIALS.password) {
+            console.log('Demo credentials matched!');
             // Try to get creator from database even for demo login
             if (window.SUPABASE_CONFIGURED) {
               try {
                 creator = await NubeauxDB.getCreatorByEmail(email);
+                console.log('Creator from DB:', creator);
               } catch (dbError) {
                 console.log('Could not fetch creator from database:', dbError.message);
               }
