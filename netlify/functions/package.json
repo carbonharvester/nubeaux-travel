@@ -1,0 +1,8 @@
+{
+  "name": "nubeaux-functions",
+  "version": "1.0.0",
+  "description": "Netlify Functions for NUBEAUX Travel",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  }
+}

@@ -500,6 +500,65 @@
       color: white;
     }
 
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      background: var(--color-bg);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-item-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 24px;
+      height: 24px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .gallery-item:hover .gallery-item-remove {
+      opacity: 1;
+    }
+
+    .gallery-item-remove svg {
+      width: 14px;
+      height: 14px;
+      color: white;
+    }
+
+    .gallery-item-video::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.6) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpolygon points='5 3 19 12 5 21 5 3'/%3E%3C/svg%3E") center/50% no-repeat;
+      border-radius: 50%;
+    }
+
     /* Add Day Button */
     .add-day-btn {
       width: 100%;
@@ -717,6 +776,52 @@
       color: white;
     }
 
+    .hero-focal-point {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      margin-left: -18px;
+      margin-top: -18px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid var(--color-accent);
+      border-radius: 50%;
+      cursor: move;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      transition: transform 0.1s;
+    }
+
+    .hero-focal-point:hover {
+      transform: scale(1.1);
+    }
+
+    .hero-focal-point svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-accent);
+    }
+
+    .hero-focal-hint {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .hero-preview:hover .hero-focal-hint {
+      opacity: 1;
+    }
+
     /* Toast Notification */
     .toast {
       position: fixed;
@@ -827,6 +932,16 @@
       opacity: 0.6;
       cursor: not-allowed;
       transform: none;
+    }
+
+    .ig-import-btn.secondary {
+      background: var(--color-surface);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+    }
+
+    .ig-import-btn.secondary:hover {
+      background: var(--color-surface-hover, #f5f5f5);
     }
 
     .ig-import-btn svg {
@@ -964,6 +1079,238 @@
       opacity: 0.4;
     }
 
+    /* Synced Posts Grid */
+    .ig-posts-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 8px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .ig-post-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+
+    .ig-post-item:hover {
+      transform: scale(1.02);
+    }
+
+    .ig-post-item.selected {
+      border-color: var(--color-accent);
+    }
+
+    .ig-post-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ig-post-item .post-type-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .ig-post-item .post-type-badge svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    .ig-post-item .post-select-indicator {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid var(--color-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .ig-post-item .post-select-indicator.checked {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    .ig-post-item .post-select-indicator svg {
+      width: 12px;
+      height: 12px;
+      color: transparent;
+    }
+
+    .ig-post-item .post-select-indicator.checked svg {
+      color: white;
+    }
+
+    /* Highlights Grid */
+    .ig-highlights-container {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .ig-highlight-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .ig-highlight-item:hover {
+      transform: scale(1.05);
+    }
+
+    .ig-highlight-item .highlight-cover {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #F77737 100%);
+    }
+
+    .ig-highlight-item .highlight-cover img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    .ig-highlight-item .highlight-title {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--color-text);
+      max-width: 80px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .ig-highlight-item .highlight-count {
+      font-size: 0.6875rem;
+      color: var(--color-text-light);
+    }
+
+    /* Downloaded Stories Grid */
+    .stories-import-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .stories-import-header span {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+    }
+
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 8px;
+    }
+
+    .ig-story-item {
+      position: relative;
+      aspect-ratio: 9/16;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--color-bg);
+    }
+
+    .ig-story-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ig-story-item .story-type-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 20px;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .ig-story-item .story-type-badge svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    .ig-story-item {
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.15s;
+    }
+
+    .ig-story-item.selected {
+      border-color: var(--color-accent);
+    }
+
+    .ig-story-item .post-select-indicator {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 22px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid var(--color-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .ig-story-item.selected .post-select-indicator {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    .ig-story-item .post-select-indicator svg {
+      width: 12px;
+      height: 12px;
+      color: transparent;
+    }
+
+    .ig-story-item.selected .post-select-indicator svg {
+      color: white;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.8125rem;
+    }
+
     /* Stories Edit */
     .story-edit-item {
       display: flex;
@@ -1015,9 +1362,63 @@
         padding: 24px;
       }
     }
+
+    /* Sync Status Banner */
+    .sync-banner {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #f5ebe4 0%, #fff4f0 100%);
+      border-bottom: 1px solid var(--color-border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      z-index: 99;
+      font-size: 0.875rem;
+    }
+
+    .sync-banner.hidden {
+      display: none;
+    }
+
+    .sync-banner .sync-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .sync-banner .sync-message {
+      color: var(--color-text);
+    }
+
+    .sync-banner .sync-complete {
+      color: #22c55e;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sync-banner:not(.hidden) + .editor-layout {
+      margin-top: 108px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
+  <!-- Sync Status Banner -->
+  <div id="syncBanner" class="sync-banner hidden">
+    <div class="sync-spinner" id="syncSpinner"></div>
+    <span class="sync-message" id="syncMessage">Syncing your Instagram content...</span>
+  </div>
   <!-- Top Bar -->
   <header class="top-bar">
     <div class="top-bar-left">
@@ -1125,8 +1526,9 @@
       <!-- Instagram Content -->
       <section class="form-section">
         <h2 class="form-section-title">Your Instagram Content</h2>
-        <p class="form-hint" style="margin-bottom: 16px;">Import photos and videos from your Instagram posts to use in this itinerary.</p>
+        <p class="form-hint" style="margin-bottom: 16px;">Sync your Instagram profile to import posts and stories for this itinerary.</p>
 
+        <!-- Step 1: Profile Sync -->
         <div class="ig-import-section">
           <div class="ig-import-header">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1134,31 +1536,109 @@
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
               <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
             </svg>
-            <h3>Import from Instagram</h3>
+            <h3>Step 1: Sync Your Profile</h3>
           </div>
           <div class="ig-import-body">
-            <textarea
-              id="igUrls"
-              class="ig-url-input"
-              placeholder="Paste Instagram post URLs here (one per line)
-
-Example:
-https://www.instagram.com/p/ABC123/
-https://www.instagram.com/reel/XYZ789/"
-            ></textarea>
-            <div class="ig-import-actions">
-              <button type="button" class="ig-import-btn" id="importIgBtn" onclick="importInstagramContent()">
+            <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+              <input type="text" id="igProfileUrl" class="form-input" placeholder="instagram.com/yourusername" style="flex: 1;">
+              <button type="button" class="ig-import-btn secondary" id="loadSavedBtn" onclick="loadSavedPosts()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                  <polyline points="7 10 12 15 17 10"/>
-                  <line x1="12" y1="15" x2="12" y2="3"/>
+                  <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 8l-5-5-5 5M12 3v12"/>
                 </svg>
-                Import Content
+                Load Saved
               </button>
-              <span class="ig-import-status" id="igImportStatus"></span>
+              <button type="button" class="ig-import-btn" id="syncProfileBtn" onclick="syncInstagramProfile()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/>
+                </svg>
+                Sync New
+              </button>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <label style="font-size: 0.875rem; color: var(--color-text-light);">From:</label>
+                <input type="date" id="igDateFrom" class="form-input" style="width: auto;">
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <label style="font-size: 0.875rem; color: var(--color-text-light);">To:</label>
+                <input type="date" id="igDateTo" class="form-input" style="width: auto;">
+              </div>
+              <span style="font-size: 0.75rem; color: var(--color-text-light);">Load Saved = instant from database | Sync New = fetch from Instagram</span>
+            </div>
+            <span class="ig-import-status" id="syncProfileStatus"></span>
+
+            <!-- Synced Posts Grid -->
+            <div class="ig-posts-grid" id="igPostsGrid" style="display: none;">
+              <p class="form-hint" style="margin-bottom: 12px;">Select posts to include in this itinerary:</p>
+              <div class="ig-posts-container" id="igPostsContainer"></div>
+              <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="selectAllPosts()">Select All</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="clearAllPosts()">Clear All</button>
+                <button type="button" class="ig-import-btn" id="importSelectedBtn" onclick="importSelectedPosts()" style="display: none;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  Import Selected (<span id="selectedCount">0</span>)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Highlights/Stories -->
+        <div class="ig-import-section" style="margin-top: 24px;">
+          <div class="ig-import-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <h3>Step 2: Import Story Highlights</h3>
+          </div>
+          <div class="ig-import-body">
+            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+              <button type="button" class="ig-import-btn secondary" id="loadSavedHighlightsBtn" onclick="loadSavedHighlights()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                </svg>
+                Load Saved
+              </button>
+              <button type="button" class="ig-import-btn" id="getHighlightsBtn" onclick="getInstagramHighlights()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                Sync New
+              </button>
+            </div>
+            <span class="ig-import-status" id="highlightsStatus"></span>
+
+            <!-- Highlights Grid -->
+            <div class="ig-highlights-grid" id="igHighlightsGrid" style="display: none;">
+              <p class="form-hint" style="margin-bottom: 12px;">Select a highlight to download its stories:</p>
+              <div class="ig-highlights-container" id="igHighlightsContainer"></div>
             </div>
 
-            <!-- Imported Content Grid -->
+            <!-- Downloaded Stories -->
+            <div class="ig-stories-grid" id="igStoriesGrid" style="display: none; margin-top: 16px;">
+              <p class="form-hint" style="margin-bottom: 12px;">Stories from selected highlight:</p>
+              <div class="ig-stories-container" id="igStoriesContainer"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Imported Content Grid -->
+        <div class="ig-import-section" style="margin-top: 24px;">
+          <div class="ig-import-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <h3>Imported Content</h3>
+          </div>
+          <div class="ig-import-body">
             <div class="ig-content-grid" id="igContentGrid">
               <div class="ig-content-empty">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1171,14 +1651,64 @@ https://www.instagram.com/reel/XYZ789/"
             </div>
           </div>
         </div>
+
+        <!-- Legacy URL Paste (collapsed) -->
+        <details style="margin-top: 16px;">
+          <summary style="cursor: pointer; color: var(--color-text-light); font-size: 0.875rem;">Or paste URLs manually...</summary>
+          <div style="margin-top: 12px;">
+            <textarea
+              id="igUrls"
+              class="ig-url-input"
+              placeholder="Paste Instagram post URLs here (one per line)"
+              style="height: 80px;"
+            ></textarea>
+            <button type="button" class="ig-import-btn" id="importIgBtn" onclick="importInstagramContent()" style="margin-top: 8px;">
+              Import from URLs
+            </button>
+            <span class="ig-import-status" id="igImportStatus"></span>
+          </div>
+        </details>
       </section>
 
-      <!-- Stories -->
-      <section class="form-section">
-        <h2 class="form-section-title">Stories (Day Thumbnails)</h2>
-        <p class="form-hint" style="margin-bottom: 16px;">These circular thumbnails appear at the top of your itinerary. Each one links to that day's content.</p>
-        <div id="storiesList" class="stories-edit-list" style="display: flex; gap: 16px; flex-wrap: wrap;"></div>
-        <p class="form-hint" style="margin-top: 12px;">Story thumbnails are auto-generated from the first media of each day. Add media to your days below to create stories.</p>
+      <!-- AI Generate Itinerary -->
+      <section class="form-section" id="generateSection" style="background: linear-gradient(135deg, #f8f4ff 0%, #fff4f0 100%); border-radius: 12px; padding: 24px;">
+        <h2 class="form-section-title" style="display: flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+            <path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/>
+            <path d="M17.8 11.8L19 13"/><path d="M15 9h0"/><path d="M17.8 6.2L19 5"/>
+            <path d="m3 21 9-9"/><path d="M12.2 6.2L11 5"/>
+          </svg>
+          Generate Itinerary with AI
+        </h2>
+        <p class="form-hint" style="margin-bottom: 16px;">
+          Import your content above, then let AI create a complete itinerary with title, introduction, and day-by-day organization.
+        </p>
+
+        <div class="form-row" style="margin-bottom: 16px;">
+          <div class="form-group">
+            <label class="form-label" for="numDays">Number of Days</label>
+            <input type="number" id="numDays" class="form-input" min="1" max="30" value="4" style="width: 100px;">
+          </div>
+          <div class="form-group" style="flex: 2;">
+            <label class="form-label" for="tripContext">Trip Context (optional)</label>
+            <input type="text" id="tripContext" class="form-input" placeholder="e.g., Safari honeymoon, Family adventure, Solo backpacking...">
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <button type="button" class="ig-import-btn" id="generateItineraryBtn" onclick="generateItineraryWithAI()" style="font-size: 1rem; padding: 14px 28px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+              <path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/>
+              <path d="M17.8 11.8L19 13"/><path d="M15 9h0"/><path d="M17.8 6.2L19 5"/>
+              <path d="m3 21 9-9"/><path d="M12.2 6.2L11 5"/>
+            </svg>
+            Generate Itinerary
+          </button>
+          <span id="generateStatus" class="ig-import-status"></span>
+        </div>
+        <p class="form-hint" style="margin-top: 12px;">
+          <strong>Imported content:</strong> <span id="importedContentCount">0</span> items ready
+        </p>
       </section>
 
       <!-- Stays / Properties -->
@@ -1217,6 +1747,19 @@ https://www.instagram.com/reel/XYZ789/"
           <textarea id="included" class="form-textarea" rows="6" placeholder="List what's included (one item per line)..."></textarea>
           <p class="form-hint">Enter each inclusion on a new line</p>
         </div>
+      </section>
+
+      <!-- Gallery -->
+      <section class="form-section">
+        <h2 class="form-section-title">Gallery</h2>
+        <p class="form-hint" style="margin-bottom: 12px;">These images will appear in the trip gallery (View Gallery button)</p>
+        <div class="gallery-grid" id="galleryGrid">
+          <!-- Gallery items will be added here -->
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="addGalleryItem()" style="margin-top: 12px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Image
+        </button>
       </section>
     </main>
 
@@ -1291,6 +1834,14 @@ https://www.instagram.com/reel/XYZ789/"
       status: 'draft'
     };
 
+    // Instagram sync state (declared early to avoid temporal dead zone)
+    let syncedPosts = [];
+    let selectedPostIds = new Set();
+    let highlights = [];
+    let downloadedStories = [];
+    let selectedStoryIndices = new Set();
+    let importedContent = [];
+
     let currentStatus = 'draft';
 
     // Elements
@@ -1301,6 +1852,133 @@ https://www.instagram.com/reel/XYZ789/"
     const saveBtn = document.getElementById('saveBtn');
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toastMessage');
+
+    // Sync banner elements
+    const syncBanner = document.getElementById('syncBanner');
+    const syncSpinner = document.getElementById('syncSpinner');
+    const syncMessage = document.getElementById('syncMessage');
+
+    // Check and display sync status on page load
+    checkSyncStatus();
+
+    async function checkSyncStatus() {
+      const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+      const creatorId = session.creatorId;
+      const syncStatus = session.sync_status;
+
+      // If not logged in or already completed, don't show banner
+      if (!creatorId || syncStatus === 'completed') {
+        return;
+      }
+
+      // If syncing, show banner and start polling
+      if (syncStatus === 'syncing') {
+        showSyncBanner('Syncing your Instagram content...');
+        pollSyncStatus();
+        return;
+      }
+
+      // If pending and there's an Instagram handle, we might need to start sync
+      if (syncStatus === 'pending' && session.instagram) {
+        // Check if sync was started elsewhere
+        if (window.SUPABASE_CONFIGURED) {
+          try {
+            const status = await NubeauxDB.getCreatorSyncStatus(creatorId);
+            if (status && status.sync_status === 'syncing') {
+              session.sync_status = 'syncing';
+              localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+              showSyncBanner('Syncing your Instagram content...');
+              pollSyncStatus();
+            } else if (status && status.sync_status === 'completed') {
+              session.sync_status = 'completed';
+              session.last_synced_at = status.last_synced_at;
+              localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+            }
+          } catch (e) {
+            console.error('Error checking sync status:', e);
+          }
+        }
+      }
+    }
+
+    function showSyncBanner(message) {
+      syncBanner.classList.remove('hidden');
+      syncMessage.textContent = message;
+      syncSpinner.style.display = 'block';
+    }
+
+    function hideSyncBanner() {
+      syncBanner.classList.add('hidden');
+    }
+
+    function showSyncComplete() {
+      syncSpinner.style.display = 'none';
+      syncMessage.innerHTML = '<span class="sync-complete"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Instagram content synced! Click "Load Saved" to use your posts and highlights.</span>';
+
+      // Hide banner after 5 seconds
+      setTimeout(() => {
+        hideSyncBanner();
+      }, 5000);
+    }
+
+    async function pollSyncStatus() {
+      const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+      const creatorId = session.creatorId;
+
+      if (!creatorId || !window.SUPABASE_CONFIGURED) {
+        return;
+      }
+
+      let attempts = 0;
+      const maxAttempts = 60; // 5 minutes max (5s interval)
+
+      const poll = async () => {
+        attempts++;
+
+        try {
+          const status = await NubeauxDB.getCreatorSyncStatus(creatorId);
+
+          if (status && status.sync_status === 'completed') {
+            // Update session
+            session.sync_status = 'completed';
+            session.last_synced_at = status.last_synced_at;
+            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+
+            showSyncComplete();
+            showToast('Instagram content synced successfully!', 'success');
+            return;
+          }
+
+          if (status && status.sync_status === 'failed') {
+            session.sync_status = 'failed';
+            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+            hideSyncBanner();
+            showToast('Sync failed. Try "Sync New" to retry.', 'error');
+            return;
+          }
+
+          // Still syncing - update message with progress
+          const elapsed = attempts * 5;
+          syncMessage.textContent = `Syncing your Instagram content... (${elapsed}s)`;
+
+          // Continue polling if not exceeded max attempts
+          if (attempts < maxAttempts) {
+            setTimeout(poll, 5000);
+          } else {
+            hideSyncBanner();
+            showToast('Sync is taking longer than expected. Check back later.');
+          }
+        } catch (error) {
+          console.error('Error polling sync status:', error);
+          if (attempts < maxAttempts) {
+            setTimeout(poll, 5000);
+          }
+        }
+      };
+
+      // Start polling after initial delay
+      setTimeout(poll, 5000);
+    }
 
     // Load existing itinerary if editing
     const urlParams = new URLSearchParams(window.location.search);
@@ -1356,9 +2034,10 @@ https://www.instagram.com/reel/XYZ789/"
       updateStoriesPreview();
     }
 
-    // Update Stories Preview
+    // Update Stories Preview (section was removed, but keep function for compatibility)
     function updateStoriesPreview() {
       const storiesList = document.getElementById('storiesList');
+      if (!storiesList) return; // Section was removed
       const days = Array.from(daysList.children);
 
       let html = '';
@@ -1456,22 +2135,6 @@ https://www.instagram.com/reel/XYZ789/"
             <label class="form-label">Activities</label>
             <input type="text" class="form-input day-activities" placeholder="e.g., Morning Game Drive, Pool, Sundowners" value="${(day.activities || []).join(', ')}">
           </div>
-          <div class="form-group">
-            <label class="form-label">Media</label>
-            <div class="media-grid">
-              ${(day.media || []).map((m, i) => `
-                <div class="media-item">
-                  <img src="${m.url}" alt="">
-                  <div class="media-item-remove" onclick="removeMedia(this)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  </div>
-                </div>
-              `).join('')}
-              <div class="media-item media-item-add" onclick="addMedia(this)">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              </div>
-            </div>
-          </div>
         </div>
       `;
 
@@ -1513,10 +2176,14 @@ https://www.instagram.com/reel/XYZ789/"
       }
     });
 
-    function setHeroImage(src) {
+    function setHeroImage(src, focalX = 50, focalY = 50) {
       heroContainer.innerHTML = `
-        <div class="hero-preview">
-          <img src="${src}" alt="Hero">
+        <div class="hero-preview" id="heroPreviewContainer">
+          <img src="${src}" alt="Hero" style="object-position: ${focalX}% ${focalY}%;" id="heroImg">
+          <div class="hero-focal-point" id="heroFocalPoint" style="left: ${focalX}%; top: ${focalY}%;" title="Drag to adjust focal point">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+          </div>
+          <div class="hero-focal-hint">Drag crosshair to set focal point</div>
           <div class="hero-preview-actions">
             <button type="button" class="hero-preview-btn" onclick="changeHeroImage()" title="Change Image">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -1528,7 +2195,56 @@ https://www.instagram.com/reel/XYZ789/"
         </div>
       `;
       itineraryData.heroImage = src;
+      itineraryData.heroFocalX = focalX;
+      itineraryData.heroFocalY = focalY;
       updatePreview();
+      initHeroFocalDrag();
+    }
+
+    function initHeroFocalDrag() {
+      const container = document.getElementById('heroPreviewContainer');
+      const focalPoint = document.getElementById('heroFocalPoint');
+      const heroImg = document.getElementById('heroImg');
+      if (!container || !focalPoint) return;
+
+      let isDragging = false;
+
+      const updateFocalPoint = (e) => {
+        const rect = container.getBoundingClientRect();
+        let x = ((e.clientX - rect.left) / rect.width) * 100;
+        let y = ((e.clientY - rect.top) / rect.height) * 100;
+
+        // Clamp values
+        x = Math.max(0, Math.min(100, x));
+        y = Math.max(0, Math.min(100, y));
+
+        focalPoint.style.left = x + '%';
+        focalPoint.style.top = y + '%';
+        heroImg.style.objectPosition = `${x}% ${y}%`;
+
+        itineraryData.heroFocalX = x;
+        itineraryData.heroFocalY = y;
+      };
+
+      focalPoint.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        e.preventDefault();
+      });
+
+      container.addEventListener('click', (e) => {
+        if (e.target.closest('.hero-preview-actions')) return;
+        updateFocalPoint(e);
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+          updateFocalPoint(e);
+        }
+      });
+
+      document.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
     }
 
     function changeHeroImage() {
@@ -1693,6 +2409,63 @@ https://www.instagram.com/reel/XYZ789/"
       updateStoriesPreview();
     }
 
+    // Gallery functions
+    function addGalleryItem(imageUrl = null, isVideo = false) {
+      const grid = document.getElementById('galleryGrid');
+
+      if (imageUrl) {
+        // Add from URL (e.g., from imported content)
+        const item = document.createElement('div');
+        item.className = 'gallery-item' + (isVideo ? ' gallery-item-video' : '');
+        item.innerHTML = `
+          <img src="${imageUrl}" alt="">
+          <div class="gallery-item-remove" onclick="removeGalleryItem(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+        `;
+        grid.appendChild(item);
+      } else {
+        // Add from file picker
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*,video/*';
+        input.multiple = true;
+        input.onchange = (e) => {
+          Array.from(e.target.files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              const item = document.createElement('div');
+              item.className = 'gallery-item' + (file.type.startsWith('video') ? ' gallery-item-video' : '');
+              item.innerHTML = `
+                <img src="${ev.target.result}" alt="">
+                <div class="gallery-item-remove" onclick="removeGalleryItem(this)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </div>
+              `;
+              grid.appendChild(item);
+            };
+            reader.readAsDataURL(file);
+          });
+        };
+        input.click();
+      }
+    }
+
+    function removeGalleryItem(btn) {
+      btn.closest('.gallery-item').remove();
+    }
+
+    function clearGallery() {
+      document.getElementById('galleryGrid').innerHTML = '';
+    }
+
+    function populateGallery(items) {
+      clearGallery();
+      items.forEach(item => {
+        addGalleryItem(item.url || item.thumbnail_url, item.type === 'video' || item.type === 'Video');
+      });
+    }
+
     // Save
     saveBtn.addEventListener('click', () => {
       // Gather data
@@ -1739,13 +2512,9 @@ https://www.instagram.com/reel/XYZ789/"
       showToast('Itinerary saved successfully!', 'success');
     });
 
-    // Preview button
+    // Preview button - shows modal preview without requiring save
     document.getElementById('previewBtn').addEventListener('click', () => {
-      if (editId) {
-        window.open(`../itineraries/${editId}.html`, '_blank');
-      } else {
-        showToast('Save the itinerary first to preview');
-      }
+      showPreviewModal();
     });
 
     // AI Wand Functions
@@ -1871,8 +2640,6 @@ https://www.instagram.com/reel/XYZ789/"
     }
 
     // Instagram Content Import
-    let importedContent = [];
-
     function parseInstagramUrls(text) {
       const lines = text.split('\n').map(l => l.trim()).filter(l => l);
       const urlPattern = /instagram\.com\/(p|reel|tv)\/([A-Za-z0-9_-]+)/;
@@ -2015,6 +2782,10 @@ https://www.instagram.com/reel/XYZ789/"
           </div>
         `;
       }).join('');
+
+      // Update count display
+      const countEl = document.getElementById('importedContentCount');
+      if (countEl) countEl.textContent = importedContent.length;
     }
 
     function removeImportedContent(index) {
@@ -2044,6 +2815,1075 @@ https://www.instagram.com/reel/XYZ789/"
         status: item.status
       }));
     }
+
+    // ===========================================
+    // Instagram Profile Sync Functions (Apify)
+    // ===========================================
+
+    // Get creator ID from session
+    function getCreatorId() {
+      const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+      return session.id || 'demo';
+    }
+
+    // Extract username from profile URL
+    function extractUsername(url) {
+      const match = url.match(/instagram\.com\/([A-Za-z0-9._]+)/);
+      if (match) {
+        const reserved = ['p', 'reel', 'tv', 'stories', 'explore', 'accounts', 'direct'];
+        if (!reserved.includes(match[1].toLowerCase())) {
+          return match[1];
+        }
+      }
+      if (/^[A-Za-z0-9._]+$/.test(url)) {
+        return url;
+      }
+      return null;
+    }
+
+    // Load saved posts from database (instant, no scraping)
+    async function loadSavedPosts() {
+      const loadBtn = document.getElementById('loadSavedBtn');
+      const statusEl = document.getElementById('syncProfileStatus');
+      const postsGrid = document.getElementById('igPostsGrid');
+
+      // Get date filters
+      const dateFromInput = document.getElementById('igDateFrom');
+      const dateToInput = document.getElementById('igDateTo');
+      const dateFrom = dateFromInput.value || null;
+      const dateTo = dateToInput.value || null;
+
+      // Show loading state
+      loadBtn.disabled = true;
+      loadBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+        </svg>
+        Loading...
+      `;
+      statusEl.textContent = 'Loading saved posts...';
+      statusEl.className = 'ig-import-status processing';
+
+      try {
+        const response = await fetch('/.netlify/functions/sync-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'load',
+            creator_id: getCreatorId(),
+            date_from: dateFrom,
+            date_to: dateTo
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          syncedPosts = result.posts || [];
+          selectedPostIds.clear();
+          renderSyncedPosts();
+          postsGrid.style.display = 'block';
+          statusEl.textContent = `Loaded ${syncedPosts.length} saved posts${dateFrom || dateTo ? ' (filtered by date)' : ''}`;
+          statusEl.className = 'ig-import-status success';
+        } else {
+          throw new Error(result.error || 'Failed to load posts');
+        }
+      } catch (error) {
+        console.error('Load posts error:', error);
+        statusEl.textContent = 'Failed to load: ' + error.message;
+        statusEl.className = 'ig-import-status error';
+      }
+
+      // Reset button
+      loadBtn.disabled = false;
+      loadBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+        Load Saved
+      `;
+    }
+
+    // Step 1: Sync Instagram Profile Posts (fetch new from Instagram)
+    async function syncInstagramProfile() {
+      const profileInput = document.getElementById('igProfileUrl');
+      const syncBtn = document.getElementById('syncProfileBtn');
+      const statusEl = document.getElementById('syncProfileStatus');
+      const postsGrid = document.getElementById('igPostsGrid');
+      const postsContainer = document.getElementById('igPostsContainer');
+
+      const profileUrl = profileInput.value.trim();
+      if (!profileUrl) {
+        showToast('Please enter your Instagram profile URL');
+        return;
+      }
+
+      const username = extractUsername(profileUrl);
+      if (!username) {
+        showToast('Invalid Instagram profile URL');
+        return;
+      }
+
+      // Show loading state
+      syncBtn.disabled = true;
+      syncBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+        </svg>
+        Starting sync...
+      `;
+      statusEl.textContent = 'Starting Instagram scraper...';
+      statusEl.className = 'ig-import-status processing';
+
+      try {
+        // Get date filters from inputs (if set)
+        const dateFromInput = document.getElementById('igDateFrom');
+        const dateToInput = document.getElementById('igDateTo');
+        const dateFrom = dateFromInput.value || null;
+        const dateTo = dateToInput.value || null;
+
+        // Step 1: Start the sync (returns run_id immediately)
+        const startResponse = await fetch('/.netlify/functions/sync-profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            profile_url: profileUrl,
+            creator_id: getCreatorId(),
+            date_from: dateFrom,
+            date_to: dateTo
+          })
+        });
+
+        const startResult = await startResponse.json();
+
+        if (!startResult.success) {
+          throw new Error(startResult.error || 'Failed to start sync');
+        }
+
+        const runId = startResult.run_id;
+        statusEl.textContent = `Scraping @${username}... This may take 1-2 minutes.`;
+        syncBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+            <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+          </svg>
+          Scraping @${username}...
+        `;
+
+        // Step 2: Poll for completion
+        let attempts = 0;
+        const maxAttempts = 60; // 5 minutes max (5 sec intervals)
+
+        while (attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds
+          attempts++;
+
+          const pollResponse = await fetch('/.netlify/functions/sync-profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              run_id: runId,
+              creator_id: getCreatorId(),
+              date_to: dateTo
+            })
+          });
+
+          const pollResult = await pollResponse.json();
+
+          if (pollResult.status === 'completed') {
+            // Success! Show the posts
+            syncedPosts = pollResult.posts || [];
+            selectedPostIds.clear();
+            renderSyncedPosts();
+            postsGrid.style.display = 'block';
+            statusEl.textContent = `Found ${syncedPosts.length} posts from @${username}`;
+            statusEl.className = 'ig-import-status success';
+            showToast(`Synced ${syncedPosts.length} posts!`, 'success');
+            break;
+          } else if (pollResult.status === 'failed') {
+            throw new Error(pollResult.error || 'Scraping failed');
+          } else {
+            // Still processing - update status
+            statusEl.textContent = `Scraping @${username}... (${attempts * 5}s)`;
+          }
+        }
+
+        if (attempts >= maxAttempts) {
+          throw new Error('Sync timed out after 5 minutes');
+        }
+
+      } catch (error) {
+        console.error('Profile sync error:', error);
+        statusEl.textContent = 'Sync failed: ' + error.message;
+        statusEl.className = 'ig-import-status error';
+        showToast('Failed to sync profile: ' + error.message);
+      }
+
+      // Reset button
+      syncBtn.disabled = false;
+      syncBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/>
+        </svg>
+        Sync Posts
+      `;
+    }
+
+    // Render synced posts grid
+    function renderSyncedPosts() {
+      const container = document.getElementById('igPostsContainer');
+      const importBtn = document.getElementById('importSelectedBtn');
+
+      if (syncedPosts.length === 0) {
+        container.innerHTML = '<p style="color: var(--color-text-light);">No posts found</p>';
+        importBtn.style.display = 'none';
+        return;
+      }
+
+      container.innerHTML = syncedPosts.map(post => {
+        const shortcode = post.shortcode || post.shortCode;
+        const isSelected = selectedPostIds.has(shortcode);
+        const isVideo = post.post_type === 'Video' || post.video_url;
+        const isCarousel = post.post_type === 'Sidecar';
+
+        // thumbnail_url now contains Cloudinary URL (uploaded during sync)
+        // Fallback to display_url if thumbnail_url not available
+        const cloudinaryUrl = post.thumbnail_url;
+        const placeholderUrl = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23e5e5e5" width="100" height="100"/%3E%3C/svg%3E';
+        const thumbnailSrc = cloudinaryUrl || placeholderUrl;
+
+        return `
+          <div class="ig-post-item ${isSelected ? 'selected' : ''}"
+               data-shortcode="${shortcode}"
+               onclick="togglePostSelection('${shortcode}')">
+            <img src="${thumbnailSrc}" alt="${post.caption ? post.caption.substring(0, 50) : 'Instagram post'}"
+                 onerror="this.src='${placeholderUrl}'">
+            ${isVideo ? '<div class="post-type-badge video"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>' : ''}
+            ${isCarousel ? '<div class="post-type-badge carousel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M21 12H9"/></svg></div>' : ''}
+            <div class="post-select-indicator ${isSelected ? 'checked' : ''}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateSelectedCount();
+    }
+
+    // Toggle post selection
+    function togglePostSelection(shortcode) {
+      if (selectedPostIds.has(shortcode)) {
+        selectedPostIds.delete(shortcode);
+      } else {
+        selectedPostIds.add(shortcode);
+      }
+
+      // Update UI
+      const item = document.querySelector(`.ig-post-item[data-shortcode="${shortcode}"]`);
+      if (item) {
+        item.classList.toggle('selected', selectedPostIds.has(shortcode));
+        const indicator = item.querySelector('.post-select-indicator');
+        if (indicator) {
+          indicator.classList.toggle('checked', selectedPostIds.has(shortcode));
+        }
+      }
+
+      updateSelectedCount();
+    }
+
+    // Select all posts
+    function selectAllPosts() {
+      syncedPosts.forEach(post => {
+        const shortcode = post.shortcode || post.shortCode;
+        if (shortcode) {
+          selectedPostIds.add(shortcode);
+        }
+      });
+      updatePostSelectionUI();
+    }
+
+    // Clear all post selections
+    function clearAllPosts() {
+      selectedPostIds.clear();
+      updatePostSelectionUI();
+    }
+
+    // Update all post selection UI
+    function updatePostSelectionUI() {
+      document.querySelectorAll('.ig-post-item').forEach(item => {
+        const shortcode = item.dataset.shortcode;
+        const isSelected = selectedPostIds.has(shortcode);
+        item.classList.toggle('selected', isSelected);
+        const indicator = item.querySelector('.post-select-indicator');
+        if (indicator) {
+          indicator.classList.toggle('checked', isSelected);
+        }
+      });
+      updateSelectedCount();
+    }
+
+    // Update selected count
+    function updateSelectedCount() {
+      const countEl = document.getElementById('selectedCount');
+      const importBtn = document.getElementById('importSelectedBtn');
+      countEl.textContent = selectedPostIds.size;
+      importBtn.style.display = selectedPostIds.size > 0 ? 'inline-flex' : 'none';
+    }
+
+    // Import selected posts to itinerary
+    async function importSelectedPosts() {
+      if (selectedPostIds.size === 0) {
+        showToast('Please select posts to import');
+        return;
+      }
+
+      // Handle both shortcode and shortCode (API returns camelCase, DB returns snake_case)
+      const selectedPosts = syncedPosts.filter(p => {
+        const code = p.shortcode || p.shortCode;
+        return selectedPostIds.has(code);
+      });
+
+      // Add to imported content
+      selectedPosts.forEach(post => {
+        const shortcode = post.shortcode || post.shortCode;
+        // Check if already imported
+        const alreadyImported = importedContent.some(c => c.instagram_shortcode === shortcode);
+        if (!alreadyImported) {
+          importedContent.push({
+            id: post.id,
+            instagram_url: `https://instagram.com/p/${shortcode}`,
+            instagram_shortcode: shortcode,
+            content_type: post.post_type || 'Image',
+            thumbnail_url: post.thumbnail_url || post.display_url,
+            cloudinary_url: post.display_url,
+            cloudinary_video_url: post.video_url,
+            caption: post.caption,
+            status: 'ready'
+          });
+        }
+      });
+
+      renderImportedContent();
+      selectedPostIds.clear();
+      renderSyncedPosts();
+      showToast(`${selectedPosts.length} post${selectedPosts.length > 1 ? 's' : ''} imported!`, 'success');
+    }
+
+    // Load saved highlights from database (instant)
+    async function loadSavedHighlights() {
+      const loadBtn = document.getElementById('loadSavedHighlightsBtn');
+      const statusEl = document.getElementById('highlightsStatus');
+      const highlightsGrid = document.getElementById('igHighlightsGrid');
+
+      // Show loading state
+      loadBtn.disabled = true;
+      loadBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+        </svg>
+        Loading...
+      `;
+      statusEl.textContent = 'Loading saved highlights...';
+      statusEl.className = 'ig-import-status processing';
+
+      try {
+        const response = await fetch('/.netlify/functions/get-highlights', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'load',
+            creator_id: getCreatorId()
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          highlights = result.highlights || [];
+          renderHighlights();
+          highlightsGrid.style.display = 'block';
+          statusEl.textContent = `Loaded ${highlights.length} saved highlights`;
+          statusEl.className = 'ig-import-status success';
+        } else {
+          throw new Error(result.error || 'Failed to load highlights');
+        }
+      } catch (error) {
+        console.error('Load highlights error:', error);
+        statusEl.textContent = 'Failed to load: ' + error.message;
+        statusEl.className = 'ig-import-status error';
+      }
+
+      // Reset button
+      loadBtn.disabled = false;
+      loadBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+        Load Saved
+      `;
+    }
+
+    // Step 2: Get Instagram Highlights (fetch new from Instagram with polling)
+    async function getInstagramHighlights() {
+      const profileInput = document.getElementById('igProfileUrl');
+      const highlightsBtn = document.getElementById('getHighlightsBtn');
+      const statusEl = document.getElementById('highlightsStatus');
+      const highlightsGrid = document.getElementById('igHighlightsGrid');
+
+      const profileUrl = profileInput.value.trim();
+      if (!profileUrl) {
+        showToast('Please enter your Instagram profile URL first');
+        return;
+      }
+
+      const username = extractUsername(profileUrl);
+      if (!username) {
+        showToast('Invalid Instagram profile URL');
+        return;
+      }
+
+      // Show loading state
+      highlightsBtn.disabled = true;
+      highlightsBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+        </svg>
+        Starting...
+      `;
+      statusEl.textContent = 'Starting highlights sync...';
+      statusEl.className = 'ig-import-status processing';
+
+      try {
+        // Step 1: Start the sync (returns run_id immediately)
+        const startResponse = await fetch('/.netlify/functions/get-highlights', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            profile_url: profileUrl,
+            creator_id: getCreatorId()
+          })
+        });
+
+        const startResult = await startResponse.json();
+
+        if (!startResult.success) {
+          throw new Error(startResult.error || 'Failed to start sync');
+        }
+
+        const runId = startResult.run_id;
+        statusEl.textContent = `Syncing highlights for @${username}...`;
+        highlightsBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+            <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+          </svg>
+          Syncing...
+        `;
+
+        // Step 2: Poll for completion
+        let attempts = 0;
+        const maxAttempts = 60; // 5 minutes max
+
+        while (attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds
+          attempts++;
+
+          const pollResponse = await fetch('/.netlify/functions/get-highlights', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              run_id: runId,
+              creator_id: getCreatorId()
+            })
+          });
+
+          const pollResult = await pollResponse.json();
+
+          if (pollResult.status === 'completed') {
+            highlights = pollResult.highlights || [];
+            renderHighlights();
+            highlightsGrid.style.display = 'block';
+            statusEl.textContent = `Found ${highlights.length} highlight${highlights.length !== 1 ? 's' : ''}`;
+            statusEl.className = 'ig-import-status success';
+            showToast(`Found ${highlights.length} highlights!`, 'success');
+            break;
+          } else if (pollResult.status === 'failed') {
+            throw new Error(pollResult.error || 'Sync failed');
+          } else {
+            statusEl.textContent = `Syncing highlights... (${attempts * 5}s)`;
+          }
+        }
+
+        if (attempts >= maxAttempts) {
+          throw new Error('Sync timed out after 5 minutes');
+        }
+
+      } catch (error) {
+        console.error('Highlights error:', error);
+        statusEl.textContent = 'Failed: ' + error.message;
+        statusEl.className = 'ig-import-status error';
+        showToast('Failed to load highlights: ' + error.message);
+      }
+
+      // Reset button
+      highlightsBtn.disabled = false;
+      highlightsBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Sync New
+      `;
+    }
+
+    // Render highlights grid
+    function renderHighlights() {
+      const container = document.getElementById('igHighlightsContainer');
+
+      if (highlights.length === 0) {
+        container.innerHTML = '<p style="color: var(--color-text-light);">No highlights found</p>';
+        return;
+      }
+
+      container.innerHTML = highlights.map(highlight => {
+        const coverSrc = highlight.coverUrl || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23e5e5e5" width="100" height="100"/%3E%3Ccircle cx="50" cy="50" r="30" fill="%23ccc"/%3E%3C/svg%3E';
+
+        return `
+          <div class="ig-highlight-item" onclick="downloadHighlightStories('${highlight.id}', '${(highlight.title || '').replace(/'/g, "\\'")}')">
+            <div class="highlight-cover">
+              <img src="${coverSrc}" alt="${highlight.title || 'Highlight'}"
+                   onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23e5e5e5%22 width=%22100%22 height=%22100%22/%3E%3C/svg%3E'">
+            </div>
+            <span class="highlight-title">${highlight.title || 'Untitled'}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Step 3: Download stories from a highlight
+    async function downloadHighlightStories(highlightId, highlightTitle) {
+      const statusEl = document.getElementById('highlightsStatus');
+      const storiesGrid = document.getElementById('igStoriesGrid');
+      const storiesContainer = document.getElementById('igStoriesContainer');
+
+      // Show loading state
+      statusEl.textContent = `Downloading stories from "${highlightTitle || highlightId}"...`;
+      statusEl.className = 'ig-import-status processing';
+
+      try {
+        const response = await fetch('/.netlify/functions/download-stories', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            highlight_id: highlightId,
+            highlight_title: highlightTitle,
+            creator_id: getCreatorId()
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          downloadedStories = result.stories || [];
+          renderDownloadedStories(highlightTitle);
+          storiesGrid.style.display = 'block';
+          statusEl.textContent = `Downloaded ${downloadedStories.length} stories from "${highlightTitle}"`;
+          statusEl.className = 'ig-import-status success';
+          showToast(`Downloaded ${downloadedStories.length} stories!`, 'success');
+        } else {
+          throw new Error(result.error || 'Failed to download stories');
+        }
+      } catch (error) {
+        console.error('Download stories error:', error);
+        statusEl.textContent = 'Failed: ' + error.message;
+        statusEl.className = 'ig-import-status error';
+        showToast('Failed to download stories: ' + error.message);
+      }
+    }
+
+    // Render downloaded stories with selection
+    function renderDownloadedStories(highlightTitle) {
+      const container = document.getElementById('igStoriesContainer');
+      selectedStoryIndices.clear();
+
+      if (downloadedStories.length === 0) {
+        container.innerHTML = '<p style="color: var(--color-text-light);">No stories found in this highlight</p>';
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="stories-import-header">
+          <span>${downloadedStories.length} stories from "${highlightTitle || 'Highlight'}"</span>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="selectAllStories()">Select All</button>
+            <button type="button" class="btn btn-primary btn-sm" id="importSelectedStoriesBtn" onclick="importSelectedStories('${(highlightTitle || '').replace(/'/g, "\\'")}')">
+              Import Selected (<span id="selectedStoryCount">0</span>)
+            </button>
+          </div>
+        </div>
+        <div class="stories-grid">
+          ${downloadedStories.map((story, index) => {
+            const isVideo = story.type === 'video';
+            // Use cloudinary_url or thumbnail_url from backend
+            const thumbnailSrc = story.cloudinary_url || story.thumbnail_url || story.thumbnailUrl || story.mediaUrl || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23e5e5e5" width="100" height="100"/%3E%3C/svg%3E';
+
+            return `
+              <div class="ig-story-item" data-index="${index}" onclick="toggleStorySelection(${index})">
+                <img src="${thumbnailSrc}" alt="Story ${index + 1}"
+                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23e5e5e5%22 width=%22100%22 height=%22100%22/%3E%3C/svg%3E'">
+                ${isVideo ? '<div class="story-type-badge"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>' : ''}
+                <div class="post-select-indicator">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    // Toggle story selection
+    function toggleStorySelection(index) {
+      if (selectedStoryIndices.has(index)) {
+        selectedStoryIndices.delete(index);
+      } else {
+        selectedStoryIndices.add(index);
+      }
+      updateStorySelectionUI();
+    }
+
+    // Select all stories
+    function selectAllStories() {
+      if (selectedStoryIndices.size === downloadedStories.length) {
+        selectedStoryIndices.clear();
+      } else {
+        downloadedStories.forEach((_, index) => selectedStoryIndices.add(index));
+      }
+      updateStorySelectionUI();
+    }
+
+    // Update story selection UI
+    function updateStorySelectionUI() {
+      document.querySelectorAll('.ig-story-item').forEach((el, index) => {
+        if (selectedStoryIndices.has(index)) {
+          el.classList.add('selected');
+        } else {
+          el.classList.remove('selected');
+        }
+      });
+      const countEl = document.getElementById('selectedStoryCount');
+      if (countEl) countEl.textContent = selectedStoryIndices.size;
+    }
+
+    // Import selected stories
+    function importSelectedStories(highlightTitle) {
+      if (selectedStoryIndices.size === 0) {
+        showToast('Please select stories to import');
+        return;
+      }
+
+      const selectedStories = downloadedStories.filter((_, index) => selectedStoryIndices.has(index));
+
+      selectedStories.forEach((story, index) => {
+        importedContent.push({
+          id: story.id || `story-${Date.now()}-${index}`,
+          instagram_url: '',
+          instagram_shortcode: `story-${story.id || index}`,
+          content_type: story.type === 'video' ? 'Video' : 'Image',
+          thumbnail_url: story.cloudinary_url || story.thumbnail_url || story.thumbnailUrl || story.mediaUrl,
+          cloudinary_url: story.cloudinary_url || story.mediaUrl,
+          cloudinary_video_url: story.type === 'video' ? (story.cloudinary_url || story.mediaUrl) : null,
+          caption: `From highlight: ${highlightTitle || 'Stories'}`,
+          status: 'ready'
+        });
+      });
+
+      renderImportedContent();
+      selectedStoryIndices.clear();
+      updateStorySelectionUI();
+      showToast(`${selectedStories.length} stories imported!`, 'success');
+      updateImportedContentCount();
+    }
+
+    // Update imported content count display
+    function updateImportedContentCount() {
+      const countEl = document.getElementById('importedContentCount');
+      if (countEl) countEl.textContent = importedContent.length;
+    }
+
+    // Generate itinerary with AI
+    async function generateItineraryWithAI() {
+      const numDays = parseInt(document.getElementById('numDays').value) || 4;
+      const tripContext = document.getElementById('tripContext').value.trim();
+      const generateBtn = document.getElementById('generateItineraryBtn');
+      const statusEl = document.getElementById('generateStatus');
+
+      if (importedContent.length === 0) {
+        showToast('Please import some content first (posts or stories)');
+        return;
+      }
+
+      // Show loading state
+      generateBtn.disabled = true;
+      generateBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;" width="20" height="20">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+        </svg>
+        Generating...
+      `;
+      statusEl.textContent = 'AI is creating your itinerary...';
+      statusEl.className = 'ig-import-status processing';
+
+      try {
+        const response = await fetch('/.netlify/functions/generate-itinerary', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            content: importedContent,
+            num_days: numDays,
+            context: tripContext,
+            creator_id: getCreatorId()
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Populate the form with generated content
+          if (result.title) {
+            document.getElementById('title').value = result.title;
+          }
+          if (result.destination) {
+            document.getElementById('destination').value = result.destination;
+          }
+          if (result.location) {
+            document.getElementById('location').value = result.location;
+          }
+          if (result.duration) {
+            document.getElementById('duration').value = result.duration;
+          }
+          if (result.intro) {
+            document.getElementById('intro').value = result.intro;
+          }
+          if (result.included) {
+            document.getElementById('included').value = result.included;
+          }
+
+          // Best For tags
+          if (result.best_for && result.best_for.length > 0) {
+            // Clear existing tags
+            document.querySelectorAll('#bestForTags .tag').forEach(t => t.remove());
+            // Add new tags
+            result.best_for.forEach(tag => addTag('bestForTags', tag));
+          }
+
+          // Generate days
+          console.log('Generation result:', result);
+          console.log('Days from result:', result.days);
+
+          if (result.days && result.days.length > 0) {
+            // Clear existing days
+            const daysListEl = document.getElementById('daysList');
+            daysListEl.innerHTML = '';
+
+            // Add generated days using addDay function
+            result.days.forEach((dayData, index) => {
+              console.log('Adding day:', dayData);
+              addDay({
+                title: dayData.title || `Day ${index + 1}`,
+                description: dayData.description || '',
+                activities: dayData.activities || []
+              });
+            });
+          } else {
+            console.warn('No days in result or days array is empty');
+          }
+
+          // Populate gallery from imported content
+          if (result.gallery && result.gallery.length > 0) {
+            populateGallery(result.gallery);
+          }
+
+          statusEl.textContent = 'Itinerary generated successfully!';
+          statusEl.className = 'ig-import-status success';
+          showToast('Itinerary generated! Review and edit as needed.', 'success');
+
+          // Scroll to top of form to show generated content
+          document.getElementById('title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          // Update preview
+          updatePreview();
+        } else {
+          throw new Error(result.error || 'Failed to generate itinerary');
+        }
+      } catch (error) {
+        console.error('Generate error:', error);
+        statusEl.textContent = 'Generation failed: ' + error.message;
+        statusEl.className = 'ig-import-status error';
+        showToast('Failed to generate itinerary: ' + error.message);
+      }
+
+      // Reset button
+      generateBtn.disabled = false;
+      generateBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+          <path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/>
+          <path d="M17.8 11.8L19 13"/><path d="M15 9h0"/><path d="M17.8 6.2L19 5"/>
+          <path d="m3 21 9-9"/><path d="M12.2 6.2L11 5"/>
+        </svg>
+        Generate Itinerary
+      `;
+    }
+
+    // Preview modal
+    function showPreviewModal() {
+      const title = document.getElementById('title').value || 'Untitled Itinerary';
+      const destination = document.getElementById('destination').value || '';
+      const location = document.getElementById('location').value || '';
+      const duration = document.getElementById('duration').value || '';
+      const intro = document.getElementById('intro').value || '';
+      const included = document.getElementById('included').value || '';
+      const heroImage = itineraryData.heroImage || '';
+      const heroFocalX = itineraryData.heroFocalX || 50;
+      const heroFocalY = itineraryData.heroFocalY || 50;
+      const bestFor = Array.from(document.querySelectorAll('#bestForTags .tag'))
+        .map(t => t.textContent.trim().replace('×', '').trim());
+
+      // Get days
+      const days = Array.from(document.getElementById('daysList').children).map((card, i) => ({
+        dayNumber: i + 1,
+        title: card.querySelector('.day-card-header input').value || `Day ${i + 1}`,
+        description: card.querySelector('.day-description').value || '',
+        activities: (card.querySelector('.day-activities').value || '').split(',').map(a => a.trim()).filter(Boolean)
+      }));
+
+      // Get gallery items
+      const galleryItems = Array.from(document.querySelectorAll('#galleryGrid .gallery-item img')).map(img => img.src);
+
+      // Create modal
+      const modal = document.createElement('div');
+      modal.className = 'preview-modal';
+      modal.innerHTML = `
+        <div class="preview-modal-content">
+          <button class="preview-modal-close" onclick="this.closest('.preview-modal').remove()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <div class="preview-modal-body">
+            ${heroImage ? `<div class="preview-hero"><img src="${heroImage}" alt="${title}" style="object-position: ${heroFocalX}% ${heroFocalY}%;"></div>` : ''}
+            <div class="preview-header">
+              <h1>${title}</h1>
+              <p class="preview-meta">${[destination, location, duration].filter(Boolean).join(' · ')}</p>
+              ${bestFor.length > 0 ? `<div class="preview-tags">${bestFor.map(t => `<span class="preview-tag">${t}</span>`).join('')}</div>` : ''}
+            </div>
+            ${intro ? `<div class="preview-intro"><p>${intro}</p></div>` : ''}
+            <div class="preview-days">
+              <h2>Day by Day</h2>
+              ${days.map(day => `
+                <div class="preview-day">
+                  <h3>${day.title}</h3>
+                  <p>${day.description}</p>
+                  ${day.activities.length > 0 ? `<p class="preview-activities"><strong>Activities:</strong> ${day.activities.join(', ')}</p>` : ''}
+                </div>
+              `).join('')}
+            </div>
+            ${included ? `
+              <div class="preview-included">
+                <h2>What's Included</h2>
+                <ul>${included.split('\\n').filter(l => l.trim()).map(l => `<li>${l}</li>`).join('')}</ul>
+              </div>
+            ` : ''}
+            ${galleryItems.length > 0 ? `
+              <div class="preview-gallery">
+                <h2>Gallery</h2>
+                <div class="preview-gallery-grid">
+                  ${galleryItems.map(src => `<img src="${src}" alt="">`).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
   </script>
+
+  <!-- Preview Modal Styles -->
+  <style>
+    .preview-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 40px 20px;
+    }
+
+    .preview-modal-content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .preview-modal-close svg {
+      width: 20px;
+      height: 20px;
+      color: white;
+    }
+
+    .preview-hero {
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .preview-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-modal-body {
+      padding: 0;
+    }
+
+    .preview-header {
+      padding: 32px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    .preview-header h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .preview-meta {
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    .preview-tags {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .preview-tag {
+      background: #f0f0f0;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.875rem;
+    }
+
+    .preview-intro {
+      padding: 24px 32px;
+      background: #f9f9f9;
+      font-style: italic;
+    }
+
+    .preview-days {
+      padding: 32px;
+    }
+
+    .preview-days h2 {
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+    }
+
+    .preview-day {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .preview-day:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .preview-day h3 {
+      font-size: 1.125rem;
+      margin-bottom: 8px;
+      color: var(--color-accent, #c9a227);
+    }
+
+    .preview-activities {
+      margin-top: 8px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .preview-included {
+      padding: 32px;
+      background: #f9f9f9;
+    }
+
+    .preview-included h2 {
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+    }
+
+    .preview-included ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .preview-included li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .preview-included li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #4CAF50;
+    }
+
+    .preview-gallery {
+      padding: 32px;
+    }
+
+    .preview-gallery h2 {
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+    }
+
+    .preview-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .preview-gallery-grid img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  </style>
 </body>
 </html>

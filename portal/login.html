@@ -248,6 +248,41 @@
       password: 'demo123'
     };
 
+    // Trigger background sync if creator hasn't synced yet
+    async function triggerBackgroundSyncIfNeeded(creator) {
+      // Only sync if:
+      // 1. Creator has an Instagram handle
+      // 2. Sync status is not 'completed' or 'syncing'
+      if (!creator.instagram) {
+        console.log('No Instagram handle, skipping background sync');
+        return;
+      }
+
+      const syncStatus = creator.sync_status || 'pending';
+      if (syncStatus === 'completed' || syncStatus === 'syncing') {
+        console.log(`Sync status is ${syncStatus}, skipping background sync`);
+        return;
+      }
+
+      console.log('Triggering background sync for Instagram:', creator.instagram);
+
+      try {
+        const result = await NubeauxDB.triggerBackgroundSync(creator.id, creator.instagram);
+        if (result.success) {
+          console.log('Background sync started:', result);
+          // Update session with syncing status
+          const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+          session.sync_status = 'syncing';
+          localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+        } else {
+          console.error('Failed to start background sync:', result.error);
+        }
+      } catch (error) {
+        console.error('Error triggering background sync:', error);
+        // Don't block login on sync failure
+      }
+    }
+
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -296,8 +331,13 @@
               creatorId: creator.id,
               handle: creator.handle,
               email: email,
+              instagram: creator.instagram,
+              sync_status: creator.sync_status || 'pending',
               loggedInAt: new Date().toISOString()
             }));
+
+            // Trigger background sync if needed
+            await triggerBackgroundSyncIfNeeded(creator);
 
             window.location.href = 'index.html';
           } else {
@@ -311,6 +351,7 @@
             localStorage.setItem('nubeaux_creator_session', JSON.stringify({
               creatorId: 'nia-the-light',
               email: email,
+              sync_status: 'pending',
               loggedInAt: new Date().toISOString()
             }));
 

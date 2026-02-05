@@ -351,6 +351,51 @@ const NubeauxDB = {
       .execute();
 
     return results?.[0] || null;
+  },
+
+  // Get creator by ID
+  async getCreatorById(creatorId) {
+    const results = await supabase.from('creators')
+      .select('*')
+      .eq('id', creatorId)
+      .limit(1)
+      .execute();
+
+    return results?.[0] || null;
+  },
+
+  // Get creator sync status
+  async getCreatorSyncStatus(creatorId) {
+    const creator = await this.getCreatorById(creatorId);
+    if (!creator) return null;
+
+    return {
+      sync_status: creator.sync_status || 'pending',
+      last_synced_at: creator.last_synced_at,
+      posts_run_id: creator.posts_run_id,
+      highlights_run_id: creator.highlights_run_id,
+      instagram: creator.instagram
+    };
+  },
+
+  // Trigger background sync for a creator
+  async triggerBackgroundSync(creatorId, instagramUsername) {
+    try {
+      const response = await fetch('/.netlify/functions/trigger-sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          creator_id: creatorId,
+          instagram_username: instagramUsername
+        })
+      });
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('Error triggering background sync:', error);
+      return { success: false, error: error.message };
+    }
   }
 };
 

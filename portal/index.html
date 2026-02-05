@@ -379,9 +379,56 @@
         height: 160px;
       }
     }
+
+    /* Sync Status Notification */
+    .sync-notification {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: linear-gradient(135deg, #f5ebe4 0%, #fff4f0 100%);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 1000;
+      font-size: 0.875rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 320px;
+    }
+
+    .sync-notification.hidden {
+      display: none;
+    }
+
+    .sync-notification .sync-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      flex-shrink: 0;
+    }
+
+    .sync-notification .sync-check {
+      color: var(--color-success);
+      flex-shrink: 0;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
+  <!-- Sync Status Notification -->
+  <div id="syncNotification" class="sync-notification hidden">
+    <div class="sync-spinner" id="syncSpinner"></div>
+    <span id="syncMessage">Syncing your Instagram content...</span>
+  </div>
+
   <div class="portal-layout">
     <aside class="sidebar">
       <div class="sidebar-logo">NUBEAUX Creator</div>
@@ -719,6 +766,105 @@
 
     // Initialize
     initDashboard();
+    checkSyncStatus();
+
+    // Sync status checking
+    async function checkSyncStatus() {
+      const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+      const creatorId = session.creatorId;
+      const syncStatus = session.sync_status;
+
+      const syncNotification = document.getElementById('syncNotification');
+      const syncSpinner = document.getElementById('syncSpinner');
+      const syncMessage = document.getElementById('syncMessage');
+
+      if (!creatorId || syncStatus === 'completed') {
+        return;
+      }
+
+      if (syncStatus === 'syncing') {
+        syncNotification.classList.remove('hidden');
+        pollSyncStatus();
+        return;
+      }
+
+      // Check database for current status
+      if (window.SUPABASE_CONFIGURED && syncStatus === 'pending' && session.instagram) {
+        try {
+          const status = await NubeauxDB.getCreatorSyncStatus(creatorId);
+          if (status && status.sync_status === 'syncing') {
+            session.sync_status = 'syncing';
+            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+            syncNotification.classList.remove('hidden');
+            pollSyncStatus();
+          } else if (status && status.sync_status === 'completed') {
+            session.sync_status = 'completed';
+            session.last_synced_at = status.last_synced_at;
+            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+          }
+        } catch (e) {
+          console.error('Error checking sync status:', e);
+        }
+      }
+    }
+
+    async function pollSyncStatus() {
+      const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+      const creatorId = session.creatorId;
+
+      if (!creatorId || !window.SUPABASE_CONFIGURED) return;
+
+      const syncNotification = document.getElementById('syncNotification');
+      const syncSpinner = document.getElementById('syncSpinner');
+      const syncMessage = document.getElementById('syncMessage');
+
+      let attempts = 0;
+      const maxAttempts = 60;
+
+      const poll = async () => {
+        attempts++;
+        try {
+          const status = await NubeauxDB.getCreatorSyncStatus(creatorId);
+
+          if (status && status.sync_status === 'completed') {
+            session.sync_status = 'completed';
+            session.last_synced_at = status.last_synced_at;
+            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+
+            syncSpinner.style.display = 'none';
+            syncMessage.innerHTML = '<span class="sync-check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span> Instagram synced!';
+
+            setTimeout(() => {
+              syncNotification.classList.add('hidden');
+            }, 3000);
+            return;
+          }
+
+          if (status && status.sync_status === 'failed') {
+            session.sync_status = 'failed';
+            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+            syncNotification.classList.add('hidden');
+            return;
+          }
+
+          const elapsed = attempts * 5;
+          syncMessage.textContent = `Syncing Instagram... (${elapsed}s)`;
+
+          if (attempts < maxAttempts) {
+            setTimeout(poll, 5000);
+          } else {
+            syncNotification.classList.add('hidden');
+          }
+        } catch (error) {
+          console.error('Error polling sync status:', error);
+          if (attempts < maxAttempts) {
+            setTimeout(poll, 5000);
+          }
+        }
+      };
+
+      setTimeout(poll, 5000);
+    }
 
     // Logout functionality
     function logout() {

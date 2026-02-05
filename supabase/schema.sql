@@ -19,6 +19,11 @@ CREATE TABLE IF NOT EXISTS creators (
   specialties TEXT[],
   regions TEXT[],
   status TEXT DEFAULT 'active',
+  -- Background sync status columns
+  sync_status TEXT DEFAULT 'pending', -- pending, syncing, completed, failed
+  last_synced_at TIMESTAMPTZ,
+  posts_run_id TEXT,
+  highlights_run_id TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -113,6 +118,42 @@ CREATE TABLE IF NOT EXISTS creator_content (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- 7. CREATOR POSTS TABLE
+-- Caches synced Instagram posts from creator profiles (before import)
+-- ============================================
+CREATE TABLE IF NOT EXISTS creator_posts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  creator_id UUID REFERENCES creators(id) ON DELETE CASCADE,
+  instagram_id TEXT NOT NULL,
+  shortcode TEXT NOT NULL,
+  post_type TEXT, -- 'Image', 'Video', 'Sidecar'
+  caption TEXT,
+  display_url TEXT, -- Instagram CDN URL (temporary)
+  video_url TEXT,
+  thumbnail_url TEXT,
+  likes_count INTEGER DEFAULT 0,
+  comments_count INTEGER DEFAULT 0,
+  location_name TEXT,
+  posted_at TIMESTAMPTZ,
+  synced_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(creator_id, shortcode)
+);
+
+-- ============================================
+-- 8. CREATOR HIGHLIGHTS TABLE
+-- Caches synced Instagram story highlights from creator profiles
+-- ============================================
+CREATE TABLE IF NOT EXISTS creator_highlights (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  creator_id UUID REFERENCES creators(id) ON DELETE CASCADE,
+  highlight_id TEXT NOT NULL,
+  title TEXT,
+  cover_url TEXT, -- Cloudinary URL for cover image
+  stories_count INTEGER DEFAULT 0,
+  synced_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(creator_id, highlight_id)
+);
+
 -- ============================================
 -- INDEXES for better query performance
 -- ============================================
@@ -125,6 +166,10 @@ CREATE INDEX IF NOT EXISTS idx_page_views_itinerary ON page_views(itinerary_id);
 CREATE INDEX IF NOT EXISTS idx_page_views_created ON page_views(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_trip_inquiries_status ON trip_inquiries(status);
 CREATE INDEX IF NOT EXISTS idx_trip_inquiries_created ON trip_inquiries(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_creator_posts_creator ON creator_posts(creator_id);
+CREATE INDEX IF NOT EXISTS idx_creator_posts_shortcode ON creator_posts(shortcode);
+CREATE INDEX IF NOT EXISTS idx_creator_highlights_creator ON creator_highlights(creator_id);
+CREATE INDEX IF NOT EXISTS idx_creators_sync_status ON creators(sync_status);
 
 -- ============================================
 -- ROW LEVEL SECURITY (RLS)

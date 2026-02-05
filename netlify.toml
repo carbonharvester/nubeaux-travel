@@ -5,6 +5,25 @@
 [functions]
   node_bundler = "esbuild"
 
+# Extend timeout for functions that do heavy processing
+[functions."get-highlights"]
+  timeout = 60
+
+[functions."download-stories"]
+  timeout = 60
+
+[functions."sync-profile"]
+  timeout = 60
+
+[functions."generate-itinerary"]
+  timeout = 60
+
+# Background function for processing Apify webhooks
+# Background functions can run up to 15 minutes
+[functions."process-sync-background"]
+  # This is a background function (file ends with -background.js)
+  # It receives webhooks from Apify and processes data asynchronously
+
 [context.production.environment]
   NODE_VERSION = "18"
 
