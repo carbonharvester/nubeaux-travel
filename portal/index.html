@@ -460,11 +460,11 @@
         </a>
       </nav>
 
-      <div class="sidebar-profile">
-        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_80,h_80,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia">
+      <div class="sidebar-profile" id="sidebarProfile">
+        <img src="https://ui-avatars.com/api/?name=User&background=c2703e&color=fff&size=80" alt="User" id="profileAvatar">
         <div class="sidebar-profile-info">
-          <strong>Nia The Light</strong>
-          <span>@niathelight</span>
+          <strong id="profileName">Creator</strong>
+          <span id="profileHandle">@creator</span>
         </div>
         <button onclick="logout()" style="margin-left: auto; background: none; border: none; cursor: pointer; color: var(--color-text-light);" title="Logout">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
@@ -474,7 +474,7 @@
 
     <main class="main-content">
       <header class="page-header">
-        <h1>Welcome back, Nia</h1>
+        <h1 id="welcomeHeader">Welcome back</h1>
         <p>Here's what's happening with your itineraries</p>
       </header>
 
@@ -602,15 +602,123 @@
   <script src="../js/supabase.js"></script>
   <script src="data.js"></script>
   <script>
+    // Handle OAuth callback (Google sign-in redirect)
+    async function handleOAuthCallback() {
+      // Check for OAuth response in URL hash
+      const hash = window.location.hash;
+      if (hash && hash.includes('access_token')) {
+        const params = new URLSearchParams(hash.substring(1));
+        const accessToken = params.get('access_token');
+        const refreshToken = params.get('refresh_token');
+        const expiresIn = params.get('expires_in');
+
+        if (accessToken) {
+          // Store auth session
+          localStorage.setItem('nubeaux_auth', JSON.stringify({
+            accessToken,
+            refreshToken,
+            expiresAt: Date.now() + (parseInt(expiresIn) * 1000)
+          }));
+
+          // Get user info from token
+          const supabaseUrl = window.SUPABASE_URL || 'https://qnhqtlpkwscbguossfmn.supabase.co';
+          const supabaseKey = window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuaHF0bHBrd3NjYmd1b3NzZm1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwOTcwMjEsImV4cCI6MjA4NTY3MzAyMX0.yxFPvTLJnmCD0zxl_ub_ms7xXafcmR5rC6JuSm3Vzik';
+
+          try {
+            const userResponse = await fetch(`${supabaseUrl}/auth/v1/user`, {
+              headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'apikey': supabaseKey
+              }
+            });
+
+            if (userResponse.ok) {
+              const userData = await userResponse.json();
+              const email = userData.email;
+
+              // Check for pending Instagram handle from signup
+              const pendingInstagram = localStorage.getItem('nubeaux_pending_instagram');
+
+              if (pendingInstagram) {
+                // Create creator profile with Instagram
+                try {
+                  await fetch(`${supabaseUrl}/rest/v1/creators`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'apikey': supabaseKey,
+                      'Authorization': `Bearer ${accessToken}`,
+                      'Prefer': 'return=representation'
+                    },
+                    body: JSON.stringify({
+                      email: email,
+                      instagram: pendingInstagram,
+                      display_name: pendingInstagram,
+                      sync_status: 'pending'
+                    })
+                  });
+                } catch (e) {
+                  console.error('Failed to create creator profile:', e);
+                }
+
+                localStorage.removeItem('nubeaux_pending_instagram');
+
+                // Store session
+                localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+                  email,
+                  instagram: pendingInstagram,
+                  display_name: pendingInstagram,
+                  loggedInAt: new Date().toISOString()
+                }));
+              } else {
+                // Just store basic session
+                localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+                  email,
+                  loggedInAt: new Date().toISOString()
+                }));
+              }
+            }
+          } catch (error) {
+            console.error('Error getting user info:', error);
+          }
+
+          // Clear the hash from URL
+          history.replaceState(null, '', window.location.pathname);
+        }
+      }
+    }
+
+    // Run OAuth handling first
+    handleOAuthCallback();
+
     // Check authentication
     const session = localStorage.getItem('nubeaux_creator_session');
     if (!session) {
-      window.location.href = 'login.html';
+      window.location.href = '/creators/start.html';
     }
 
     // Get current creator
     const sessionData = session ? JSON.parse(session) : null;
-    const creatorId = sessionData?.creatorId || 'nia-the-light';
+    const creatorId = sessionData?.creatorId || sessionData?.id || 'nia-the-light';
+
+    // Update profile display from session
+    function updateProfileDisplay() {
+      const displayName = sessionData?.display_name || sessionData?.instagram || sessionData?.email?.split('@')[0] || 'Creator';
+      const instagram = sessionData?.instagram || '';
+
+      document.getElementById('profileName').textContent = displayName;
+      document.getElementById('profileHandle').textContent = instagram ? '@' + instagram : sessionData?.email || '';
+      document.getElementById('welcomeHeader').textContent = 'Welcome, ' + displayName;
+
+      // Set avatar with initials
+      const initials = displayName.charAt(0).toUpperCase();
+      document.getElementById('profileAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=c2703e&color=fff&size=80`;
+    }
+
+    // Call immediately
+    if (sessionData) {
+      updateProfileDisplay();
+    }
 
     // Initialize dashboard
     async function initDashboard() {
@@ -873,7 +981,8 @@
         supabase.auth.signOut();
       }
       localStorage.removeItem('nubeaux_creator_session');
-      window.location.href = 'login.html';
+      localStorage.removeItem('nubeaux_auth');
+      window.location.href = '/creators/start.html';
     }
   </script>
 </body>

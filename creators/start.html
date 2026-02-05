@@ -506,13 +506,22 @@
         <!-- Sign Up Form -->
         <form class="auth-form" id="signupForm">
           <div class="form-group">
-            <label class="form-label" for="signupEmail">Email</label>
+            <label class="form-label" for="signupInstagram">Instagram Handle <span style="color: var(--color-terracotta);">*</span></label>
+            <div class="instagram-wrapper" style="position: relative;">
+              <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--color-warm-grey);">@</span>
+              <input type="text" id="signupInstagram" name="instagram" class="form-input" style="padding-left: 2rem;" required placeholder="yourhandle" autocomplete="username">
+            </div>
+            <span class="form-error" id="signupInstagramError"></span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signupEmail">Email <span style="color: var(--color-terracotta);">*</span></label>
             <input type="email" id="signupEmail" name="email" class="form-input" required autocomplete="email">
             <span class="form-error" id="signupEmailError"></span>
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="signupPassword">Password</label>
+            <label class="form-label" for="signupPassword">Password <span style="color: var(--color-terracotta);">*</span></label>
             <div class="password-wrapper">
               <input type="password" id="signupPassword" name="password" class="form-input" required minlength="8" autocomplete="new-password">
               <button type="button" class="password-toggle" aria-label="Show password">
@@ -617,6 +626,20 @@
     // Google auth via Supabase OAuth
     document.getElementById('googleAuth').addEventListener('click', async () => {
       const btn = document.getElementById('googleAuth');
+
+      // For Google OAuth, we need to collect Instagram first
+      const instagram = document.getElementById('signupInstagram').value.trim().replace(/^@/, '');
+      if (!instagram) {
+        document.getElementById('signupInstagram').classList.add('error');
+        document.getElementById('signupInstagramError').textContent = 'Please enter your Instagram handle first.';
+        document.getElementById('signupInstagramError').classList.add('visible');
+        document.getElementById('signupInstagram').focus();
+        return;
+      }
+
+      // Store Instagram handle in localStorage so we can use it after OAuth redirect
+      localStorage.setItem('nubeaux_pending_instagram', instagram);
+
       btn.classList.add('loading');
 
       // Track analytics
@@ -625,7 +648,7 @@
       try {
         // Redirect to Supabase Google OAuth
         const supabaseUrl = window.SUPABASE_URL || 'https://qnhqtlpkwscbguossfmn.supabase.co';
-        const redirectUrl = window.location.origin + '/creators/onboarding.html';
+        const redirectUrl = window.location.origin + '/portal/index.html';
 
         // Build OAuth URL
         const authUrl = `${supabaseUrl}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(redirectUrl)}`;
@@ -663,11 +686,28 @@
       e.preventDefault();
       clearErrors();
 
+      const instagram = document.getElementById('signupInstagram').value.trim().replace(/^@/, '');
       const email = document.getElementById('signupEmail').value;
       const password = document.getElementById('signupPassword').value;
       const btn = signupForm.querySelector('button[type="submit"]');
 
       // Validation
+      if (!instagram) {
+        document.getElementById('signupInstagram').classList.add('error');
+        document.getElementById('signupInstagramError').textContent = 'Please enter your Instagram handle.';
+        document.getElementById('signupInstagramError').classList.add('visible');
+        return;
+      }
+
+      // Validate Instagram handle format (alphanumeric, underscores, periods only)
+      const instagramRegex = /^[a-zA-Z0-9._]{1,30}$/;
+      if (!instagramRegex.test(instagram)) {
+        document.getElementById('signupInstagram').classList.add('error');
+        document.getElementById('signupInstagramError').textContent = 'Please enter a valid Instagram handle.';
+        document.getElementById('signupInstagramError').classList.add('visible');
+        return;
+      }
+
       if (!email || !email.includes('@')) {
         document.getElementById('signupEmail').classList.add('error');
         document.getElementById('signupEmailError').textContent = 'Please enter a valid email.';
@@ -687,13 +727,16 @@
       // Track analytics
       if (window.gtag) gtag('event', 'auth_provider_selected', { provider: 'email' });
 
+      const supabaseUrl = window.SUPABASE_URL || 'https://qnhqtlpkwscbguossfmn.supabase.co';
+      const supabaseKey = window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuaHF0bHBrd3NjYmd1b3NzZm1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwOTcwMjEsImV4cCI6MjA4NTY3MzAyMX0.yxFPvTLJnmCD0zxl_ub_ms7xXafcmR5rC6JuSm3Vzik';
+
       try {
         // Sign up with Supabase Auth
-        const response = await fetch(`${window.SUPABASE_URL || 'https://qnhqtlpkwscbguossfmn.supabase.co'}/auth/v1/signup`, {
+        const response = await fetch(`${supabaseUrl}/auth/v1/signup`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'apikey': window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuaHF0bHBrd3NjYmd1b3NzZm1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwOTcwMjEsImV4cCI6MjA4NTY3MzAyMX0.yxFPvTLJnmCD0zxl_ub_ms7xXafcmR5rC6JuSm3Vzik'
+            'apikey': supabaseKey
           },
           body: JSON.stringify({ email, password })
         });
@@ -705,23 +748,64 @@
         }
 
         // Store session
-        if (data.access_token) {
+        let accessToken = data.access_token;
+        if (accessToken) {
           localStorage.setItem('nubeaux_auth', JSON.stringify({
-            accessToken: data.access_token,
+            accessToken: accessToken,
             refreshToken: data.refresh_token,
             user: data.user,
             expiresAt: Date.now() + (data.expires_in * 1000)
           }));
         }
 
-        // Store creator session
-        localStorage.setItem('nubeaux_creator_session', JSON.stringify({
-          email: email,
-          loggedInAt: new Date().toISOString()
-        }));
+        // Create creator profile in Supabase
+        try {
+          const creatorResponse = await fetch(`${supabaseUrl}/rest/v1/creators`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': supabaseKey,
+              'Authorization': `Bearer ${accessToken || supabaseKey}`,
+              'Prefer': 'return=representation'
+            },
+            body: JSON.stringify({
+              email: email,
+              instagram: instagram,
+              display_name: instagram,
+              sync_status: 'pending'
+            })
+          });
 
-        // Redirect to onboarding
-        window.location.href = 'onboarding.html';
+          if (creatorResponse.ok) {
+            const creatorData = await creatorResponse.json();
+            // Store creator session with full profile
+            localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+              id: creatorData[0]?.id,
+              email: email,
+              instagram: instagram,
+              display_name: instagram,
+              loggedInAt: new Date().toISOString()
+            }));
+          } else {
+            // Still save basic session even if creator insert fails
+            localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+              email: email,
+              instagram: instagram,
+              loggedInAt: new Date().toISOString()
+            }));
+          }
+        } catch (creatorErr) {
+          console.error('Failed to create creator profile:', creatorErr);
+          // Still save basic session
+          localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+            email: email,
+            instagram: instagram,
+            loggedInAt: new Date().toISOString()
+          }));
+        }
+
+        // Redirect directly to portal dashboard
+        window.location.href = '/portal/index.html';
       } catch (error) {
         console.error('Signup error:', error);
         if (error.message?.includes('already registered') || error.code === 'user_already_exists') {
@@ -751,22 +835,78 @@
 
       btn.classList.add('loading');
 
-      try {
-        // In production, call your auth API
-        // await signInWithEmail(email, password);
-        console.log('Sign in:', { email });
+      const supabaseUrl = window.SUPABASE_URL || 'https://qnhqtlpkwscbguossfmn.supabase.co';
+      const supabaseKey = window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuaHF0bHBrd3NjYmd1b3NzZm1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwOTcwMjEsImV4cCI6MjA4NTY3MzAyMX0.yxFPvTLJnmCD0zxl_ub_ms7xXafcmR5rC6JuSm3Vzik';
 
-        // Check if user has creator profile
-        // If yes, go to itinerary creation
-        // If no, go to onboarding
-        setTimeout(() => {
-          window.location.href = 'onboarding.html';
-        }, 1000);
+      try {
+        // Sign in with Supabase Auth
+        const response = await fetch(`${supabaseUrl}/auth/v1/token?grant_type=password`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': supabaseKey
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw { code: data.error_code || 'invalid_credentials', message: data.msg || data.error_description || 'Invalid credentials' };
+        }
+
+        // Store auth session
+        if (data.access_token) {
+          localStorage.setItem('nubeaux_auth', JSON.stringify({
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token,
+            user: data.user,
+            expiresAt: Date.now() + (data.expires_in * 1000)
+          }));
+        }
+
+        // Fetch creator profile
+        try {
+          const creatorResponse = await fetch(`${supabaseUrl}/rest/v1/creators?email=eq.${encodeURIComponent(email)}&select=*`, {
+            headers: {
+              'apikey': supabaseKey,
+              'Authorization': `Bearer ${data.access_token || supabaseKey}`
+            }
+          });
+
+          if (creatorResponse.ok) {
+            const creators = await creatorResponse.json();
+            if (creators.length > 0) {
+              localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+                id: creators[0].id,
+                email: creators[0].email,
+                instagram: creators[0].instagram,
+                display_name: creators[0].display_name,
+                loggedInAt: new Date().toISOString()
+              }));
+            } else {
+              localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+                email: email,
+                loggedInAt: new Date().toISOString()
+              }));
+            }
+          }
+        } catch (err) {
+          console.error('Failed to fetch creator profile:', err);
+          localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+            email: email,
+            loggedInAt: new Date().toISOString()
+          }));
+        }
+
+        // Redirect to portal dashboard
+        window.location.href = '/portal/index.html';
       } catch (error) {
-        if (error.code === 'invalid_credentials') {
+        console.error('Sign in error:', error);
+        if (error.code === 'invalid_credentials' || error.message?.includes('Invalid')) {
           showError('Invalid email or password. Please try again.');
         } else {
-          showError('Sign in failed. Please try again.');
+          showError(error.message || 'Sign in failed. Please try again.');
         }
         btn.classList.remove('loading');
       }
