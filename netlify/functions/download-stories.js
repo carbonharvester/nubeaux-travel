@@ -103,8 +103,16 @@ async function callApifyStoriesActor(highlightId) {
   // Strip "highlight:" prefix if present (from get-highlights actor)
   let cleanId = String(highlightId);
   if (cleanId.startsWith('highlight:')) {
-    cleanId = cleanId.replace('highlight:', '');
+    cleanId = cleanId.split(':')[1];
   }
+
+  // Validate highlight ID length (Instagram IDs are 17+ digits)
+  if (cleanId.length < 17) {
+    console.error(`Invalid highlight ID: "${cleanId}" (${cleanId.length} chars, need 17+)`);
+    throw new Error(`Invalid highlight ID: ID must be at least 17 characters (got ${cleanId.length}). Please re-sync your highlights.`);
+  }
+
+  console.log(`Fetching stories for highlight ID: ${cleanId} (${cleanId.length} chars)`);
 
   try {
     // Actor ID: A9vd1RbmpS40rjMxu

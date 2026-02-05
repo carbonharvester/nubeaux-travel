@@ -223,15 +223,53 @@ async function checkRunStatus(runId, creatorId) {
       if (items.length > 0) {
         console.log('Highlight item sample:', JSON.stringify(items[0], null, 2));
       }
-      const highlights = items.map(item => ({
-        id: item.id || item.highlightId || item.highlight_id,
-        title: item.title || item.name,
-        // cover_media can be a direct URL string or an object
-        coverUrl: item.coverUrl || item.cover_url ||
-          (typeof item.cover_media === 'string' ? item.cover_media : item.cover_media?.cropped_image_version?.url) ||
-          item.thumbnail_src,
-        storiesCount: item.media_count || item.storiesCount || item.stories_count || item.count || item.items?.length || 0
-      }));
+      const highlights = items.map(item => {
+        // Extract highlight ID - Instagram IDs are 17+ digit numbers
+        // Try multiple fields where the ID might be stored
+        let highlightId = item.pk || item.highlight_id || item.highlightId || item.id;
+
+        // If ID has "highlight:" prefix, keep the numeric part
+        if (typeof highlightId === 'string' && highlightId.includes('highlight:')) {
+          highlightId = highlightId.split(':')[1];
+        }
+
+        // Ensure we have a valid ID (17+ characters for Instagram)
+        highlightId = String(highlightId || '');
+
+        // Extract cover URL from various possible field locations
+        let coverUrl = null;
+        if (item.coverUrl) {
+          coverUrl = item.coverUrl;
+        } else if (item.cover_url) {
+          coverUrl = item.cover_url;
+        } else if (typeof item.cover_media === 'string') {
+          coverUrl = item.cover_media;
+        } else if (item.cover_media?.cropped_image_version?.url) {
+          coverUrl = item.cover_media.cropped_image_version.url;
+        } else if (item.cover_media?.thumbnail_src) {
+          coverUrl = item.cover_media.thumbnail_src;
+        } else if (item.cover_media_cropped_thumbnail?.url) {
+          coverUrl = item.cover_media_cropped_thumbnail.url;
+        } else if (item.thumbnail_src) {
+          coverUrl = item.thumbnail_src;
+        } else if (item.thumbnail) {
+          coverUrl = item.thumbnail;
+        } else if (item.image_url) {
+          coverUrl = item.image_url;
+        } else if (item.profilePicUrl) {
+          // Fallback to profile pic if no cover
+          coverUrl = item.profilePicUrl;
+        }
+
+        console.log(`Highlight "${item.title || item.name}": ID=${highlightId} (${highlightId.length} chars), Cover=${coverUrl ? 'found' : 'missing'}`);
+
+        return {
+          id: highlightId,
+          title: item.title || item.name,
+          coverUrl: coverUrl,
+          storiesCount: item.media_count || item.storiesCount || item.stories_count || item.count || item.items?.length || 0
+        };
+      });
 
       // Upload covers to Cloudinary and save to database
       const savedHighlights = await saveHighlights(highlights, creatorId);
