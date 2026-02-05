@@ -340,7 +340,11 @@
           if (email === DEMO_CREDENTIALS.email && password === DEMO_CREDENTIALS.password) {
             // Try to get creator from database even for demo login
             if (window.SUPABASE_CONFIGURED) {
-              creator = await NubeauxDB.getCreatorByEmail(email);
+              try {
+                creator = await NubeauxDB.getCreatorByEmail(email);
+              } catch (dbError) {
+                console.log('Could not fetch creator from database:', dbError.message);
+              }
             }
             loginSuccess = true;
           }

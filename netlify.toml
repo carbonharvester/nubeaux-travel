@@ -13,6 +13,11 @@
   to = "/portal/index.html"
   status = 301
 
+[[redirects]]
+  from = "/portal/edit-itinerary"
+  to = "/portal/edit-itinerary.html"
+  status = 301
+
 [functions]
   node_bundler = "esbuild"
 
