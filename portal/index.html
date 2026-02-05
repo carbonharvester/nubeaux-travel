@@ -699,7 +699,8 @@
 
     // Get current creator
     const sessionData = session ? JSON.parse(session) : null;
-    const creatorId = sessionData?.creatorId || sessionData?.id || 'nia-the-light';
+    const creatorId = sessionData?.creatorId || sessionData?.id || null;
+    const isNewUser = !creatorId;
 
     // Update profile display from session
     function updateProfileDisplay() {
@@ -711,7 +712,6 @@
       document.getElementById('welcomeHeader').textContent = 'Welcome, ' + displayName;
 
       // Set avatar with initials
-      const initials = displayName.charAt(0).toUpperCase();
       document.getElementById('profileAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=c2703e&color=fff&size=80`;
     }
 
@@ -720,8 +720,46 @@
       updateProfileDisplay();
     }
 
+    // Show empty state for new users
+    function showEmptyState() {
+      // Update stats to zeros
+      const statCards = document.querySelectorAll('.stat-card');
+      statCards[0].querySelector('.stat-card-value').textContent = '0';
+      statCards[0].querySelector('.stat-card-change').textContent = 'Start creating!';
+      statCards[1].querySelector('.stat-card-value').textContent = '0';
+      statCards[1].querySelector('.stat-card-change').textContent = '-';
+      statCards[2].querySelector('.stat-card-value').textContent = '0';
+      statCards[2].querySelector('.stat-card-change').textContent = '0 drafts';
+      statCards[3].querySelector('.stat-card-value').textContent = '$0';
+      statCards[3].querySelector('.stat-card-change').textContent = '-';
+
+      // Clear itinerary list and show empty message
+      const itineraryList = document.querySelector('.itinerary-list');
+      itineraryList.innerHTML = `
+        <div style="text-align: center; padding: 48px 24px; background: var(--color-bg); border-radius: 12px; grid-column: 1 / -1;">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-light)" stroke-width="1.5" style="margin-bottom: 16px; opacity: 0.5;">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <h3 style="font-size: 1.125rem; margin-bottom: 8px; color: var(--color-text);">No itineraries yet</h3>
+          <p style="color: var(--color-text-light); margin-bottom: 24px;">Create your first travel itinerary to start earning.</p>
+          <a href="edit-itinerary.html" class="btn" style="display: inline-flex; align-items: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Create Itinerary
+          </a>
+        </div>
+      `;
+    }
+
     // Initialize dashboard
     async function initDashboard() {
+      // If new user without data, show empty state
+      if (isNewUser) {
+        showEmptyState();
+        return;
+      }
+
       // Try Supabase first if configured
       if (window.SUPABASE_CONFIGURED && sessionData?.creatorId) {
         try {
@@ -796,8 +834,8 @@
         }
       }
 
-      // Fallback to legacy data.js
-      const creator = CREATORS[creatorId];
+      // Fallback to legacy data.js (only for demo accounts)
+      const creator = creatorId ? CREATORS[creatorId] : null;
 
       if (creator) {
         // Update profile section
@@ -869,6 +907,9 @@
             itineraryList.appendChild(card);
           }
         });
+      } else {
+        // No creator data found, show empty state
+        showEmptyState();
       }
     }
 
