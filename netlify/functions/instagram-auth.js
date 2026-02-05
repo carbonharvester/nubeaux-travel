@@ -1,5 +1,5 @@
 // Instagram OAuth - Exchange code for access token and get user profile
-const INSTAGRAM_APP_ID = '1927481864539898';
+const INSTAGRAM_APP_ID = '887486630914098';
 
 exports.handler = async (event) => {
   // CORS headers
