@@ -2,6 +2,17 @@
   publish = "."
   functions = "netlify/functions"
 
+# Redirects
+[[redirects]]
+  from = "/login"
+  to = "/portal/login.html"
+  status = 301
+
+[[redirects]]
+  from = "/portal"
+  to = "/portal/index.html"
+  status = 301
+
 [functions]
   node_bundler = "esbuild"
 
