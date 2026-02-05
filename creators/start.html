@@ -614,25 +614,13 @@
       });
     });
 
-    // Google auth
+    // Google auth - coming soon
     document.getElementById('googleAuth').addEventListener('click', async () => {
-      const btn = document.getElementById('googleAuth');
-      btn.classList.add('loading');
-
       // Track analytics
       if (window.gtag) gtag('event', 'auth_provider_selected', { provider: 'google' });
 
-      // Simulate Google OAuth redirect
-      // In production, this would redirect to your auth endpoint
-      try {
-        // await signInWithGoogle();
-        console.log('Google auth initiated');
-        // Redirect to onboarding after success
-        // window.location.href = '/creators/onboarding.html';
-      } catch (error) {
-        showError('Google sign in failed. Please try again.');
-        btn.classList.remove('loading');
-      }
+      // Show coming soon message
+      showError('Google sign-in coming soon! Please use email and password for now.');
     });
 
     // Show error helper
