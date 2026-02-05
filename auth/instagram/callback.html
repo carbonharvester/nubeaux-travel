@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecting Instagram... | NUBEAUX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-ecru: #f5f1eb;
+      --color-charcoal: #2d2d2d;
+      --color-terracotta: #c2703e;
+      --color-white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--color-ecru);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .callback-container {
+      background: var(--color-white);
+      padding: 48px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.5rem;
+      color: var(--color-terracotta);
+      margin-bottom: 32px;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--color-ecru);
+      border-top-color: var(--color-terracotta);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 24px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 12px;
+      color: var(--color-charcoal);
+    }
+
+    p {
+      color: #666;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    .error {
+      display: none;
+      background: #fff5f5;
+      border: 1px solid #dc3545;
+      color: #dc3545;
+      padding: 16px;
+      margin-top: 24px;
+      font-size: 0.875rem;
+    }
+
+    .error.visible {
+      display: block;
+    }
+
+    .success {
+      display: none;
+    }
+
+    .success.visible {
+      display: block;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: #d4edda;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .success-icon svg {
+      width: 32px;
+      height: 32px;
+      color: #28a745;
+    }
+
+    .username {
+      font-weight: 600;
+      color: var(--color-charcoal);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--color-charcoal);
+      color: white;
+      text-decoration: none;
+      font-size: 0.9375rem;
+      margin-top: 24px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover {
+      background: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+  <div class="callback-container">
+    <div class="logo">NUBEAUX</div>
+
+    <div id="loading">
+      <div class="spinner"></div>
+      <h1>Connecting Instagram</h1>
+      <p>Please wait while we verify your account...</p>
+    </div>
+
+    <div id="success" class="success">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h1>Instagram Connected</h1>
+      <p>Welcome, <span id="usernameDisplay" class="username">@username</span>!</p>
+      <p style="margin-top: 8px;">Redirecting you to complete signup...</p>
+    </div>
+
+    <div id="error" class="error"></div>
+  </div>
+
+  <script>
+    const REDIRECT_URI = window.location.origin + '/auth/instagram/callback';
+
+    async function handleCallback() {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('code');
+      const error = params.get('error');
+      const errorReason = params.get('error_reason');
+      const errorDescription = params.get('error_description');
+
+      const loadingEl = document.getElementById('loading');
+      const successEl = document.getElementById('success');
+      const errorEl = document.getElementById('error');
+
+      // Handle error from Instagram
+      if (error) {
+        loadingEl.style.display = 'none';
+        errorEl.textContent = errorDescription || errorReason || 'Instagram authorization was denied.';
+        errorEl.innerHTML += '<br><br><a href="/creators/start.html" class="btn">Try Again</a>';
+        errorEl.classList.add('visible');
+        return;
+      }
+
+      // No code means invalid callback
+      if (!code) {
+        loadingEl.style.display = 'none';
+        errorEl.textContent = 'Invalid callback. No authorization code received.';
+        errorEl.innerHTML += '<br><br><a href="/creators/start.html" class="btn">Try Again</a>';
+        errorEl.classList.add('visible');
+        return;
+      }
+
+      try {
+        // Exchange code for access token via our Netlify function
+        const response = await fetch('/.netlify/functions/instagram-auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            code: code,
+            redirect_uri: REDIRECT_URI
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || data.error) {
+          throw new Error(data.error || 'Failed to verify Instagram account');
+        }
+
+        // Success! Store the verified Instagram data
+        const instagramData = data.instagram;
+
+        // Store in localStorage for the signup flow to pick up
+        localStorage.setItem('nubeaux_verified_instagram', JSON.stringify({
+          username: instagramData.username,
+          user_id: instagramData.user_id,
+          account_type: instagramData.account_type,
+          name: instagramData.name,
+          verified_at: new Date().toISOString()
+        }));
+
+        // Show success message
+        loadingEl.style.display = 'none';
+        document.getElementById('usernameDisplay').textContent = '@' + instagramData.username;
+        successEl.classList.add('visible');
+
+        // Redirect to signup page after a brief delay
+        setTimeout(() => {
+          window.location.href = '/creators/start.html?instagram_verified=true';
+        }, 2000);
+
+      } catch (err) {
+        console.error('Instagram auth error:', err);
+        loadingEl.style.display = 'none';
+        errorEl.textContent = err.message || 'Failed to connect Instagram. Please try again.';
+        errorEl.innerHTML += '<br><br><a href="/creators/start.html" class="btn">Try Again</a>';
+        errorEl.classList.add('visible');
+      }
+    }
+
+    // Run on page load
+    handleCallback();
+  </script>
+</body>
+</html>

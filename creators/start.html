@@ -505,13 +505,35 @@
 
         <!-- Sign Up Form -->
         <form class="auth-form" id="signupForm">
-          <div class="form-group">
-            <label class="form-label" for="signupInstagram">Instagram Handle <span style="color: var(--color-terracotta);">*</span></label>
-            <div class="instagram-wrapper" style="position: relative;">
-              <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--color-warm-grey);">@</span>
-              <input type="text" id="signupInstagram" name="instagram" class="form-input" style="padding-left: 2rem;" required placeholder="yourhandle" autocomplete="username">
-            </div>
+          <!-- Instagram Verification -->
+          <div class="form-group" id="instagramConnectGroup">
+            <label class="form-label">Instagram Account <span style="color: var(--color-terracotta);">*</span></label>
+            <button type="button" id="connectInstagramBtn" class="social-btn social-btn-instagram" style="width: 100%;">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              Connect with Instagram
+            </button>
+            <p style="font-size: 0.75rem; color: var(--color-warm-grey); margin-top: 8px; text-align: center;">
+              Requires a Professional Instagram account (Creator or Business)
+            </p>
             <span class="form-error" id="signupInstagramError"></span>
+          </div>
+
+          <!-- Instagram Verified Display (hidden by default) -->
+          <div class="form-group" id="instagramVerifiedGroup" style="display: none;">
+            <label class="form-label">Instagram Account</label>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #d4edda; border: 1px solid #28a745; border-radius: 4px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <span id="verifiedUsername" style="font-weight: 500; color: #155724;">@username</span>
+              <button type="button" id="changeInstagramBtn" style="margin-left: auto; background: none; border: none; color: #155724; font-size: 0.8125rem; cursor: pointer; text-decoration: underline;">
+                Change
+              </button>
+            </div>
+            <input type="hidden" id="signupInstagram" name="instagram" value="">
           </div>
 
           <div class="form-group">
@@ -623,17 +645,65 @@
       });
     });
 
+    // Instagram OAuth Configuration
+    const INSTAGRAM_APP_ID = '2136674573775074';
+    const INSTAGRAM_REDIRECT_URI = window.location.origin + '/auth/instagram/callback';
+    const INSTAGRAM_OAUTH_URL = `https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=${INSTAGRAM_APP_ID}&redirect_uri=${encodeURIComponent(INSTAGRAM_REDIRECT_URI)}&response_type=code&scope=instagram_business_basic`;
+
+    // Check for verified Instagram on page load
+    function checkVerifiedInstagram() {
+      const verifiedData = localStorage.getItem('nubeaux_verified_instagram');
+      if (verifiedData) {
+        try {
+          const data = JSON.parse(verifiedData);
+          if (data.username) {
+            showVerifiedInstagram(data.username);
+            return data.username;
+          }
+        } catch (e) {
+          localStorage.removeItem('nubeaux_verified_instagram');
+        }
+      }
+      return null;
+    }
+
+    // Show verified Instagram UI
+    function showVerifiedInstagram(username) {
+      document.getElementById('instagramConnectGroup').style.display = 'none';
+      document.getElementById('instagramVerifiedGroup').style.display = 'block';
+      document.getElementById('verifiedUsername').textContent = '@' + username;
+      document.getElementById('signupInstagram').value = username;
+    }
+
+    // Connect with Instagram button
+    document.getElementById('connectInstagramBtn').addEventListener('click', () => {
+      // Track analytics
+      if (window.gtag) gtag('event', 'auth_provider_selected', { provider: 'instagram' });
+
+      // Redirect to Instagram OAuth
+      window.location.href = INSTAGRAM_OAUTH_URL;
+    });
+
+    // Change Instagram button
+    document.getElementById('changeInstagramBtn').addEventListener('click', () => {
+      localStorage.removeItem('nubeaux_verified_instagram');
+      document.getElementById('instagramConnectGroup').style.display = 'block';
+      document.getElementById('instagramVerifiedGroup').style.display = 'none';
+      document.getElementById('signupInstagram').value = '';
+    });
+
+    // Check on page load
+    const verifiedInstagram = checkVerifiedInstagram();
+
     // Google auth via Supabase OAuth
     document.getElementById('googleAuth').addEventListener('click', async () => {
       const btn = document.getElementById('googleAuth');
 
-      // For Google OAuth, we need to collect Instagram first
-      const instagram = document.getElementById('signupInstagram').value.trim().replace(/^@/, '');
+      // For Google OAuth, Instagram must be verified first
+      const instagram = document.getElementById('signupInstagram').value;
       if (!instagram) {
-        document.getElementById('signupInstagram').classList.add('error');
-        document.getElementById('signupInstagramError').textContent = 'Please enter your Instagram handle first.';
+        document.getElementById('signupInstagramError').textContent = 'Please connect your Instagram account first.';
         document.getElementById('signupInstagramError').classList.add('visible');
-        document.getElementById('signupInstagram').focus();
         return;
       }
 
@@ -691,19 +761,10 @@
       const password = document.getElementById('signupPassword').value;
       const btn = signupForm.querySelector('button[type="submit"]');
 
-      // Validation
-      if (!instagram) {
-        document.getElementById('signupInstagram').classList.add('error');
-        document.getElementById('signupInstagramError').textContent = 'Please enter your Instagram handle.';
-        document.getElementById('signupInstagramError').classList.add('visible');
-        return;
-      }
-
-      // Validate Instagram handle format (alphanumeric, underscores, periods only)
-      const instagramRegex = /^[a-zA-Z0-9._]{1,30}$/;
-      if (!instagramRegex.test(instagram)) {
-        document.getElementById('signupInstagram').classList.add('error');
-        document.getElementById('signupInstagramError').textContent = 'Please enter a valid Instagram handle.';
+      // Check Instagram is verified
+      const verifiedData = localStorage.getItem('nubeaux_verified_instagram');
+      if (!instagram || !verifiedData) {
+        document.getElementById('signupInstagramError').textContent = 'Please connect your Instagram account to continue.';
         document.getElementById('signupInstagramError').classList.add('visible');
         return;
       }
