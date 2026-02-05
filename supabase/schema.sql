@@ -92,6 +92,27 @@ CREATE TABLE IF NOT EXISTS trip_inquiries (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- 6. CREATOR CONTENT TABLE
+-- Stores imported Instagram content for creators
+-- ============================================
+CREATE TABLE IF NOT EXISTS creator_content (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  creator_id UUID REFERENCES creators(id) ON DELETE CASCADE,
+  instagram_url TEXT NOT NULL,
+  instagram_shortcode TEXT,
+  content_type TEXT, -- 'Video', 'Image', 'Sidecar' (carousel)
+  caption TEXT,
+  cloudinary_url TEXT, -- permanent hosted image URL
+  cloudinary_video_url TEXT, -- for videos
+  thumbnail_url TEXT,
+  carousel_urls JSONB, -- array of URLs for carousels
+  location_name TEXT,
+  posted_at TIMESTAMPTZ,
+  status TEXT DEFAULT 'pending', -- pending, processing, ready, failed
+  error_message TEXT, -- stores error if failed
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
 -- ============================================
 -- INDEXES for better query performance
 -- ============================================

@@ -3335,11 +3335,13 @@ p {
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  width: 233px;
+  min-width: 233px;
 }
 
 .story-ring {
-  width: 72px;
-  height: 72px;
+  width: 188px;
+  height: 188px;
   border-radius: 50%;
   padding: 3px;
   background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-gold) 100%);
@@ -3468,14 +3470,19 @@ p {
     gap: 2px;
   }
 
+  .story-item {
+    width: 140px;
+    min-width: 140px;
+  }
+
   .story-ring {
-    width: 56px;
-    height: 56px;
+    width: 110px;
+    height: 110px;
   }
 
   .story-label {
-    font-size: 0.625rem;
-    max-width: 56px;
+    font-size: 0.75rem;
+    max-width: 120px;
   }
 }
 

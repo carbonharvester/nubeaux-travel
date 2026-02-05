@@ -204,6 +204,177 @@
       height: 18px;
     }
 
+    /* Content Gallery Section */
+    .content-gallery-section {
+      background: var(--color-charcoal);
+      padding: var(--space-xl) 0;
+    }
+
+    .content-gallery-header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+      padding: 0 var(--space-md);
+    }
+
+    .content-gallery-header h2 {
+      color: var(--color-white);
+      margin-bottom: var(--space-sm);
+    }
+
+    .content-gallery-header p {
+      color: rgba(255,255,255,0.7);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .content-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .content-gallery-item {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: #000;
+      cursor: pointer;
+    }
+
+    .content-gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .content-gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .content-gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .content-gallery-item:hover .content-gallery-overlay {
+      opacity: 1;
+    }
+
+    .content-gallery-item .play-icon {
+      width: 60px;
+      height: 60px;
+      color: white;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+    }
+
+    .content-gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-md);
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: white;
+      font-size: 0.75rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .content-gallery-item:hover .content-gallery-caption {
+      opacity: 1;
+    }
+
+    .content-gallery-location {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 4px;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: var(--space-lg);
+      right: var(--space-lg);
+      width: 48px;
+      height: 48px;
+      background: none;
+      border: none;
+      color: var(--color-white);
+      cursor: pointer;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10001;
+    }
+
+    .lightbox-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-content video {
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 8px;
+      background: #000;
+    }
+
+    .lightbox-caption {
+      position: absolute;
+      bottom: var(--space-lg);
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 0.875rem;
+      max-width: 600px;
+      text-align: center;
+      padding: var(--space-md);
+      background: rgba(0,0,0,0.5);
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .lightbox-caption {
+        font-size: 0.75rem;
+        max-width: 90%;
+        padding: var(--space-sm);
+      }
+    }
+
     /* Main Content Layout */
     .itin-content {
       padding: var(--space-xl) 0;
@@ -1090,6 +1261,14 @@
       .stay-card-name {
         margin-bottom: 0;
       }
+
+      .stays-scroll {
+        padding-bottom: var(--space-md);
+      }
+
+      .stay-card-link {
+        padding-bottom: var(--space-xs);
+      }
     }
 
     /* Minimal footer for itinerary */
@@ -1256,6 +1435,51 @@
       </div>
     </section>
 
+    <!-- Content Gallery -->
+    <section class="content-gallery-section">
+      <div class="content-gallery-header">
+        <h2>Nia's Namibia Content</h2>
+        <p>Watch the moments that inspired this itinerary</p>
+      </div>
+
+      <div class="content-gallery-grid">
+        <!-- Video 1: Moving to Africa -->
+        <div class="content-gallery-item" data-video="../assets/namibia-content/moving-to-africa.mp4" data-caption="Looking forward to the day I upload a post saying 'I'm moving to Africa.' It's amazing how the very place I used to be ashamed of as a young child is now the place I hold so close to my heart.">
+          <img src="../assets/namibia-content/moving-to-africa.jpg" alt="Moving to Africa" loading="lazy">
+          <div class="content-gallery-overlay">
+            <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="content-gallery-caption">
+            <div class="content-gallery-location">Namibia</div>
+            Moving to Africa
+          </div>
+        </div>
+
+        <!-- Video 2: Born in Africa -->
+        <div class="content-gallery-item" data-video="../assets/namibia-content/born-in-africa.mp4" data-caption="I wasn't born in Africa but it was born within me.. There are still SO many places I want to visit. I feel alive whenever I'm on the Motherland. I know I'll probably move here in a few years, I can feel it..">
+          <img src="../assets/namibia-content/born-in-africa.jpg" alt="Born in Africa" loading="lazy">
+          <div class="content-gallery-overlay">
+            <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="content-gallery-caption">
+            <div class="content-gallery-location">Africa</div>
+            Born in Africa
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose">&times;</button>
+      <div class="lightbox-content" id="lightboxContent"></div>
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
     <!-- Main Content -->
     <section class="itin-content">
       <div class="container">
@@ -1393,11 +1617,9 @@
                 <div class="stay-card">
                   <div class="stay-card-header">
                     <h3 class="stay-card-name">Onguma Camp Kala</h3>
-                    <p class="stay-card-location">Onguma Game Reserve</p>
                   </div>
                   <div class="stay-card-image">
                     <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_560,h_560,q_auto,f_auto/v1769942667/Namibia_camp_kala_Klein-168_atshty.jpg" alt="Onguma Camp Kala">
-                    <span class="stay-card-nights">2 nights</span>
                   </div>
                   <a href="#" class="stay-card-link">
                     View property
@@ -1408,11 +1630,9 @@
                 <div class="stay-card">
                   <div class="stay-card-header">
                     <h3 class="stay-card-name">Onguma The Fort</h3>
-                    <p class="stay-card-location">Onguma Game Reserve</p>
                   </div>
                   <div class="stay-card-image">
                     <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_560,h_560,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-20_yzncpj.jpg" alt="Onguma The Fort">
-                    <span class="stay-card-nights">1 night</span>
                   </div>
                   <a href="#" class="stay-card-link">
                     View property
@@ -1667,6 +1887,43 @@
       });
     });
 
+    // Content Gallery Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxContent = document.getElementById('lightboxContent');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.querySelectorAll('.content-gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const videoUrl = item.dataset.video;
+        const caption = item.dataset.caption || '';
+
+        if (videoUrl) {
+          lightboxContent.innerHTML = `<video controls autoplay playsinline><source src="${videoUrl}" type="video/mp4">Your browser does not support the video tag.</video>`;
+        }
+
+        lightboxCaption.textContent = caption;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+      const video = lightboxContent.querySelector('video');
+      if (video) video.pause();
+      lightboxContent.innerHTML = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
     // Gallery modal
     const galleryTrigger = document.getElementById('galleryTrigger');
     const galleryModal = document.getElementById('galleryModal');
@@ -1756,11 +2013,8 @@
     // Open concierge when "Book or customise" buttons are clicked
     document.querySelectorAll('.open-concierge').forEach(btn => {
       btn.addEventListener('click', () => {
-        const panel = document.getElementById('voicePanel');
-        const tooltip = document.querySelector('.voice-tooltip');
-        if (panel) {
-          panel.classList.add('visible');
-          if (tooltip) tooltip.classList.add('hidden');
+        if (window.openVoiceConcierge) {
+          window.openVoiceConcierge();
         }
 
         // Track click

@@ -586,6 +586,22 @@
     visualizer.querySelectorAll('.voice-bar').forEach(bar => bar.classList.remove('active'));
   }
 
+  // Global API to open voice concierge from external buttons
+  window.openVoiceConcierge = function(autoStart = false) {
+    const panel = document.getElementById('voicePanel');
+    const tooltip = document.querySelector('.voice-tooltip');
+
+    if (panel) {
+      panel.classList.add('visible');
+      if (tooltip) tooltip.classList.add('hidden');
+
+      // Optionally auto-start the call
+      if (autoStart && !isCallActive) {
+        setTimeout(() => startCall(), 300);
+      }
+    }
+  };
+
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', createWidgetUI);

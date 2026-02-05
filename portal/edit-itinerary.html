@@ -743,6 +743,227 @@
       background: var(--color-success);
     }
 
+    /* Instagram Content Import */
+    .ig-import-section {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .ig-import-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #F77737 100%);
+      color: white;
+    }
+
+    .ig-import-header svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .ig-import-header h3 {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .ig-import-body {
+      padding: 20px;
+    }
+
+    .ig-url-input {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px 14px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      resize: vertical;
+      line-height: 1.8;
+    }
+
+    .ig-url-input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-light);
+    }
+
+    .ig-url-input::placeholder {
+      color: var(--color-text-light);
+    }
+
+    .ig-import-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .ig-import-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #F77737 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .ig-import-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .ig-import-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .ig-import-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .ig-import-status {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    .ig-import-status.processing {
+      color: #8b5cf6;
+    }
+
+    .ig-import-status.success {
+      color: var(--color-success);
+    }
+
+    .ig-import-status.error {
+      color: var(--color-error);
+    }
+
+    /* Imported Content Grid */
+    .ig-content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .ig-content-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--color-bg);
+    }
+
+    .ig-content-item img,
+    .ig-content-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ig-content-item .video-indicator {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 24px;
+      height: 24px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ig-content-item .video-indicator svg {
+      width: 12px;
+      height: 12px;
+      color: white;
+    }
+
+    .ig-content-item .status-badge {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 4px 8px;
+      font-size: 0.6875rem;
+      text-align: center;
+      color: white;
+    }
+
+    .ig-content-item .status-badge.pending {
+      background: rgba(139, 92, 246, 0.9);
+    }
+
+    .ig-content-item .status-badge.processing {
+      background: rgba(59, 130, 246, 0.9);
+    }
+
+    .ig-content-item .status-badge.ready {
+      background: rgba(34, 197, 94, 0.9);
+    }
+
+    .ig-content-item .status-badge.failed {
+      background: rgba(239, 68, 68, 0.9);
+    }
+
+    .ig-content-item .remove-btn {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: rgba(0, 0, 0, 0.6);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .ig-content-item:hover .remove-btn {
+      opacity: 1;
+    }
+
+    .ig-content-item .remove-btn svg {
+      width: 14px;
+      height: 14px;
+      color: white;
+    }
+
+    .ig-content-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 24px;
+      color: var(--color-text-light);
+    }
+
+    .ig-content-empty svg {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 8px;
+      opacity: 0.4;
+    }
+
     /* Stories Edit */
     .story-edit-item {
       display: flex;
@@ -897,6 +1118,57 @@
           <div style="display: flex; gap: 8px;">
             <input type="url" id="heroUrl" class="form-input" placeholder="https://...">
             <button type="button" class="btn btn-outline" onclick="loadHeroFromUrl()" style="white-space: nowrap;">Load URL</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Instagram Content -->
+      <section class="form-section">
+        <h2 class="form-section-title">Your Instagram Content</h2>
+        <p class="form-hint" style="margin-bottom: 16px;">Import photos and videos from your Instagram posts to use in this itinerary.</p>
+
+        <div class="ig-import-section">
+          <div class="ig-import-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+            <h3>Import from Instagram</h3>
+          </div>
+          <div class="ig-import-body">
+            <textarea
+              id="igUrls"
+              class="ig-url-input"
+              placeholder="Paste Instagram post URLs here (one per line)
+
+Example:
+https://www.instagram.com/p/ABC123/
+https://www.instagram.com/reel/XYZ789/"
+            ></textarea>
+            <div class="ig-import-actions">
+              <button type="button" class="ig-import-btn" id="importIgBtn" onclick="importInstagramContent()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Import Content
+              </button>
+              <span class="ig-import-status" id="igImportStatus"></span>
+            </div>
+
+            <!-- Imported Content Grid -->
+            <div class="ig-content-grid" id="igContentGrid">
+              <div class="ig-content-empty">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                <p>Imported content will appear here</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -1073,6 +1345,11 @@
       // Days
       if (data.days && data.days.length > 0) {
         data.days.forEach(day => addDay(day));
+      }
+
+      // Instagram content
+      if (data.instagramContent) {
+        loadImportedContent(data.instagramContent);
       }
 
       updatePreview();
@@ -1427,6 +1704,9 @@
       itineraryData.included = document.getElementById('included').value.split('\n').filter(l => l.trim());
       itineraryData.status = currentStatus;
 
+      // Instagram content
+      itineraryData.instagramContent = getImportedContentForSave();
+
       // Gather stays
       itineraryData.stays = Array.from(staysList.children).map(item => ({
         name: item.querySelector('.stay-name').value,
@@ -1588,6 +1868,181 @@
       toastMessage.textContent = message;
       toast.className = `toast show ${type}`;
       setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Instagram Content Import
+    let importedContent = [];
+
+    function parseInstagramUrls(text) {
+      const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+      const urlPattern = /instagram\.com\/(p|reel|tv)\/([A-Za-z0-9_-]+)/;
+      const validUrls = [];
+
+      lines.forEach(line => {
+        const match = line.match(urlPattern);
+        if (match) {
+          validUrls.push({
+            url: line,
+            type: match[1], // p, reel, or tv
+            shortcode: match[2]
+          });
+        }
+      });
+
+      return validUrls;
+    }
+
+    async function importInstagramContent() {
+      const textarea = document.getElementById('igUrls');
+      const importBtn = document.getElementById('importIgBtn');
+      const statusEl = document.getElementById('igImportStatus');
+      const urls = parseInstagramUrls(textarea.value);
+
+      if (urls.length === 0) {
+        showToast('Please enter valid Instagram URLs');
+        return;
+      }
+
+      // Disable button and show processing state
+      importBtn.disabled = true;
+      importBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+        </svg>
+        Importing...
+      `;
+      statusEl.textContent = `Processing ${urls.length} URL${urls.length > 1 ? 's' : ''}...`;
+      statusEl.className = 'ig-import-status processing';
+
+      try {
+        // Call the Netlify function to scrape Instagram content
+        const response = await fetch('/.netlify/functions/scrape-instagram', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            urls: urls.map(u => u.url),
+            creator_id: JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}').id || 'demo'
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Add to imported content
+          result.content.forEach(item => {
+            importedContent.push(item);
+          });
+          renderImportedContent();
+          textarea.value = '';
+          statusEl.textContent = `${result.content.length} item${result.content.length > 1 ? 's' : ''} imported`;
+          statusEl.className = 'ig-import-status success';
+          showToast('Content imported successfully!', 'success');
+        } else {
+          throw new Error(result.error || 'Import failed');
+        }
+      } catch (error) {
+        console.error('Import error:', error);
+
+        // For demo/development: simulate import with pending status
+        urls.forEach(urlData => {
+          importedContent.push({
+            id: 'temp-' + Date.now() + '-' + urlData.shortcode,
+            instagram_url: urlData.url,
+            instagram_shortcode: urlData.shortcode,
+            content_type: urlData.type === 'reel' ? 'Video' : 'Image',
+            thumbnail_url: null, // Will be populated by backend
+            status: 'pending',
+            caption: ''
+          });
+        });
+        renderImportedContent();
+        textarea.value = '';
+        statusEl.textContent = `${urls.length} item${urls.length > 1 ? 's' : ''} queued for processing`;
+        statusEl.className = 'ig-import-status processing';
+        showToast('Content queued - backend processing required', 'success');
+      }
+
+      // Reset button
+      importBtn.disabled = false;
+      importBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Import Content
+      `;
+    }
+
+    function renderImportedContent() {
+      const grid = document.getElementById('igContentGrid');
+
+      if (importedContent.length === 0) {
+        grid.innerHTML = `
+          <div class="ig-content-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <p>Imported content will appear here</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = importedContent.map((item, index) => {
+        const isVideo = item.content_type === 'Video' || item.content_type === 'Sidecar';
+        const thumbnailSrc = item.thumbnail_url || item.cloudinary_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23e5e5e5" width="100" height="100"/%3E%3Ctext fill="%236b6b6b" font-family="sans-serif" font-size="12" x="50%" y="50%" text-anchor="middle" dy=".3em"%3EProcessing%3C/text%3E%3C/svg%3E';
+
+        return `
+          <div class="ig-content-item" data-index="${index}" data-shortcode="${item.instagram_shortcode}">
+            <img src="${thumbnailSrc}" alt="${item.caption || 'Instagram content'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23e5e5e5%22 width=%22100%22 height=%22100%22/%3E%3Ctext fill=%22%236b6b6b%22 font-family=%22sans-serif%22 font-size=%2212%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EPending%3C/text%3E%3C/svg%3E'">
+            ${isVideo ? `
+              <div class="video-indicator">
+                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            ` : ''}
+            <div class="status-badge ${item.status}">${item.status}</div>
+            <button type="button" class="remove-btn" onclick="removeImportedContent(${index})" title="Remove">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function removeImportedContent(index) {
+      importedContent.splice(index, 1);
+      renderImportedContent();
+      showToast('Content removed');
+    }
+
+    // Load existing imported content if editing
+    function loadImportedContent(content) {
+      if (content && Array.isArray(content)) {
+        importedContent = content;
+        renderImportedContent();
+      }
+    }
+
+    // Include imported content in save
+    function getImportedContentForSave() {
+      return importedContent.map(item => ({
+        instagram_shortcode: item.instagram_shortcode,
+        instagram_url: item.instagram_url,
+        content_type: item.content_type,
+        cloudinary_url: item.cloudinary_url,
+        cloudinary_video_url: item.cloudinary_video_url,
+        thumbnail_url: item.thumbnail_url,
+        caption: item.caption,
+        status: item.status
+      }));
     }
   </script>
 </body>
