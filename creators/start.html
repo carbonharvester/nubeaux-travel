@@ -743,11 +743,15 @@
 
         const data = await response.json();
 
-        if (!response.ok) {
-          throw { code: data.error_code || 'unknown', message: data.msg || data.error_description || 'Sign up failed' };
+        // Check for error response
+        if (!response.ok || data.error) {
+          throw {
+            code: data.error_code || data.error || 'unknown',
+            message: data.msg || data.error_description || data.message || 'Sign up failed'
+          };
         }
 
-        // Store session
+        // Store auth session if access token present (might not be if email confirmation required)
         let accessToken = data.access_token;
         if (accessToken) {
           localStorage.setItem('nubeaux_auth', JSON.stringify({
@@ -758,62 +762,42 @@
           }));
         }
 
-        // Create creator profile in Supabase
-        try {
-          const creatorResponse = await fetch(`${supabaseUrl}/rest/v1/creators`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'apikey': supabaseKey,
-              'Authorization': `Bearer ${accessToken || supabaseKey}`,
-              'Prefer': 'return=representation'
-            },
-            body: JSON.stringify({
-              email: email,
-              instagram: instagram,
-              display_name: instagram,
-              sync_status: 'pending'
-            })
-          });
+        // Always store creator session with Instagram handle
+        localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+          email: email,
+          instagram: instagram,
+          display_name: instagram,
+          loggedInAt: new Date().toISOString()
+        }));
 
-          if (creatorResponse.ok) {
-            const creatorData = await creatorResponse.json();
-            // Store creator session with full profile
-            localStorage.setItem('nubeaux_creator_session', JSON.stringify({
-              id: creatorData[0]?.id,
-              email: email,
-              instagram: instagram,
-              display_name: instagram,
-              loggedInAt: new Date().toISOString()
-            }));
-          } else {
-            // Still save basic session even if creator insert fails
-            localStorage.setItem('nubeaux_creator_session', JSON.stringify({
-              email: email,
-              instagram: instagram,
-              loggedInAt: new Date().toISOString()
-            }));
-          }
-        } catch (creatorErr) {
-          console.error('Failed to create creator profile:', creatorErr);
-          // Still save basic session
-          localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+        // Try to create creator profile in Supabase (don't block redirect on this)
+        fetch(`${supabaseUrl}/rest/v1/creators`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': supabaseKey,
+            'Authorization': `Bearer ${accessToken || supabaseKey}`,
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify({
             email: email,
             instagram: instagram,
-            loggedInAt: new Date().toISOString()
-          }));
-        }
+            display_name: instagram,
+            sync_status: 'pending'
+          })
+        }).catch(err => console.error('Failed to create creator profile:', err));
 
         // Redirect directly to portal dashboard
         window.location.href = '/portal/index.html';
       } catch (error) {
         console.error('Signup error:', error);
+        btn.classList.remove('loading');
+
         if (error.message?.includes('already registered') || error.code === 'user_already_exists') {
           showError('An account with this email already exists. Try signing in instead.');
         } else {
           showError(error.message || 'Sign up failed. Please try again.');
         }
-        btn.classList.remove('loading');
       }
     });
 
