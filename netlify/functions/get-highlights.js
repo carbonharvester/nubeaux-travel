@@ -271,8 +271,19 @@ async function checkRunStatus(runId, creatorId) {
         };
       });
 
+      // Filter out highlights with invalid IDs (need 17+ chars for Instagram)
+      const validHighlights = highlights.filter(h => {
+        if (!h.id || h.id.length < 10) {
+          console.warn(`Skipping highlight "${h.title}" - invalid ID: "${h.id}"`);
+          return false;
+        }
+        return true;
+      });
+
+      console.log(`Valid highlights: ${validHighlights.length} of ${highlights.length}`);
+
       // Upload covers to Cloudinary and save to database
-      const savedHighlights = await saveHighlights(highlights, creatorId);
+      const savedHighlights = await saveHighlights(validHighlights, creatorId);
 
       return {
         statusCode: 200,
@@ -285,6 +296,7 @@ async function checkRunStatus(runId, creatorId) {
           status: 'completed',
           run_id: runId,
           highlights_count: savedHighlights.length,
+          total_found: highlights.length,
           highlights: savedHighlights
         })
       };
