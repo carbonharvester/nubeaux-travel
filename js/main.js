@@ -573,6 +573,86 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(err => {
           console.error('Failed to track page view:', err);
         });
+
+      // Fetch and display live viewer count
+      fetchLiveViewers(itineraryId);
+    }
+  }
+
+  // Fetch live viewer count from API
+  async function fetchLiveViewers(itineraryId) {
+    try {
+      const response = await fetch(`/.netlify/functions/get-live-viewers?itinerary_id=${itineraryId}`);
+      const data = await response.json();
+
+      if (data.count > 1) {
+        displayLiveViewers(data.count);
+      }
+    } catch (error) {
+      console.error('Failed to fetch live viewers:', error);
+    }
+  }
+
+  // Display live viewer count in the UI
+  function displayLiveViewers(count) {
+    // Find the sidebar CTA or create a viewer badge
+    const sidebarCta = document.querySelector('.sidebar-cta');
+    const priceElement = document.querySelector('.sidebar-cta .price');
+
+    if (priceElement && !document.getElementById('liveViewersBadge')) {
+      const badge = document.createElement('div');
+      badge.id = 'liveViewersBadge';
+      badge.className = 'live-viewers-badge';
+      badge.innerHTML = `
+        <span class="live-dot"></span>
+        <span>${count} ${count === 1 ? 'person' : 'people'} viewing</span>
+      `;
+      badge.style.cssText = `
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8125rem;
+        color: #22c55e;
+        margin-bottom: 8px;
+      `;
+
+      // Create pulsing dot
+      const style = document.createElement('style');
+      style.textContent = `
+        .live-dot {
+          width: 8px;
+          height: 8px;
+          background: #22c55e;
+          border-radius: 50%;
+          animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(1.2); }
+        }
+      `;
+      document.head.appendChild(style);
+
+      // Insert before price
+      priceElement.parentNode.insertBefore(badge, priceElement);
+    }
+
+    // Also add to mobile sticky CTA if exists
+    const mobileCta = document.querySelector('.mobile-sticky-cta');
+    if (mobileCta && !mobileCta.querySelector('.live-viewers-badge')) {
+      const mobileBadge = document.createElement('div');
+      mobileBadge.className = 'live-viewers-badge';
+      mobileBadge.innerHTML = `<span class="live-dot"></span> ${count} viewing`;
+      mobileBadge.style.cssText = `
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 0.75rem;
+        color: #22c55e;
+        padding-bottom: 8px;
+      `;
+      mobileCta.insertBefore(mobileBadge, mobileCta.firstChild);
     }
   }
 
