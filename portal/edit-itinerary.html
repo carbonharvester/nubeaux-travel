@@ -2485,25 +2485,32 @@
     }
 
     // Save
-    saveBtn.addEventListener('click', () => {
+    saveBtn.addEventListener('click', async () => {
       // Gather data
-      itineraryData.title = document.getElementById('title').value;
-      itineraryData.destination = document.getElementById('destination').value;
-      itineraryData.location = document.getElementById('location').value;
-      itineraryData.duration = document.getElementById('duration').value;
-      itineraryData.intro = document.getElementById('intro').value;
+      itineraryData.title = document.getElementById('title').value?.trim() || '';
+      itineraryData.destination = document.getElementById('destination').value?.trim() || '';
+      itineraryData.location = document.getElementById('location').value?.trim() || '';
+      itineraryData.duration = document.getElementById('duration').value?.trim() || '';
+      itineraryData.intro = document.getElementById('intro').value?.trim() || '';
       itineraryData.included = document.getElementById('included').value.split('\n').filter(l => l.trim());
       itineraryData.status = currentStatus;
+
+      // Validate required fields
+      if (!itineraryData.title) {
+        showToast('Please enter a title for your itinerary', 'error');
+        document.getElementById('title').focus();
+        return;
+      }
 
       // Instagram content
       itineraryData.instagramContent = getImportedContentForSave();
 
       // Gather stays
       itineraryData.stays = Array.from(staysList.children).map(item => ({
-        name: item.querySelector('.stay-name').value,
-        location: item.querySelector('.stay-location').value,
-        nights: item.querySelector('.stay-nights').value,
-        notes: item.querySelector('.stay-notes').value
+        name: item.querySelector('.stay-name')?.value || '',
+        location: item.querySelector('.stay-location')?.value || '',
+        nights: item.querySelector('.stay-nights')?.value || '',
+        notes: item.querySelector('.stay-notes')?.value || ''
       })).filter(s => s.name);
 
       // Best for tags
@@ -2513,21 +2520,73 @@
       // Days
       itineraryData.days = Array.from(daysList.children).map((card, i) => ({
         dayNumber: i + 1,
-        title: card.querySelector('.day-card-header input').value,
-        description: card.querySelector('.day-description').value,
-        activities: card.querySelector('.day-activities').value.split(',').map(a => a.trim()).filter(a => a),
+        title: card.querySelector('.day-card-header input')?.value || '',
+        description: card.querySelector('.day-description')?.value || '',
+        activities: (card.querySelector('.day-activities')?.value || '').split(',').map(a => a.trim()).filter(a => a),
         media: Array.from(card.querySelectorAll('.media-item:not(.media-item-add) img'))
           .map(img => ({ type: 'image', url: img.src }))
       }));
 
-      // Save to localStorage for demo
-      const savedItineraries = JSON.parse(localStorage.getItem('nubeaux_itineraries') || '{}');
-      const id = itineraryData.id || itineraryData.title.toLowerCase().replace(/\s+/g, '-');
-      itineraryData.id = id;
-      savedItineraries[id] = itineraryData;
-      localStorage.setItem('nubeaux_itineraries', JSON.stringify(savedItineraries));
+      // Get creator ID from session
+      const creatorId = getCreatorId();
+      if (!creatorId) {
+        showToast('You must be logged in to save', 'error');
+        return;
+      }
 
-      showToast('Itinerary saved successfully!', 'success');
+      // Show saving state
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<span class="spinner"></span> Saving...';
+
+      try {
+        // Save to Supabase
+        const response = await fetch('/.netlify/functions/save-itinerary', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: itineraryData.id || null,
+            creator_id: creatorId,
+            title: itineraryData.title,
+            destination: itineraryData.destination,
+            region: itineraryData.location, // location maps to region
+            duration: itineraryData.duration,
+            hero_image: itineraryData.heroImage || null,
+            intro: itineraryData.intro,
+            days: itineraryData.days,
+            stays: itineraryData.stays,
+            included: itineraryData.included,
+            status: itineraryData.status
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Update local ID if it was generated
+          if (result.itinerary?.id) {
+            itineraryData.id = result.itinerary.id;
+          }
+
+          // Also save to localStorage as backup
+          const savedItineraries = JSON.parse(localStorage.getItem('nubeaux_itineraries') || '{}');
+          savedItineraries[itineraryData.id] = itineraryData;
+          localStorage.setItem('nubeaux_itineraries', JSON.stringify(savedItineraries));
+
+          showToast('Itinerary saved successfully!', 'success');
+        } else {
+          throw new Error(result.error || 'Failed to save');
+        }
+      } catch (error) {
+        console.error('Save error:', error);
+        showToast('Failed to save: ' + error.message, 'error');
+      } finally {
+        // Restore button
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save
+        `;
+      }
     });
 
     // Preview button - shows modal preview without requiring save
