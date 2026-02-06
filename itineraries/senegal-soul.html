@@ -1907,6 +1907,30 @@
       ]
     };
 
+    // Preload all story videos and images on page load
+    function preloadStories() {
+      Object.values(storyGroups).forEach(stories => {
+        stories.forEach(story => {
+          if (story.type === 'video') {
+            const video = document.createElement('video');
+            video.preload = 'auto';
+            video.src = story.src;
+            video.load();
+          } else {
+            const img = new Image();
+            img.src = story.src;
+          }
+        });
+      });
+    }
+
+    // Start preloading after page load
+    if (document.readyState === 'complete') {
+      preloadStories();
+    } else {
+      window.addEventListener('load', preloadStories);
+    }
+
     const storiesLightbox = document.getElementById('storiesLightbox');
     const storiesMedia = document.getElementById('storiesMedia');
     const storiesProgress = document.getElementById('storiesProgress');
@@ -1967,26 +1991,12 @@
         videoElement = null;
       }
 
-      // Show loading state
-      storiesMedia.classList.add('loading');
-
-      // Show content
+      // Show content - videos should be preloaded
       if (story.type === 'video') {
-        storiesMedia.innerHTML = `<video src="${story.src}" autoplay playsinline preload="auto"></video>`;
+        storiesMedia.innerHTML = `<video src="${story.src}" autoplay playsinline></video>`;
         videoElement = storiesMedia.querySelector('video');
 
-        // Handle video load error - skip to next
-        videoElement.addEventListener('error', () => {
-          console.error('Video failed to load:', story.src);
-          storiesMedia.classList.remove('loading');
-          goToNextStory();
-        });
-
-        // Hide loading when video can play
-        videoElement.addEventListener('canplay', () => {
-          storiesMedia.classList.remove('loading');
-        }, { once: true });
-
+        videoElement.addEventListener('error', () => goToNextStory());
         videoElement.addEventListener('ended', () => goToNextStory());
 
         // Update progress bar animation to match video duration
@@ -1998,39 +2008,10 @@
           }
         });
 
-        // Force play on mobile
-        videoElement.play().catch(err => {
-          console.error('Video play failed:', err);
-          storiesMedia.classList.remove('loading');
-          goToNextStory();
-        });
-
-        // Preload next video
-        if (index + 1 < currentStories.length && currentStories[index + 1].type === 'video') {
-          const nextVideo = document.createElement('video');
-          nextVideo.preload = 'auto';
-          nextVideo.src = currentStories[index + 1].src;
-        }
+        // Play immediately
+        videoElement.play().catch(() => goToNextStory());
       } else {
-        const img = new Image();
-        img.onload = () => {
-          storiesMedia.innerHTML = `<img src="${story.src}" alt="Story">`;
-          storiesMedia.classList.remove('loading');
-        };
-        img.onerror = () => {
-          console.error('Image failed to load:', story.src);
-          storiesMedia.classList.remove('loading');
-          goToNextStory();
-        };
-        img.src = story.src;
-
-        // Show image immediately if cached
-        if (img.complete) {
-          storiesMedia.innerHTML = `<img src="${story.src}" alt="Story">`;
-          storiesMedia.classList.remove('loading');
-        }
-
-        // Auto-advance after 5 seconds for images
+        storiesMedia.innerHTML = `<img src="${story.src}" alt="Story">`;
         storyTimer = setTimeout(() => goToNextStory(), 5000);
       }
     }
