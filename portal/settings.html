@@ -566,7 +566,6 @@
     <span id="toastMessage">Settings saved</span>
   </div>
 
-  <script src="data.js"></script>
   <script>
     // Check auth
     const session = localStorage.getItem('juno_creator_session');
@@ -574,27 +573,55 @@
       window.location.href = 'login.html';
     }
 
-    // Load creator data
     const sessionData = session ? JSON.parse(session) : null;
-    const creatorId = sessionData?.creatorId || 'nia-the-light';
-    const creator = CREATORS[creatorId];
+    const creatorId = sessionData?.creatorId;
+    let creatorData = null;
+    let pendingAvatarFile = null;
 
-    if (creator) {
-      document.getElementById('displayName').value = creator.name;
-      document.getElementById('handle').value = creator.handle;
-      document.getElementById('bio').value = creator.bio;
-      document.getElementById('instagram').value = creator.instagram;
-      document.getElementById('email').value = creator.email;
-      document.getElementById('avatarPreview').src = creator.avatar.replace('w_80,h_80', 'w_160,h_160');
-      document.getElementById('sidebarAvatar').src = creator.avatar;
-      document.getElementById('sidebarName').textContent = creator.name;
-      document.getElementById('sidebarHandle').textContent = '@' + creator.handle;
+    // Load creator data from API
+    loadCreatorProfile();
+
+    async function loadCreatorProfile() {
+      if (!creatorId) return;
+
+      try {
+        const response = await fetch(`/.netlify/functions/update-creator?creator_id=${creatorId}`);
+        const data = await response.json();
+
+        if (data.success && data.creator) {
+          creatorData = data.creator;
+          populateForm(data.creator);
+        }
+      } catch (error) {
+        console.error('Failed to load profile:', error);
+      }
+    }
+
+    function populateForm(creator) {
+      document.getElementById('displayName').value = creator.name || '';
+      document.getElementById('handle').value = creator.handle || '';
+      document.getElementById('bio').value = creator.bio || '';
+      document.getElementById('instagram').value = creator.instagram ? `https://instagram.com/${creator.instagram}` : '';
+      document.getElementById('email').value = creator.email || '';
+
+      if (creator.avatar_url) {
+        document.getElementById('avatarPreview').src = creator.avatar_url.replace('w_80,h_80', 'w_160,h_160');
+        document.getElementById('sidebarAvatar').src = creator.avatar_url;
+      }
+
+      document.getElementById('sidebarName').textContent = creator.name || '';
+      document.getElementById('sidebarHandle').textContent = creator.handle ? '@' + creator.handle : '';
     }
 
     // Avatar upload preview
     document.getElementById('avatarInput').addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
+        if (file.size > 2 * 1024 * 1024) {
+          showToast('Image must be under 2MB', 'error');
+          return;
+        }
+        pendingAvatarFile = file;
         const reader = new FileReader();
         reader.onload = (e) => {
           document.getElementById('avatarPreview').src = e.target.result;
@@ -603,9 +630,91 @@
       }
     });
 
-    function saveProfile() {
-      // In a real app, this would save to the backend
-      showToast('Settings saved successfully!', 'success');
+    async function saveProfile() {
+      if (!creatorId) {
+        showToast('Not logged in', 'error');
+        return;
+      }
+
+      const saveBtn = document.querySelector('.btn-primary');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+
+      try {
+        // Extract Instagram username from URL
+        let instagram = document.getElementById('instagram').value.trim();
+        const igMatch = instagram.match(/instagram\.com\/([A-Za-z0-9._]+)/);
+        if (igMatch) {
+          instagram = igMatch[1];
+        }
+
+        // Upload avatar to Cloudinary if changed
+        let avatarUrl = creatorData?.avatar_url;
+        if (pendingAvatarFile) {
+          avatarUrl = await uploadAvatarToCloudinary(pendingAvatarFile);
+        }
+
+        const response = await fetch('/.netlify/functions/update-creator', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            creator_id: creatorId,
+            name: document.getElementById('displayName').value.trim(),
+            handle: document.getElementById('handle').value.trim(),
+            bio: document.getElementById('bio').value.trim(),
+            instagram: instagram,
+            avatar_url: avatarUrl
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          creatorData = data.creator;
+          pendingAvatarFile = null;
+
+          // Update sidebar
+          document.getElementById('sidebarName').textContent = data.creator.name;
+          document.getElementById('sidebarHandle').textContent = '@' + data.creator.handle;
+          if (data.creator.avatar_url) {
+            document.getElementById('sidebarAvatar').src = data.creator.avatar_url;
+          }
+
+          // Update session storage with new name
+          const updatedSession = { ...sessionData, creatorName: data.creator.name };
+          localStorage.setItem('juno_creator_session', JSON.stringify(updatedSession));
+
+          showToast('Settings saved successfully!', 'success');
+        } else {
+          throw new Error(data.error || 'Failed to save');
+        }
+      } catch (error) {
+        console.error('Save error:', error);
+        showToast('Failed to save: ' + error.message, 'error');
+      }
+
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save Changes';
+    }
+
+    async function uploadAvatarToCloudinary(file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'juno_avatars');
+      formData.append('folder', `creators/${creatorId}`);
+
+      const response = await fetch('https://api.cloudinary.com/v1_1/dng12bd0a/image/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload image');
+      }
+
+      const data = await response.json();
+      // Return optimized URL
+      return data.secure_url.replace('/upload/', '/upload/c_fill,w_400,h_400,q_auto,f_auto/');
     }
 
     function showToast(message, type = '') {
@@ -613,6 +722,11 @@
       const toastMessage = document.getElementById('toastMessage');
       toastMessage.textContent = message;
       toast.className = `toast show ${type}`;
+      if (type === 'error') {
+        toast.style.background = 'var(--color-error)';
+      } else {
+        toast.style.background = '';
+      }
       setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
