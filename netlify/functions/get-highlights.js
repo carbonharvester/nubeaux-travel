@@ -282,9 +282,9 @@ async function checkRunStatus(runId, creatorId) {
 
       console.log(`Valid highlights: ${validHighlights.length} of ${highlights.length}`);
 
-      // Skip Cloudinary uploads to avoid timeout - return highlights directly
-      // Cloudinary uploads can be done in background process later
-      // Just save to database without cover upload
+      // Skip Cloudinary for covers - Instagram blocks them with CORS anyway
+      // We'll show styled placeholders with titles instead
+      // Stories content will use Cloudinary when downloaded
       const savedHighlights = await saveHighlightsWithoutCloudinary(validHighlights, creatorId);
 
       return {
