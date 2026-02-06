@@ -314,7 +314,7 @@
           <div class="form-success" id="formSuccess">
             <h3>Quote Request Received!</h3>
             <p>Thank you for your interest. We'll prepare a personalized quote and send it to your email within 24 hours.</p>
-            <p style="margin-top: var(--space-md);"><a href="itineraries/" style="color: var(--color-terracotta);">Browse more itineraries</a></p>
+            <p style="margin-top: var(--space-md);"><a href="my-trip.html" style="color: var(--color-terracotta);">View your trip countdown</a></p>
           </div>
         </div>
       </div>
@@ -395,6 +395,24 @@
       document.getElementById('endDate').setAttribute('min', this.value);
     });
 
+    // Save trip data for countdown page
+    function saveTripData(data) {
+      if (!data.startDate) return;
+
+      const tripData = {
+        tripName: tripName || data.tripName || 'Your Trip',
+        destination: tripName ? tripName.split(' - ')[0] : '',
+        startDate: data.startDate,
+        endDate: data.endDate || null,
+        adults: data.adults,
+        children: data.children,
+        heroImage: urlParams.get('image') || null,
+        savedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('juno_upcoming_trip', JSON.stringify(tripData));
+    }
+
     // Form submission
     document.getElementById('quoteRequestForm').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -442,15 +460,21 @@
           });
 
           if (response.ok) {
+            // Save trip data for countdown page
+            saveTripData(data);
             form.classList.add('hidden');
             document.getElementById('formSuccess').classList.add('active');
           } else {
             throw new Error('Submission failed');
           }
         }
+
+        // Save trip data for countdown page
+        saveTripData(data);
       } catch (error) {
         console.error('Quote submission error:', error);
         // Show success anyway for better UX (we can fix backend issues later)
+        saveTripData(data);
         form.classList.add('hidden');
         document.getElementById('formSuccess').classList.add('active');
       } finally {

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Your upcoming trip countdown - JUNO Travel">
+
+  <title>My Trip | JUNO Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=22">
+
+  <style>
+    .trip-page {
+      margin-top: var(--header-height);
+      min-height: calc(100vh - var(--header-height));
+    }
+
+    .trip-hero {
+      position: relative;
+      height: 50vh;
+      min-height: 400px;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--color-white);
+    }
+
+    .trip-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+    }
+
+    .trip-hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      padding: 0 var(--space-md);
+    }
+
+    .trip-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: var(--space-md);
+    }
+
+    .trip-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: var(--space-sm);
+      color: var(--color-white);
+    }
+
+    .trip-destination {
+      font-size: 1.25rem;
+      opacity: 0.9;
+    }
+
+    /* Countdown Section */
+    .countdown-section {
+      background: var(--color-white);
+      margin-top: -60px;
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      padding: var(--space-xl);
+      text-align: center;
+    }
+
+    .countdown-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-md);
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .countdown-item {
+      background: linear-gradient(135deg, var(--color-warm-cream) 0%, #fff 100%);
+      padding: var(--space-lg) var(--space-md);
+      border-radius: 12px;
+    }
+
+    .countdown-value {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 600;
+      line-height: 1;
+      color: var(--color-accent);
+      font-family: var(--font-serif);
+    }
+
+    .countdown-unit {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-light);
+      margin-top: var(--space-xs);
+    }
+
+    .trip-dates {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-xl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .trip-date-item {
+      text-align: center;
+    }
+
+    .trip-date-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-light);
+      margin-bottom: 4px;
+    }
+
+    .trip-date-value {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+    }
+
+    /* Trip Details */
+    .trip-details {
+      max-width: 800px;
+      margin: var(--space-xl) auto;
+      padding: 0 var(--space-md);
+    }
+
+    .trip-checklist {
+      background: var(--color-white);
+      border-radius: 12px;
+      padding: var(--space-lg);
+      border: 1px solid var(--color-light-grey);
+    }
+
+    .trip-checklist h3 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .checklist-item:last-child {
+      border-bottom: none;
+    }
+
+    .checklist-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--color-light-grey);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .checklist-checkbox.checked {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: white;
+    }
+
+    .checklist-checkbox svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0;
+    }
+
+    .checklist-checkbox.checked svg {
+      opacity: 1;
+    }
+
+    .checklist-text {
+      flex: 1;
+    }
+
+    .checklist-text.checked {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    /* Share Excitement */
+    .share-section {
+      text-align: center;
+      padding: var(--space-xl) var(--space-md);
+      background: var(--color-warm-cream);
+    }
+
+    .share-section h3 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .share-section p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+    }
+
+    .share-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+
+    .share-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid var(--color-light-grey);
+      background: var(--color-white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .share-btn:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-2px);
+    }
+
+    .share-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* No Trip State */
+    .no-trip {
+      text-align: center;
+      padding: var(--space-xxl) var(--space-md);
+    }
+
+    .no-trip h2 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .no-trip p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+    }
+
+    @media (max-width: 600px) {
+      .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .trip-dates {
+        flex-direction: column;
+        gap: var(--space-md);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="JUNO"></a>
+      <nav class="nav">
+        <a href="destinations/">Destinations</a>
+        <a href="itineraries/">Itineraries</a>
+        <a href="stays/">Stays</a>
+        <a href="journal/">Journal</a>
+        <a href="about.html">About</a>
+        <a href="plan-your-trip.html" class="nav-cta">Plan Your Trip</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="destinations/">Destinations</a>
+    <a href="itineraries/">Itineraries</a>
+    <a href="stays/">Stays</a>
+    <a href="journal/">Journal</a>
+    <a href="about.html">About</a>
+    <a href="plan-your-trip.html" class="mobile-menu-cta">Plan Your Trip</a>
+  </div>
+
+  <div class="trip-page" id="tripPage">
+    <!-- Content populated by JS -->
+  </div>
+
+  <script src="js/main.js?v=2"></script>
+  <script>
+    // Get saved trip from localStorage
+    const savedTrip = localStorage.getItem('juno_upcoming_trip');
+    const tripPage = document.getElementById('tripPage');
+
+    if (!savedTrip) {
+      // No trip saved - show empty state
+      tripPage.innerHTML = `
+        <div class="no-trip">
+          <h2>No Upcoming Trip</h2>
+          <p>Request a quote to start planning your dream getaway.</p>
+          <a href="itineraries/" class="btn btn-primary">Browse Itineraries</a>
+        </div>
+      `;
+    } else {
+      const trip = JSON.parse(savedTrip);
+      const startDate = new Date(trip.startDate);
+      const endDate = trip.endDate ? new Date(trip.endDate) : null;
+      const heroImage = trip.heroImage || 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1600&h=900&fit=crop';
+
+      // Render trip page
+      tripPage.innerHTML = `
+        <div class="trip-hero" style="background-image: url('${heroImage}')">
+          <div class="trip-hero-content">
+            <span class="trip-badge">Your Upcoming Adventure</span>
+            <h1>${trip.tripName || 'Your Trip'}</h1>
+            <p class="trip-destination">${trip.destination || ''}</p>
+          </div>
+        </div>
+
+        <div class="countdown-section">
+          <div class="countdown-label">Your adventure begins in</div>
+          <div class="countdown-grid" id="countdown">
+            <div class="countdown-item">
+              <div class="countdown-value" id="days">--</div>
+              <div class="countdown-unit">Days</div>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-value" id="hours">--</div>
+              <div class="countdown-unit">Hours</div>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-value" id="minutes">--</div>
+              <div class="countdown-unit">Minutes</div>
+            </div>
+            <div class="countdown-item">
+              <div class="countdown-value" id="seconds">--</div>
+              <div class="countdown-unit">Seconds</div>
+            </div>
+          </div>
+          <div class="trip-dates">
+            <div class="trip-date-item">
+              <div class="trip-date-label">Departure</div>
+              <div class="trip-date-value" id="departureDate">--</div>
+            </div>
+            ${endDate ? `
+            <div class="trip-date-item">
+              <div class="trip-date-label">Return</div>
+              <div class="trip-date-value" id="returnDate">--</div>
+            </div>
+            ` : ''}
+          </div>
+        </div>
+
+        <div class="trip-details">
+          <div class="trip-checklist">
+            <h3>Pre-Trip Checklist</h3>
+            <div class="checklist-item">
+              <div class="checklist-checkbox" data-item="passport" onclick="toggleCheck(this)">
+                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="checklist-text">Passport valid for 6+ months</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-checkbox" data-item="visa" onclick="toggleCheck(this)">
+                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="checklist-text">Visa requirements checked</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-checkbox" data-item="insurance" onclick="toggleCheck(this)">
+                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="checklist-text">Travel insurance purchased</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-checkbox" data-item="vaccines" onclick="toggleCheck(this)">
+                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="checklist-text">Vaccinations up to date</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-checkbox" data-item="packing" onclick="toggleCheck(this)">
+                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="checklist-text">Packing list ready</span>
+            </div>
+            <div class="checklist-item">
+              <div class="checklist-checkbox" data-item="currency" onclick="toggleCheck(this)">
+                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <span class="checklist-text">Local currency arranged</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="share-section">
+          <h3>Share Your Excitement</h3>
+          <p>Let friends and family know about your upcoming adventure</p>
+          <div class="share-buttons">
+            <button class="share-btn" onclick="shareTrip('whatsapp')" title="WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+            </button>
+            <button class="share-btn" onclick="shareTrip('twitter')" title="Twitter">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </button>
+            <button class="share-btn" onclick="shareTrip('copy')" title="Copy link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+        </div>
+      `;
+
+      // Format and display dates
+      const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('departureDate').textContent = startDate.toLocaleDateString('en-US', dateOptions);
+      if (endDate) {
+        document.getElementById('returnDate').textContent = endDate.toLocaleDateString('en-US', dateOptions);
+      }
+
+      // Start countdown
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // Load saved checklist state
+      loadChecklistState();
+    }
+
+    function updateCountdown() {
+      const trip = JSON.parse(localStorage.getItem('juno_upcoming_trip'));
+      if (!trip) return;
+
+      const startDate = new Date(trip.startDate);
+      const now = new Date();
+      const diff = startDate - now;
+
+      if (diff <= 0) {
+        document.getElementById('days').textContent = '0';
+        document.getElementById('hours').textContent = '0';
+        document.getElementById('minutes').textContent = '0';
+        document.getElementById('seconds').textContent = '0';
+        document.querySelector('.countdown-label').textContent = 'Your adventure has begun!';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    }
+
+    function toggleCheck(el) {
+      el.classList.toggle('checked');
+      const textEl = el.nextElementSibling;
+      textEl.classList.toggle('checked');
+      saveChecklistState();
+    }
+
+    function saveChecklistState() {
+      const checkboxes = document.querySelectorAll('.checklist-checkbox');
+      const state = {};
+      checkboxes.forEach(cb => {
+        state[cb.dataset.item] = cb.classList.contains('checked');
+      });
+      localStorage.setItem('juno_trip_checklist', JSON.stringify(state));
+    }
+
+    function loadChecklistState() {
+      const saved = localStorage.getItem('juno_trip_checklist');
+      if (!saved) return;
+
+      const state = JSON.parse(saved);
+      Object.entries(state).forEach(([item, checked]) => {
+        const cb = document.querySelector(`.checklist-checkbox[data-item="${item}"]`);
+        if (cb && checked) {
+          cb.classList.add('checked');
+          cb.nextElementSibling.classList.add('checked');
+        }
+      });
+    }
+
+    function shareTrip(platform) {
+      const trip = JSON.parse(localStorage.getItem('juno_upcoming_trip'));
+      if (!trip) return;
+
+      const text = `I'm going to ${trip.destination || trip.tripName}! Can't wait for my adventure with @junotravel`;
+      const url = window.location.origin + '/my-trip.html';
+
+      switch (platform) {
+        case 'whatsapp':
+          window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`);
+          break;
+        case 'twitter':
+          window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
+          break;
+        case 'copy':
+          navigator.clipboard.writeText(text + ' ' + url).then(() => {
+            alert('Link copied to clipboard!');
+          });
+          break;
+      }
+    }
+  </script>
+<script src="js/voice-agent.js?v=4"></script>
+</body>
+</html>
