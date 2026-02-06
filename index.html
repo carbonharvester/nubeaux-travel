@@ -1685,13 +1685,19 @@
     const videoLightboxClose = document.getElementById('videoLightboxClose');
 
     if (lamuPost && videoLightbox) {
+      // Preload video immediately for instant playback
+      const videoUrl = lamuPost.dataset.video;
+      if (videoUrl) {
+        lightboxVideoSrc.src = videoUrl;
+        lightboxVideo.preload = 'auto';
+        lightboxVideo.load();
+      }
+
       lamuPost.addEventListener('click', () => {
-        const videoUrl = lamuPost.dataset.video;
         if (videoUrl) {
-          lightboxVideoSrc.src = videoUrl;
-          lightboxVideo.load();
           videoLightbox.classList.add('active');
           document.body.style.overflow = 'hidden';
+          lightboxVideo.currentTime = 0;
           lightboxVideo.play();
         }
       });
