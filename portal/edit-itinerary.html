@@ -3379,7 +3379,7 @@
       }).join('');
     }
 
-    // Step 3: Download stories from a highlight
+    // Step 3: Download stories from a highlight (async with polling)
     async function downloadHighlightStories(highlightId, highlightTitle) {
       const statusEl = document.getElementById('highlightsStatus');
       const storiesGrid = document.getElementById('igStoriesGrid');
@@ -3397,7 +3397,8 @@
       statusEl.className = 'ig-import-status processing';
 
       try {
-        const response = await fetch('/.netlify/functions/download-stories', {
+        // Step 1: Start the download (returns run_id immediately)
+        const startResponse = await fetch('/.netlify/functions/download-stories', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -3407,18 +3408,55 @@
           })
         });
 
-        const result = await response.json();
+        const startResult = await startResponse.json();
 
-        if (result.success) {
-          downloadedStories = result.stories || [];
-          renderDownloadedStories(highlightTitle);
-          storiesGrid.style.display = 'block';
-          statusEl.textContent = `Downloaded ${downloadedStories.length} stories from "${highlightTitle}"`;
-          statusEl.className = 'ig-import-status success';
-          showToast(`Downloaded ${downloadedStories.length} stories!`, 'success');
-        } else {
-          throw new Error(result.error || 'Failed to download stories');
+        if (!startResult.success && startResult.status !== 'processing') {
+          throw new Error(startResult.error || 'Failed to start stories download');
         }
+
+        const runId = startResult.run_id;
+
+        // Step 2: Poll for completion
+        let attempts = 0;
+        const maxAttempts = 30; // 30 * 2 seconds = 60 seconds max
+        const pollInterval = 2000;
+
+        while (attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, pollInterval));
+          attempts++;
+
+          statusEl.textContent = `Downloading stories from "${highlightTitle}"... (${attempts * 2}s)`;
+
+          const pollResponse = await fetch('/.netlify/functions/download-stories', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              run_id: runId,
+              highlight_title: highlightTitle,
+              creator_id: getCreatorId()
+            })
+          });
+
+          const pollResult = await pollResponse.json();
+
+          if (pollResult.status === 'completed') {
+            downloadedStories = pollResult.stories || [];
+            renderDownloadedStories(highlightTitle);
+            storiesGrid.style.display = 'block';
+            statusEl.textContent = `Downloaded ${downloadedStories.length} stories from "${highlightTitle}"`;
+            statusEl.className = 'ig-import-status success';
+            showToast(`Downloaded ${downloadedStories.length} stories!`, 'success');
+            return;
+          }
+
+          if (pollResult.status === 'failed') {
+            throw new Error(pollResult.error || 'Stories download failed');
+          }
+
+          // Still processing, continue polling
+        }
+
+        throw new Error('Download timed out. Please try again.');
       } catch (error) {
         console.error('Download stories error:', error);
         statusEl.textContent = 'Failed: ' + error.message;
