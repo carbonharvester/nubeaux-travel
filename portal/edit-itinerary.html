@@ -4054,221 +4054,625 @@
       `;
     }
 
-    // Preview modal
+    // Preview modal - Full front-end style preview
     function showPreviewModal() {
       const title = document.getElementById('title').value || 'Untitled Itinerary';
       const destination = document.getElementById('destination').value || '';
       const location = document.getElementById('location').value || '';
       const duration = document.getElementById('duration').value || '';
       const intro = document.getElementById('intro').value || '';
+      const whyCurated = document.getElementById('whyCurated')?.value || '';
+      const priceFrom = document.getElementById('priceFrom')?.value || '';
       const heroImage = itineraryData.heroImage || '';
       const heroFocalX = itineraryData.heroFocalX || 50;
       const heroFocalY = itineraryData.heroFocalY || 50;
       const bestFor = Array.from(document.querySelectorAll('#bestForTags .tag'))
         .map(t => t.textContent.trim().replace('×', '').trim());
 
-      // Get days
-      const days = Array.from(document.getElementById('daysList').children).map((card, i) => ({
-        dayNumber: i + 1,
-        title: card.querySelector('.day-card-header input').value || `Day ${i + 1}`,
-        description: card.querySelector('.day-description').value || '',
-        activities: (card.querySelector('.day-activities').value || '').split(',').map(a => a.trim()).filter(Boolean)
-      }));
+      // Get creator info from session
+      const session = JSON.parse(localStorage.getItem('juno_creator_session') || '{}');
+      const creatorName = session.display_name || session.instagram || 'Creator';
+      const creatorAvatar = session.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(creatorName)}&background=c2703e&color=fff&size=100`;
+
+      // Get days with media
+      const days = Array.from(document.getElementById('daysList').children).map((card, i) => {
+        const mediaItems = Array.from(card.querySelectorAll('.day-media-grid img, .day-media-grid video')).map(el => ({
+          type: el.tagName.toLowerCase() === 'video' ? 'video' : 'image',
+          src: el.src || el.querySelector('source')?.src
+        }));
+        return {
+          dayNumber: i + 1,
+          title: card.querySelector('.day-card-header input').value || `Day ${i + 1}`,
+          description: card.querySelector('.day-description').value || '',
+          activities: (card.querySelector('.day-activities').value || '').split(',').map(a => a.trim()).filter(Boolean),
+          media: mediaItems
+        };
+      });
 
       // Get gallery items
       const galleryItems = Array.from(document.querySelectorAll('#galleryGrid .gallery-item img')).map(img => img.src);
 
-      // Create modal
+      // Create full-page preview
       const modal = document.createElement('div');
-      modal.className = 'preview-modal';
+      modal.className = 'preview-modal-fullpage';
       modal.innerHTML = `
-        <div class="preview-modal-content">
-          <button class="preview-modal-close" onclick="this.closest('.preview-modal').remove()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
-          <div class="preview-modal-body">
-            ${heroImage ? `<div class="preview-hero"><img src="${heroImage}" alt="${title}" style="object-position: ${heroFocalX}% ${heroFocalY}%;"></div>` : ''}
-            <div class="preview-header">
-              <h1>${title}</h1>
-              <p class="preview-meta">${[destination, location, duration].filter(Boolean).join(' · ')}</p>
-              ${bestFor.length > 0 ? `<div class="preview-tags">${bestFor.map(t => `<span class="preview-tag">${t}</span>`).join('')}</div>` : ''}
-            </div>
-            ${intro ? `<div class="preview-intro"><p>${intro}</p></div>` : ''}
-            <div class="preview-days">
-              <h2>Day by Day</h2>
-              ${days.map(day => `
-                <div class="preview-day">
-                  <h3>${day.title}</h3>
-                  <p>${day.description}</p>
-                  ${day.activities.length > 0 ? `<p class="preview-activities"><strong>Activities:</strong> ${day.activities.join(', ')}</p>` : ''}
+        <div class="preview-toolbar">
+          <div class="preview-toolbar-left">
+            <span class="preview-badge">Preview Mode</span>
+            <span class="preview-device-info">Desktop View</span>
+          </div>
+          <div class="preview-toolbar-right">
+            <button class="preview-close-btn" onclick="this.closest('.preview-modal-fullpage').remove()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Close Preview
+            </button>
+          </div>
+        </div>
+        <div class="preview-frame">
+          <!-- Hero Section -->
+          <div class="pv-hero" style="background-image: url('${heroImage || 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1600'}');">
+            <div class="pv-hero-overlay"></div>
+            <div class="pv-hero-content">
+              <div class="pv-hero-inner">
+                <div class="pv-creator">
+                  <img src="${creatorAvatar}" alt="${creatorName}">
+                  <span>Curated by ${creatorName}</span>
                 </div>
-              `).join('')}
-            </div>
-            ${galleryItems.length > 0 ? `
-              <div class="preview-gallery">
-                <h2>Gallery</h2>
-                <div class="preview-gallery-grid">
-                  ${galleryItems.map(src => `<img src="${src}" alt="">`).join('')}
+                <h1>${title}</h1>
+                <p class="pv-location">${[destination, location].filter(Boolean).join(' · ')}</p>
+                ${intro ? `<p class="pv-subtitle">${intro}</p>` : ''}
+                <div class="pv-actions">
+                  <button class="pv-btn pv-btn-primary">Request Quote</button>
+                  <button class="pv-btn pv-btn-secondary">Save Trip</button>
                 </div>
               </div>
-            ` : ''}
+            </div>
+          </div>
+
+          <!-- Snapshot Bar -->
+          <div class="pv-snapshot">
+            <div class="pv-snapshot-item">
+              <div class="pv-snapshot-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <div>
+                <span class="pv-snapshot-label">Duration</span>
+                <span class="pv-snapshot-value">${duration || '-- days'}</span>
+              </div>
+            </div>
+            <div class="pv-snapshot-item">
+              <div class="pv-snapshot-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div>
+                <span class="pv-snapshot-label">Best For</span>
+                <span class="pv-snapshot-value">${bestFor.slice(0, 2).join(', ') || 'Everyone'}</span>
+              </div>
+            </div>
+            <div class="pv-snapshot-item">
+              <div class="pv-snapshot-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <div>
+                <span class="pv-snapshot-label">From</span>
+                <span class="pv-snapshot-value">${priceFrom ? '$' + parseInt(priceFrom).toLocaleString() : 'Custom'}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Why I Curated This -->
+          ${whyCurated ? `
+          <div class="pv-why-section">
+            <div class="pv-section-inner">
+              <div class="pv-why-content">
+                <div class="pv-why-avatar">
+                  <img src="${creatorAvatar}" alt="${creatorName}">
+                </div>
+                <div>
+                  <h3>Why I Curated This</h3>
+                  <p>${whyCurated}</p>
+                  <span class="pv-why-author">— ${creatorName}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- Day by Day -->
+          <div class="pv-days-section">
+            <div class="pv-section-inner">
+              <h2>Day by Day</h2>
+              <div class="pv-days-list">
+                ${days.map(day => `
+                  <div class="pv-day-card">
+                    <div class="pv-day-header">
+                      <span class="pv-day-number">Day ${day.dayNumber}</span>
+                      <h3>${day.title}</h3>
+                    </div>
+                    ${day.description ? `<p class="pv-day-desc">${day.description}</p>` : ''}
+                    ${day.activities.length > 0 ? `
+                      <div class="pv-day-activities">
+                        ${day.activities.map(a => `<span class="pv-activity-tag">${a}</span>`).join('')}
+                      </div>
+                    ` : ''}
+                    ${day.media.length > 0 ? `
+                      <div class="pv-day-media">
+                        ${day.media.slice(0, 4).map(m => `<img src="${m.src}" alt="">`).join('')}
+                      </div>
+                    ` : ''}
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Gallery -->
+          ${galleryItems.length > 0 ? `
+          <div class="pv-gallery-section">
+            <div class="pv-section-inner">
+              <h2>Gallery</h2>
+              <div class="pv-gallery-grid">
+                ${galleryItems.map(src => `<img src="${src}" alt="">`).join('')}
+              </div>
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- CTA Section -->
+          <div class="pv-cta-section">
+            <div class="pv-section-inner">
+              <h2>Ready to Experience ${destination || 'This Trip'}?</h2>
+              <p>Request a personalized quote and we'll tailor this itinerary to your preferences.</p>
+              <button class="pv-btn pv-btn-primary pv-btn-large">Request Quote</button>
+            </div>
           </div>
         </div>
       `;
       document.body.appendChild(modal);
+      document.body.style.overflow = 'hidden';
+
+      // Handle close
+      modal.querySelector('.preview-close-btn').addEventListener('click', () => {
+        document.body.style.overflow = '';
+      });
     }
   </script>
 
-  <!-- Preview Modal Styles -->
+  <!-- Full Page Preview Styles -->
   <style>
-    .preview-modal {
+    .preview-modal-fullpage {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 1000;
+      inset: 0;
+      z-index: 9999;
+      background: #fff;
       overflow-y: auto;
-      padding: 40px 20px;
     }
 
-    .preview-modal-content {
-      max-width: 800px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      position: relative;
+    .preview-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      background: #1a1a1a;
+      color: #fff;
     }
 
-    .preview-modal-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.5);
-      border: none;
-      cursor: pointer;
+    .preview-toolbar-left {
       display: flex;
       align-items: center;
-      justify-content: center;
-      z-index: 10;
+      gap: 16px;
     }
 
-    .preview-modal-close svg {
-      width: 20px;
-      height: 20px;
-      color: white;
+    .preview-badge {
+      background: var(--color-accent);
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    .preview-hero {
+    .preview-device-info {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.8125rem;
+    }
+
+    .preview-close-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .preview-close-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .preview-close-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .preview-frame {
+      font-family: 'Inter', -apple-system, sans-serif;
+    }
+
+    /* Hero */
+    .pv-hero {
+      position: relative;
+      min-height: 85vh;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .pv-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.2) 100%);
+    }
+
+    .pv-hero-content {
+      position: relative;
+      z-index: 2;
       width: 100%;
-      height: 300px;
-      overflow: hidden;
+      padding: 60px 40px;
+      color: #fff;
     }
 
-    .preview-hero img {
-      width: 100%;
-      height: 100%;
+    .pv-hero-inner {
+      max-width: 700px;
+    }
+
+    .pv-creator {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .pv-creator img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.5);
       object-fit: cover;
     }
 
-    .preview-modal-body {
-      padding: 0;
+    .pv-creator span {
+      font-size: 0.9375rem;
+      letter-spacing: 0.03em;
     }
 
-    .preview-header {
-      padding: 32px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
+    .pv-hero h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 400;
+      margin-bottom: 12px;
+      line-height: 1.1;
     }
 
-    .preview-header h1 {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-
-    .preview-meta {
-      color: #666;
+    .pv-location {
+      font-size: 1.125rem;
       margin-bottom: 16px;
+      opacity: 0.9;
     }
 
-    .preview-tags {
+    .pv-subtitle {
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 500px;
+      margin-bottom: 24px;
+      opacity: 0.85;
+    }
+
+    .pv-actions {
       display: flex;
-      gap: 8px;
-      justify-content: center;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .preview-tag {
-      background: #f0f0f0;
-      padding: 4px 12px;
-      border-radius: 16px;
+    .pv-btn {
+      padding: 14px 28px;
+      border-radius: 4px;
       font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
     }
 
-    .preview-intro {
-      padding: 24px 32px;
-      background: #f9f9f9;
-      font-style: italic;
+    .pv-btn-primary {
+      background: #fff;
+      color: #1a1a1a;
     }
 
-    .preview-days {
-      padding: 32px;
+    .pv-btn-primary:hover {
+      background: #f5f5f5;
     }
 
-    .preview-days h2 {
-      font-size: 1.5rem;
-      margin-bottom: 24px;
+    .pv-btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.6);
+      color: #fff;
     }
 
-    .preview-day {
-      margin-bottom: 24px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid #eee;
+    .pv-btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
     }
 
-    .preview-day:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
+    .pv-btn-large {
+      padding: 16px 40px;
+      font-size: 1rem;
     }
 
-    .preview-day h3 {
-      font-size: 1.125rem;
-      margin-bottom: 8px;
-      color: var(--color-accent, #c9a227);
+    /* Snapshot Bar */
+    .pv-snapshot {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      padding: 24px 40px;
+      background: #f9f7f4;
+      border-bottom: 1px solid #e5e5e5;
+      flex-wrap: wrap;
     }
 
-    .preview-activities {
-      margin-top: 8px;
-      color: #666;
-      font-size: 0.9rem;
-    }
-
-    .preview-gallery {
-      padding: 32px;
-    }
-
-    .preview-gallery h2 {
-      font-size: 1.25rem;
-      margin-bottom: 16px;
-    }
-
-    .preview-gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    .pv-snapshot-item {
+      display: flex;
+      align-items: center;
       gap: 12px;
     }
 
-    .preview-gallery-grid img {
+    .pv-snapshot-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    .pv-snapshot-icon svg {
+      width: 20px;
+      height: 20px;
+      color: #c2703e;
+    }
+
+    .pv-snapshot-label {
+      display: block;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #888;
+    }
+
+    .pv-snapshot-value {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    /* Section styles */
+    .pv-section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* Why Section */
+    .pv-why-section {
+      padding: 60px 0;
+      background: #fff;
+    }
+
+    .pv-why-content {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .pv-why-avatar img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .pv-why-content h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .pv-why-content p {
+      color: #555;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .pv-why-author {
+      display: block;
+      margin-top: 16px;
+      color: #c2703e;
+      font-style: italic;
+    }
+
+    /* Days Section */
+    .pv-days-section {
+      padding: 60px 0;
+      background: #f9f7f4;
+    }
+
+    .pv-days-section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .pv-days-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .pv-day-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .pv-day-header {
+      margin-bottom: 16px;
+    }
+
+    .pv-day-number {
+      display: inline-block;
+      background: #c2703e;
+      color: #fff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .pv-day-header h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.375rem;
+      font-weight: 400;
+    }
+
+    .pv-day-desc {
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .pv-day-activities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .pv-activity-tag {
+      background: #f0ebe6;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.8125rem;
+      color: #666;
+    }
+
+    .pv-day-media {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .pv-day-media img {
       width: 100%;
       aspect-ratio: 1;
       object-fit: cover;
       border-radius: 8px;
+    }
+
+    /* Gallery Section */
+    .pv-gallery-section {
+      padding: 60px 0;
+      background: #fff;
+    }
+
+    .pv-gallery-section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .pv-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .pv-gallery-grid img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* CTA Section */
+    .pv-cta-section {
+      padding: 80px 0;
+      background: #1a1a1a;
+      color: #fff;
+      text-align: center;
+    }
+
+    .pv-cta-section h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 12px;
+    }
+
+    .pv-cta-section p {
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 32px;
+    }
+
+    .pv-cta-section .pv-btn-primary {
+      background: #c2703e;
+      color: #fff;
+    }
+
+    .pv-cta-section .pv-btn-primary:hover {
+      background: #a85d32;
+    }
+
+    @media (max-width: 768px) {
+      .pv-hero-content {
+        padding: 40px 20px;
+      }
+      .pv-snapshot {
+        gap: 24px;
+        padding: 20px;
+      }
+      .pv-section-inner {
+        padding: 0 20px;
+      }
+      .pv-why-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      .pv-why-avatar {
+        margin: 0 auto;
+      }
+      .pv-day-media {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
   </style>
 </body>
