@@ -13,68 +13,145 @@
   <link rel="stylesheet" href="../css/style.css?v=22">
 
   <style>
-    .itin-hero { position: relative; margin-top: var(--header-height); display: flex; align-items: flex-end; overflow: hidden; min-height: 50vh; }
+    /* Hero */
+    .itin-hero { position: relative; min-height: 85vh; margin-top: var(--header-height); display: flex; align-items: flex-end; overflow: hidden; }
     .itin-hero-bg { position: absolute; inset: 0; z-index: 1; background: var(--color-sand); }
     .itin-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
-    .itin-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%); z-index: 2; }
-    .itin-hero-content { position: relative; z-index: 3; padding: var(--space-xl) var(--space-md); color: var(--color-white); width: 100%; }
-    .itin-hero-content .container { max-width: 800px; margin: 0; }
-    .itin-label { font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
-    .itin-hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: var(--space-md); color: var(--color-white); }
-    .itin-hero-meta { display: flex; gap: var(--space-lg); font-size: 1rem; opacity: 0.9; }
+    .itin-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.2) 100%); z-index: 2; }
+    .itin-hero-content { position: relative; z-index: 3; width: 100%; padding: var(--space-2xl) var(--space-md); color: var(--color-white); }
+    .itin-hero-inner { max-width: 700px; }
+    .itin-hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); color: var(--color-white); margin-bottom: var(--space-sm); line-height: 1.1; }
+    .itin-hero-location { font-size: 1.125rem; color: #ffffff; margin-bottom: var(--space-md); }
+    .itin-hero-subtitle { font-size: 1rem; line-height: 1.6; color: #ffffff; max-width: 500px; margin-bottom: var(--space-lg); }
+    .itin-hero-actions { display: flex; gap: var(--space-sm); flex-wrap: wrap; }
+    .itin-hero-actions .btn-primary { background: var(--color-white); color: var(--color-text); }
+    .itin-hero-actions .btn-secondary { background: transparent; border: 1px solid rgba(255,255,255,0.6); color: var(--color-white); }
+
+    /* Instagram Profile Section */
+    .ig-profile-section { background: var(--color-white); padding: var(--space-lg) 0 var(--space-md); }
+    .ig-profile-header { display: flex; align-items: center; gap: var(--space-md); max-width: 1200px; margin: 0 auto var(--space-md); padding: 0 var(--space-md); }
+    .ig-profile-avatar { width: 77px; height: 77px; border-radius: 50%; border: 1px solid var(--color-light-grey); flex-shrink: 0; object-fit: cover; }
+    .ig-profile-info { flex: 1; }
+    .ig-profile-label { font-size: 0.75rem; color: var(--color-text-light); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 2px; }
+    .ig-profile-username { color: var(--color-text); font-size: 1.125rem; font-weight: 500; margin-bottom: 2px; }
+    .ig-profile-bio { color: var(--color-text-light); font-size: 0.8125rem; line-height: 1.4; }
+
+    /* Stories Carousel */
+    .stories-section { background: var(--color-white); padding: 0 var(--space-md); max-width: 1200px; margin: 0 auto; box-sizing: content-box; display: none; }
+    .stories-section.has-stories { display: block; }
+    .stories-scroll { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 0 0 var(--space-sm); scrollbar-width: none; }
+    .stories-scroll::-webkit-scrollbar { display: none; }
+    .story-item { flex: 0 0 auto; scroll-snap-align: start; cursor: pointer; text-align: center; width: 100px; }
+    .story-ring { width: 80px; height: 80px; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #F77737 100%); margin: 0 auto 8px; }
+    .story-ring-inner { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--color-white); overflow: hidden; background: var(--color-sand); }
+    .story-ring-inner img { width: 100%; height: 100%; object-fit: cover; }
+    .story-label { font-size: 0.75rem; color: var(--color-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px; margin: 0 auto; }
+
+    /* Content Gallery */
+    .content-gallery-section { background: var(--color-charcoal); padding: var(--space-sm) 0 var(--space-lg) 0; display: none; }
+    .content-gallery-section.has-posts { display: block; }
+    .ig-tabs { display: flex; justify-content: center; border-top: 1px solid var(--color-light-grey); background: var(--color-white); max-width: 1200px; margin: 0 auto; }
+    .ig-tab { padding: var(--space-sm) var(--space-lg); color: var(--color-medium-grey); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; border-top: 1px solid transparent; margin-top: -1px; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+    .ig-tab.active { color: var(--color-text); border-top-color: var(--color-text); }
+    .ig-tab svg { width: 12px; height: 12px; }
+    .content-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; max-width: 1200px; margin: 0 auto; }
+    .content-gallery-item { position: relative; aspect-ratio: 1; overflow: hidden; background: #000; cursor: pointer; }
+    .content-gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .content-gallery-item:hover img { transform: scale(1.05); }
+    .content-gallery-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: center; justify-content: center; }
+    .content-gallery-item:hover .content-gallery-overlay { opacity: 1; }
+    .play-icon { width: 50px; height: 50px; color: white; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4)); }
+    .content-gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: var(--space-md); background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; font-size: 0.75rem; opacity: 0; transition: opacity 0.3s ease; }
+    .content-gallery-item:hover .content-gallery-caption { opacity: 1; }
+
+    /* Lightbox */
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .lightbox.active { opacity: 1; visibility: visible; }
+    .lightbox-close { position: absolute; top: var(--space-lg); right: var(--space-lg); width: 48px; height: 48px; background: none; border: none; color: var(--color-white); cursor: pointer; font-size: 2rem; display: flex; align-items: center; justify-content: center; z-index: 10001; }
+    .lightbox-content { max-width: 90vw; max-height: 90vh; display: flex; align-items: center; justify-content: center; }
+    .lightbox-content video, .lightbox-content img { max-width: 100%; max-height: 85vh; object-fit: contain; border-radius: 8px; }
+    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--color-charcoal); }
+    .lightbox-nav:hover { background: var(--color-white); }
+    .lightbox-nav.prev { left: var(--space-lg); }
+    .lightbox-nav.next { right: var(--space-lg); }
+    .lightbox-caption { position: absolute; bottom: var(--space-lg); left: 50%; transform: translateX(-50%); color: white; font-size: 0.875rem; max-width: 600px; text-align: center; padding: var(--space-md); background: rgba(0,0,0,0.5); border-radius: 8px; line-height: 1.6; }
+
+    /* Stories Lightbox */
+    .stories-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 10001; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .stories-lightbox.active { opacity: 1; visibility: visible; }
+    .stories-viewer { position: relative; width: 100%; max-width: 400px; height: 90vh; max-height: 700px; }
+    .stories-progress { position: absolute; top: 0; left: 0; right: 0; display: flex; gap: 4px; padding: var(--space-sm); z-index: 10; }
+    .stories-progress-bar { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 2px; overflow: hidden; }
+    .stories-progress-fill { height: 100%; background: var(--color-white); width: 0%; }
+    .stories-progress-bar.complete .stories-progress-fill { width: 100%; }
+    .stories-progress-bar.active .stories-progress-fill { animation: storyProgress 5s linear forwards; }
+    @keyframes storyProgress { from { width: 0%; } to { width: 100%; } }
+    .stories-media { width: 100%; height: 100%; border-radius: 12px; overflow: hidden; background: #000; }
+    .stories-media img, .stories-media video { width: 100%; height: 100%; object-fit: cover; }
+    .stories-close { position: absolute; top: var(--space-lg); right: var(--space-md); width: 36px; height: 36px; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; color: var(--color-white); font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 15; }
+    .stories-nav { position: absolute; top: 0; bottom: 0; width: 50%; background: none; border: none; cursor: pointer; z-index: 5; }
+    .stories-nav.prev { left: 0; }
+    .stories-nav.next { right: 0; }
+    .stories-header-info { position: absolute; top: var(--space-lg); left: var(--space-md); display: flex; align-items: center; gap: var(--space-sm); z-index: 10; }
+    .stories-header-info img { width: 32px; height: 32px; border-radius: 50%; }
+    .stories-header-info span { color: white; font-size: 0.875rem; font-weight: 500; }
+
+    /* Main Content */
     .itin-content { padding: var(--space-xl) 0; }
-    .itin-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-xl); }
-    .itin-main h2 { margin-bottom: var(--space-md); }
-    .itin-main p { color: var(--color-text-light); line-height: 1.8; margin-bottom: var(--space-md); }
-    .day-block { margin-bottom: var(--space-lg); padding-bottom: var(--space-lg); border-bottom: 1px solid var(--color-light-grey); }
-    .day-block:last-child { border-bottom: none; }
-    .day-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-xs); }
-    .day-title { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: var(--space-sm); }
-    .day-content { color: var(--color-text-light); line-height: 1.8; }
-    .day-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-sm); margin-top: var(--space-md); }
-    .day-images img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 4px; }
-    .itin-sidebar { background-color: var(--color-off-white); padding: var(--space-lg); height: fit-content; position: sticky; top: calc(var(--header-height) + var(--space-md)); }
-    .sidebar-section { margin-bottom: var(--space-lg); }
-    .sidebar-section:last-child { margin-bottom: 0; }
-    .sidebar-title { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
-    .sidebar-content { font-size: 0.9375rem; color: var(--color-text); }
-    .creator-badge { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-md); background: var(--color-off-white); margin-bottom: var(--space-lg); }
-    .creator-badge img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
-    .creator-badge-content span { display: block; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
-    .creator-badge-content strong { font-family: var(--font-serif); font-weight: 400; }
+    .itin-grid { display: grid; grid-template-columns: 1fr 380px; gap: var(--space-xl); align-items: start; }
+    .itin-main { min-width: 0; }
     .creator-voice { background: var(--color-warm-cream, #f5f0e8); padding: var(--space-lg); margin-bottom: var(--space-xl); }
     .creator-voice-header { display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md); }
     .creator-voice-header img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
     .creator-voice-header .label { font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-light); }
     .creator-voice-header .name { font-family: var(--font-serif); font-size: 1.125rem; margin: 0; }
     .creator-voice blockquote { font-size: 1rem; line-height: 1.7; color: var(--color-text); margin: 0; font-style: italic; }
-    .book-cta { background: var(--color-accent); color: var(--color-white); padding: var(--space-md); text-align: center; }
-    .book-cta h3 { font-size: 1.25rem; margin-bottom: var(--space-sm); color: var(--color-white); }
-    .book-cta p { font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md); color: var(--color-white); }
-    .book-cta .btn { background: var(--color-white); color: var(--color-accent); width: 100%; }
+    .section-title { font-size: 1.5rem; margin-bottom: var(--space-lg); }
+    .day-block { margin-bottom: var(--space-lg); padding-bottom: var(--space-lg); border-bottom: 1px solid var(--color-light-grey); }
+    .day-block:last-child { border-bottom: none; }
+    .day-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-xs); }
+    .day-title { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: var(--space-sm); }
+    .day-content { color: var(--color-text-light); line-height: 1.8; }
     .stays-grid { display: grid; gap: var(--space-md); margin-top: var(--space-md); }
     .stay-card { display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--color-sand); }
     .stay-card img { width: 120px; height: 90px; object-fit: cover; flex-shrink: 0; }
     .stay-card-content h4 { font-size: 1rem; margin-bottom: var(--space-xs); }
     .stay-card-content p { font-size: 0.875rem; color: var(--color-text-light); margin: 0; }
 
-    /* Loading state */
-    .loading-state { text-align: center; padding: var(--space-2xl); }
-    .loading-spinner { width: 40px; height: 40px; border: 3px solid var(--color-light-grey); border-top-color: var(--color-accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto var(--space-md); }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Sidebar */
+    .itin-sidebar { position: sticky; top: calc(var(--header-height) + var(--space-md)); }
+    .sidebar-cta { background: var(--color-warm-cream); color: var(--color-text); padding: var(--space-lg); margin-bottom: var(--space-md); }
+    .sidebar-cta h3 { font-size: 1.25rem; color: var(--color-text); margin-bottom: var(--space-sm); }
+    .sidebar-cta p { font-size: 0.875rem; color: var(--color-text-light); margin-bottom: var(--space-md); line-height: 1.6; }
+    .sidebar-cta .btn { width: 100%; background: var(--color-charcoal); color: var(--color-white); margin-bottom: var(--space-sm); }
+    .sidebar-cta-meta { margin-top: var(--space-md); padding-top: var(--space-md); border-top: 1px solid rgba(0,0,0,0.1); }
+    .sidebar-cta-meta p { font-size: 0.875rem; color: var(--color-text); margin: 0; }
+    .sidebar-info { background: var(--color-sand); padding: var(--space-lg); }
+    .sidebar-info-item { padding: var(--space-sm) 0; border-bottom: 1px solid var(--color-light-grey); }
+    .sidebar-info-item:last-child { border-bottom: none; }
+    .sidebar-info-label { font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-xs); }
+    .sidebar-info-value { font-size: 0.9375rem; color: var(--color-text); }
 
-    /* Error state */
-    .error-state { text-align: center; padding: var(--space-2xl); }
+    /* Loading/Error states */
+    .loading-state { text-align: center; padding: var(--space-2xl); margin-top: calc(var(--header-height) + var(--space-xl)); }
+    .loading-spinner { width: 40px; height: 40px; border: 3px solid var(--color-light-grey); border-top-color: var(--color-accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto var(--space-md); }
+    .error-state { text-align: center; padding: var(--space-2xl); margin-top: calc(var(--header-height) + var(--space-xl)); }
     .error-state h2 { margin-bottom: var(--space-sm); }
     .error-state p { color: var(--color-text-light); margin-bottom: var(--space-lg); }
 
-    @media (max-width: 768px) {
+    /* Responsive */
+    @media (max-width: 1024px) {
       .itin-grid { grid-template-columns: 1fr; }
-      .itin-sidebar { position: static; }
-      .itin-hero-meta { display: none; }
-      .itin-hero h1 { margin-bottom: var(--space-xs); }
-      .stay-card { flex-direction: column; }
-      .stay-card img { width: 100%; height: 180px; }
+      .itin-sidebar { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); }
+      .content-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .itin-hero { min-height: 70vh; }
+      .itin-sidebar { grid-template-columns: 1fr; }
+      .content-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .lightbox-nav { width: 40px; height: 40px; }
+      .lightbox-nav.prev { left: var(--space-sm); }
+      .lightbox-nav.next { right: var(--space-sm); }
     }
   </style>
 </head>
@@ -98,13 +175,13 @@
   </div>
 
   <!-- Loading State -->
-  <div id="loadingState" class="loading-state" style="margin-top: calc(var(--header-height) + var(--space-xl));">
+  <div id="loadingState" class="loading-state">
     <div class="loading-spinner"></div>
     <p>Loading itinerary...</p>
   </div>
 
   <!-- Error State -->
-  <div id="errorState" class="error-state" style="display: none; margin-top: calc(var(--header-height) + var(--space-xl));">
+  <div id="errorState" class="error-state" style="display: none;">
     <h2>Itinerary not found</h2>
     <p>This itinerary doesn't exist or may have been removed.</p>
     <a href="../trips/" class="btn btn-primary">Explore other trips</a>
@@ -112,6 +189,7 @@
 
   <!-- Main Content (hidden until loaded) -->
   <main id="mainContent" style="display: none;">
+    <!-- Hero -->
     <section class="itin-hero">
       <div class="itin-hero-bg">
         <img id="heroImage" src="" alt="">
@@ -119,16 +197,47 @@
       <div class="itin-hero-overlay"></div>
       <div class="itin-hero-content">
         <div class="container">
-          <span class="itin-label" id="destinationLabel"></span>
-          <h1 id="itineraryTitle"></h1>
-          <div class="itin-hero-meta">
-            <span id="durationMeta"></span>
-            <span id="regionMeta"></span>
+          <div class="itin-hero-inner">
+            <h1 id="itineraryTitle"></h1>
+            <p class="itin-hero-location" id="destinationLabel"></p>
+            <p class="itin-hero-subtitle" id="introText"></p>
+            <div class="itin-hero-actions">
+              <a id="quoteLink" href="../request-quote.html" class="btn btn-primary">Book this trip</a>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Instagram Profile Section -->
+    <section class="ig-profile-section" id="profileSection" style="display: none;">
+      <div class="ig-profile-header">
+        <img class="ig-profile-avatar" id="creatorAvatar" src="" alt="">
+        <div class="ig-profile-info">
+          <span class="ig-profile-label">Curated by</span>
+          <h3 class="ig-profile-username" id="creatorUsername"></h3>
+          <p class="ig-profile-bio" id="creatorBio"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stories Carousel -->
+    <section class="stories-section" id="storiesSection">
+      <div class="stories-scroll" id="storiesScroll"></div>
+    </section>
+
+    <!-- Content Gallery (Posts) -->
+    <section class="content-gallery-section" id="postsSection">
+      <div class="ig-tabs">
+        <div class="ig-tab active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Posts
+        </div>
+      </div>
+      <div class="content-gallery-grid" id="postsGrid"></div>
+    </section>
+
+    <!-- Main Content Grid -->
     <section class="itin-content">
       <div class="container">
         <div class="itin-grid">
@@ -145,45 +254,42 @@
               <blockquote id="whyCuratedText"></blockquote>
             </div>
 
-            <!-- Intro -->
-            <div id="introSection">
-              <h2>The Journey</h2>
-              <p id="introText"></p>
-            </div>
-
             <!-- Days -->
-            <div id="daysSection" style="margin-top: var(--space-lg);">
-              <h2>Day by Day</h2>
+            <div id="daysSection" style="display: none;">
+              <h2 class="section-title">The Itinerary</h2>
               <div id="daysContainer"></div>
             </div>
 
             <!-- Stays -->
-            <div id="staysSection" style="margin-top: var(--space-lg); display: none;">
-              <h2>Where You'll Stay</h2>
+            <div id="staysSection" style="margin-top: var(--space-xl); display: none;">
+              <h2 class="section-title">Where You Stay</h2>
               <div class="stays-grid" id="staysContainer"></div>
             </div>
           </div>
 
-          <div class="itin-sidebar">
-            <div class="sidebar-section">
-              <h3 class="sidebar-title">Trip Details</h3>
-              <div class="sidebar-content">
-                <p id="sidebarDuration"><strong>Duration:</strong> <span></span></p>
-                <p id="sidebarPrice" style="margin-top: 0.5rem;"><strong>Starting from:</strong> <span></span></p>
-                <p id="sidebarRegion" style="margin-top: 0.5rem;"><strong>Region:</strong> <span></span></p>
+          <!-- Sidebar -->
+          <aside class="itin-sidebar">
+            <div class="sidebar-cta">
+              <h3>Book this trip</h3>
+              <p>Let us handle the details. We'll customise this itinerary to your dates and preferences.</p>
+              <a id="quoteLinkSidebar" href="../request-quote.html" class="btn">Get a quote</a>
+              <div class="sidebar-cta-meta">
+                <p id="sidebarPrice"><strong>From $X,XXX</strong> per person</p>
+                <p id="sidebarDuration"></p>
               </div>
             </div>
-
-            <div class="book-cta">
-              <h3>Get Your Quote</h3>
-              <p>Ready for this trip? Get a personalized quote for your dates.</p>
-              <a id="quoteLink" href="../request-quote.html" class="btn">Request Quote</a>
+            <div class="sidebar-info">
+              <div class="sidebar-info-item">
+                <div class="sidebar-info-label">Region</div>
+                <div class="sidebar-info-value" id="sidebarRegion"></div>
+              </div>
             </div>
-          </div>
+          </aside>
         </div>
       </div>
     </section>
 
+    <!-- Final CTA -->
     <section class="cta-section">
       <div class="container">
         <h2>Ready to explore?</h2>
@@ -193,6 +299,30 @@
     </section>
   </main>
 
+  <!-- Stories Lightbox -->
+  <div class="stories-lightbox" id="storiesLightbox">
+    <div class="stories-viewer">
+      <div class="stories-progress" id="storiesProgress"></div>
+      <div class="stories-header-info" id="storiesHeaderInfo">
+        <img src="" alt="">
+        <span></span>
+      </div>
+      <button class="stories-close" id="storiesClose">&times;</button>
+      <button class="stories-nav prev" id="storiesPrev"></button>
+      <button class="stories-nav next" id="storiesNext"></button>
+      <div class="stories-media" id="storiesMedia"></div>
+    </div>
+  </div>
+
+  <!-- Posts Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">&times;</button>
+    <button class="lightbox-nav prev" id="lightboxPrev">&larr;</button>
+    <button class="lightbox-nav next" id="lightboxNext">&rarr;</button>
+    <div class="lightbox-content" id="lightboxContent"></div>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -200,38 +330,22 @@
           <img src="../assets/logo.svg" alt="NUBEAUX" style="height: 20px; margin-bottom: var(--space-md);">
           <p>Curated luxury travel experiences from creatives who've been there.</p>
         </div>
-
         <div class="footer-col">
           <h4 class="footer-heading">Explore</h4>
           <div class="footer-links">
             <a href="../destinations/">Destinations</a>
             <a href="../trips/">Trips</a>
-            <a href="../stays/">Stays</a>
-            <a href="../journal/">Journal</a>
-            <a href="../creators/index.html">Creators</a>
           </div>
         </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Company</h4>
-          <div class="footer-links">
-            <a href="../about.html">About</a>
-            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
-          </div>
-        </div>
-
         <div class="footer-col">
           <h4 class="footer-heading">Connect</h4>
           <div class="footer-links">
             <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
-            <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
           </div>
         </div>
       </div>
-
       <div class="footer-bottom">
         <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
-        <p>A NUBEAUX Collective Company</p>
       </div>
     </div>
   </footer>
@@ -241,57 +355,46 @@
     (function() {
       'use strict';
 
+      let itineraryData = null;
+      let currentPosts = [];
+      let currentPostIndex = 0;
+      let currentStoryGroup = null;
+      let currentStoryIndex = 0;
+      let storyTimer = null;
+
       // Get itinerary ID from URL
       function getItineraryId() {
-        // Check for query param first: /itinerary/?id=xxx
         const params = new URLSearchParams(window.location.search);
-        if (params.get('id')) {
-          return params.get('id');
-        }
-
-        // Check for path-based: /itinerary/xxx
+        if (params.get('id')) return params.get('id');
         const path = window.location.pathname;
         const match = path.match(/\/itinerary\/([^\/\?]+)/);
-        if (match && match[1] && match[1] !== 'index.html') {
-          return match[1];
-        }
-
+        if (match && match[1] && match[1] !== 'index.html') return match[1];
         return null;
       }
 
-      // Show error state
       function showError() {
         document.getElementById('loadingState').style.display = 'none';
         document.getElementById('errorState').style.display = 'block';
         document.getElementById('mainContent').style.display = 'none';
       }
 
-      // Show content
       function showContent() {
         document.getElementById('loadingState').style.display = 'none';
         document.getElementById('errorState').style.display = 'none';
         document.getElementById('mainContent').style.display = 'block';
       }
 
-      // Load itinerary data
       async function loadItinerary() {
         const id = getItineraryId();
-
-        if (!id) {
-          showError();
-          return;
-        }
+        if (!id) { showError(); return; }
 
         try {
           const response = await fetch(`/.netlify/functions/get-itinerary?id=${encodeURIComponent(id)}`);
           const result = await response.json();
+          if (!response.ok || !result.success) { showError(); return; }
 
-          if (!response.ok || !result.success) {
-            showError();
-            return;
-          }
-
-          renderItinerary(result.itinerary);
+          itineraryData = result.itinerary;
+          renderItinerary(itineraryData);
           showContent();
         } catch (error) {
           console.error('Error loading itinerary:', error);
@@ -299,114 +402,271 @@
         }
       }
 
-      // Render itinerary data to page
       function renderItinerary(itinerary) {
-        // Update page title
         document.title = `${itinerary.title} | NUBEAUX Travel`;
 
-        // Hero section
+        // Hero
         const heroImage = document.getElementById('heroImage');
         if (itinerary.hero_image) {
           heroImage.src = itinerary.hero_image;
           heroImage.alt = itinerary.title;
-        } else {
-          heroImage.parentElement.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+        }
+        document.getElementById('itineraryTitle').textContent = itinerary.title;
+        document.getElementById('destinationLabel').textContent = itinerary.destination || '';
+        document.getElementById('introText').textContent = itinerary.intro || '';
+
+        // Creator profile
+        const creator = itinerary.creators;
+        if (creator) {
+          document.getElementById('creatorAvatar').src = creator.profile_image || '../assets/avatar-placeholder.jpg';
+          document.getElementById('creatorUsername').textContent = creator.name;
+          document.getElementById('creatorBio').textContent = itinerary.destination ? `${itinerary.destination} Experience` : '';
+          document.getElementById('profileSection').style.display = 'block';
+
+          // Stories header
+          const storiesHeader = document.getElementById('storiesHeaderInfo');
+          storiesHeader.querySelector('img').src = creator.profile_image || '../assets/avatar-placeholder.jpg';
+          storiesHeader.querySelector('span').textContent = creator.instagram || creator.name;
         }
 
-        document.getElementById('destinationLabel').textContent = itinerary.destination || '';
-        document.getElementById('itineraryTitle').textContent = itinerary.title;
-        document.getElementById('durationMeta').textContent = itinerary.duration || '';
-        document.getElementById('regionMeta').textContent = formatRegion(itinerary.region);
-
-        // Creator voice / Why I curated this
-        const creator = itinerary.creators;
+        // Why I curated this
         if (creator && itinerary.why_curated) {
           document.getElementById('creatorVoiceImage').src = creator.profile_image || '../assets/avatar-placeholder.jpg';
-          document.getElementById('creatorVoiceImage').alt = creator.name;
           document.getElementById('creatorVoiceName').textContent = creator.name;
           document.getElementById('whyCuratedText').textContent = `"${itinerary.why_curated}"`;
           document.getElementById('creatorVoice').style.display = 'block';
-        } else {
-          document.getElementById('creatorVoice').style.display = 'none';
         }
 
-        // Intro
-        if (itinerary.intro) {
-          document.getElementById('introText').textContent = itinerary.intro;
-          document.getElementById('introSection').style.display = 'block';
-        } else {
-          document.getElementById('introSection').style.display = 'none';
+        // Stories
+        const stories = itinerary.stories || [];
+        if (stories.length > 0) {
+          renderStories(stories);
+          document.getElementById('storiesSection').classList.add('has-stories');
+        }
+
+        // Posts
+        const posts = itinerary.posts || [];
+        if (posts.length > 0) {
+          renderPosts(posts);
+          document.getElementById('postsSection').classList.add('has-posts');
         }
 
         // Days
         const days = itinerary.days || [];
-        const daysContainer = document.getElementById('daysContainer');
         if (days.length > 0) {
-          daysContainer.innerHTML = days.map((day, index) => `
-            <div class="day-block">
-              <span class="day-label">Day ${index + 1}</span>
-              <h3 class="day-title">${day.title || `Day ${index + 1}`}</h3>
-              <p class="day-content">${day.description || ''}</p>
-              ${day.images && day.images.length > 0 ? `
-                <div class="day-images">
-                  ${day.images.map(img => `<img src="${img}" alt="" loading="lazy">`).join('')}
-                </div>
-              ` : ''}
-            </div>
-          `).join('');
+          renderDays(days);
           document.getElementById('daysSection').style.display = 'block';
-        } else {
-          document.getElementById('daysSection').style.display = 'none';
         }
 
         // Stays
         const stays = itinerary.stays || [];
-        const staysContainer = document.getElementById('staysContainer');
         if (stays.length > 0) {
-          staysContainer.innerHTML = stays.map(stay => `
-            <div class="stay-card">
-              ${stay.image ? `<img src="${stay.image}" alt="${stay.name}" loading="lazy">` : ''}
-              <div class="stay-card-content">
-                <h4>${stay.name || 'Accommodation'}</h4>
-                ${stay.location ? `<p>${stay.location}</p>` : ''}
-                ${stay.nights ? `<p>${stay.nights} nights</p>` : ''}
-              </div>
-            </div>
-          `).join('');
+          renderStays(stays);
           document.getElementById('staysSection').style.display = 'block';
-        } else {
-          document.getElementById('staysSection').style.display = 'none';
         }
 
         // Sidebar
-        document.querySelector('#sidebarDuration span').textContent = itinerary.duration || 'Varies';
-        document.querySelector('#sidebarPrice span').textContent = itinerary.price_from
-          ? `$${itinerary.price_from.toLocaleString()} per person`
-          : 'Contact for pricing';
-        document.querySelector('#sidebarRegion span').textContent = formatRegion(itinerary.region);
+        document.getElementById('sidebarDuration').textContent = itinerary.duration || '';
+        document.getElementById('sidebarPrice').innerHTML = itinerary.price_from
+          ? `<strong>From $${itinerary.price_from.toLocaleString()}</strong> per person`
+          : '<strong>Contact for pricing</strong>';
+        document.getElementById('sidebarRegion').textContent = formatRegion(itinerary.region);
 
-        // Quote link
-        const quoteLink = document.getElementById('quoteLink');
+        // Quote links
         const tripName = encodeURIComponent(itinerary.title);
-        const priceText = itinerary.price_from
-          ? encodeURIComponent(`From $${itinerary.price_from.toLocaleString()} pp`)
-          : encodeURIComponent('Contact for pricing');
-        quoteLink.href = `../request-quote.html?trip=${tripName}&price=${priceText}`;
+        const quoteUrl = `../request-quote.html?trip=${tripName}`;
+        document.getElementById('quoteLink').href = quoteUrl;
+        document.getElementById('quoteLinkSidebar').href = quoteUrl;
       }
 
-      // Format region for display
+      function renderStories(stories) {
+        const scroll = document.getElementById('storiesScroll');
+        scroll.innerHTML = stories.map((group, index) => `
+          <div class="story-item" data-group-index="${index}">
+            <div class="story-ring">
+              <div class="story-ring-inner">
+                <img src="${group.cover_url || group.items[0]?.thumbnail_url || ''}" alt="${group.title}" onerror="this.style.display='none'">
+              </div>
+            </div>
+            <span class="story-label">${group.title}</span>
+          </div>
+        `).join('');
+
+        // Add click handlers
+        scroll.querySelectorAll('.story-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const groupIndex = parseInt(item.dataset.groupIndex);
+            openStories(stories[groupIndex]);
+          });
+        });
+      }
+
+      function renderPosts(posts) {
+        currentPosts = posts;
+        const grid = document.getElementById('postsGrid');
+        grid.innerHTML = posts.map((post, index) => {
+          const isVideo = post.content_type === 'Video' || post.cloudinary_video_url;
+          return `
+            <div class="content-gallery-item" data-index="${index}">
+              <img src="${post.thumbnail_url || post.cloudinary_url}" alt="${post.caption || 'Post'}" loading="lazy">
+              ${isVideo ? `
+                <div class="content-gallery-overlay">
+                  <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"/>
+                  </svg>
+                </div>
+              ` : ''}
+              ${post.caption ? `<div class="content-gallery-caption">${post.caption.substring(0, 100)}${post.caption.length > 100 ? '...' : ''}</div>` : ''}
+            </div>
+          `;
+        }).join('');
+
+        // Add click handlers
+        grid.querySelectorAll('.content-gallery-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const index = parseInt(item.dataset.index);
+            openLightbox(index);
+          });
+        });
+      }
+
+      function renderDays(days) {
+        const container = document.getElementById('daysContainer');
+        container.innerHTML = days.map((day, index) => `
+          <div class="day-block">
+            <span class="day-label">Day ${index + 1}</span>
+            <h3 class="day-title">${day.title || `Day ${index + 1}`}</h3>
+            <p class="day-content">${day.description || ''}</p>
+          </div>
+        `).join('');
+      }
+
+      function renderStays(stays) {
+        const container = document.getElementById('staysContainer');
+        container.innerHTML = stays.map(stay => `
+          <div class="stay-card">
+            ${stay.image ? `<img src="${stay.image}" alt="${stay.name}" loading="lazy">` : ''}
+            <div class="stay-card-content">
+              <h4>${stay.name || 'Accommodation'}</h4>
+              ${stay.location ? `<p>${stay.location}</p>` : ''}
+            </div>
+          </div>
+        `).join('');
+      }
+
       function formatRegion(region) {
         if (!region) return '';
-        const regions = {
-          'africa': 'Africa',
-          'europe': 'Europe',
-          'asia': 'Asia',
-          'middle-east': 'Middle East',
-          'americas': 'Americas',
-          'oceania': 'Oceania'
-        };
+        const regions = { 'africa': 'Africa', 'europe': 'Europe', 'asia': 'Asia', 'middle-east': 'Middle East', 'americas': 'Americas', 'oceania': 'Oceania' };
         return regions[region] || region;
       }
+
+      // Stories Lightbox
+      function openStories(group) {
+        currentStoryGroup = group;
+        currentStoryIndex = 0;
+
+        const progress = document.getElementById('storiesProgress');
+        progress.innerHTML = group.items.map((_, i) =>
+          `<div class="stories-progress-bar${i === 0 ? ' active' : ''}"><div class="stories-progress-fill"></div></div>`
+        ).join('');
+
+        showStory(0);
+        document.getElementById('storiesLightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function showStory(index) {
+        if (!currentStoryGroup || index < 0 || index >= currentStoryGroup.items.length) {
+          closeStories();
+          return;
+        }
+
+        currentStoryIndex = index;
+        const story = currentStoryGroup.items[index];
+
+        // Update progress
+        document.querySelectorAll('.stories-progress-bar').forEach((bar, i) => {
+          bar.classList.remove('active', 'complete');
+          if (i < index) bar.classList.add('complete');
+          if (i === index) bar.classList.add('active');
+        });
+
+        if (storyTimer) clearTimeout(storyTimer);
+
+        const media = document.getElementById('storiesMedia');
+        if (story.type === 'video') {
+          media.innerHTML = `<video src="${story.url}" autoplay playsinline></video>`;
+          const video = media.querySelector('video');
+          video.addEventListener('ended', () => showStory(currentStoryIndex + 1));
+        } else {
+          media.innerHTML = `<img src="${story.url || story.thumbnail_url}" alt="Story">`;
+          storyTimer = setTimeout(() => showStory(currentStoryIndex + 1), 5000);
+        }
+      }
+
+      function closeStories() {
+        document.getElementById('storiesLightbox').classList.remove('active');
+        document.body.style.overflow = '';
+        if (storyTimer) clearTimeout(storyTimer);
+        const video = document.querySelector('#storiesMedia video');
+        if (video) video.pause();
+      }
+
+      document.getElementById('storiesClose').addEventListener('click', closeStories);
+      document.getElementById('storiesPrev').addEventListener('click', () => showStory(currentStoryIndex - 1));
+      document.getElementById('storiesNext').addEventListener('click', () => showStory(currentStoryIndex + 1));
+
+      // Posts Lightbox
+      function openLightbox(index) {
+        currentPostIndex = index;
+        showPost(index);
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function showPost(index) {
+        if (index < 0 || index >= currentPosts.length) return;
+        currentPostIndex = index;
+        const post = currentPosts[index];
+        const content = document.getElementById('lightboxContent');
+        const isVideo = post.content_type === 'Video' || post.cloudinary_video_url;
+
+        if (isVideo && post.cloudinary_video_url) {
+          content.innerHTML = `<video controls autoplay playsinline><source src="${post.cloudinary_video_url}" type="video/mp4"></video>`;
+        } else {
+          content.innerHTML = `<img src="${post.cloudinary_url || post.thumbnail_url}" alt="${post.caption || 'Post'}">`;
+        }
+
+        document.getElementById('lightboxCaption').textContent = post.caption || '';
+        document.getElementById('lightboxPrev').style.display = index > 0 ? 'flex' : 'none';
+        document.getElementById('lightboxNext').style.display = index < currentPosts.length - 1 ? 'flex' : 'none';
+      }
+
+      function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = '';
+        const video = document.querySelector('#lightboxContent video');
+        if (video) video.pause();
+      }
+
+      document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+      document.getElementById('lightboxPrev').addEventListener('click', (e) => { e.stopPropagation(); showPost(currentPostIndex - 1); });
+      document.getElementById('lightboxNext').addEventListener('click', (e) => { e.stopPropagation(); showPost(currentPostIndex + 1); });
+      document.getElementById('lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') closeLightbox(); });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (document.getElementById('storiesLightbox').classList.contains('active')) {
+          if (e.key === 'Escape') closeStories();
+          if (e.key === 'ArrowLeft') showStory(currentStoryIndex - 1);
+          if (e.key === 'ArrowRight') showStory(currentStoryIndex + 1);
+        }
+        if (document.getElementById('lightbox').classList.contains('active')) {
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') showPost(currentPostIndex - 1);
+          if (e.key === 'ArrowRight') showPost(currentPostIndex + 1);
+        }
+      });
 
       // Initialize
       loadItinerary();
