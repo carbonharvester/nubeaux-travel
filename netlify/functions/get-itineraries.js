@@ -1,4 +1,5 @@
-// Netlify function to fetch published itineraries from Supabase
+// Netlify function to get published itineraries
+
 const { createClient } = require('@supabase/supabase-js');
 
 function getSupabase() {
@@ -12,98 +13,82 @@ function getSupabase() {
 }
 
 exports.handler = async (event, context) => {
-  // CORS headers
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Content-Type': 'application/json'
-  };
-
+  // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 200, headers, body: '' };
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      },
+      body: ''
+    };
   }
 
   if (event.httpMethod !== 'GET') {
     return {
       statusCode: 405,
-      headers,
+      headers: { 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({ error: 'Method not allowed' })
     };
   }
 
+  const supabase = getSupabase();
+  if (!supabase) {
+    return {
+      statusCode: 500,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'Database not configured' })
+    };
+  }
+
   try {
-    const supabase = getSupabase();
-    if (!supabase) {
-      // Return empty array if no database
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({ success: true, itineraries: [] })
-      };
-    }
-
-    // Parse query parameters
     const params = event.queryStringParameters || {};
-    const status = params.status || 'published'; // Default to published only
-    const creatorId = params.creator_id;
-    const region = params.region;
-    const limit = parseInt(params.limit) || 50;
+    const limit = parseInt(params.limit) || 20;
+    const destination = params.destination;
+    const tag = params.tag;
 
-    // Build query
     let query = supabase
       .from('itineraries')
       .select(`
         id,
+        slug,
         title,
         destination,
-        region,
         duration,
         price_from,
         hero_image,
         intro,
-        status,
-        published_at,
-        created_at,
-        creator_id,
-        creators (
-          id,
-          name,
-          instagram,
-          profile_image
-        )
+        tags,
+        created_at
       `)
-      .order('published_at', { ascending: false, nullsFirst: false })
+      .eq('status', 'published')
+      .order('created_at', { ascending: false })
       .limit(limit);
 
-    // Filter by status
-    if (status !== 'all') {
-      query = query.eq('status', status);
+    // Optional filters
+    if (destination) {
+      query = query.ilike('destination', `%${destination}%`);
     }
 
-    // Filter by creator if specified
-    if (creatorId) {
-      query = query.eq('creator_id', creatorId);
+    if (tag) {
+      query = query.contains('tags', [tag]);
     }
 
-    // Filter by region if specified
-    if (region) {
-      query = query.eq('region', region);
-    }
+    const { data, error } = await query;
 
-    const { data: itineraries, error } = await query;
-
-    if (error) {
-      console.error('Supabase error:', error);
-      throw new Error(error.message);
-    }
+    if (error) throw error;
 
     return {
       statusCode: 200,
-      headers,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'public, max-age=60'
+      },
       body: JSON.stringify({
         success: true,
-        count: itineraries.length,
-        itineraries: itineraries
+        itineraries: data || []
       })
     };
 
@@ -111,11 +96,8 @@ exports.handler = async (event, context) => {
     console.error('Get itineraries error:', error);
     return {
       statusCode: 500,
-      headers,
-      body: JSON.stringify({
-        success: false,
-        error: error.message || 'Failed to fetch itineraries'
-      })
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: error.message })
     };
   }
 };

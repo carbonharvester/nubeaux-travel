@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Take our quiz to find your perfect destination. Answer a few questions and we'll match you with curated travel experiences.">
 
-  <title>Find Your Destination | JUNO Travel</title>
+  <title>Discover Your Travel Personality | JUNO Travel</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -287,6 +287,147 @@
       color: var(--color-text-light);
     }
 
+    /* Personality Result */
+    .personality-result {
+      background: linear-gradient(135deg, var(--color-warm-cream) 0%, #fff 100%);
+      border-radius: 16px;
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+      text-align: center;
+    }
+
+    .personality-badge {
+      display: inline-block;
+      font-size: 0.625rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      background: rgba(194, 112, 62, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      margin-bottom: var(--space-md);
+    }
+
+    .personality-icon {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: var(--space-sm);
+    }
+
+    .personality-name {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: var(--space-sm);
+      color: var(--color-text);
+    }
+
+    .personality-tagline {
+      font-size: 1.125rem;
+      color: var(--color-accent);
+      font-style: italic;
+      margin-bottom: var(--space-md);
+    }
+
+    .personality-description {
+      max-width: 500px;
+      margin: 0 auto var(--space-lg);
+      line-height: 1.7;
+    }
+
+    .personality-traits {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .personality-trait {
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8125rem;
+    }
+
+    /* Share Button */
+    .share-result {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      margin-top: var(--space-lg);
+      color: var(--color-text-light);
+      font-size: 0.8125rem;
+      cursor: pointer;
+      transition: color var(--transition-fast);
+    }
+
+    .share-result:hover {
+      color: var(--color-accent);
+    }
+
+    /* Recommended Itineraries */
+    .recommended-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .recommended-section h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-lg);
+    }
+
+    .recommended-itineraries {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+
+    .rec-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .rec-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .rec-card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+    }
+
+    .rec-card-content {
+      padding: var(--space-md);
+      background: var(--color-white);
+    }
+
+    .rec-card-match {
+      display: inline-block;
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-white);
+      background: var(--color-accent);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      margin-bottom: var(--space-xs);
+    }
+
+    .rec-card h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .rec-card-meta {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .quiz-options {
@@ -299,6 +440,15 @@
 
       .result-destinations {
         grid-template-columns: 1fr;
+      }
+
+      .recommended-itineraries {
+        grid-template-columns: 1fr;
+      }
+
+      .personality-traits {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
@@ -331,8 +481,8 @@
   <div class="quiz-page">
     <section class="quiz-hero">
       <div class="container">
-        <h1>Find Your Perfect Destination</h1>
-        <p>Answer a few questions and we'll match you with destinations that fit your travel style.</p>
+        <h1>Discover Your Travel Personality</h1>
+        <p>Answer 5 quick questions and we'll reveal your travel style — plus match you with perfect itineraries.</p>
       </div>
     </section>
 
@@ -479,11 +629,36 @@
 
       <!-- Results -->
       <div class="quiz-results" id="quizResults">
-        <h2>Your Perfect Destinations</h2>
-        <p>Based on your answers, we think you'd love these destinations:</p>
+        <!-- Personality Reveal -->
+        <div class="personality-result" id="personalityResult">
+          <span class="personality-badge">Your Travel Personality</span>
+          <span class="personality-icon" id="personalityIcon"></span>
+          <h2 class="personality-name" id="personalityName"></h2>
+          <p class="personality-tagline" id="personalityTagline"></p>
+          <p class="personality-description" id="personalityDescription"></p>
+          <div class="personality-traits" id="personalityTraits"></div>
+          <div class="share-result" onclick="shareResult()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 12v3h12v-3M10 3v9M6 7l4-4 4 4"/>
+            </svg>
+            Share your result
+          </div>
+        </div>
 
-        <div class="result-destinations" id="resultDestinations">
-          <!-- Results populated by JS -->
+        <!-- Recommended Itineraries -->
+        <div class="recommended-section">
+          <h3>Itineraries Made For You</h3>
+          <div class="recommended-itineraries" id="recommendedItineraries">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Top Destinations -->
+        <div class="recommended-section">
+          <h3>Destinations You'll Love</h3>
+          <div class="result-destinations" id="resultDestinations">
+            <!-- Results populated by JS -->
+          </div>
         </div>
 
         <div class="result-cta">
@@ -503,7 +678,51 @@
 
   <script src="js/main.js?v=2"></script>
   <script>
-    // Quiz Logic
+    // Travel Personality Types
+    const personalities = {
+      explorer: {
+        icon: '🧭',
+        name: 'The Explorer',
+        tagline: '"The world is a book, and I intend to read every page."',
+        description: 'You crave discovery and adventure. Whether it\'s trekking through remote landscapes or uncovering hidden gems, you\'re always seeking the path less traveled. Comfort zones are for other people.',
+        traits: ['Adventurous', 'Curious', 'Independent', 'Thrill-seeker'],
+        triggers: ['adventure', 'active', 'unique', 'off-beaten-path', 'solo', 'savanna', 'mountains']
+      },
+      connoisseur: {
+        icon: '✨',
+        name: 'The Connoisseur',
+        tagline: '"Life is too short for ordinary experiences."',
+        description: 'You appreciate the finer things in travel. From world-class cuisine to five-star lodges, you believe luxury enhances every journey. Quality over quantity, always.',
+        traits: ['Refined', 'Discerning', 'Sophisticated', 'Quality-focused'],
+        triggers: ['luxury', 'premium', 'gastronomy', 'city', 'urban', 'couples', 'romantic']
+      },
+      storyteller: {
+        icon: '📖',
+        name: 'The Storyteller',
+        tagline: '"Every destination has a story waiting to be told."',
+        description: 'You travel for the stories — the history, the culture, the people you meet. You\'d rather spend an afternoon at a local market than a museum, soaking in authentic experiences.',
+        traits: ['Cultural', 'Authentic', 'Thoughtful', 'Connection-seeker'],
+        triggers: ['culture', 'history', 'heritage', 'authentic', 'local', 'photography']
+      },
+      wanderer: {
+        icon: '🌊',
+        name: 'The Wanderer',
+        tagline: '"Not all who wander are lost — some are finding themselves."',
+        description: 'You travel to disconnect and recharge. Beach days, sunset cocktails, and no alarm clocks. Your ideal trip is flexible, relaxed, and entirely on your terms.',
+        traits: ['Relaxed', 'Present', 'Mindful', 'Easy-going'],
+        triggers: ['beach', 'island', 'relaxation', 'wellness', 'slow', 'flexible', 'ocean']
+      },
+      connector: {
+        icon: '👨‍👩‍👧‍👦',
+        name: 'The Connector',
+        tagline: '"The best journeys are shared with the ones you love."',
+        description: 'Travel for you is about togetherness — creating memories with family, friends, or that special someone. The destination matters, but the company matters more.',
+        traits: ['Family-oriented', 'Social', 'Memory-maker', 'Inclusive'],
+        triggers: ['family', 'friends', 'group', 'balanced', 'safari', 'wildlife']
+      }
+    };
+
+    // Destinations data
     const destinations = {
       namibia: {
         name: 'Namibia',
@@ -546,6 +765,7 @@
     let currentQuestion = 1;
     let totalQuestions = 5;
     let selectedTags = [];
+    let selectedValues = [];
 
     const questions = document.querySelectorAll('.quiz-question');
     const progressFill = document.getElementById('progressFill');
@@ -563,12 +783,13 @@
         this.classList.add('selected');
         btnNext.disabled = false;
 
-        // Store selected tags
+        // Store selected tags and values
         const tags = this.dataset.tags.split(',');
+        const value = this.dataset.value;
         const questionNum = parseInt(this.closest('.quiz-question').dataset.question);
 
-        // Update tags for this question
         selectedTags[questionNum - 1] = tags;
+        selectedValues[questionNum - 1] = value;
       });
     });
 
@@ -583,14 +804,13 @@
         btnBack.style.visibility = 'visible';
         btnNext.disabled = true;
 
-        // Check if already selected
         const currentQ = questions[currentQuestion - 1];
         if (currentQ.querySelector('.quiz-option.selected')) {
           btnNext.disabled = false;
         }
 
         if (currentQuestion === totalQuestions) {
-          btnNext.textContent = 'See Results';
+          btnNext.textContent = 'Reveal My Personality';
         }
       } else {
         showResults();
@@ -620,40 +840,135 @@
       currentQuestionText.textContent = currentQuestion;
     }
 
-    function showResults() {
+    function calculatePersonality(allTags) {
+      const scores = {};
+
+      Object.keys(personalities).forEach(key => {
+        const p = personalities[key];
+        let score = 0;
+        allTags.forEach(tag => {
+          if (p.triggers.includes(tag)) score++;
+        });
+        scores[key] = score;
+      });
+
+      // Get highest scoring personality
+      const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      return personalities[sorted[0][0]];
+    }
+
+    async function fetchRecommendedItineraries(allTags) {
+      try {
+        // Try to fetch from API
+        const response = await fetch('/.netlify/functions/get-itineraries?limit=6');
+        if (response.ok) {
+          const data = await response.json();
+          if (data.itineraries && data.itineraries.length > 0) {
+            // Score itineraries based on tags
+            const scored = data.itineraries.map(it => {
+              let score = 0;
+              const itTags = (it.tags || []).map(t => t.toLowerCase());
+              const itDest = (it.destination || '').toLowerCase();
+
+              allTags.forEach(tag => {
+                if (itTags.includes(tag)) score += 2;
+                if (itDest.includes(tag)) score += 1;
+              });
+
+              return { ...it, matchScore: score };
+            });
+
+            return scored.sort((a, b) => b.matchScore - a.matchScore).slice(0, 3);
+          }
+        }
+      } catch (e) {
+        console.log('Could not fetch itineraries:', e);
+      }
+      return null;
+    }
+
+    async function showResults() {
       // Hide questions and nav
       questions.forEach(q => q.classList.remove('active'));
       quizNav.style.display = 'none';
       document.querySelector('.quiz-progress').style.display = 'none';
 
-      // Calculate scores
       const allTags = selectedTags.flat();
-      const scores = {};
 
+      // Calculate personality
+      const personality = calculatePersonality(allTags);
+
+      // Save to localStorage for personalization
+      localStorage.setItem('juno_travel_personality', JSON.stringify({
+        type: personality.name,
+        tags: allTags,
+        timestamp: new Date().toISOString()
+      }));
+
+      // Display personality
+      document.getElementById('personalityIcon').textContent = personality.icon;
+      document.getElementById('personalityName').textContent = personality.name;
+      document.getElementById('personalityTagline').textContent = personality.tagline;
+      document.getElementById('personalityDescription').textContent = personality.description;
+
+      const traitsContainer = document.getElementById('personalityTraits');
+      traitsContainer.innerHTML = personality.traits
+        .map(t => `<span class="personality-trait">${t}</span>`)
+        .join('');
+
+      // Fetch and display recommended itineraries
+      const itineraries = await fetchRecommendedItineraries(allTags);
+      const itContainer = document.getElementById('recommendedItineraries');
+
+      if (itineraries && itineraries.length > 0) {
+        itContainer.innerHTML = itineraries.map(it => `
+          <a href="itineraries/${it.slug || it.id}.html" class="rec-card">
+            <img src="${it.hero_image || 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&h=450&fit=crop'}" alt="${it.title}">
+            <div class="rec-card-content">
+              <span class="rec-card-match">Perfect Match</span>
+              <h4>${it.title}</h4>
+              <p class="rec-card-meta">${it.destination} · ${it.duration}</p>
+            </div>
+          </a>
+        `).join('');
+      } else {
+        // Fallback if no itineraries from API
+        itContainer.innerHTML = `
+          <a href="itineraries/" class="rec-card">
+            <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600&h=450&fit=crop" alt="Browse itineraries">
+            <div class="rec-card-content">
+              <span class="rec-card-match">Explore</span>
+              <h4>Browse All Itineraries</h4>
+              <p class="rec-card-meta">Find your perfect trip</p>
+            </div>
+          </a>
+        `;
+      }
+
+      // Calculate destination scores
+      const destScores = {};
       Object.keys(destinations).forEach(key => {
         const dest = destinations[key];
         let score = 0;
         allTags.forEach(tag => {
           if (dest.tags.includes(tag)) score++;
         });
-        scores[key] = score;
+        destScores[key] = score;
       });
 
       // Sort and get top 3
-      const sorted = Object.entries(scores)
+      const sorted = Object.entries(destScores)
         .sort((a, b) => b[1] - a[1])
         .slice(0, 3);
 
-      // Display results
+      // Display destinations
       const resultsContainer = document.getElementById('resultDestinations');
-      resultsContainer.innerHTML = '';
-
-      sorted.forEach((item, index) => {
+      resultsContainer.innerHTML = sorted.map((item, index) => {
         const [key, score] = item;
         const dest = destinations[key];
         const matchPercent = Math.min(Math.round((score / allTags.length) * 100) + 60, 98);
 
-        resultsContainer.innerHTML += `
+        return `
           <a href="${dest.url}" class="result-card">
             <img src="${dest.image}" alt="${dest.name}">
             <div class="result-card-overlay">
@@ -662,14 +977,37 @@
             </div>
           </a>
         `;
-      });
+      }).join('');
 
       quizResults.classList.add('active');
+
+      // Scroll to results
+      quizResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function shareResult() {
+      const personality = document.getElementById('personalityName').textContent;
+      const text = `I'm ${personality}! Take the JUNO Travel personality quiz to discover yours.`;
+      const url = window.location.href;
+
+      if (navigator.share) {
+        navigator.share({ title: 'My Travel Personality', text, url });
+      } else {
+        // Copy to clipboard
+        navigator.clipboard.writeText(`${text} ${url}`).then(() => {
+          const btn = document.querySelector('.share-result');
+          btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4-4-4-4"/></svg> Copied!';
+          setTimeout(() => {
+            btn.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v3h12v-3M10 3v9M6 7l4-4 4 4"/></svg> Share your result';
+          }, 2000);
+        });
+      }
     }
 
     function restartQuiz() {
       currentQuestion = 1;
       selectedTags = [];
+      selectedValues = [];
 
       // Reset UI
       quizResults.classList.remove('active');
