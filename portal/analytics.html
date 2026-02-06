@@ -333,32 +333,32 @@
       </header>
 
       <div class="period-selector">
-        <button class="period-btn">7 days</button>
-        <button class="period-btn active">30 days</button>
-        <button class="period-btn">90 days</button>
-        <button class="period-btn">All time</button>
+        <button class="period-btn" data-period="7d">7 days</button>
+        <button class="period-btn active" data-period="30d">30 days</button>
+        <button class="period-btn" data-period="90d">90 days</button>
+        <button class="period-btn" data-period="all">All time</button>
       </div>
 
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-card-label">Total Views</div>
-          <div class="stat-card-value" id="totalViews">2,139</div>
-          <div class="stat-card-change">+18% vs last period</div>
+          <div class="stat-card-value" id="totalViews">--</div>
+          <div class="stat-card-change" id="viewsChange">Loading...</div>
         </div>
         <div class="stat-card">
           <div class="stat-card-label">Quote Requests</div>
-          <div class="stat-card-value" id="totalQuotes">55</div>
-          <div class="stat-card-change">+12% vs last period</div>
+          <div class="stat-card-value" id="totalQuotes">--</div>
+          <div class="stat-card-change" id="quotesChange">Loading...</div>
         </div>
         <div class="stat-card">
           <div class="stat-card-label">Conversion Rate</div>
-          <div class="stat-card-value">2.6%</div>
-          <div class="stat-card-change">+0.3% vs last period</div>
+          <div class="stat-card-value" id="conversionRate">--</div>
+          <div class="stat-card-change" style="color: var(--color-text-light);">Views to quotes</div>
         </div>
         <div class="stat-card">
-          <div class="stat-card-label">Avg. Time on Page</div>
-          <div class="stat-card-value">3:42</div>
-          <div class="stat-card-change">+24s vs last period</div>
+          <div class="stat-card-label">Itineraries</div>
+          <div class="stat-card-value" id="totalItineraries">--</div>
+          <div class="stat-card-change" style="color: var(--color-text-light);">Published trips</div>
         </div>
       </div>
 
@@ -396,27 +396,8 @@
                 <th>%</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Instagram</td>
-                <td>892</td>
-                <td>42%</td>
-              </tr>
-              <tr>
-                <td>Direct</td>
-                <td>534</td>
-                <td>25%</td>
-              </tr>
-              <tr>
-                <td>Google</td>
-                <td>427</td>
-                <td>20%</td>
-              </tr>
-              <tr>
-                <td>Other</td>
-                <td>286</td>
-                <td>13%</td>
-              </tr>
+            <tbody id="trafficSources">
+              <!-- Populated dynamically -->
             </tbody>
           </table>
         </div>
@@ -424,7 +405,6 @@
     </main>
   </div>
 
-  <script src="data.js"></script>
   <script>
     // Check auth
     const session = localStorage.getItem('juno_creator_session');
@@ -432,65 +412,143 @@
       window.location.href = 'login.html';
     }
 
-    // Generate chart
-    const chartData = [42, 38, 55, 61, 48, 72, 65, 58, 82, 75, 68, 91, 85, 78, 95, 88, 92, 78, 85, 102, 95, 88, 110, 98, 92, 115, 108, 102, 125, 118];
-    const maxValue = Math.max(...chartData);
-    const chartContainer = document.getElementById('viewsChart');
-
-    chartData.forEach((value, i) => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'chart-bar-wrapper';
-
-      const bar = document.createElement('div');
-      bar.className = 'chart-bar';
-      bar.style.height = (value / maxValue * 250) + 'px';
-
-      const label = document.createElement('div');
-      label.className = 'chart-bar-label';
-      label.textContent = (i + 1) % 5 === 0 ? `Jan ${i + 1}` : '';
-
-      wrapper.appendChild(bar);
-      wrapper.appendChild(label);
-      chartContainer.appendChild(wrapper);
-    });
-
-    // Populate top itineraries
-    const topItinerariesTable = document.getElementById('topItineraries');
     const sessionData = session ? JSON.parse(session) : null;
-    const creatorId = sessionData?.creatorId || 'nia-the-light';
-    const creator = CREATORS[creatorId];
+    const creatorId = sessionData?.creatorId;
+    let currentPeriod = '30d';
 
-    if (creator) {
-      let totalViews = 0;
-      let totalQuotes = 0;
-
-      creator.itineraries.forEach(itinId => {
-        const itin = ITINERARIES[itinId];
-        if (itin) {
-          totalViews += itin.views || 0;
-          totalQuotes += itin.quoteRequests || 0;
-
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${itin.title}</td>
-            <td>${itin.views?.toLocaleString() || 0}</td>
-            <td>${itin.quoteRequests || 0}</td>
-          `;
-          topItinerariesTable.appendChild(row);
-        }
-      });
-
-      document.getElementById('totalViews').textContent = totalViews.toLocaleString();
-      document.getElementById('totalQuotes').textContent = totalQuotes;
-    }
+    // Load analytics on page load
+    loadAnalytics();
 
     // Period selector
     document.querySelectorAll('.period-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        currentPeriod = btn.dataset.period;
+        loadAnalytics();
       });
     });
+
+    async function loadAnalytics() {
+      if (!creatorId) return;
+
+      try {
+        const response = await fetch(`/.netlify/functions/get-analytics?creator_id=${creatorId}&period=${currentPeriod}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          console.error('Analytics error:', data.error);
+          return;
+        }
+
+        // Update stat cards
+        document.getElementById('totalViews').textContent = data.totalViews.toLocaleString();
+        document.getElementById('totalQuotes').textContent = data.totalQuotes.toLocaleString();
+        document.getElementById('conversionRate').textContent = data.conversionRate + '%';
+        document.getElementById('totalItineraries').textContent = data.topItineraries.length;
+
+        // Update change indicators
+        updateChangeIndicator('viewsChange', data.viewsChange);
+        updateChangeIndicator('quotesChange', data.quotesChange);
+
+        // Render chart
+        renderChart(data.dailyViews);
+
+        // Render top itineraries
+        renderTopItineraries(data.topItineraries);
+
+        // Render traffic sources
+        renderTrafficSources(data.trafficSources);
+
+      } catch (error) {
+        console.error('Failed to load analytics:', error);
+      }
+    }
+
+    function updateChangeIndicator(elementId, change) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+
+      const sign = change >= 0 ? '+' : '';
+      el.textContent = `${sign}${change}% vs last period`;
+      el.style.color = change >= 0 ? 'var(--color-success)' : '#ef4444';
+    }
+
+    function renderChart(dailyViews) {
+      const chartContainer = document.getElementById('viewsChart');
+      chartContainer.innerHTML = '';
+
+      if (!dailyViews || dailyViews.length === 0) {
+        chartContainer.innerHTML = '<p style="color: var(--color-text-light); text-align: center; padding: 40px;">No view data yet</p>';
+        return;
+      }
+
+      const maxValue = Math.max(...dailyViews.map(d => d.views), 1);
+
+      dailyViews.forEach((day, i) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'chart-bar-wrapper';
+
+        const bar = document.createElement('div');
+        bar.className = 'chart-bar';
+        bar.style.height = (day.views / maxValue * 250) + 'px';
+        bar.title = `${day.date}: ${day.views} views`;
+
+        const label = document.createElement('div');
+        label.className = 'chart-bar-label';
+        // Show label every 5th bar or first/last
+        if (i === 0 || i === dailyViews.length - 1 || (i + 1) % 5 === 0) {
+          const date = new Date(day.date);
+          label.textContent = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+
+        wrapper.appendChild(bar);
+        wrapper.appendChild(label);
+        chartContainer.appendChild(wrapper);
+      });
+    }
+
+    function renderTopItineraries(itineraries) {
+      const tbody = document.getElementById('topItineraries');
+      tbody.innerHTML = '';
+
+      if (!itineraries || itineraries.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--color-text-light);">No itineraries yet</td></tr>';
+        return;
+      }
+
+      itineraries.forEach(itin => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${itin.title}</td>
+          <td>${itin.views.toLocaleString()}</td>
+          <td>${itin.quotes}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function renderTrafficSources(sources) {
+      const tbody = document.getElementById('trafficSources');
+      if (!tbody) return;
+
+      tbody.innerHTML = '';
+
+      if (!sources || sources.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--color-text-light);">No traffic data yet</td></tr>';
+        return;
+      }
+
+      sources.forEach(source => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${source.source}</td>
+          <td>${source.visitors.toLocaleString()}</td>
+          <td>${source.percentage}%</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
 
     function logout() {
       localStorage.removeItem('juno_creator_session');
