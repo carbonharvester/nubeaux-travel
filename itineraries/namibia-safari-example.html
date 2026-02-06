@@ -1945,9 +1945,17 @@
 
       // Show content
       if (story.type === 'video') {
-        storiesMedia.innerHTML = `<video src="${story.src}" autoplay playsinline></video>`;
+        storiesMedia.innerHTML = `<video src="${story.src}" autoplay muted playsinline></video>`;
         videoElement = storiesMedia.querySelector('video');
+
+        // Handle video load error - skip to next
+        videoElement.addEventListener('error', () => {
+          console.error('Video failed to load:', story.src);
+          goToNextStory();
+        });
+
         videoElement.addEventListener('ended', () => goToNextStory());
+
         // Update progress bar animation to match video duration
         videoElement.addEventListener('loadedmetadata', () => {
           const duration = videoElement.duration * 1000;
@@ -1956,8 +1964,22 @@
             progressBar.style.animation = `storyProgress ${duration}ms linear forwards`;
           }
         });
+
+        // Force play on mobile
+        videoElement.play().catch(err => {
+          console.error('Video play failed:', err);
+          goToNextStory();
+        });
       } else {
         storiesMedia.innerHTML = `<img src="${story.src}" alt="Story">`;
+
+        // Handle image load error - skip to next
+        const img = storiesMedia.querySelector('img');
+        img.addEventListener('error', () => {
+          console.error('Image failed to load:', story.src);
+          goToNextStory();
+        });
+
         // Auto-advance after 5 seconds for images
         storyTimer = setTimeout(() => goToNextStory(), 5000);
       }
