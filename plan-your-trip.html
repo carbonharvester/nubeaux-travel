@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="Plan your luxury trip with NUBEAUX Travel. Tell us your dream destination and we'll craft an unforgettable experience.">
+  <meta name="description" content="Plan your luxury trip with JUNO Travel. Tell us your dream destination and we'll craft an unforgettable experience.">
   <meta name="theme-color" content="#ffffff">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-  <title>Plan Your Trip | NUBEAUX Travel</title>
+  <title>Plan Your Trip | JUNO Travel</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -232,7 +232,7 @@
   <header class="header">
     <div class="header-inner">
       <a href="index.html" class="logo">
-        <img src="assets/logo.svg" alt="NUBEAUX">
+        <img src="assets/logo.svg" alt="JUNO">
       </a>
 
       <nav class="nav">
@@ -409,7 +409,7 @@
                 <option value="instagram">Instagram</option>
                 <option value="google">Google Search</option>
                 <option value="referral">Friend/Referral</option>
-                <option value="nubeaux-collective">NUBEAUX Collective</option>
+                <option value="juno-collective">JUNO Collective</option>
                 <option value="creator">Through a Creator</option>
                 <option value="other">Other</option>
               </select>
@@ -435,8 +435,8 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="assets/logo.svg" alt="NUBEAUX" style="height: 20px; margin-bottom: var(--space-md);">
-          <p>Curated luxury travel experiences from creatives who've been there. Part of the NUBEAUX Collective family.</p>
+          <img src="assets/logo.svg" alt="JUNO" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>Curated luxury travel experiences from creatives who've been there. Part of the JUNO Collective family.</p>
         </div>
 
         <div class="footer-col">
@@ -454,22 +454,22 @@
           <h4 class="footer-heading">Company</h4>
           <div class="footer-links">
             <a href="about.html">About</a>
-            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
+            <a href="https://junotravel.com" target="_blank">JUNO Collective</a>
           </div>
         </div>
 
         <div class="footer-col">
           <h4 class="footer-heading">Connect</h4>
           <div class="footer-links">
-            <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
-            <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
+            <a href="mailto:travel@junotravel.com">travel@junotravel.com</a>
+            <a href="https://instagram.com/junotravel" target="_blank">Instagram</a>
           </div>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
-        <p>A NUBEAUX Collective Company</p>
+        <p>&copy; 2026 JUNO Travel. All rights reserved.</p>
+        <p>A JUNO Collective Company</p>
       </div>
     </div>
   </footer>
@@ -494,7 +494,7 @@
       try {
         // Try Supabase first if configured
         if (window.SUPABASE_CONFIGURED) {
-          await NubeauxDB.submitTripInquiry({
+          await JunoDB.submitTripInquiry({
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,

@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Create and share your travel experiences with NUBEAUX. Turn your trips into bookable itineraries.">
+  <meta name="description" content="Create and share your travel experiences with JUNO. Turn your trips into bookable itineraries.">
 
-  <title>Create an Itinerary | NUBEAUX Travel</title>
+  <title>Create an Itinerary | JUNO Travel</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -442,7 +442,7 @@
       <div class="auth-visual-overlay"></div>
 
       <a href="../index.html" class="auth-visual-logo">
-        <img src="../assets/logo.svg" alt="NUBEAUX">
+        <img src="../assets/logo.svg" alt="JUNO">
       </a>
 
       <div class="auth-visual-content">
@@ -596,7 +596,7 @@
           <div class="auth-legal-links">
             <a href="../terms.html">Terms</a>
             <a href="../privacy.html">Privacy</a>
-            <a href="mailto:support@nubeauxtravel.com">Support</a>
+            <a href="mailto:support@junotravel.com">Support</a>
           </div>
         </div>
       </div>
@@ -652,7 +652,7 @@
 
     // Check for verified Instagram on page load
     function checkVerifiedInstagram() {
-      const verifiedData = localStorage.getItem('nubeaux_verified_instagram');
+      const verifiedData = localStorage.getItem('juno_verified_instagram');
       if (verifiedData) {
         try {
           const data = JSON.parse(verifiedData);
@@ -661,7 +661,7 @@
             return data.username;
           }
         } catch (e) {
-          localStorage.removeItem('nubeaux_verified_instagram');
+          localStorage.removeItem('juno_verified_instagram');
         }
       }
       return null;
@@ -686,7 +686,7 @@
 
     // Change Instagram button
     document.getElementById('changeInstagramBtn').addEventListener('click', () => {
-      localStorage.removeItem('nubeaux_verified_instagram');
+      localStorage.removeItem('juno_verified_instagram');
       document.getElementById('instagramConnectGroup').style.display = 'block';
       document.getElementById('instagramVerifiedGroup').style.display = 'none';
       document.getElementById('signupInstagram').value = '';
@@ -708,7 +708,7 @@
       }
 
       // Store Instagram handle in localStorage so we can use it after OAuth redirect
-      localStorage.setItem('nubeaux_pending_instagram', instagram);
+      localStorage.setItem('juno_pending_instagram', instagram);
 
       btn.classList.add('loading');
 
@@ -762,7 +762,7 @@
       const btn = signupForm.querySelector('button[type="submit"]');
 
       // Check Instagram is verified
-      const verifiedData = localStorage.getItem('nubeaux_verified_instagram');
+      const verifiedData = localStorage.getItem('juno_verified_instagram');
       if (!instagram || !verifiedData) {
         document.getElementById('signupInstagramError').textContent = 'Please connect your Instagram account to continue.';
         document.getElementById('signupInstagramError').classList.add('visible');
@@ -815,7 +815,7 @@
         // Store auth session if access token present (might not be if email confirmation required)
         let accessToken = data.access_token;
         if (accessToken) {
-          localStorage.setItem('nubeaux_auth', JSON.stringify({
+          localStorage.setItem('juno_auth', JSON.stringify({
             accessToken: accessToken,
             refreshToken: data.refresh_token,
             user: data.user,
@@ -824,7 +824,7 @@
         }
 
         // Always store creator session with Instagram handle
-        localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+        localStorage.setItem('juno_creator_session', JSON.stringify({
           email: email,
           instagram: instagram,
           display_name: instagram,
@@ -902,7 +902,7 @@
 
         // Store auth session
         if (data.access_token) {
-          localStorage.setItem('nubeaux_auth', JSON.stringify({
+          localStorage.setItem('juno_auth', JSON.stringify({
             accessToken: data.access_token,
             refreshToken: data.refresh_token,
             user: data.user,
@@ -922,7 +922,7 @@
           if (creatorResponse.ok) {
             const creators = await creatorResponse.json();
             if (creators.length > 0) {
-              localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+              localStorage.setItem('juno_creator_session', JSON.stringify({
                 id: creators[0].id,
                 email: creators[0].email,
                 instagram: creators[0].instagram,
@@ -930,7 +930,7 @@
                 loggedInAt: new Date().toISOString()
               }));
             } else {
-              localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+              localStorage.setItem('juno_creator_session', JSON.stringify({
                 email: email,
                 loggedInAt: new Date().toISOString()
               }));
@@ -938,7 +938,7 @@
           }
         } catch (err) {
           console.error('Failed to fetch creator profile:', err);
-          localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+          localStorage.setItem('juno_creator_session', JSON.stringify({
             email: email,
             loggedInAt: new Date().toISOString()
           }));

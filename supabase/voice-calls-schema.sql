@@ -1,5 +1,5 @@
 -- ============================================
--- NUBEAUX Travel - Voice Calls Table
+-- JUNO Travel - Voice Calls Table
 -- ============================================
 -- Run this SQL in your Supabase SQL Editor
 -- to add voice call tracking support

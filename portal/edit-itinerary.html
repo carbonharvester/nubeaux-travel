@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Itinerary | NUBEAUX Creator Portal</title>
+  <title>Edit Itinerary | JUNO Creator Portal</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1869,7 +1869,7 @@
   <script src="data.js"></script>
   <script>
     // Check auth
-    const session = localStorage.getItem('nubeaux_creator_session');
+    const session = localStorage.getItem('juno_creator_session');
     if (!session) {
       // Allow access for demo purposes
       // window.location.href = 'login.html';
@@ -1926,7 +1926,7 @@
     // TODO: Re-enable lock after testing - remove editable flag
     const TESTING_MODE = true; // Set to false to lock Instagram input
     const sessionData = session ? JSON.parse(session) : null;
-    const verifiedInstagram = sessionData?.instagram || localStorage.getItem('nubeaux_verified_instagram') ? JSON.parse(localStorage.getItem('nubeaux_verified_instagram') || '{}').username : null;
+    const verifiedInstagram = sessionData?.instagram || localStorage.getItem('juno_verified_instagram') ? JSON.parse(localStorage.getItem('juno_verified_instagram') || '{}').username : null;
 
     if (verifiedInstagram) {
       const igProfileInput = document.getElementById('igProfileUrl');
@@ -1953,7 +1953,7 @@
     checkSyncStatus();
 
     async function checkSyncStatus() {
-      const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+      const session = JSON.parse(localStorage.getItem('juno_creator_session') || '{}');
       const creatorId = session.creatorId;
       const syncStatus = session.sync_status;
 
@@ -1974,16 +1974,16 @@
         // Check if sync was started elsewhere
         if (window.SUPABASE_CONFIGURED) {
           try {
-            const status = await NubeauxDB.getCreatorSyncStatus(creatorId);
+            const status = await JunoDB.getCreatorSyncStatus(creatorId);
             if (status && status.sync_status === 'syncing') {
               session.sync_status = 'syncing';
-              localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+              localStorage.setItem('juno_creator_session', JSON.stringify(session));
               showSyncBanner('Syncing your Instagram content...');
               pollSyncStatus();
             } else if (status && status.sync_status === 'completed') {
               session.sync_status = 'completed';
               session.last_synced_at = status.last_synced_at;
-              localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+              localStorage.setItem('juno_creator_session', JSON.stringify(session));
             }
           } catch (e) {
             console.error('Error checking sync status:', e);
@@ -2013,7 +2013,7 @@
     }
 
     async function pollSyncStatus() {
-      const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+      const session = JSON.parse(localStorage.getItem('juno_creator_session') || '{}');
       const creatorId = session.creatorId;
 
       if (!creatorId || !window.SUPABASE_CONFIGURED) {
@@ -2027,13 +2027,13 @@
         attempts++;
 
         try {
-          const status = await NubeauxDB.getCreatorSyncStatus(creatorId);
+          const status = await JunoDB.getCreatorSyncStatus(creatorId);
 
           if (status && status.sync_status === 'completed') {
             // Update session
             session.sync_status = 'completed';
             session.last_synced_at = status.last_synced_at;
-            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+            localStorage.setItem('juno_creator_session', JSON.stringify(session));
 
             showSyncComplete();
             showToast('Instagram content synced successfully!', 'success');
@@ -2042,7 +2042,7 @@
 
           if (status && status.sync_status === 'failed') {
             session.sync_status = 'failed';
-            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+            localStorage.setItem('juno_creator_session', JSON.stringify(session));
             hideSyncBanner();
             showToast('Sync failed. Try "Sync New" to retry.', 'error');
             return;
@@ -2644,9 +2644,9 @@
           }
 
           // Also save to localStorage as backup
-          const savedItineraries = JSON.parse(localStorage.getItem('nubeaux_itineraries') || '{}');
+          const savedItineraries = JSON.parse(localStorage.getItem('juno_itineraries') || '{}');
           savedItineraries[itineraryData.id] = itineraryData;
-          localStorage.setItem('nubeaux_itineraries', JSON.stringify(savedItineraries));
+          localStorage.setItem('juno_itineraries', JSON.stringify(savedItineraries));
 
           showToast('Itinerary saved successfully!', 'success');
         } else {
@@ -2843,7 +2843,7 @@
           },
           body: JSON.stringify({
             urls: urls.map(u => u.url),
-            creator_id: JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}').id || 'demo'
+            creator_id: JSON.parse(localStorage.getItem('juno_creator_session') || '{}').id || 'demo'
           })
         });
 
@@ -3020,7 +3020,7 @@
 
     // Get creator ID from session
     function getCreatorId() {
-      const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+      const session = JSON.parse(localStorage.getItem('juno_creator_session') || '{}');
       return session.id || 'demo';
     }
 

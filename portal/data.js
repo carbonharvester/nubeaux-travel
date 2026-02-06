@@ -4,7 +4,7 @@ const CREATORS = {
     id: "nia-the-light",
     name: "Nia The Light",
     handle: "niathelight",
-    email: "nia@nubeauxcollective.com",
+    email: "nia@junotravel.com",
     avatar: "https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_200,h_200,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg",
     bio: "Content creator and storyteller with a passion for African luxury, wellness, and solo travel. Every itinerary I curate reflects my philosophy: travel should nourish the soul.",
     instagram: "https://instagram.com/niathelight",

@@ -1,4 +1,4 @@
-// NUBEAUX Travel - Main JavaScript
+// JUNO Travel - Main JavaScript
 // Enhanced with sophisticated animations
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -563,8 +563,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    if (itineraryId && typeof window.NubeauxDB !== 'undefined') {
-      NubeauxDB.trackPageView(itineraryId)
+    if (itineraryId && typeof window.JunoDB !== 'undefined') {
+      JunoDB.trackPageView(itineraryId)
         .then(result => {
           if (result) {
             console.log('Page view tracked for:', itineraryId);

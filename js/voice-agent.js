@@ -1,5 +1,5 @@
 /**
- * NUBEAUX Travel - Voice Agent Widget
+ * JUNO Travel - Voice Agent Widget
  * Floating voice AI concierge powered by Retell AI
  */
 
@@ -116,12 +116,12 @@
   // Create the widget UI
   function createWidgetUI() {
     // Check if already exists
-    if (document.getElementById('nubeaux-voice-widget')) return;
+    if (document.getElementById('juno-voice-widget')) return;
 
     // Inject CSS
     const style = document.createElement('style');
     style.textContent = `
-      #nubeaux-voice-widget {
+      #juno-voice-widget {
         position: fixed;
         bottom: 24px;
         right: 24px;
@@ -362,13 +362,13 @@
         border-top: 5px solid #1a1a1a;
       }
 
-      #nubeaux-voice-widget:hover .voice-tooltip:not(.hidden) {
+      #juno-voice-widget:hover .voice-tooltip:not(.hidden) {
         opacity: 1;
         transform: translateY(0);
       }
 
       @media (max-width: 480px) {
-        #nubeaux-voice-widget {
+        #juno-voice-widget {
           bottom: 16px;
           right: 16px;
         }
@@ -383,7 +383,7 @@
 
     // Create widget HTML
     const widget = document.createElement('div');
-    widget.id = 'nubeaux-voice-widget';
+    widget.id = 'juno-voice-widget';
     widget.innerHTML = `
       <div class="voice-tooltip">Speak with our concierge</div>
 
@@ -447,7 +447,7 @@
 
     // Close panel when clicking outside
     document.addEventListener('click', (e) => {
-      const widget = document.getElementById('nubeaux-voice-widget');
+      const widget = document.getElementById('juno-voice-widget');
       if (!widget.contains(e.target) && panel.classList.contains('visible') && !isCallActive) {
         panel.classList.remove('visible');
         tooltip.classList.remove('hidden');

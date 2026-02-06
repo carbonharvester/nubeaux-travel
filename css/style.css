@@ -1,5 +1,5 @@
 /* ============================================
-   NUBEAUX TRAVEL — Design System
+   JUNO TRAVEL — Design System
    Inspired by andBeyond & Belmond
    Light • Airy • Image-Forward with Visual Variety
    ============================================ */
@@ -3598,7 +3598,7 @@ p {
     display: none;
   }
 
-  /* Mobile footer - matching nubeauxcollective.com style */
+  /* Mobile footer - matching junotravel.com style */
   .footer {
     padding: var(--space-xl) 0 var(--space-lg);
   }

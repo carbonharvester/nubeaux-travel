@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Itineraries | NUBEAUX Creator Portal</title>
+  <title>My Itineraries | JUNO Creator Portal</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -386,7 +386,7 @@
 <body>
   <div class="portal-layout">
     <aside class="sidebar">
-      <div class="sidebar-logo">NUBEAUX Creator</div>
+      <div class="sidebar-logo">JUNO Creator</div>
 
       <nav class="sidebar-nav">
         <a href="index.html">
@@ -467,7 +467,7 @@
   <script src="data.js"></script>
   <script>
     // Check auth
-    const session = localStorage.getItem('nubeaux_creator_session');
+    const session = localStorage.getItem('juno_creator_session');
     if (!session) {
       window.location.href = 'login.html';
     }
@@ -574,7 +574,7 @@
     }
 
     function logout() {
-      localStorage.removeItem('nubeaux_creator_session');
+      localStorage.removeItem('juno_creator_session');
       window.location.href = 'login.html';
     }
 

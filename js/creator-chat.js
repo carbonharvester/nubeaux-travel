@@ -26,7 +26,7 @@
             </svg>
           </div>
           <div>
-            <span class="chat-title">NUBEAUX Support</span>
+            <span class="chat-title">JUNO Support</span>
             <span class="chat-status">We typically reply within a few hours</span>
           </div>
         </div>
@@ -40,7 +40,7 @@
       <div class="chat-messages" id="chatMessages">
         <div class="chat-welcome">
           <p class="chat-welcome-title">Hi there!</p>
-          <p class="chat-welcome-text">Have a question about becoming a NUBEAUX creator or need help with your account? We're here to help.</p>
+          <p class="chat-welcome-text">Have a question about becoming a JUNO creator or need help with your account? We're here to help.</p>
         </div>
       </div>
       <div class="chat-input-area">
@@ -439,7 +439,7 @@
       "Thanks for reaching out! I'd be happy to help with that. Could you tell me a bit more about what you're looking for?",
       "Great question! Our team will get back to you shortly with more details. In the meantime, feel free to explore our creator resources.",
       "I appreciate you asking! Let me connect you with someone who can provide more specific information about that.",
-      "Thanks for your interest in NUBEAUX! Someone from our creator partnerships team will follow up with you soon.",
+      "Thanks for your interest in JUNO! Someone from our creator partnerships team will follow up with you soon.",
     ];
     return responses[Math.floor(Math.random() * responses.length)];
   }

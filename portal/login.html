@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | NUBEAUX Creator Portal</title>
+  <title>Login | JUNO Creator Portal</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -197,12 +197,12 @@
 <body>
   <div class="login-container">
     <div class="login-card">
-      <h1 class="login-logo">NUBEAUX Creator</h1>
+      <h1 class="login-logo">JUNO Creator</h1>
       <p class="login-subtitle">Sign in to manage your itineraries</p>
 
       <div class="demo-notice">
         <strong>Demo Access</strong>
-        Email: nia@nubeauxcollective.com<br>
+        Email: nia@junotravel.com<br>
         Password: demo123
       </div>
 
@@ -225,11 +225,11 @@
       <div class="login-divider"><span>or</span></div>
 
       <p class="login-help">
-        Want to become a creator? <a href="mailto:travel@nubeauxcollective.com">Contact us</a>
+        Want to become a creator? <a href="mailto:travel@junotravel.com">Contact us</a>
       </p>
     </div>
 
-    <a href="../index.html" class="back-link">Back to NUBEAUX Travel</a>
+    <a href="../index.html" class="back-link">Back to JUNO Travel</a>
   </div>
 
   <script src="../js/supabase.js"></script>
@@ -244,7 +244,7 @@
 
     // Demo credentials (fallback when Supabase not configured)
     const DEMO_CREDENTIALS = {
-      email: 'nia@nubeauxcollective.com',
+      email: 'nia@junotravel.com',
       password: 'demo123'
     };
 
@@ -267,13 +267,13 @@
       console.log('Triggering background sync for Instagram:', creator.instagram);
 
       try {
-        const result = await NubeauxDB.triggerBackgroundSync(creator.id, creator.instagram);
+        const result = await JunoDB.triggerBackgroundSync(creator.id, creator.instagram);
         if (result.success) {
           console.log('Background sync started:', result);
           // Update session with syncing status
-          const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+          const session = JSON.parse(localStorage.getItem('juno_creator_session') || '{}');
           session.sync_status = 'syncing';
-          localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+          localStorage.setItem('juno_creator_session', JSON.stringify(session));
         } else {
           console.error('Failed to start background sync:', result.error);
         }
@@ -326,7 +326,7 @@
           try {
             const { user } = await supabase.auth.signIn(email, password);
             // Get creator profile from database
-            creator = await NubeauxDB.getCreatorByEmail(email);
+            creator = await JunoDB.getCreatorByEmail(email);
             if (creator) {
               loginSuccess = true;
             }
@@ -346,7 +346,7 @@
             // Try to get creator from database even for demo login
             if (window.SUPABASE_CONFIGURED) {
               try {
-                creator = await NubeauxDB.getCreatorByEmail(email);
+                creator = await JunoDB.getCreatorByEmail(email);
                 console.log('Creator from DB:', creator);
               } catch (dbError) {
                 console.log('Could not fetch creator from database:', dbError.message);
@@ -358,7 +358,7 @@
 
         if (loginSuccess) {
           // Store session info
-          localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+          localStorage.setItem('juno_creator_session', JSON.stringify({
             creatorId: creator?.id || 'nia-the-light',
             handle: creator?.handle || 'niathelight',
             email: email,
@@ -396,7 +396,7 @@
       }
     } else {
       // Clear session if logout param present
-      localStorage.removeItem('nubeaux_creator_session');
+      localStorage.removeItem('juno_creator_session');
       supabase.auth.signOut();
     }
   </script>

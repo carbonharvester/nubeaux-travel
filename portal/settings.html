@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Settings | NUBEAUX Creator Portal</title>
+  <title>Settings | JUNO Creator Portal</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -389,7 +389,7 @@
 <body>
   <div class="portal-layout">
     <aside class="sidebar">
-      <div class="sidebar-logo">NUBEAUX Creator</div>
+      <div class="sidebar-logo">JUNO Creator</div>
 
       <nav class="sidebar-nav">
         <a href="index.html">
@@ -521,7 +521,7 @@
           <div class="toggle-row">
             <div class="toggle-info">
               <h4>Marketing Emails</h4>
-              <p>Tips, news, and updates from NUBEAUX Travel</p>
+              <p>Tips, news, and updates from JUNO Travel</p>
             </div>
             <label class="toggle-switch">
               <input type="checkbox">
@@ -540,7 +540,7 @@
         <div class="settings-section-content">
           <div class="form-group">
             <label class="form-label" for="email">Email Address</label>
-            <input type="email" id="email" class="form-input" value="nia@nubeauxcollective.com">
+            <input type="email" id="email" class="form-input" value="nia@junotravel.com">
           </div>
 
           <div class="form-group">
@@ -569,7 +569,7 @@
   <script src="data.js"></script>
   <script>
     // Check auth
-    const session = localStorage.getItem('nubeaux_creator_session');
+    const session = localStorage.getItem('juno_creator_session');
     if (!session) {
       window.location.href = 'login.html';
     }
@@ -617,7 +617,7 @@
     }
 
     function logout() {
-      localStorage.removeItem('nubeaux_creator_session');
+      localStorage.removeItem('juno_creator_session');
       window.location.href = 'login.html';
     }
   </script>

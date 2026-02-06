@@ -1,5 +1,5 @@
 -- ============================================
--- NUBEAUX Travel - Supabase Database Schema
+-- JUNO Travel - Supabase Database Schema
 -- ============================================
 -- Run this SQL in your Supabase SQL Editor
 -- (Project > SQL Editor > New Query)
@@ -284,7 +284,7 @@ VALUES (
   gen_random_uuid(),
   'niathelight',
   'Nia The Light',
-  'nia@nubeauxcollective.com',
+  'nia@junotravel.com',
   'https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg',
   'Travel creator and wellness advocate. Documenting luxury African experiences with intention.',
   'niathelight',
@@ -298,7 +298,7 @@ DO $$
 DECLARE
   nia_id UUID;
 BEGIN
-  SELECT id INTO nia_id FROM creators WHERE email = 'nia@nubeauxcollective.com';
+  SELECT id INTO nia_id FROM creators WHERE email = 'nia@junotravel.com';
 
   -- Insert Namibia Safari itinerary
   INSERT INTO itineraries (id, creator_id, title, destination, region, duration, price_from, hero_image, status, published_at)

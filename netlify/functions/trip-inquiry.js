@@ -65,8 +65,8 @@ exports.handler = async (event, context) => {
       sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
       await sgMail.send({
-        to: 'travel@nubeauxcollective.com',
-        from: 'noreply@nubeauxtravel.com',
+        to: 'travel@junotravel.com',
+        from: 'noreply@junotravel.com',
         subject: `New Trip Inquiry: ${destination} - ${firstName} ${lastName}`,
         html: `
           <h2>New Trip Inquiry</h2>

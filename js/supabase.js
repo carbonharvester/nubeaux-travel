@@ -1,5 +1,5 @@
 /**
- * NUBEAUX Travel - Supabase Client Library
+ * JUNO Travel - Supabase Client Library
  *
  * SETUP INSTRUCTIONS:
  * 1. Create a Supabase project at https://supabase.com
@@ -78,7 +78,7 @@ const supabase = {
 
       // Store tokens
       supabase.accessToken = data.access_token;
-      localStorage.setItem('nubeaux_auth', JSON.stringify({
+      localStorage.setItem('juno_auth', JSON.stringify({
         accessToken: data.access_token,
         refreshToken: data.refresh_token,
         user: data.user,
@@ -90,11 +90,11 @@ const supabase = {
 
     async signOut() {
       supabase.accessToken = null;
-      localStorage.removeItem('nubeaux_auth');
+      localStorage.removeItem('juno_auth');
     },
 
     getSession() {
-      const stored = localStorage.getItem('nubeaux_auth');
+      const stored = localStorage.getItem('juno_auth');
       if (!stored) return null;
 
       const session = JSON.parse(stored);
@@ -212,10 +212,10 @@ const supabase = {
 };
 
 // ============================================
-// NUBEAUX-SPECIFIC HELPER FUNCTIONS
+// JUNO-SPECIFIC HELPER FUNCTIONS
 // ============================================
 
-const NubeauxDB = {
+const JunoDB = {
   // Submit a quote request
   async submitQuoteRequest(data) {
     const payload = {
@@ -254,10 +254,10 @@ const NubeauxDB = {
   // Track a page view
   async trackPageView(itineraryId) {
     // Get or create session ID
-    let sessionId = sessionStorage.getItem('nubeaux_session');
+    let sessionId = sessionStorage.getItem('juno_session');
     if (!sessionId) {
       sessionId = 'sess_' + Math.random().toString(36).substring(2, 15);
-      sessionStorage.setItem('nubeaux_session', sessionId);
+      sessionStorage.setItem('juno_session', sessionId);
     }
 
     // Check if already tracked this itinerary this session
@@ -408,7 +408,7 @@ const isConfigured = SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON_KEY !
 
 if (!isConfigured) {
   console.warn(
-    '%c⚠️ NUBEAUX Supabase not configured',
+    '%c⚠️ JUNO Supabase not configured',
     'color: #c2703e; font-weight: bold;',
     '\n\nTo enable tracking, update SUPABASE_URL and SUPABASE_ANON_KEY in /js/supabase.js',
     '\nSee /supabase/schema.sql for database setup.'
@@ -420,5 +420,5 @@ supabase.auth.getSession();
 
 // Export
 window.supabase = supabase;
-window.NubeauxDB = NubeauxDB;
+window.JunoDB = JunoDB;
 window.SUPABASE_CONFIGURED = isConfigured;

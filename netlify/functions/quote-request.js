@@ -77,8 +77,8 @@ exports.handler = async (event, context) => {
 
       // Email to you (the travel advisor)
       await sgMail.send({
-        to: 'travel@nubeauxcollective.com',
-        from: 'noreply@nubeauxtravel.com',
+        to: 'travel@junotravel.com',
+        from: 'noreply@junotravel.com',
         subject: `Quote Request: ${tripName || 'Custom Trip'} - ${firstName} ${lastName}`,
         html: `
           <h2>New Quote Request</h2>
@@ -134,8 +134,8 @@ exports.handler = async (event, context) => {
       // Confirmation email to customer
       await sgMail.send({
         to: email,
-        from: 'travel@nubeauxcollective.com',
-        subject: 'Your Quote Request - NUBEAUX Travel',
+        from: 'travel@junotravel.com',
+        subject: 'Your Quote Request - JUNO Travel',
         html: `
           <h2 style="color: #3D3530;">Thank you, ${firstName}!</h2>
           <p>We've received your quote request for <strong>${tripName || 'your custom trip'}</strong>.</p>
@@ -145,15 +145,15 @@ exports.handler = async (event, context) => {
             <li><strong>Travelers:</strong> ${adults} adults${children > 0 ? `, ${children} children` : ''}</li>
           </ul>
           <p>You'll receive your detailed quote within 24 hours.</p>
-          <p>In the meantime, feel free to explore more of our <a href="https://nubeauxtravel.com/itineraries/">curated itineraries</a>.</p>
+          <p>In the meantime, feel free to explore more of our <a href="https://junotravel.com/itineraries/">curated itineraries</a>.</p>
           <p style="margin-top: 30px;">
             Warm regards,<br>
-            <strong>The NUBEAUX Travel Team</strong>
+            <strong>The JUNO Travel Team</strong>
           </p>
           <hr style="margin-top: 40px; border: none; border-top: 1px solid #eee;">
           <p style="font-size: 12px; color: #888;">
-            NUBEAUX Travel | travel@nubeauxcollective.com<br>
-            A NUBEAUX Collective Company
+            JUNO Travel | travel@junotravel.com<br>
+            A JUNO Collective Company
           </p>
         `
       });

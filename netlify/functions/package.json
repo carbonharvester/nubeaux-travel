@@ -1,7 +1,7 @@
 {
-  "name": "nubeaux-functions",
+  "name": "juno-functions",
   "version": "1.0.0",
-  "description": "Netlify Functions for NUBEAUX Travel",
+  "description": "Netlify Functions for JUNO Travel",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0"
   }

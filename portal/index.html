@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Creator Portal | NUBEAUX Travel</title>
+  <title>Creator Portal | JUNO Travel</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -431,7 +431,7 @@
 
   <div class="portal-layout">
     <aside class="sidebar">
-      <div class="sidebar-logo">NUBEAUX Creator</div>
+      <div class="sidebar-logo">JUNO Creator</div>
 
       <nav class="sidebar-nav">
         <a href="index.html" class="active">
@@ -614,7 +614,7 @@
 
         if (accessToken) {
           // Store auth session
-          localStorage.setItem('nubeaux_auth', JSON.stringify({
+          localStorage.setItem('juno_auth', JSON.stringify({
             accessToken,
             refreshToken,
             expiresAt: Date.now() + (parseInt(expiresIn) * 1000)
@@ -637,7 +637,7 @@
               const email = userData.email;
 
               // Check for pending Instagram handle from signup
-              const pendingInstagram = localStorage.getItem('nubeaux_pending_instagram');
+              const pendingInstagram = localStorage.getItem('juno_pending_instagram');
 
               if (pendingInstagram) {
                 // Create creator profile with Instagram
@@ -661,10 +661,10 @@
                   console.error('Failed to create creator profile:', e);
                 }
 
-                localStorage.removeItem('nubeaux_pending_instagram');
+                localStorage.removeItem('juno_pending_instagram');
 
                 // Store session
-                localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+                localStorage.setItem('juno_creator_session', JSON.stringify({
                   email,
                   instagram: pendingInstagram,
                   display_name: pendingInstagram,
@@ -672,7 +672,7 @@
                 }));
               } else {
                 // Just store basic session
-                localStorage.setItem('nubeaux_creator_session', JSON.stringify({
+                localStorage.setItem('juno_creator_session', JSON.stringify({
                   email,
                   loggedInAt: new Date().toISOString()
                 }));
@@ -692,7 +692,7 @@
     handleOAuthCallback();
 
     // Check authentication
-    const session = localStorage.getItem('nubeaux_creator_session');
+    const session = localStorage.getItem('juno_creator_session');
     if (!session) {
       window.location.href = '/creators/start.html';
     }
@@ -763,7 +763,7 @@
       // Try Supabase first if configured
       if (window.SUPABASE_CONFIGURED && sessionData?.creatorId) {
         try {
-          const stats = await NubeauxDB.getCreatorStats(sessionData.creatorId);
+          const stats = await JunoDB.getCreatorStats(sessionData.creatorId);
 
           // Get creator profile
           const creatorProfile = await supabase.from('creators')
@@ -919,7 +919,7 @@
 
     // Sync status checking
     async function checkSyncStatus() {
-      const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+      const session = JSON.parse(localStorage.getItem('juno_creator_session') || '{}');
       const creatorId = session.creatorId;
       const syncStatus = session.sync_status;
 
@@ -940,16 +940,16 @@
       // Check database for current status
       if (window.SUPABASE_CONFIGURED && syncStatus === 'pending' && session.instagram) {
         try {
-          const status = await NubeauxDB.getCreatorSyncStatus(creatorId);
+          const status = await JunoDB.getCreatorSyncStatus(creatorId);
           if (status && status.sync_status === 'syncing') {
             session.sync_status = 'syncing';
-            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+            localStorage.setItem('juno_creator_session', JSON.stringify(session));
             syncNotification.classList.remove('hidden');
             pollSyncStatus();
           } else if (status && status.sync_status === 'completed') {
             session.sync_status = 'completed';
             session.last_synced_at = status.last_synced_at;
-            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+            localStorage.setItem('juno_creator_session', JSON.stringify(session));
           }
         } catch (e) {
           console.error('Error checking sync status:', e);
@@ -958,7 +958,7 @@
     }
 
     async function pollSyncStatus() {
-      const session = JSON.parse(localStorage.getItem('nubeaux_creator_session') || '{}');
+      const session = JSON.parse(localStorage.getItem('juno_creator_session') || '{}');
       const creatorId = session.creatorId;
 
       if (!creatorId || !window.SUPABASE_CONFIGURED) return;
@@ -973,12 +973,12 @@
       const poll = async () => {
         attempts++;
         try {
-          const status = await NubeauxDB.getCreatorSyncStatus(creatorId);
+          const status = await JunoDB.getCreatorSyncStatus(creatorId);
 
           if (status && status.sync_status === 'completed') {
             session.sync_status = 'completed';
             session.last_synced_at = status.last_synced_at;
-            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+            localStorage.setItem('juno_creator_session', JSON.stringify(session));
 
             syncSpinner.style.display = 'none';
             syncMessage.innerHTML = '<span class="sync-check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></span> Instagram synced!';
@@ -991,7 +991,7 @@
 
           if (status && status.sync_status === 'failed') {
             session.sync_status = 'failed';
-            localStorage.setItem('nubeaux_creator_session', JSON.stringify(session));
+            localStorage.setItem('juno_creator_session', JSON.stringify(session));
             syncNotification.classList.add('hidden');
             return;
           }
@@ -1021,8 +1021,8 @@
       if (window.SUPABASE_CONFIGURED) {
         supabase.auth.signOut();
       }
-      localStorage.removeItem('nubeaux_creator_session');
-      localStorage.removeItem('nubeaux_auth');
+      localStorage.removeItem('juno_creator_session');
+      localStorage.removeItem('juno_auth');
       window.location.href = '/creators/start.html';
     }
   </script>
