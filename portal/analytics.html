@@ -263,6 +263,132 @@
       gap: 24px;
     }
 
+    /* Creator Tier & Badges */
+    .tier-section {
+      background: linear-gradient(135deg, #fef9f5 0%, #fff 100%);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .tier-display {
+      text-align: center;
+      padding: 24px;
+      background: var(--color-white);
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+    }
+
+    .tier-icon {
+      font-size: 3.5rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .tier-name {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    .tier-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-light);
+      margin-bottom: 16px;
+    }
+
+    .tier-progress {
+      background: var(--color-bg);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .tier-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-accent), #e8946b);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .tier-progress-text {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
+    .badges-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .badges-section h3 {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .badges-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .badge-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 8px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .badge-item.earned {
+      border-color: var(--color-accent);
+      background: linear-gradient(135deg, #fef9f5 0%, #fff 100%);
+    }
+
+    .badge-item.locked {
+      opacity: 0.5;
+    }
+
+    .badge-icon {
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+      filter: grayscale(100%);
+      transition: filter 0.2s;
+    }
+
+    .badge-item.earned .badge-icon {
+      filter: none;
+    }
+
+    .badge-name {
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .badge-desc {
+      font-size: 0.625rem;
+      color: var(--color-text-light);
+    }
+
+    .badge-item.earned .badge-name {
+      color: var(--color-accent);
+    }
+
     @media (max-width: 1024px) {
       .portal-layout {
         grid-template-columns: 1fr;
@@ -278,6 +404,12 @@
       }
       .grid-2 {
         grid-template-columns: 1fr;
+      }
+      .tier-section {
+        grid-template-columns: 1fr;
+      }
+      .badges-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
@@ -331,6 +463,25 @@
         <h1>Analytics</h1>
         <p>Track your itinerary performance</p>
       </header>
+
+      <!-- Creator Tier & Badges -->
+      <div class="tier-section">
+        <div class="tier-display">
+          <span class="tier-icon" id="tierIcon">--</span>
+          <div class="tier-name" id="tierName">Loading...</div>
+          <div class="tier-label">Creator Tier</div>
+          <div class="tier-progress">
+            <div class="tier-progress-fill" id="tierProgress" style="width: 0%"></div>
+          </div>
+          <div class="tier-progress-text" id="tierProgressText">--</div>
+        </div>
+        <div class="badges-section">
+          <h3>Achievements</h3>
+          <div class="badges-grid" id="badgesGrid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
 
       <div class="period-selector">
         <button class="period-btn" data-period="7d">7 days</button>
@@ -416,8 +567,30 @@
     const creatorId = sessionData?.creatorId;
     let currentPeriod = '30d';
 
+    // Creator Tiers
+    const tiers = [
+      { name: 'Rising Star', icon: '🌟', minViews: 0, maxViews: 100 },
+      { name: 'Explorer', icon: '🧭', minViews: 100, maxViews: 500 },
+      { name: 'Voyager', icon: '🚀', minViews: 500, maxViews: 2000 },
+      { name: 'Ambassador', icon: '👑', minViews: 2000, maxViews: 10000 },
+      { name: 'Legend', icon: '🏆', minViews: 10000, maxViews: Infinity }
+    ];
+
+    // Achievement Badges
+    const badges = [
+      { id: 'first_itinerary', name: 'First Steps', desc: 'Published first itinerary', icon: '📝', check: (d) => d.totalItineraries >= 1 },
+      { id: 'five_itineraries', name: 'Prolific', desc: '5+ itineraries', icon: '📚', check: (d) => d.totalItineraries >= 5 },
+      { id: 'first_quote', name: 'In Demand', desc: 'First quote request', icon: '💬', check: (d) => d.totalQuotes >= 1 },
+      { id: 'ten_quotes', name: 'Popular', desc: '10+ quote requests', icon: '🔥', check: (d) => d.totalQuotes >= 10 },
+      { id: 'hundred_views', name: 'Visible', desc: '100+ total views', icon: '👀', check: (d) => d.allTimeViews >= 100 },
+      { id: 'thousand_views', name: 'Trending', desc: '1,000+ total views', icon: '📈', check: (d) => d.allTimeViews >= 1000 },
+      { id: 'high_conversion', name: 'Persuasive', desc: '5%+ conversion rate', icon: '🎯', check: (d) => parseFloat(d.conversionRate) >= 5 },
+      { id: 'consistent', name: 'Consistent', desc: 'Active 30+ days', icon: '📅', check: (d) => d.daysActive >= 30 }
+    ];
+
     // Load analytics on page load
     loadAnalytics();
+    loadTierAndBadges();
 
     // Period selector
     document.querySelectorAll('.period-btn').forEach(btn => {
@@ -553,6 +726,76 @@
     function logout() {
       localStorage.removeItem('juno_creator_session');
       window.location.href = 'login.html';
+    }
+
+    async function loadTierAndBadges() {
+      if (!creatorId) return;
+
+      try {
+        // Get all-time stats for tier calculation
+        const response = await fetch(`/.netlify/functions/get-analytics?creator_id=${creatorId}&period=all`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          console.error('Tier data error:', data.error);
+          return;
+        }
+
+        const allTimeViews = data.totalViews || 0;
+
+        // Calculate tier
+        let currentTier = tiers[0];
+        let nextTier = tiers[1];
+
+        for (let i = 0; i < tiers.length; i++) {
+          if (allTimeViews >= tiers[i].minViews) {
+            currentTier = tiers[i];
+            nextTier = tiers[i + 1] || null;
+          }
+        }
+
+        // Update tier display
+        document.getElementById('tierIcon').textContent = currentTier.icon;
+        document.getElementById('tierName').textContent = currentTier.name;
+
+        if (nextTier) {
+          const progress = ((allTimeViews - currentTier.minViews) / (nextTier.minViews - currentTier.minViews)) * 100;
+          document.getElementById('tierProgress').style.width = Math.min(progress, 100) + '%';
+          document.getElementById('tierProgressText').textContent =
+            `${allTimeViews.toLocaleString()} / ${nextTier.minViews.toLocaleString()} views to ${nextTier.name}`;
+        } else {
+          document.getElementById('tierProgress').style.width = '100%';
+          document.getElementById('tierProgressText').textContent = 'Maximum tier reached!';
+        }
+
+        // Calculate badges
+        const badgeData = {
+          totalItineraries: data.topItineraries?.length || 0,
+          totalQuotes: data.totalQuotes || 0,
+          allTimeViews: allTimeViews,
+          conversionRate: data.conversionRate || 0,
+          daysActive: data.daysActive || 0
+        };
+
+        const badgesGrid = document.getElementById('badgesGrid');
+        badgesGrid.innerHTML = '';
+
+        badges.forEach(badge => {
+          const earned = badge.check(badgeData);
+          const el = document.createElement('div');
+          el.className = `badge-item ${earned ? 'earned' : 'locked'}`;
+          el.innerHTML = `
+            <span class="badge-icon">${badge.icon}</span>
+            <span class="badge-name">${badge.name}</span>
+            <span class="badge-desc">${badge.desc}</span>
+          `;
+          el.title = earned ? 'Achievement unlocked!' : `Unlock: ${badge.desc}`;
+          badgesGrid.appendChild(el);
+        });
+
+      } catch (error) {
+        console.error('Failed to load tier data:', error);
+      }
     }
   </script>
 </body>

@@ -230,6 +230,19 @@ exports.handler = async (event, context) => {
       }))
       .sort((a, b) => b.visitors - a.visitors);
 
+    // Calculate days active (from first itinerary creation)
+    const { data: creatorData } = await supabase
+      .from('creators')
+      .select('created_at')
+      .eq('id', creator_id)
+      .single();
+
+    let daysActive = 0;
+    if (creatorData?.created_at) {
+      const createdDate = new Date(creatorData.created_at);
+      daysActive = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+    }
+
     return {
       statusCode: 200,
       headers: {
@@ -244,7 +257,8 @@ exports.handler = async (event, context) => {
         quotesChange,
         dailyViews: dailyViewsArray,
         topItineraries,
-        trafficSources
+        trafficSources,
+        daysActive
       })
     };
 
