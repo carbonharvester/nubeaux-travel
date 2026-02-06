@@ -420,6 +420,130 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+    /* Leaderboard */
+    .leaderboard-section {
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    .leaderboard-card {
+      background: linear-gradient(135deg, #fef9f5 0%, #fff 100%);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .leaderboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .leaderboard-header h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .leaderboard-period {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-accent);
+      background: var(--color-accent-light);
+      padding: 4px 12px;
+      border-radius: 12px;
+    }
+
+    .leaderboard-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .leaderboard-item {
+      display: grid;
+      grid-template-columns: 40px 40px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      background: var(--color-white);
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+    }
+
+    .leaderboard-item.current-user {
+      border-color: var(--color-accent);
+      background: linear-gradient(135deg, #fff5f0 0%, #fff 100%);
+    }
+
+    .leaderboard-item.top-3 .leaderboard-rank {
+      font-size: 1.25rem;
+    }
+
+    .leaderboard-rank {
+      font-weight: 600;
+      font-size: 1rem;
+      text-align: center;
+      color: var(--color-text-light);
+    }
+
+    .leaderboard-item:nth-child(1) .leaderboard-rank { color: #ffd700; }
+    .leaderboard-item:nth-child(2) .leaderboard-rank { color: #c0c0c0; }
+    .leaderboard-item:nth-child(3) .leaderboard-rank { color: #cd7f32; }
+
+    .leaderboard-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .leaderboard-info strong {
+      display: block;
+      font-size: 0.9375rem;
+    }
+
+    .leaderboard-info span {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
+    .leaderboard-score {
+      text-align: right;
+    }
+
+    .leaderboard-score strong {
+      display: block;
+      font-size: 1rem;
+      color: var(--color-accent);
+    }
+
+    .leaderboard-score span {
+      font-size: 0.625rem;
+      color: var(--color-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .leaderboard-my-rank {
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--color-bg);
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+    }
+
+    .leaderboard-my-rank strong {
+      color: var(--color-accent);
+    }
   </style>
 </head>
 <body>
@@ -567,6 +691,25 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Leaderboard Section -->
+      <section class="leaderboard-section">
+        <div class="leaderboard-card">
+          <div class="leaderboard-header">
+            <h3>Creator Leaderboard</h3>
+            <span class="leaderboard-period" id="leaderboardPeriod">This Month</span>
+          </div>
+          <div class="leaderboard-list" id="leaderboardList">
+            <!-- Populated by JS -->
+            <div style="text-align: center; padding: 24px; color: var(--color-text-light);">
+              Loading leaderboard...
+            </div>
+          </div>
+          <div class="leaderboard-my-rank" id="myRank" style="display: none;">
+            Your rank: <strong>#--</strong> of -- creators
           </div>
         </div>
       </section>
@@ -916,6 +1059,7 @@
     // Initialize
     initDashboard();
     checkSyncStatus();
+    loadLeaderboard();
 
     // Sync status checking
     async function checkSyncStatus() {
@@ -1013,6 +1157,66 @@
       };
 
       setTimeout(poll, 5000);
+    }
+
+    // Load leaderboard
+    async function loadLeaderboard() {
+      const listEl = document.getElementById('leaderboardList');
+      const periodEl = document.getElementById('leaderboardPeriod');
+      const myRankEl = document.getElementById('myRank');
+
+      try {
+        const url = creatorId
+          ? `/.netlify/functions/get-leaderboard?period=month&current_creator_id=${creatorId}`
+          : '/.netlify/functions/get-leaderboard?period=month';
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (!response.ok || !data.leaderboard) {
+          listEl.innerHTML = '<div style="text-align: center; padding: 24px; color: var(--color-text-light);">Leaderboard coming soon!</div>';
+          return;
+        }
+
+        periodEl.textContent = data.period;
+
+        if (data.leaderboard.length === 0) {
+          listEl.innerHTML = '<div style="text-align: center; padding: 24px; color: var(--color-text-light);">Be the first on the leaderboard!</div>';
+          return;
+        }
+
+        // Render leaderboard
+        listEl.innerHTML = data.leaderboard.map((creator, index) => {
+          const isCurrentUser = creatorId && creator.id === creatorId;
+          const rankIcon = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : creator.rank;
+          const avatar = creator.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(creator.name)}&background=c2703e&color=fff&size=80`;
+
+          return `
+            <div class="leaderboard-item ${isCurrentUser ? 'current-user' : ''} ${index < 3 ? 'top-3' : ''}">
+              <span class="leaderboard-rank">${rankIcon}</span>
+              <img class="leaderboard-avatar" src="${avatar}" alt="${creator.name}">
+              <div class="leaderboard-info">
+                <strong>${creator.name}</strong>
+                <span>${creator.views} views · ${creator.quotes} quotes</span>
+              </div>
+              <div class="leaderboard-score">
+                <strong>${creator.score.toLocaleString()}</strong>
+                <span>Points</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Show current user rank if not in top 10
+        if (data.currentRank && data.currentRank.rank > 10) {
+          myRankEl.style.display = 'block';
+          myRankEl.innerHTML = `Your rank: <strong>#${data.currentRank.rank}</strong> of ${data.currentRank.total} creators`;
+        }
+
+      } catch (error) {
+        console.error('Failed to load leaderboard:', error);
+        listEl.innerHTML = '<div style="text-align: center; padding: 24px; color: var(--color-text-light);">Leaderboard coming soon!</div>';
+      }
     }
 
     // Logout functionality
