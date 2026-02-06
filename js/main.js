@@ -576,6 +576,52 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Fetch and display live viewer count
       fetchLiveViewers(itineraryId);
+
+      // Fetch and display booking stats
+      fetchBookingStats(itineraryId);
+    }
+  }
+
+  // Fetch booking stats from API
+  async function fetchBookingStats(itineraryId) {
+    try {
+      const response = await fetch(`/.netlify/functions/get-booking-stats?itinerary_id=${itineraryId}`);
+      const data = await response.json();
+
+      if (data.message) {
+        displayBookingStats(data.message);
+      }
+    } catch (error) {
+      console.error('Failed to fetch booking stats:', error);
+    }
+  }
+
+  // Display booking stats in the UI
+  function displayBookingStats(message) {
+    const sidebarCta = document.querySelector('.sidebar-cta');
+    const reassurance = document.querySelector('.sidebar-cta .reassurance');
+
+    if (reassurance && !document.getElementById('bookingStatsBadge')) {
+      const badge = document.createElement('div');
+      badge.id = 'bookingStatsBadge';
+      badge.innerHTML = `
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px;">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        ${message}
+      `;
+      badge.style.cssText = `
+        font-size: 0.8125rem;
+        color: #6b6b6b;
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      `;
+
+      // Insert before reassurance text
+      reassurance.parentNode.insertBefore(badge, reassurance);
     }
   }
 
