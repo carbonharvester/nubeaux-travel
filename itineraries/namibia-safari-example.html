@@ -273,6 +273,20 @@
       border: none;
       cursor: pointer;
       z-index: 5;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Prevent double-tap zoom on iOS */
+    .stories-viewer {
+      touch-action: manipulation;
+    }
+
+    .stories-media {
+      touch-action: manipulation;
+    }
+
+    .stories-nav {
+      touch-action: manipulation;
     }
 
     .stories-nav.prev { left: 0; }
@@ -1907,29 +1921,34 @@
       ]
     };
 
+    // Cache for preloaded videos
+    const videoCache = {};
+    const imageCache = {};
+
     // Preload all story videos and images on page load
     function preloadStories() {
-      Object.values(storyGroups).forEach(stories => {
-        stories.forEach(story => {
+      Object.entries(storyGroups).forEach(([groupName, stories]) => {
+        stories.forEach((story, index) => {
           if (story.type === 'video') {
             const video = document.createElement('video');
             video.preload = 'auto';
+            video.playsInline = true;
+            video.muted = true; // Muted for preload only
             video.src = story.src;
             video.load();
+            // Cache reference
+            videoCache[story.src] = video;
           } else {
             const img = new Image();
             img.src = story.src;
+            imageCache[story.src] = img;
           }
         });
       });
     }
 
-    // Start preloading after page load
-    if (document.readyState === 'complete') {
-      preloadStories();
-    } else {
-      window.addEventListener('load', preloadStories);
-    }
+    // Start preloading immediately
+    preloadStories();
 
     const storiesLightbox = document.getElementById('storiesLightbox');
     const storiesMedia = document.getElementById('storiesMedia');
@@ -1991,27 +2010,53 @@
         videoElement = null;
       }
 
-      // Show content - videos should be preloaded
+      // Show content - use cached videos for instant playback
       if (story.type === 'video') {
-        storiesMedia.innerHTML = `<video src="${story.src}" autoplay playsinline></video>`;
-        videoElement = storiesMedia.querySelector('video');
+        // Use cached video if available
+        const cachedVideo = videoCache[story.src];
+        if (cachedVideo && cachedVideo.readyState >= 3) {
+          // Clone and use cached video
+          videoElement = cachedVideo.cloneNode(true);
+          videoElement.muted = false; // Unmute for playback
+          videoElement.currentTime = 0;
+          storiesMedia.innerHTML = '';
+          storiesMedia.appendChild(videoElement);
+        } else {
+          // Fallback to creating new video
+          storiesMedia.innerHTML = `<video src="${story.src}" autoplay playsinline></video>`;
+          videoElement = storiesMedia.querySelector('video');
+        }
 
         videoElement.addEventListener('error', () => goToNextStory());
         videoElement.addEventListener('ended', () => goToNextStory());
 
         // Update progress bar animation to match video duration
-        videoElement.addEventListener('loadedmetadata', () => {
-          const duration = videoElement.duration * 1000;
+        if (videoElement.duration) {
           const progressBar = document.querySelector('.stories-progress-bar.active .stories-progress-fill');
           if (progressBar) {
-            progressBar.style.animation = `storyProgress ${duration}ms linear forwards`;
+            progressBar.style.animation = `storyProgress ${videoElement.duration * 1000}ms linear forwards`;
           }
-        });
+        } else {
+          videoElement.addEventListener('loadedmetadata', () => {
+            const duration = videoElement.duration * 1000;
+            const progressBar = document.querySelector('.stories-progress-bar.active .stories-progress-fill');
+            if (progressBar) {
+              progressBar.style.animation = `storyProgress ${duration}ms linear forwards`;
+            }
+          });
+        }
 
         // Play immediately
         videoElement.play().catch(() => goToNextStory());
       } else {
-        storiesMedia.innerHTML = `<img src="${story.src}" alt="Story">`;
+        // Use cached image if available
+        const cachedImg = imageCache[story.src];
+        if (cachedImg && cachedImg.complete) {
+          storiesMedia.innerHTML = '';
+          storiesMedia.appendChild(cachedImg.cloneNode(true));
+        } else {
+          storiesMedia.innerHTML = `<img src="${story.src}" alt="Story">`;
+        }
         storyTimer = setTimeout(() => goToNextStory(), 5000);
       }
     }
@@ -2039,8 +2084,42 @@
     }
 
     storiesClose.addEventListener('click', closeStoriesLightbox);
-    storiesPrev.addEventListener('click', goToPrevStory);
-    storiesNext.addEventListener('click', goToNextStory);
+    storiesPrev.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      goToPrevStory();
+    });
+    storiesNext.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      goToNextStory();
+    });
+
+    // Touch navigation - tap left half for prev, right half for next
+    storiesMedia.addEventListener('click', (e) => {
+      const rect = storiesMedia.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const midpoint = rect.width / 2;
+
+      if (x < midpoint) {
+        goToPrevStory();
+      } else {
+        goToNextStory();
+      }
+    });
+
+    // Prevent default touch behaviors that cause zoom
+    storiesLightbox.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    storiesLightbox.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    }, { passive: false });
 
     // Keyboard navigation for stories
     document.addEventListener('keydown', (e) => {
