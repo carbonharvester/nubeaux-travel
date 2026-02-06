@@ -13,6 +13,8 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link rel="preload" as="image" href="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
   <!-- Styles -->
@@ -1267,11 +1269,14 @@
     <!-- Hero Section with Video -->
     <section class="hero hero-minimal" aria-labelledby="hero-heading">
       <div class="hero-bg">
-        <!-- Fallback image - always visible -->
-        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Luxury safari in Namibia">
-        <!-- Video overlay - plays on top if supported -->
-        <video autoplay muted loop playsinline poster="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg">
-          <source src="https://res.cloudinary.com/dng12bd0a/video/upload/v1770020109/Onguma_sunset_02_qg2lic.mp4" type="video/mp4">
+        <!-- Fallback/poster image - shows immediately for fast FCP -->
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Luxury safari in Namibia" class="hero-poster" fetchpriority="high">
+        <!-- Video overlay - lazy loaded after page ready -->
+        <video muted loop playsinline preload="none"
+          data-desktop-src="https://res.cloudinary.com/dng12bd0a/video/upload/q_auto/v1770020109/Onguma_sunset_02_qg2lic.mp4"
+          data-mobile-src="https://res.cloudinary.com/dng12bd0a/video/upload/w_720,q_60,f_auto/v1770020109/Onguma_sunset_02_qg2lic.mp4"
+          poster="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg">
+          <source src="" type="video/mp4">
         </video>
       </div>
       <div class="hero-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);"></div>
@@ -1317,7 +1322,7 @@
               <span class="reel-username">niathelight</span>
             </div>
             <div class="reel-video">
-              <img src="assets/lamu_daydream.jpg" alt="Nia in Lamu, Kenya" class="reel-image">
+              <img src="assets/lamu_daydream.jpg" alt="Nia in Lamu, Kenya" class="reel-image" loading="lazy">
               <div class="play-button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M8 5v14l11-7z"/>
@@ -1401,7 +1406,7 @@
             <a href="how-it-works.html#earnings" class="btn-link">See how earnings work</a>
           </div>
           <div class="earnings-visual">
-            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_600,q_auto,f_auto/v1770230458/Namibia_onguma_Klein-113_f6iean.jpg" alt="Creator enjoying travel">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_500,h_600,q_auto,f_auto/v1770230458/Namibia_onguma_Klein-113_f6iean.jpg" alt="Creator enjoying travel" loading="lazy">
           </div>
         </div>
       </div>
@@ -1439,7 +1444,7 @@
     <!-- Live Example -->
     <section class="full-bleed-section">
       <div class="full-bleed-bg">
-        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto,a_hflip/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Namibia Safari" style="object-position: 20% center;">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto,a_hflip/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Namibia Safari" style="object-position: 20% center;" loading="lazy">
       </div>
       <div class="hero-overlay" style="background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 70%);"></div>
       <div class="full-bleed-content animate-on-scroll">
@@ -1464,7 +1469,7 @@
         <div class="scroll-wrapper" data-scroll="itineraries">
           <div class="destinations-scroll">
             <a href="itineraries/namibia-safari-example.html" class="destination-card destination-card-centered">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_800,q_auto,f_auto/v1769958277/Namibia_onguma_Klein-163_e01x4h.jpg" alt="Namibia Safari">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_800,q_auto,f_auto/v1769958277/Namibia_onguma_Klein-163_e01x4h.jpg" alt="Namibia Safari" loading="lazy">
               <div class="destination-card-overlay">
                 <span class="itinerary-card-label">Onguma, Namibia</span>
                 <h3>Wilderness & Wonder</h3>
@@ -1473,7 +1478,7 @@
             </a>
 
             <a href="itineraries/joburg-gateway.html" class="destination-card destination-card-centered">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_800,q_auto,f_auto/v1770005011/S_africa_Klein-2_xqck3i.jpg" alt="Johannesburg">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_800,q_auto,f_auto/v1770005011/S_africa_Klein-2_xqck3i.jpg" alt="Johannesburg" loading="lazy">
               <div class="destination-card-overlay">
                 <span class="itinerary-card-label">Johannesburg, South Africa</span>
                 <h3>City Gateway</h3>
@@ -1482,7 +1487,7 @@
             </a>
 
             <a href="itineraries/mozambique-island-escape.html" class="destination-card destination-card-centered">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_800,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Mozambique">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_800,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Mozambique" loading="lazy">
               <div class="destination-card-overlay">
                 <span class="itinerary-card-label">Bazaruto, Mozambique</span>
                 <h3>Island Escape</h3>
@@ -1491,7 +1496,7 @@
             </a>
 
             <a href="itineraries/kilifi-coast.html" class="destination-card destination-card-centered">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_800,q_auto,f_auto/v1749400855/KleinNettoh--8_1_gtxyvk.jpg" alt="Kenya">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_800,q_auto,f_auto/v1749400855/KleinNettoh--8_1_gtxyvk.jpg" alt="Kenya" loading="lazy">
               <div class="destination-card-overlay">
                 <span class="itinerary-card-label">Kilifi, Kenya</span>
                 <h3>Coastal Retreat</h3>
@@ -1500,7 +1505,7 @@
             </a>
 
             <a href="itineraries/senegal-soul.html" class="destination-card destination-card-centered">
-              <img src="https://images.unsplash.com/photo-1591122947157-26bad3a117d2?w=600&h=800&fit=crop&q=80" alt="Senegal">
+              <img src="https://images.unsplash.com/photo-1591122947157-26bad3a117d2?w=600&h=800&fit=crop&q=80" alt="Senegal" loading="lazy">
               <div class="destination-card-overlay">
                 <span class="itinerary-card-label">Dakar, Senegal</span>
                 <h3>Soul of Senegal</h3>
@@ -1637,34 +1642,53 @@
       animateOnScroll();
     }
 
-    // Force hero video autoplay on mobile
+    // Lazy load hero video after page is ready (performance optimization)
     const heroVideo = document.querySelector('.hero-bg video');
     if (heroVideo) {
-      // Remove controls attribute
       heroVideo.removeAttribute('controls');
       heroVideo.controls = false;
+      heroVideo.style.opacity = '0';
 
-      // Show video only when playing
-      heroVideo.addEventListener('playing', () => {
-        heroVideo.dataset.playing = 'true';
-        heroVideo.style.opacity = '1';
-      });
+      // Load video after page is interactive
+      const loadHeroVideo = () => {
+        // Choose video quality based on screen width
+        const isMobile = window.innerWidth <= 768;
+        const videoSrc = isMobile
+          ? heroVideo.dataset.mobileSrc
+          : heroVideo.dataset.desktopSrc;
 
-      // Try to play immediately
-      heroVideo.play().then(() => {
-        heroVideo.dataset.playing = 'true';
-        heroVideo.style.opacity = '1';
-      }).catch(() => {
-        // If autoplay fails, keep video hidden (show poster/fallback image)
-        heroVideo.style.opacity = '0';
-        // Try again on user interaction
-        document.addEventListener('touchstart', () => {
+        if (!videoSrc) return;
+
+        // Set the source and load
+        const source = heroVideo.querySelector('source');
+        if (source) {
+          source.src = videoSrc;
+        }
+        heroVideo.load();
+
+        // Fade in when video can play
+        heroVideo.addEventListener('canplay', () => {
           heroVideo.play().then(() => {
-            heroVideo.dataset.playing = 'true';
             heroVideo.style.opacity = '1';
+          }).catch(() => {
+            // Autoplay blocked - try on user interaction
+            document.addEventListener('touchstart', () => {
+              heroVideo.play().then(() => {
+                heroVideo.style.opacity = '1';
+              });
+            }, { once: true });
           });
         }, { once: true });
-      });
+      };
+
+      // Delay video load to prioritize content (load after 1 second)
+      if (document.readyState === 'complete') {
+        setTimeout(loadHeroVideo, 1000);
+      } else {
+        window.addEventListener('load', () => {
+          setTimeout(loadHeroVideo, 1000);
+        });
+      }
     }
 
     // Stop comments video 2s before end and keep final frame
@@ -1685,19 +1709,13 @@
     const videoLightboxClose = document.getElementById('videoLightboxClose');
 
     if (lamuPost && videoLightbox) {
-      // Preload video immediately for instant playback
-      const videoUrl = lamuPost.dataset.video;
-      if (videoUrl) {
-        lightboxVideoSrc.src = videoUrl;
-        lightboxVideo.preload = 'auto';
-        lightboxVideo.load();
-      }
-
       lamuPost.addEventListener('click', () => {
+        const videoUrl = lamuPost.dataset.video;
         if (videoUrl) {
+          lightboxVideoSrc.src = videoUrl;
+          lightboxVideo.load();
           videoLightbox.classList.add('active');
           document.body.style.overflow = 'hidden';
-          lightboxVideo.currentTime = 0;
           lightboxVideo.play();
         }
       });
