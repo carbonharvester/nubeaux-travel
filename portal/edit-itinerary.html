@@ -85,6 +85,52 @@
       gap: 12px;
     }
 
+    /* Completion Meter */
+    .completion-meter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px;
+      background: var(--color-bg);
+      border-radius: 8px;
+      margin-right: 16px;
+    }
+
+    .completion-meter-label {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+      white-space: nowrap;
+    }
+
+    .completion-meter-bar {
+      width: 120px;
+      height: 6px;
+      background: var(--color-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .completion-meter-fill {
+      height: 100%;
+      background: var(--color-accent);
+      border-radius: 3px;
+      transition: width 0.3s ease, background-color 0.3s;
+    }
+
+    .completion-meter-fill.low { background: #ef4444; }
+    .completion-meter-fill.medium { background: #f59e0b; }
+    .completion-meter-fill.high { background: #22c55e; }
+
+    .completion-meter-percent {
+      font-size: 0.875rem;
+      font-weight: 600;
+      min-width: 36px;
+    }
+
+    .completion-meter-percent.low { color: #ef4444; }
+    .completion-meter-percent.medium { color: #f59e0b; }
+    .completion-meter-percent.high { color: #22c55e; }
+
     .btn {
       display: inline-flex;
       align-items: center;
@@ -1502,6 +1548,13 @@
       <h1 class="top-bar-title" id="pageTitle">New Itinerary</h1>
     </div>
     <div class="top-bar-actions">
+      <div class="completion-meter" id="completionMeter" title="Itinerary completeness">
+        <span class="completion-meter-label">Quality</span>
+        <div class="completion-meter-bar">
+          <div class="completion-meter-fill" id="completionFill" style="width: 0%"></div>
+        </div>
+        <span class="completion-meter-percent" id="completionPercent">0%</span>
+      </div>
       <button class="btn btn-outline" id="previewBtn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
         Preview
@@ -1914,6 +1967,73 @@
 
     let currentStatus = 'draft';
 
+    // ============================================
+    // COMPLETION METER
+    // ============================================
+    function calculateCompletion() {
+      let score = 0;
+      let maxScore = 0;
+
+      // Required fields (weighted)
+      const checks = [
+        { weight: 15, check: () => document.getElementById('title')?.value?.trim().length > 0 },
+        { weight: 10, check: () => document.getElementById('destination')?.value?.trim().length > 0 },
+        { weight: 10, check: () => document.getElementById('duration')?.value?.trim().length > 0 },
+        { weight: 15, check: () => document.getElementById('intro')?.value?.trim().length > 50 },
+        { weight: 10, check: () => document.getElementById('whyCurated')?.value?.trim().length > 20 },
+        { weight: 10, check: () => itineraryData.heroImage?.length > 0 },
+        { weight: 15, check: () => itineraryData.days?.length >= 2 },
+        { weight: 5, check: () => importedPosts?.length >= 3 },
+        { weight: 5, check: () => importedStories?.length >= 1 },
+        { weight: 5, check: () => document.getElementById('priceFrom')?.value > 0 },
+      ];
+
+      checks.forEach(item => {
+        maxScore += item.weight;
+        if (item.check()) {
+          score += item.weight;
+        }
+      });
+
+      return Math.round((score / maxScore) * 100);
+    }
+
+    function updateCompletionMeter() {
+      const percent = calculateCompletion();
+      const fill = document.getElementById('completionFill');
+      const percentEl = document.getElementById('completionPercent');
+
+      if (!fill || !percentEl) return;
+
+      fill.style.width = percent + '%';
+      percentEl.textContent = percent + '%';
+
+      // Update colors based on level
+      fill.classList.remove('low', 'medium', 'high');
+      percentEl.classList.remove('low', 'medium', 'high');
+
+      if (percent < 40) {
+        fill.classList.add('low');
+        percentEl.classList.add('low');
+      } else if (percent < 70) {
+        fill.classList.add('medium');
+        percentEl.classList.add('medium');
+      } else {
+        fill.classList.add('high');
+        percentEl.classList.add('high');
+      }
+    }
+
+    // Update completion meter on input changes
+    document.addEventListener('input', (e) => {
+      if (e.target.closest('.editor-main')) {
+        updateCompletionMeter();
+      }
+    });
+
+    // Also update when days/content changes
+    const originalPushDay = Array.prototype.push;
+
     // Elements
     const daysList = document.getElementById('daysList');
     const addDayBtn = document.getElementById('addDayBtn');
@@ -2089,6 +2209,9 @@
       addDay();
     }
 
+    // Initial completion meter update
+    setTimeout(updateCompletionMeter, 100);
+
     function loadItinerary(data) {
       itineraryData = { ...data };
 
@@ -2260,7 +2383,10 @@
       updateStoriesPreview();
     }
 
-    addDayBtn.addEventListener('click', () => addDay());
+    addDayBtn.addEventListener('click', () => {
+      addDay();
+      updateCompletionMeter();
+    });
 
     // Hero Image
     const heroContainer = document.getElementById('heroImageContainer');
@@ -2296,6 +2422,7 @@
       itineraryData.heroFocalY = focalY;
       updatePreview();
       initHeroFocalDrag();
+      updateCompletionMeter();
     }
 
     function initHeroFocalDrag() {
