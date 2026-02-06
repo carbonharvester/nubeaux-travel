@@ -604,9 +604,15 @@
 
   // Initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', createWidgetUI);
+    document.addEventListener('DOMContentLoaded', () => {
+      createWidgetUI();
+      // Preload SDK so it's ready when user clicks
+      loadRetellSDK().catch(err => console.log('SDK preload:', err));
+    });
   } else {
     createWidgetUI();
+    // Preload SDK so it's ready when user clicks
+    loadRetellSDK().catch(err => console.log('SDK preload:', err));
   }
 
 })();
