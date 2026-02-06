@@ -282,10 +282,9 @@ async function checkRunStatus(runId, creatorId) {
 
       console.log(`Valid highlights: ${validHighlights.length} of ${highlights.length}`);
 
-      // Skip Cloudinary for covers - Instagram blocks them with CORS anyway
-      // We'll show styled placeholders with titles instead
-      // Stories content will use Cloudinary when downloaded
-      const savedHighlights = await saveHighlightsWithoutCloudinary(validHighlights, creatorId);
+      // Upload covers to Cloudinary so they display properly
+      // (Instagram CDN URLs get blocked by CORS in browser)
+      const savedHighlights = await saveHighlights(validHighlights, creatorId);
 
       return {
         statusCode: 200,

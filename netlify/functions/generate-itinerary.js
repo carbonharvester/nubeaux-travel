@@ -24,15 +24,39 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { content, num_days, context: tripContext, creator_id } = JSON.parse(event.body);
+    const { content, posts, stories, num_days, context: tripContext, creator_id } = JSON.parse(event.body);
 
-    if (!content || content.length === 0) {
+    // Support both old format (content) and new format (posts + stories)
+    let allContent = content || [];
+    if (posts && posts.length > 0) {
+      allContent = [...allContent, ...posts];
+    }
+    if (stories && stories.length > 0) {
+      // Flatten story items from groups
+      stories.forEach(group => {
+        if (group.items) {
+          group.items.forEach(item => {
+            allContent.push({
+              content_type: item.type === 'video' ? 'Video' : 'Image',
+              caption: `Story from: ${group.title}`,
+              cloudinary_url: item.url || item.thumbnail_url,
+              cloudinary_video_url: item.type === 'video' ? item.url : null
+            });
+          });
+        }
+      });
+    }
+
+    if (!allContent || allContent.length === 0) {
       return {
         statusCode: 400,
         headers: { 'Access-Control-Allow-Origin': '*' },
         body: JSON.stringify({ error: 'No content provided' })
       };
     }
+
+    // Use combined content going forward
+    const content_combined = allContent;
 
     const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
@@ -41,7 +65,7 @@ exports.handler = async (event, context) => {
     }
 
     // Prepare content summary for AI
-    const contentSummary = content.map((item, index) => ({
+    const contentSummary = content_combined.map((item, index) => ({
       index: index + 1,
       type: item.content_type,
       caption: item.caption || 'No caption',
@@ -50,7 +74,7 @@ exports.handler = async (event, context) => {
 
     const prompt = `You are a travel content expert helping a creator build an itinerary from their Instagram posts and stories.
 
-The creator has ${content.length} pieces of content from their trip. Here's a summary:
+The creator has ${content_combined.length} pieces of content from their trip. Here's a summary:
 
 ${JSON.stringify(contentSummary, null, 2)}
 
@@ -146,7 +170,7 @@ Return ONLY the JSON object, no additional text.`;
     }));
 
     // Collect all media as gallery items
-    const gallery = content.map(item => ({
+    const gallery = content_combined.map(item => ({
       url: item.cloudinary_url || item.thumbnail_url,
       video_url: item.cloudinary_video_url,
       caption: item.caption,

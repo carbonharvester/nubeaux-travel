@@ -3545,8 +3545,7 @@
         return;
       }
 
-      // Use gradient placeholders since Instagram blocks direct image loading (CORS)
-      // The title is what matters for selection
+      // Gradient fallbacks for when images fail to load
       const gradients = [
         'linear-gradient(135deg, #833AB4, #FD1D1D, #F77737)',
         'linear-gradient(135deg, #405DE6, #5851DB, #833AB4)',
@@ -3558,11 +3557,20 @@
       container.innerHTML = validHighlights.map((highlight, index) => {
         const gradient = gradients[index % gradients.length];
         const initial = (highlight.title || 'H')[0].toUpperCase();
+        // Only use Cloudinary URLs (Instagram CDN gets blocked by CORS)
+        const hasCover = highlight.coverUrl && highlight.coverUrl.includes('cloudinary');
 
         return `
           <div class="ig-highlight-item" onclick="downloadHighlightStories('${highlight.id}', '${(highlight.title || '').replace(/'/g, "\\'")}')">
-            <div class="highlight-cover" style="background: ${gradient}; display: flex; align-items: center; justify-content: center;">
-              <span style="color: white; font-size: 1.5rem; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">${initial}</span>
+            <div class="highlight-cover" style="background: ${gradient};">
+              ${hasCover ? `
+                <img src="${highlight.coverUrl}" alt="${highlight.title || ''}"
+                     style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span style="display: none; color: white; font-size: 1.5rem; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.3); width: 100%; height: 100%; align-items: center; justify-content: center;">${initial}</span>
+              ` : `
+                <span style="color: white; font-size: 1.5rem; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">${initial}</span>
+              `}
             </div>
             <span class="highlight-title">${highlight.title || 'Untitled'}</span>
             ${highlight.storiesCount ? `<span class="highlight-count">${highlight.storiesCount} stories</span>` : ''}
