@@ -1640,16 +1640,31 @@
     // Force hero video autoplay on mobile
     const heroVideo = document.querySelector('.hero-bg video');
     if (heroVideo) {
-      // Try to play immediately
-      heroVideo.play().catch(() => {
-        // If autoplay fails, try again on user interaction
-        document.addEventListener('touchstart', () => {
-          heroVideo.play();
-        }, { once: true });
+      // Remove controls attribute
+      heroVideo.removeAttribute('controls');
+      heroVideo.controls = false;
+
+      // Show video only when playing
+      heroVideo.addEventListener('playing', () => {
+        heroVideo.dataset.playing = 'true';
+        heroVideo.style.opacity = '1';
       });
 
-      // Remove any browser default controls
-      heroVideo.removeAttribute('controls');
+      // Try to play immediately
+      heroVideo.play().then(() => {
+        heroVideo.dataset.playing = 'true';
+        heroVideo.style.opacity = '1';
+      }).catch(() => {
+        // If autoplay fails, keep video hidden (show poster/fallback image)
+        heroVideo.style.opacity = '0';
+        // Try again on user interaction
+        document.addEventListener('touchstart', () => {
+          heroVideo.play().then(() => {
+            heroVideo.dataset.playing = 'true';
+            heroVideo.style.opacity = '1';
+          });
+        }, { once: true });
+      });
     }
 
     // Stop comments video 2s before end and keep final frame

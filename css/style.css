@@ -343,21 +343,48 @@ p {
 
 .hero-bg video {
   z-index: 1;
+  /* Prevent any interaction that might show controls */
+  pointer-events: none;
 }
 
-/* Hide browser's native video play button */
+/* Hide browser's native video play button - multiple approaches */
 .hero-bg video::-webkit-media-controls {
   display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  -webkit-appearance: none !important;
+}
+
+.hero-bg video::-webkit-media-controls-panel {
+  display: none !important;
+  opacity: 0 !important;
+  -webkit-appearance: none !important;
 }
 
 .hero-bg video::-webkit-media-controls-start-playback-button {
   display: none !important;
-  -webkit-appearance: none;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  -webkit-appearance: none !important;
 }
 
 .hero-bg video::-webkit-media-controls-play-button {
   display: none !important;
-  -webkit-appearance: none;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  -webkit-appearance: none !important;
+}
+
+.hero-bg video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  -webkit-appearance: none !important;
+}
+
+/* Hide video if it's not playing - show fallback image instead */
+.hero-bg video:not([data-playing="true"]) {
+  opacity: 0;
 }
 
 .hero-overlay {
