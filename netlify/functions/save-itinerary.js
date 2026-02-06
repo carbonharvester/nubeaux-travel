@@ -75,6 +75,9 @@ exports.handler = async (event, context) => {
       why_curated: data.why_curated || null,
       days: data.days || [],
       stays: data.stays || [],
+      posts: data.posts || [],
+      stories: data.stories || [],
+      gallery: data.gallery || [],
       included: data.included || [],
       status: data.status || 'draft',
       published_at: data.status === 'published' ? new Date().toISOString() : null

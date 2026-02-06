@@ -1079,6 +1079,79 @@
       opacity: 0.4;
     }
 
+    /* Imported Content Sections */
+    .imported-section {
+      margin-bottom: 20px;
+    }
+    .imported-section-title {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-text);
+      margin-bottom: 12px;
+    }
+    .imported-stories-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .imported-story-group {
+      flex-shrink: 0;
+      text-align: center;
+      position: relative;
+    }
+    .story-highlight-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #F77737 100%);
+      padding: 2px;
+      margin: 0 auto 6px;
+    }
+    .story-highlight-circle img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+    .story-highlight-label {
+      display: block;
+      font-size: 0.6875rem;
+      color: var(--color-text);
+      max-width: 64px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .story-highlight-count {
+      display: block;
+      font-size: 0.625rem;
+      color: var(--color-text-light);
+    }
+    .remove-btn-small {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--color-error, #dc3545);
+      color: white;
+      border: none;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .imported-posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 8px;
+    }
+
     /* Synced Posts Grid */
     .ig-posts-container {
       display: grid;
@@ -1829,7 +1902,9 @@
     let highlights = [];
     let downloadedStories = [];
     let selectedStoryIndices = new Set();
-    let importedContent = [];
+    let importedPosts = [];
+    let importedStories = [];
+    let galleryItems = [];
 
     let currentStatus = 'draft';
 
@@ -2041,9 +2116,9 @@
         data.days.forEach(day => addDay(day));
       }
 
-      // Instagram content
-      if (data.instagramContent) {
-        loadImportedContent(data.instagramContent);
+      // Instagram content (posts and stories)
+      if (data.posts || data.stories) {
+        loadImportedContent({ posts: data.posts, stories: data.stories });
       }
 
       updatePreview();
@@ -2553,6 +2628,8 @@
             why_curated: itineraryData.whyCurated,
             days: itineraryData.days,
             stays: itineraryData.stays,
+            posts: getPostsForSave(),
+            stories: getStoriesForSave(),
             included: itineraryData.included,
             status: itineraryData.status
           })
@@ -2773,9 +2850,9 @@
         const result = await response.json();
 
         if (result.success) {
-          // Add to imported content
+          // Add to imported posts
           result.content.forEach(item => {
-            importedContent.push(item);
+            importedPosts.push(item);
           });
           renderImportedContent();
           textarea.value = '';
@@ -2790,7 +2867,7 @@
 
         // For demo/development: simulate import with pending status
         urls.forEach(urlData => {
-          importedContent.push({
+          importedPosts.push({
             id: 'temp-' + Date.now() + '-' + urlData.shortcode,
             instagram_url: urlData.url,
             instagram_shortcode: urlData.shortcode,
@@ -2821,8 +2898,10 @@
 
     function renderImportedContent() {
       const grid = document.getElementById('igContentGrid');
+      const hasPosts = importedPosts.length > 0;
+      const hasStories = importedStories.length > 0;
 
-      if (importedContent.length === 0) {
+      if (!hasPosts && !hasStories) {
         grid.innerHTML = `
           <div class="ig-content-empty">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -2830,57 +2909,89 @@
               <circle cx="8.5" cy="8.5" r="1.5"/>
               <polyline points="21 15 16 10 5 21"/>
             </svg>
-            <p>Imported content will appear here</p>
+            <p>Imported posts and stories will appear here</p>
           </div>
         `;
         return;
       }
 
-      grid.innerHTML = importedContent.map((item, index) => {
-        const isVideo = item.content_type === 'Video' || item.content_type === 'Sidecar';
-        const thumbnailSrc = item.thumbnail_url || item.cloudinary_url || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23e5e5e5" width="100" height="100"/%3E%3Ctext fill="%236b6b6b" font-family="sans-serif" font-size="12" x="50%" y="50%" text-anchor="middle" dy=".3em"%3EProcessing%3C/text%3E%3C/svg%3E';
+      let html = '';
 
-        return `
-          <div class="ig-content-item" data-index="${index}" data-shortcode="${item.instagram_shortcode}">
-            <img src="${thumbnailSrc}" alt="${item.caption || 'Instagram content'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23e5e5e5%22 width=%22100%22 height=%22100%22/%3E%3Ctext fill=%22%236b6b6b%22 font-family=%22sans-serif%22 font-size=%2212%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22%3EPending%3C/text%3E%3C/svg%3E'">
-            ${isVideo ? `
-              <div class="video-indicator">
-                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </div>
-            ` : ''}
-            <div class="status-badge ${item.status}">${item.status}</div>
-            <button type="button" class="remove-btn" onclick="removeImportedContent(${index})" title="Remove">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="6" x2="6" y2="18"/>
-                <line x1="6" y1="6" x2="18" y2="18"/>
-              </svg>
-            </button>
+      // Stories section (horizontal scroll like Instagram highlights)
+      if (hasStories) {
+        html += `
+          <div class="imported-section">
+            <h4 class="imported-section-title">Stories (${importedStories.reduce((sum, g) => sum + g.items.length, 0)} items in ${importedStories.length} highlights)</h4>
+            <div class="imported-stories-scroll">
+              ${importedStories.map((group, gIndex) => `
+                <div class="imported-story-group">
+                  <div class="story-highlight-circle">
+                    <img src="${group.cover_url || group.items[0]?.thumbnail_url || ''}" alt="${group.title}" onerror="this.style.display='none'">
+                  </div>
+                  <span class="story-highlight-label">${group.title}</span>
+                  <span class="story-highlight-count">${group.items.length}</span>
+                  <button type="button" class="remove-btn-small" onclick="removeStoryGroup(${gIndex})" title="Remove">×</button>
+                </div>
+              `).join('')}
+            </div>
           </div>
         `;
-      }).join('');
+      }
 
-      // Update count display
-      const countEl = document.getElementById('importedContentCount');
-      if (countEl) countEl.textContent = importedContent.length;
+      // Posts section (grid)
+      if (hasPosts) {
+        html += `
+          <div class="imported-section">
+            <h4 class="imported-section-title">Posts (${importedPosts.length})</h4>
+            <div class="imported-posts-grid">
+              ${importedPosts.map((item, index) => {
+                const isVideo = item.content_type === 'Video' || item.content_type === 'Sidecar';
+                const thumbnailSrc = item.thumbnail_url || item.cloudinary_url || '';
+                return `
+                  <div class="ig-content-item" data-index="${index}" data-shortcode="${item.instagram_shortcode}">
+                    <img src="${thumbnailSrc}" alt="${item.caption || 'Instagram post'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23e5e5e5%22 width=%22100%22 height=%22100%22/%3E%3C/svg%3E'">
+                    ${isVideo ? `<div class="video-indicator"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>` : ''}
+                    <button type="button" class="remove-btn" onclick="removeImportedPost(${index})" title="Remove">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      grid.innerHTML = html;
+      updateImportedContentCount();
     }
 
-    function removeImportedContent(index) {
-      importedContent.splice(index, 1);
+    function removeImportedPost(index) {
+      importedPosts.splice(index, 1);
       renderImportedContent();
-      showToast('Content removed');
+    }
+
+    function removeStoryGroup(index) {
+      importedStories.splice(index, 1);
+      renderImportedContent();
     }
 
     // Load existing imported content if editing
-    function loadImportedContent(content) {
-      if (content && Array.isArray(content)) {
-        importedContent = content;
+    function loadImportedContent(data) {
+      if (data) {
+        if (data.posts && Array.isArray(data.posts)) {
+          importedPosts = data.posts;
+        }
+        if (data.stories && Array.isArray(data.stories)) {
+          importedStories = data.stories;
+        }
         renderImportedContent();
       }
     }
 
-    // Include imported content in save
-    function getImportedContentForSave() {
-      return importedContent.map(item => ({
+    // Get posts for save
+    function getPostsForSave() {
+      return importedPosts.map(item => ({
         instagram_shortcode: item.instagram_shortcode,
         instagram_url: item.instagram_url,
         content_type: item.content_type,
@@ -2888,7 +2999,18 @@
         cloudinary_video_url: item.cloudinary_video_url,
         thumbnail_url: item.thumbnail_url,
         caption: item.caption,
+        location: item.location,
         status: item.status
+      }));
+    }
+
+    // Get stories for save
+    function getStoriesForSave() {
+      return importedStories.map(group => ({
+        id: group.id,
+        title: group.title,
+        cover_url: group.cover_url,
+        items: group.items
       }));
     }
 
@@ -3218,13 +3340,13 @@
         return selectedPostIds.has(code);
       });
 
-      // Add to imported content
+      // Add to imported posts
       selectedPosts.forEach(post => {
         const shortcode = post.shortcode || post.shortCode;
         // Check if already imported
-        const alreadyImported = importedContent.some(c => c.instagram_shortcode === shortcode);
+        const alreadyImported = importedPosts.some(p => p.instagram_shortcode === shortcode);
         if (!alreadyImported) {
-          importedContent.push({
+          importedPosts.push({
             id: post.id,
             instagram_url: `https://instagram.com/p/${shortcode}`,
             instagram_shortcode: shortcode,
@@ -3233,6 +3355,7 @@
             cloudinary_url: post.display_url,
             cloudinary_video_url: post.video_url,
             caption: post.caption,
+            location: post.location_name,
             status: 'ready'
           });
         }
@@ -3615,33 +3738,42 @@
         return;
       }
 
-      const selectedStories = downloadedStories.filter((_, index) => selectedStoryIndices.has(index));
+      const selectedStoriesData = downloadedStories.filter((_, index) => selectedStoryIndices.has(index));
 
-      selectedStories.forEach((story, index) => {
-        importedContent.push({
+      // Check if this highlight already exists
+      let storyGroup = importedStories.find(g => g.title === highlightTitle);
+      if (!storyGroup) {
+        storyGroup = {
+          id: `highlight-${Date.now()}`,
+          title: highlightTitle || 'Stories',
+          cover_url: selectedStoriesData[0]?.cloudinary_url || selectedStoriesData[0]?.thumbnail_url || '',
+          items: []
+        };
+        importedStories.push(storyGroup);
+      }
+
+      selectedStoriesData.forEach((story, index) => {
+        storyGroup.items.push({
           id: story.id || `story-${Date.now()}-${index}`,
-          instagram_url: '',
-          instagram_shortcode: `story-${story.id || index}`,
-          content_type: story.type === 'video' ? 'Video' : 'Image',
-          thumbnail_url: story.cloudinary_url || story.thumbnail_url || story.thumbnailUrl || story.mediaUrl,
-          cloudinary_url: story.cloudinary_url || story.mediaUrl,
-          cloudinary_video_url: story.type === 'video' ? (story.cloudinary_url || story.mediaUrl) : null,
-          caption: `From highlight: ${highlightTitle || 'Stories'}`,
-          status: 'ready'
+          type: story.type === 'video' ? 'video' : 'image',
+          url: story.cloudinary_url || story.mediaUrl,
+          thumbnail_url: story.cloudinary_url || story.thumbnail_url || story.thumbnailUrl || story.mediaUrl
         });
       });
 
       renderImportedContent();
       selectedStoryIndices.clear();
       updateStorySelectionUI();
-      showToast(`${selectedStories.length} stories imported!`, 'success');
+      showToast(`${selectedStoriesData.length} stories imported to "${highlightTitle}"!`, 'success');
       updateImportedContentCount();
     }
 
     // Update imported content count display
     function updateImportedContentCount() {
       const countEl = document.getElementById('importedContentCount');
-      if (countEl) countEl.textContent = importedContent.length;
+      const totalStoryItems = importedStories.reduce((sum, g) => sum + g.items.length, 0);
+      const total = importedPosts.length + totalStoryItems;
+      if (countEl) countEl.textContent = `${importedPosts.length} posts, ${totalStoryItems} stories`;
     }
 
     // Generate itinerary with AI
@@ -3651,7 +3783,8 @@
       const generateBtn = document.getElementById('generateItineraryBtn');
       const statusEl = document.getElementById('generateStatus');
 
-      if (importedContent.length === 0) {
+      const totalContent = importedPosts.length + importedStories.reduce((sum, g) => sum + g.items.length, 0);
+      if (totalContent === 0) {
         showToast('Please import some content first (posts or stories)');
         return;
       }
@@ -3672,7 +3805,8 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            content: importedContent,
+            posts: importedPosts,
+            stories: importedStories,
             num_days: numDays,
             context: tripContext,
             creator_id: getCreatorId()
