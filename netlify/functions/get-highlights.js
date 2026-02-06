@@ -282,8 +282,10 @@ async function checkRunStatus(runId, creatorId) {
 
       console.log(`Valid highlights: ${validHighlights.length} of ${highlights.length}`);
 
-      // Upload covers to Cloudinary and save to database
-      const savedHighlights = await saveHighlights(validHighlights, creatorId);
+      // Skip Cloudinary uploads to avoid timeout - return highlights directly
+      // Cloudinary uploads can be done in background process later
+      // Just save to database without cover upload
+      const savedHighlights = await saveHighlightsWithoutCloudinary(validHighlights, creatorId);
 
       return {
         statusCode: 200,
@@ -393,7 +395,66 @@ async function loadSavedHighlights(creatorId) {
   }
 }
 
-// Save highlights to Supabase with Cloudinary cover upload
+// Save highlights to Supabase WITHOUT Cloudinary upload (fast, no timeout)
+async function saveHighlightsWithoutCloudinary(highlights, creatorId) {
+  const supabase = getSupabase();
+  const savedHighlights = [];
+
+  // Check if creatorId is a valid UUID before trying to save to DB
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const canSaveToDb = supabase && creatorId && uuidRegex.test(creatorId);
+
+  for (const highlight of highlights) {
+    try {
+      // Use original Instagram cover URL (no Cloudinary upload)
+      const coverUrl = highlight.coverUrl;
+
+      if (canSaveToDb) {
+        const record = {
+          creator_id: creatorId,
+          highlight_id: highlight.id,
+          title: highlight.title,
+          cover_url: coverUrl,
+          stories_count: highlight.storiesCount || 0,
+          synced_at: new Date().toISOString()
+        };
+
+        const { data, error } = await supabase
+          .from('creator_highlights')
+          .upsert(record, {
+            onConflict: 'creator_id,highlight_id',
+            ignoreDuplicates: false
+          })
+          .select()
+          .single();
+
+        if (error) {
+          console.error(`Error saving highlight ${highlight.id}:`, error);
+        }
+      }
+
+      // Always return the highlight
+      savedHighlights.push({
+        id: highlight.id,
+        title: highlight.title,
+        coverUrl: coverUrl,
+        storiesCount: highlight.storiesCount
+      });
+    } catch (err) {
+      console.error(`Error processing highlight ${highlight.id}:`, err);
+      savedHighlights.push({
+        id: highlight.id,
+        title: highlight.title,
+        coverUrl: highlight.coverUrl,
+        storiesCount: highlight.storiesCount
+      });
+    }
+  }
+
+  return savedHighlights;
+}
+
+// Save highlights to Supabase with Cloudinary cover upload (SLOW - can timeout)
 async function saveHighlights(highlights, creatorId) {
   const supabase = getSupabase();
   const savedHighlights = [];
