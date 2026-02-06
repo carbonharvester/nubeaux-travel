@@ -14,7 +14,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-  <link rel="preload" as="image" href="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" fetchpriority="high">
+  <link rel="preload" as="image" fetchpriority="high"
+    href="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_450,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg"
+    imagesrcset="
+      https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_450,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg 800w,
+      https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1280,h_720,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg 1280w,
+      https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg 1920w"
+    imagesizes="100vw">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
   <!-- Styles -->
@@ -1270,7 +1276,16 @@
     <section class="hero hero-minimal" aria-labelledby="hero-heading">
       <div class="hero-bg">
         <!-- Fallback/poster image - shows immediately for fast FCP -->
-        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Luxury safari in Namibia" class="hero-poster" fetchpriority="high">
+        <img
+          src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_450,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg"
+          srcset="
+            https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_450,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg 800w,
+            https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1280,h_720,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg 1280w,
+            https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg 1920w"
+          sizes="100vw"
+          alt="Luxury safari in Namibia"
+          class="hero-poster"
+          fetchpriority="high">
         <!-- Video overlay - lazy loaded after page ready -->
         <video muted loop playsinline preload="none"
           data-desktop-src="https://res.cloudinary.com/dng12bd0a/video/upload/q_auto/v1770020109/Onguma_sunset_02_qg2lic.mp4"
