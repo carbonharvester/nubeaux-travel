@@ -1950,7 +1950,7 @@
 
       // Show content
       if (story.type === 'video') {
-        storiesMedia.innerHTML = `<video src="${story.src}" autoplay muted playsinline></video>`;
+        storiesMedia.innerHTML = `<video src="${story.src}" autoplay playsinline></video>`;
         videoElement = storiesMedia.querySelector('video');
 
         // Handle video load error - skip to next
