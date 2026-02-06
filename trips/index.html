@@ -1331,6 +1331,88 @@
         search: ''
       };
 
+      // Load itineraries from Supabase and add to grid
+      async function loadSupabaseItineraries() {
+        try {
+          const response = await fetch('/.netlify/functions/get-itineraries?status=published');
+          const result = await response.json();
+
+          if (result.success && result.itineraries && result.itineraries.length > 0) {
+            const tripsGrid = document.getElementById('tripsGrid');
+
+            result.itineraries.forEach(itinerary => {
+              // Skip if no title
+              if (!itinerary.title) return;
+
+              // Create trip card
+              const card = document.createElement('a');
+              card.href = `../itinerary/${itinerary.id}`;
+              card.className = 'trip-card animate-item';
+              card.dataset.region = itinerary.region || 'other';
+              card.dataset.style = 'adventure'; // Default style
+              card.dataset.duration = getDurationCategory(itinerary.duration);
+              card.dataset.title = itinerary.title.toLowerCase();
+              card.dataset.destination = (itinerary.destination || '').toLowerCase();
+              card.dataset.creator = itinerary.creators?.instagram || '';
+
+              // Get creator info
+              const creatorName = itinerary.creators?.name || 'Creator';
+              const creatorImage = itinerary.creators?.profile_image || '../assets/avatar-placeholder.jpg';
+              const creatorHandle = itinerary.creators?.instagram || '';
+
+              // Hero image or placeholder
+              const heroImage = itinerary.hero_image || '../assets/placeholder-trip.jpg';
+
+              card.innerHTML = `
+                <div class="trip-card-image">
+                  <img src="${heroImage}" alt="${itinerary.title}" loading="lazy"
+                       onerror="this.src='../assets/placeholder-trip.jpg'">
+                  <div class="trip-card-overlay">
+                    <span class="trip-card-duration">${itinerary.duration || 'Multi-day'}</span>
+                  </div>
+                </div>
+                <div class="trip-card-content">
+                  <div class="trip-card-creator">
+                    <img src="${creatorImage}" alt="${creatorName}"
+                         onerror="this.src='../assets/avatar-placeholder.jpg'">
+                    <span>${creatorHandle ? '@' + creatorHandle : creatorName}</span>
+                  </div>
+                  <h3 class="trip-card-title">${itinerary.title}</h3>
+                  <p class="trip-card-destination">${itinerary.destination || ''}</p>
+                  ${itinerary.price_from ? `
+                    <div class="trip-card-price">
+                      <span class="price-label">From</span>
+                      <span class="price-value">$${itinerary.price_from.toLocaleString()}</span>
+                      <span class="price-suffix">/ person</span>
+                    </div>
+                  ` : ''}
+                </div>
+              `;
+
+              // Add to grid (at the beginning so new trips appear first)
+              tripsGrid.insertBefore(card, tripsGrid.firstChild);
+            });
+
+            // Re-apply filters after adding new cards
+            applyFilters();
+          }
+        } catch (error) {
+          console.error('Error loading itineraries:', error);
+        }
+      }
+
+      // Helper to categorize duration
+      function getDurationCategory(duration) {
+        if (!duration) return 'week';
+        const lower = duration.toLowerCase();
+        if (lower.includes('weekend') || lower.includes('2') || lower.includes('3')) return 'weekend';
+        if (lower.includes('week') || lower.includes('7') || lower.includes('6') || lower.includes('5')) return 'week';
+        return 'extended';
+      }
+
+      // Load itineraries on page load
+      loadSupabaseItineraries();
+
       // DOM elements
       const filterDropdowns = document.querySelectorAll('.filter-dropdown');
       const searchInput = document.getElementById('searchInput');
