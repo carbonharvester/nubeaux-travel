@@ -210,6 +210,49 @@
       border-color: var(--color-text);
     }
 
+    .search-input-wrapper {
+      position: relative;
+      max-width: 400px;
+      margin-bottom: var(--space-md);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-family: var(--font-sans);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(194,112,62,0.1);
+    }
+
+    .search-input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-light);
+      pointer-events: none;
+    }
+
+    .search-results-count {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-md);
+    }
+
+    .no-results {
+      text-align: center;
+      padding: var(--space-xl);
+      color: var(--color-text-light);
+    }
+
     .itinerary-card.hidden {
       display: none;
     }
@@ -359,6 +402,15 @@
         <h2>All Itineraries</h2>
       </div>
 
+      <!-- Search -->
+      <div class="search-input-wrapper">
+        <svg class="search-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input type="text" class="search-input" id="itinerarySearch" placeholder="Search itineraries...">
+      </div>
+
       <!-- Filters -->
       <div class="itinerary-filters">
         <div class="filter-group">
@@ -377,6 +429,8 @@
           <button class="filter-btn" data-filter="region" data-value="senegal">Senegal</button>
         </div>
       </div>
+
+      <p class="search-results-count" id="resultsCount"></p>
 
       <div class="itineraries-compact-grid">
         <a href="namibia-safari.html" class="itinerary-card hover-lift" data-duration="short" data-region="namibia">
@@ -498,16 +552,58 @@
   <script src="../js/supabase.js"></script>
   <script src="../js/main.js?v=3"></script>
   <script>
-    // Filter functionality
+    // Search and filter functionality
     document.addEventListener('DOMContentLoaded', function() {
       const filterBtns = document.querySelectorAll('.filter-btn');
       const cards = document.querySelectorAll('.itineraries-compact-grid .itinerary-card');
+      const searchInput = document.getElementById('itinerarySearch');
+      const resultsCount = document.getElementById('resultsCount');
 
       let activeFilters = {
         duration: 'all',
-        region: 'all'
+        region: 'all',
+        search: ''
       };
 
+      function applyFilters() {
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const cardDuration = card.dataset.duration;
+          const cardRegion = card.dataset.region;
+          const cardText = card.textContent.toLowerCase();
+
+          const matchesDuration = activeFilters.duration === 'all' || cardDuration === activeFilters.duration;
+          const matchesRegion = activeFilters.region === 'all' || cardRegion === activeFilters.region;
+          const matchesSearch = !activeFilters.search || cardText.includes(activeFilters.search.toLowerCase());
+
+          if (matchesDuration && matchesRegion && matchesSearch) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        // Update results count
+        if (activeFilters.search || activeFilters.duration !== 'all' || activeFilters.region !== 'all') {
+          resultsCount.textContent = `${visibleCount} ${visibleCount === 1 ? 'itinerary' : 'itineraries'} found`;
+        } else {
+          resultsCount.textContent = '';
+        }
+      }
+
+      // Search input handler
+      let searchTimeout;
+      searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          activeFilters.search = this.value.trim();
+          applyFilters();
+        }, 200);
+      });
+
+      // Filter button handlers
       filterBtns.forEach(btn => {
         btn.addEventListener('click', function() {
           const filterType = this.dataset.filter;
@@ -523,19 +619,7 @@
           activeFilters[filterType] = filterValue;
 
           // Apply filters
-          cards.forEach(card => {
-            const cardDuration = card.dataset.duration;
-            const cardRegion = card.dataset.region;
-
-            const matchesDuration = activeFilters.duration === 'all' || cardDuration === activeFilters.duration;
-            const matchesRegion = activeFilters.region === 'all' || cardRegion === activeFilters.region;
-
-            if (matchesDuration && matchesRegion) {
-              card.classList.remove('hidden');
-            } else {
-              card.classList.add('hidden');
-            }
-          });
+          applyFilters();
         });
       });
     });
