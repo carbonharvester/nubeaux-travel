@@ -1731,15 +1731,6 @@
         </button>
       </section>
 
-      <!-- What's Included -->
-      <section class="form-section">
-        <h2 class="form-section-title">What's Included</h2>
-        <div class="form-group">
-          <textarea id="included" class="form-textarea" rows="6" placeholder="List what's included (one item per line)..."></textarea>
-          <p class="form-hint">Enter each inclusion on a new line</p>
-        </div>
-      </section>
-
       <!-- Gallery -->
       <section class="form-section">
         <h2 class="form-section-title">Gallery</h2>
@@ -2018,7 +2009,6 @@
       document.getElementById('location').value = data.location || '';
       document.getElementById('duration').value = data.duration || '';
       document.getElementById('intro').value = data.intro || '';
-      document.getElementById('included').value = (data.included || []).join('\n');
 
       // Hero image
       if (data.heroImage) {
@@ -2492,7 +2482,6 @@
       itineraryData.location = document.getElementById('location').value?.trim() || '';
       itineraryData.duration = document.getElementById('duration').value?.trim() || '';
       itineraryData.intro = document.getElementById('intro').value?.trim() || '';
-      itineraryData.included = document.getElementById('included').value.split('\n').filter(l => l.trim());
       itineraryData.status = currentStatus;
 
       // Validate required fields
@@ -3699,9 +3688,6 @@
           if (result.intro) {
             document.getElementById('intro').value = result.intro;
           }
-          if (result.included) {
-            document.getElementById('included').value = result.included;
-          }
 
           // Best For tags
           if (result.best_for && result.best_for.length > 0) {
@@ -3776,7 +3762,6 @@
       const location = document.getElementById('location').value || '';
       const duration = document.getElementById('duration').value || '';
       const intro = document.getElementById('intro').value || '';
-      const included = document.getElementById('included').value || '';
       const heroImage = itineraryData.heroImage || '';
       const heroFocalX = itineraryData.heroFocalX || 50;
       const heroFocalY = itineraryData.heroFocalY || 50;
@@ -3820,12 +3805,6 @@
                 </div>
               `).join('')}
             </div>
-            ${included ? `
-              <div class="preview-included">
-                <h2>What's Included</h2>
-                <ul>${included.split('\\n').filter(l => l.trim()).map(l => `<li>${l}</li>`).join('')}</ul>
-              </div>
-            ` : ''}
             ${galleryItems.length > 0 ? `
               <div class="preview-gallery">
                 <h2>Gallery</h2>
@@ -3969,34 +3948,6 @@
       margin-top: 8px;
       color: #666;
       font-size: 0.9rem;
-    }
-
-    .preview-included {
-      padding: 32px;
-      background: #f9f9f9;
-    }
-
-    .preview-included h2 {
-      font-size: 1.25rem;
-      margin-bottom: 16px;
-    }
-
-    .preview-included ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .preview-included li {
-      padding: 8px 0;
-      padding-left: 24px;
-      position: relative;
-    }
-
-    .preview-included li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: #4CAF50;
     }
 
     .preview-gallery {
