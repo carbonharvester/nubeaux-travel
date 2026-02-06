@@ -1637,6 +1637,21 @@
       animateOnScroll();
     }
 
+    // Force hero video autoplay on mobile
+    const heroVideo = document.querySelector('.hero-bg video');
+    if (heroVideo) {
+      // Try to play immediately
+      heroVideo.play().catch(() => {
+        // If autoplay fails, try again on user interaction
+        document.addEventListener('touchstart', () => {
+          heroVideo.play();
+        }, { once: true });
+      });
+
+      // Remove any browser default controls
+      heroVideo.removeAttribute('controls');
+    }
+
     // Stop comments video 2s before end and keep final frame
     const commentsVideo = document.querySelector('.comments-video');
     if (commentsVideo) {
