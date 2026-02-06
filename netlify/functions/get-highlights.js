@@ -38,7 +38,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { profile_url, creator_id, action, run_id } = JSON.parse(event.body);
+    const { profile_url, creator_id, action, run_id, date_filter } = JSON.parse(event.body);
 
     // Load saved highlights from database (instant)
     if (action === 'load') {
@@ -47,7 +47,7 @@ exports.handler = async (event, context) => {
 
     // Check status of existing run
     if (run_id) {
-      return await checkRunStatus(run_id, creator_id);
+      return await checkRunStatus(run_id, creator_id, date_filter);
     }
 
     if (!profile_url) {
@@ -156,7 +156,7 @@ async function startApifyRun(username) {
 }
 
 // Check status of an existing run
-async function checkRunStatus(runId, creatorId) {
+async function checkRunStatus(runId, creatorId, dateFilter = 'all') {
   const APIFY_TOKEN = process.env.APIFY_API_TOKEN;
 
   if (!APIFY_TOKEN) {
@@ -261,18 +261,25 @@ async function checkRunStatus(runId, creatorId) {
           coverUrl = item.profilePicUrl;
         }
 
-        console.log(`Highlight "${item.title || item.name}": ID=${highlightId} (${highlightId.length} chars), Cover=${coverUrl ? 'found' : 'missing'}`);
+        // Extract created_at timestamp if available
+        let createdAt = item.created_at || item.createdAt || item.timestamp || item.created_time;
+        if (typeof createdAt === 'number') {
+          createdAt = new Date(createdAt * 1000).toISOString();
+        }
+
+        console.log(`Highlight "${item.title || item.name}": ID=${highlightId} (${highlightId.length} chars), Cover=${coverUrl ? 'found' : 'missing'}, CreatedAt=${createdAt || 'N/A'}`);
 
         return {
           id: highlightId,
           title: item.title || item.name,
           coverUrl: coverUrl,
-          storiesCount: item.media_count || item.storiesCount || item.stories_count || item.count || item.items?.length || 0
+          storiesCount: item.media_count || item.storiesCount || item.stories_count || item.count || item.items?.length || 0,
+          createdAt: createdAt
         };
       });
 
       // Filter out highlights with invalid IDs (need 17+ chars for Instagram)
-      const validHighlights = highlights.filter(h => {
+      let validHighlights = highlights.filter(h => {
         if (!h.id || h.id.length < 10) {
           console.warn(`Skipping highlight "${h.title}" - invalid ID: "${h.id}"`);
           return false;
@@ -281,6 +288,46 @@ async function checkRunStatus(runId, creatorId) {
       });
 
       console.log(`Valid highlights: ${validHighlights.length} of ${highlights.length}`);
+
+      // Apply date filter
+      if (dateFilter && dateFilter !== 'all') {
+        const now = new Date();
+        let cutoffDate;
+
+        switch (dateFilter) {
+          case '3months':
+            cutoffDate = new Date(now.setMonth(now.getMonth() - 3));
+            break;
+          case '6months':
+            cutoffDate = new Date(now.setMonth(now.getMonth() - 6));
+            break;
+          case '1year':
+            cutoffDate = new Date(now.setFullYear(now.getFullYear() - 1));
+            break;
+          default:
+            cutoffDate = null;
+        }
+
+        if (cutoffDate) {
+          // Check if any highlights have date info
+          const highlightsWithDates = validHighlights.filter(h => h.createdAt);
+
+          if (highlightsWithDates.length > 0) {
+            // Filter by actual dates
+            validHighlights = validHighlights.filter(h => {
+              if (!h.createdAt) return true; // Keep undated highlights
+              return new Date(h.createdAt) >= cutoffDate;
+            });
+            console.log(`Filtered by date (${dateFilter}): ${validHighlights.length} highlights`);
+          } else {
+            // No dates available, limit by count as fallback
+            const limits = { '3months': 10, '6months': 20, '1year': 30 };
+            const limit = limits[dateFilter] || validHighlights.length;
+            validHighlights = validHighlights.slice(0, limit);
+            console.log(`No dates available, limiting to ${limit} highlights (${dateFilter})`);
+          }
+        }
+      }
 
       // Upload covers to Cloudinary so they display properly
       // (Instagram CDN URLs get blocked by CORS in browser)
