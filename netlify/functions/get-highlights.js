@@ -289,42 +289,43 @@ async function checkRunStatus(runId, creatorId, dateFilter = 'all') {
 
       console.log(`Valid highlights: ${validHighlights.length} of ${highlights.length}`);
 
-      // Apply date filter
+      // Apply date filter - always apply count limits since Instagram highlights rarely have dates
       if (dateFilter && dateFilter !== 'all') {
-        const now = new Date();
-        let cutoffDate;
+        const limits = { '3months': 10, '6months': 20, '1year': 30 };
+        const limit = limits[dateFilter];
 
-        switch (dateFilter) {
-          case '3months':
-            cutoffDate = new Date(now.setMonth(now.getMonth() - 3));
-            break;
-          case '6months':
-            cutoffDate = new Date(now.setMonth(now.getMonth() - 6));
-            break;
-          case '1year':
-            cutoffDate = new Date(now.setFullYear(now.getFullYear() - 1));
-            break;
-          default:
-            cutoffDate = null;
-        }
-
-        if (cutoffDate) {
+        if (limit) {
           // Check if any highlights have date info
           const highlightsWithDates = validHighlights.filter(h => h.createdAt);
 
-          if (highlightsWithDates.length > 0) {
-            // Filter by actual dates
-            validHighlights = validHighlights.filter(h => {
-              if (!h.createdAt) return true; // Keep undated highlights
-              return new Date(h.createdAt) >= cutoffDate;
-            });
-            console.log(`Filtered by date (${dateFilter}): ${validHighlights.length} highlights`);
+          if (highlightsWithDates.length > validHighlights.length / 2) {
+            // More than half have dates - filter by actual dates
+            const now = new Date();
+            let cutoffDate;
+
+            switch (dateFilter) {
+              case '3months':
+                cutoffDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+                break;
+              case '6months':
+                cutoffDate = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000);
+                break;
+              case '1year':
+                cutoffDate = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+                break;
+            }
+
+            if (cutoffDate) {
+              validHighlights = validHighlights.filter(h => {
+                if (!h.createdAt) return false; // Exclude undated when filtering by date
+                return new Date(h.createdAt) >= cutoffDate;
+              });
+              console.log(`Filtered by date (${dateFilter}): ${validHighlights.length} highlights`);
+            }
           } else {
-            // No dates available, limit by count as fallback
-            const limits = { '3months': 10, '6months': 20, '1year': 30 };
-            const limit = limits[dateFilter] || validHighlights.length;
+            // Most highlights don't have dates - use count limit
             validHighlights = validHighlights.slice(0, limit);
-            console.log(`No dates available, limiting to ${limit} highlights (${dateFilter})`);
+            console.log(`Date filter ${dateFilter}: limiting to ${limit} highlights (${validHighlights.length} returned)`);
           }
         }
       }

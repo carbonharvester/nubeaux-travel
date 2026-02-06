@@ -24,7 +24,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { content, posts, stories, num_days, context: tripContext, creator_id } = JSON.parse(event.body);
+    const { content, posts, stories, num_days, context: tripContext, creator_id, stays } = JSON.parse(event.body);
 
     // Support both old format (content) and new format (posts + stories)
     let allContent = content || [];
@@ -72,6 +72,11 @@ exports.handler = async (event, context) => {
       hasVideo: !!item.cloudinary_video_url
     }));
 
+    // Prepare stays summary for AI
+    const staysSummary = (stays && stays.length > 0)
+      ? stays.map((s, i) => `${i + 1}. ${s.name} (${s.location || 'location not specified'})`).join('\n')
+      : '';
+
     const prompt = `You are a travel content expert helping a creator build an itinerary from their Instagram posts and stories.
 
 The creator has ${content_combined.length} pieces of content from their trip. Here's a summary:
@@ -80,6 +85,7 @@ ${JSON.stringify(contentSummary, null, 2)}
 
 Number of days for the itinerary: ${num_days}
 ${tripContext ? `Trip context: ${tripContext}` : ''}
+${staysSummary ? `\nAccommodations the creator stayed at:\n${staysSummary}` : ''}
 
 Based on the captions and content, generate a complete travel itinerary. Analyze the captions to determine:
 - The destination(s)
@@ -93,7 +99,7 @@ Return a JSON object with this exact structure:
   "destination": "Main destination (country or region)",
   "location": "Specific location(s) mentioned",
   "duration": "${num_days} days / ${num_days - 1} nights",
-  "intro": "A 2-3 sentence personal introduction that captures the essence of this trip. Write in first person as the creator.",
+  "intro": "A 2-3 sentence personal introduction that captures the essence of this trip. Write in first person singular (I, not we).",
   "included": "List of what's typically included, one item per line (flights, accommodations, activities, meals, etc.)",
   "best_for": ["tag1", "tag2", "tag3"],
   "days": [
@@ -102,17 +108,41 @@ Return a JSON object with this exact structure:
       "description": "A detailed 3-5 sentence description of this day's activities, experiences, and highlights. Be specific about what happens, where, and why it's special.",
       "activities": ["Activity 1", "Activity 2", "Activity 3"]
     }
-  ]
+  ]${staysSummary ? `,
+  "stays": [
+    {
+      "name": "Property Name",
+      "location": "City, Country",
+      "description": "A 2-3 sentence description of this property highlighting its unique features, style, location advantages, and what makes it special for travelers. Write in third person.",
+      "price_per_night": 250,
+      "price_notes": "Brief note on pricing tier (e.g., 'Luxury safari lodge', 'Mid-range boutique hotel', 'Budget-friendly guesthouse')"
+    }
+  ]` : ''}
 }
 
-Important:
+CRITICAL VOICE GUIDELINES:
+- Write ALL day descriptions in FIRST PERSON SINGULAR: "I" not "we"
+- The creator is sharing THEIR personal experience - travelers are connecting with the creator directly
+- The creator can mention traveling with friends (e.g., "I explored the market with my friends" or "my group headed to..."), but the narrative voice must always be "I"
+- Examples of correct voice: "I woke up early to catch the sunrise", "I discovered this hidden gem", "I spent the afternoon wandering"
+- Examples of WRONG voice: "We explored the city", "Our group visited", "We had lunch at..."
+- The traveler reading this should feel like they're hearing the creator's personal story
+- For STAYS descriptions, write in THIRD PERSON (describing the property objectively)
+
+Additional requirements:
 - The "days" array must have exactly ${num_days} entries
 - Each day must have a detailed description (3-5 sentences) and list of activities
 - Make the title evocative and destination-specific, not generic
-- Keep descriptions personal and engaging, written in first person
 - For "included", provide realistic inclusions for this type of trip
 - For "best_for", suggest 3-5 tags like "First-time visitors", "Photography lovers", "Couples", "Adventure seekers", etc.
 - Make each day's description rich with details about the experience
+${staysSummary ? `- For each stay/property, generate an engaging description based on the property name and location. Research what you know about these properties or similar ones in the area.
+- IMPORTANT: Estimate a realistic price_per_night in USD for each property based on:
+  * Your knowledge of the specific property if it's well-known
+  * Similar properties in that destination/category if you don't know the exact property
+  * The destination's general price level (e.g., Namibia safari lodges are typically $300-800/night, European boutique hotels $150-400/night)
+  * Be realistic - luxury properties should be priced as luxury, budget as budget
+- Include a brief price_notes explaining the pricing tier` : ''}
 
 Return ONLY the JSON object, no additional text.`;
 
@@ -126,7 +156,7 @@ Return ONLY the JSON object, no additional text.`;
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
+        max_tokens: 3000,
         messages: [
           {
             role: 'user',
@@ -177,6 +207,27 @@ Return ONLY the JSON object, no additional text.`;
       type: item.content_type
     }));
 
+    // Process stays with AI-generated descriptions, prices, and placeholder images
+    let enhancedStays = [];
+    if (stays && stays.length > 0) {
+      const generatedStays = generated.stays || [];
+      enhancedStays = stays.map((originalStay, index) => {
+        const aiStay = generatedStays[index] || {};
+        // Generate a consistent placeholder image using Lorem Picsum with seed based on hotel name
+        const seed = originalStay.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().slice(0, 20);
+        const imageUrl = `https://picsum.photos/seed/${seed}/800/600`;
+
+        return {
+          name: originalStay.name,
+          location: originalStay.location || aiStay.location || '',
+          description: aiStay.description || `A beautiful property located in ${originalStay.location || 'the destination'}.`,
+          price_per_night: aiStay.price_per_night || null,
+          price_notes: aiStay.price_notes || null,
+          image_url: imageUrl
+        };
+      });
+    }
+
     return {
       statusCode: 200,
       headers: {
@@ -193,7 +244,8 @@ Return ONLY the JSON object, no additional text.`;
         included: generated.included,
         best_for: generated.best_for || [],
         days: formattedDays,
-        gallery: gallery
+        gallery: gallery,
+        stays: enhancedStays
       })
     };
 

@@ -750,14 +750,10 @@
     }
 
     .stay-item {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
       padding: 16px;
       background: var(--color-white);
       border: 1px solid var(--color-border);
       border-radius: 8px;
-      align-items: start;
     }
 
     .stay-item-fields {
@@ -775,6 +771,68 @@
     .stay-item .form-input {
       padding: 10px 12px;
       font-size: 0.875rem;
+    }
+
+    .stay-gallery {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stay-gallery-item {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .stay-gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .stay-gallery-remove {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 20px;
+      height: 20px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stay-gallery-add {
+      width: 100px;
+      height: 100px;
+      border: 2px dashed var(--color-border);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      color: var(--color-text-light);
+      transition: all 0.2s;
+    }
+
+    .stay-gallery-add:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .stay-gallery-add span {
+      font-size: 0.75rem;
     }
 
     /* Hero image with preview */
@@ -1568,93 +1626,6 @@
 
   <div class="editor-layout">
     <main class="editor-main">
-      <!-- Basic Info -->
-      <section class="form-section">
-        <h2 class="form-section-title">Basic Information</h2>
-
-        <div class="form-group">
-          <label class="form-label" for="title">Title</label>
-          <input type="text" id="title" class="form-input" placeholder="e.g., Wilderness & Wonder">
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="destination">Destination</label>
-            <input type="text" id="destination" class="form-input" placeholder="e.g., Namibia">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="location">Location</label>
-            <input type="text" id="location" class="form-input" placeholder="e.g., Onguma, Etosha">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="duration">Duration</label>
-          <input type="text" id="duration" class="form-input" placeholder="e.g., 4 days / 3 nights">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="intro">Introduction</label>
-          <div class="textarea-wrapper">
-            <textarea id="intro" class="form-textarea" rows="4" placeholder="Write a personal introduction to this itinerary..." style="padding-right: 48px;"></textarea>
-            <button type="button" class="ai-wand-btn" onclick="toggleAiMenu(this)" title="AI Enhance">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8L19 13"/><path d="M15 9h0"/><path d="M17.8 6.2L19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2L11 5"/></svg>
-            </button>
-            <div class="ai-menu">
-              <div class="ai-menu-header">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 4V2M15 16v-2M8 9h2M20 9h2M17.8 11.8L19 13M15 9h0M17.8 6.2L19 5M3 21l9-9M12.2 6.2L11 5"/></svg>
-                AI Enhance
-              </div>
-              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'improve')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-                Improve Writing
-              </button>
-              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'shorten')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 12H7"/><path d="m11 8-4 4 4 4"/><path d="m13 8 4 4-4 4"/></svg>
-                Make Shorter
-              </button>
-              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'expand')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12H3"/><path d="m15 6 6 6-6 6"/><path d="m9 6-6 6 6 6"/></svg>
-                Expand & Add Detail
-              </button>
-              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'personal')">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                More Personal
-              </button>
-            </div>
-          </div>
-          <p class="form-hint">Tell travelers why you love this destination and what makes it special.</p>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="whyCurated">Why I curated this trip</label>
-          <textarea id="whyCurated" class="form-textarea" rows="4" placeholder="Share your personal connection to this trip - what made it special, why you want others to experience it..."></textarea>
-          <p class="form-hint">This quote appears prominently on your itinerary page, giving travelers insight into your personal experience.</p>
-        </div>
-      </section>
-
-      <!-- Hero Image -->
-      <section class="form-section">
-        <h2 class="form-section-title">Hero Image</h2>
-        <div id="heroImageContainer">
-          <div class="hero-upload" id="heroUpload">
-            <div class="hero-upload-content">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              <p>Click to upload or drag image here</p>
-              <p class="form-hint">Recommended: 1920x1080px</p>
-            </div>
-            <input type="file" accept="image/*" id="heroInput">
-          </div>
-        </div>
-        <div class="form-group" style="margin-top: 12px;">
-          <label class="form-label">Or paste image URL</label>
-          <div style="display: flex; gap: 8px;">
-            <input type="url" id="heroUrl" class="form-input" placeholder="https://...">
-            <button type="button" class="btn btn-outline" onclick="loadHeroFromUrl()" style="white-space: nowrap;">Load URL</button>
-          </div>
-        </div>
-      </section>
-
       <!-- Instagram Content -->
       <section class="form-section">
         <h2 class="form-section-title">Your Instagram Content</h2>
@@ -1840,10 +1811,85 @@
         </p>
       </section>
 
+      <!-- Trip Info -->
+      <section class="form-section">
+        <h2 class="form-section-title">Trip Information</h2>
+
+        <div class="form-group">
+          <label class="form-label" for="title">Title</label>
+          <input type="text" id="title" class="form-input" placeholder="e.g., Wilderness & Wonder">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="destination">Destination</label>
+            <input type="text" id="destination" class="form-input" placeholder="e.g., Namibia">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="location">Location</label>
+            <input type="text" id="location" class="form-input" placeholder="e.g., Onguma, Etosha">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="duration">Duration</label>
+            <input type="text" id="duration" class="form-input" placeholder="e.g., 4 days / 3 nights">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="priceFrom">From Price (per person)</label>
+            <div style="position: relative;">
+              <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-text-light);">$</span>
+              <input type="number" id="priceFrom" class="form-input" placeholder="Auto-calculated from stays" style="padding-left: 24px;">
+            </div>
+            <p class="form-hint">Leave blank to auto-calculate from property prices.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="intro">Introduction</label>
+          <div class="textarea-wrapper">
+            <textarea id="intro" class="form-textarea" rows="4" placeholder="Write a personal introduction to this itinerary..." style="padding-right: 48px;"></textarea>
+            <button type="button" class="ai-wand-btn" onclick="toggleAiMenu(this)" title="AI Enhance">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 4V2"/><path d="M15 16v-2"/><path d="M8 9h2"/><path d="M20 9h2"/><path d="M17.8 11.8L19 13"/><path d="M15 9h0"/><path d="M17.8 6.2L19 5"/><path d="m3 21 9-9"/><path d="M12.2 6.2L11 5"/></svg>
+            </button>
+            <div class="ai-menu">
+              <div class="ai-menu-header">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 4V2M15 16v-2M8 9h2M20 9h2M17.8 11.8L19 13M15 9h0M17.8 6.2L19 5M3 21l9-9M12.2 6.2L11 5"/></svg>
+                AI Enhance
+              </div>
+              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'improve')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                Improve Writing
+              </button>
+              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'shorten')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 12H7"/><path d="m11 8-4 4 4 4"/><path d="m13 8 4 4-4 4"/></svg>
+                Make Shorter
+              </button>
+              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'expand')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12H3"/><path d="m15 6 6 6-6 6"/><path d="m9 6-6 6 6 6"/></svg>
+                Expand & Add Detail
+              </button>
+              <button type="button" class="ai-menu-item" onclick="enhanceText(this, 'personal')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                More Personal
+              </button>
+            </div>
+          </div>
+          <p class="form-hint">Tell travelers why you love this destination and what makes it special.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="whyCurated">Why I curated this trip</label>
+          <textarea id="whyCurated" class="form-textarea" rows="4" placeholder="Share your personal connection to this trip - what made it special, why you want others to experience it..."></textarea>
+          <p class="form-hint">This quote appears prominently on your itinerary page, giving travelers insight into your personal experience.</p>
+        </div>
+      </section>
+
       <!-- Stays / Properties -->
       <section class="form-section">
         <h2 class="form-section-title">Where You Stayed</h2>
-        <p class="form-hint" style="margin-bottom: 16px;">Add the properties/lodges you stayed at during this trip.</p>
+        <p class="form-hint" style="margin-bottom: 16px;">Add the properties/lodges you stayed at during this trip. AI will generate descriptions and find images.</p>
 
         <div id="staysList" class="stays-list">
           <!-- Stays will be added here -->
@@ -1853,6 +1899,28 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Add Property
         </button>
+      </section>
+
+      <!-- Hero Image -->
+      <section class="form-section">
+        <h2 class="form-section-title">Hero Image</h2>
+        <div id="heroImageContainer">
+          <div class="hero-upload" id="heroUpload">
+            <div class="hero-upload-content">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <p>Click to upload or drag image here</p>
+              <p class="form-hint">Recommended: 1920x1080px</p>
+            </div>
+            <input type="file" accept="image/*" id="heroInput">
+          </div>
+        </div>
+        <div class="form-group" style="margin-top: 12px;">
+          <label class="form-label">Or paste image URL</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="url" id="heroUrl" class="form-input" placeholder="https://...">
+            <button type="button" class="btn btn-outline" onclick="loadHeroFromUrl()" style="white-space: nowrap;">Load URL</button>
+          </div>
+        </div>
       </section>
 
       <!-- Day-by-Day -->
@@ -2532,23 +2600,154 @@
     const staysList = document.getElementById('staysList');
 
     function addStay(stayData = null) {
-      const stay = stayData || { name: '', location: '', nights: '', notes: '' };
+      const stay = stayData || { name: '', location: '', description: '', images: [] };
       const stayItem = document.createElement('div');
       stayItem.className = 'stay-item';
+      const stayId = 'stay-' + Date.now();
+      stayItem.dataset.stayId = stayId;
+
+      // Build images HTML
+      const imagesHtml = (stay.images || []).map((img, idx) => `
+        <div class="stay-gallery-item" data-url="${img}">
+          <img src="${img}" alt="Property image">
+          <button type="button" class="stay-gallery-remove" onclick="this.parentElement.remove()">×</button>
+        </div>
+      `).join('');
+
       stayItem.innerHTML = `
         <div class="stay-item-fields">
-          <input type="text" class="form-input stay-name" placeholder="Property name (e.g., Onguma The Fort)" value="${stay.name || ''}">
-          <div class="stay-item-row">
-            <input type="text" class="form-input stay-location" placeholder="Location" value="${stay.location || ''}">
-            <input type="text" class="form-input stay-nights" placeholder="Nights stayed" value="${stay.nights || ''}">
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <div style="flex: 1;">
+              <input type="text" class="form-input stay-name" placeholder="Property name (e.g., Maison d'Hôtes au Fil du Fleuve)" value="${stay.name || ''}" style="margin-bottom: 8px;">
+              <div style="display: flex; gap: 12px;">
+                <input type="text" class="form-input stay-location" placeholder="Location (e.g., Saint Louis, Senegal)" value="${stay.location || ''}" style="flex: 2;">
+                <div style="flex: 1; position: relative;">
+                  <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--color-text-light);">$</span>
+                  <input type="number" class="form-input stay-price" placeholder="per night" value="${stay.price_per_night || ''}" style="padding-left: 24px;">
+                </div>
+              </div>
+            </div>
+            <button type="button" class="icon-btn" onclick="this.closest('.stay-item').remove()" title="Remove">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
           </div>
-          <input type="text" class="form-input stay-notes" placeholder="Notes (optional)" value="${stay.notes || ''}">
+
+          <div style="margin-top: 12px;">
+            <label class="form-label" style="font-size: 0.875rem;">Your thoughts on this property</label>
+            <textarea class="form-textarea stay-description" rows="3" placeholder="Share your personal experience - what made this place special, the vibe, the service, why you'd recommend it...">${stay.description || ''}</textarea>
+          </div>
+
+          <div style="margin-top: 12px;">
+            <label class="form-label" style="font-size: 0.875rem;">Property Photos</label>
+            <div class="stay-gallery" id="${stayId}-gallery">
+              ${imagesHtml}
+              <div class="stay-gallery-add" onclick="addStayImage('${stayId}')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>Add Photo</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <button type="button" class="icon-btn" onclick="this.closest('.stay-item').remove()" title="Remove">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
       `;
       staysList.appendChild(stayItem);
+
+      // Add event listener for price changes
+      const priceInput = stayItem.querySelector('.stay-price');
+      priceInput.addEventListener('input', updateCalculatedPrice);
+    }
+
+    // Calculate and suggest price based on stays
+    function updateCalculatedPrice() {
+      const priceFromInput = document.getElementById('priceFrom');
+      const durationInput = document.getElementById('duration');
+      const duration = durationInput.value || '';
+
+      // Only auto-update if the price field is empty (not manually set)
+      if (priceFromInput.value) return;
+
+      // Extract number of nights from duration
+      const nightsMatch = duration.match(/(\d+)\s*nights?/i) || duration.match(/(\d+)\s*days?/i);
+      let numNights = 0;
+      if (nightsMatch) {
+        numNights = parseInt(nightsMatch[1]);
+        // If it says "days" not "nights", subtract 1
+        if (duration.includes('days') && !duration.includes('nights')) {
+          numNights = numNights - 1;
+        }
+      }
+
+      // Gather stay prices
+      const stayPrices = Array.from(document.querySelectorAll('.stay-price'))
+        .map(input => parseFloat(input.value) || 0)
+        .filter(price => price > 0);
+
+      if (stayPrices.length > 0 && numNights > 0) {
+        const avgNightlyRate = stayPrices.reduce((sum, p) => sum + p, 0) / stayPrices.length;
+        const calculatedPrice = Math.round(avgNightlyRate * numNights);
+        priceFromInput.placeholder = `~$${calculatedPrice.toLocaleString()} (auto-calculated)`;
+      } else if (stayPrices.length > 0) {
+        priceFromInput.placeholder = 'Enter duration to calculate';
+      } else {
+        priceFromInput.placeholder = 'Auto-calculated from stays';
+      }
+    }
+
+    // Also update when duration changes
+    document.getElementById('duration').addEventListener('input', updateCalculatedPrice);
+
+    function addStayImage(stayId) {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const gallery = document.getElementById(`${stayId}-gallery`);
+        const addBtn = gallery.querySelector('.stay-gallery-add');
+
+        // Show loading state
+        addBtn.innerHTML = '<span class="spinner"></span>';
+
+        try {
+          // Upload to Cloudinary
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('upload_preset', 'juno_unsigned');
+
+          const response = await fetch('https://api.cloudinary.com/v1_1/dyuv2u8ru/image/upload', {
+            method: 'POST',
+            body: formData
+          });
+
+          const data = await response.json();
+
+          if (data.secure_url) {
+            const imgItem = document.createElement('div');
+            imgItem.className = 'stay-gallery-item';
+            imgItem.dataset.url = data.secure_url;
+            imgItem.innerHTML = `
+              <img src="${data.secure_url}" alt="Property image">
+              <button type="button" class="stay-gallery-remove" onclick="this.parentElement.remove()">×</button>
+            `;
+            gallery.insertBefore(imgItem, addBtn);
+          }
+        } catch (err) {
+          console.error('Upload error:', err);
+          showToast('Failed to upload image', 'error');
+        }
+
+        // Reset add button
+        addBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          <span>Add Photo</span>
+        `;
+      };
+      input.click();
     }
 
     // Tags
@@ -2697,6 +2896,7 @@
       itineraryData.destination = document.getElementById('destination').value?.trim() || '';
       itineraryData.location = document.getElementById('location').value?.trim() || '';
       itineraryData.duration = document.getElementById('duration').value?.trim() || '';
+      itineraryData.priceFrom = parseFloat(document.getElementById('priceFrom').value) || null;
       itineraryData.intro = document.getElementById('intro').value?.trim() || '';
       itineraryData.whyCurated = document.getElementById('whyCurated').value?.trim() || '';
       itineraryData.status = currentStatus;
@@ -2708,16 +2908,37 @@
         return;
       }
 
-      // Instagram content
-      itineraryData.instagramContent = getImportedContentForSave();
-
       // Gather stays
-      itineraryData.stays = Array.from(staysList.children).map(item => ({
-        name: item.querySelector('.stay-name')?.value || '',
-        location: item.querySelector('.stay-location')?.value || '',
-        nights: item.querySelector('.stay-nights')?.value || '',
-        notes: item.querySelector('.stay-notes')?.value || ''
-      })).filter(s => s.name);
+      itineraryData.stays = Array.from(staysList.children).map(item => {
+        const images = Array.from(item.querySelectorAll('.stay-gallery-item')).map(img => img.dataset.url);
+        return {
+          name: item.querySelector('.stay-name')?.value || '',
+          location: item.querySelector('.stay-location')?.value || '',
+          description: item.querySelector('.stay-description')?.value || '',
+          price_per_night: parseFloat(item.querySelector('.stay-price')?.value) || null,
+          images: images
+        };
+      }).filter(s => s.name);
+
+      // Auto-calculate price_from if not set but stays have prices
+      if (!itineraryData.priceFrom && itineraryData.stays.length > 0) {
+        const staysWithPrices = itineraryData.stays.filter(s => s.price_per_night > 0);
+        if (staysWithPrices.length > 0) {
+          // Extract number of nights from duration
+          const nightsMatch = itineraryData.duration.match(/(\d+)\s*nights?/i) || itineraryData.duration.match(/(\d+)\s*days?/i);
+          let numNights = 0;
+          if (nightsMatch) {
+            numNights = parseInt(nightsMatch[1]);
+            if (itineraryData.duration.includes('days') && !itineraryData.duration.includes('nights')) {
+              numNights = numNights - 1;
+            }
+          }
+          if (numNights > 0) {
+            const avgNightlyRate = staysWithPrices.reduce((sum, s) => sum + s.price_per_night, 0) / staysWithPrices.length;
+            itineraryData.priceFrom = Math.round(avgNightlyRate * numNights);
+          }
+        }
+      }
 
       // Best for tags
       itineraryData.bestFor = Array.from(document.querySelectorAll('#bestForTags .tag'))
@@ -2756,6 +2977,7 @@
             destination: itineraryData.destination,
             region: itineraryData.location, // location maps to region
             duration: itineraryData.duration,
+            price_from: itineraryData.priceFrom,
             hero_image: itineraryData.heroImage || null,
             intro: itineraryData.intro,
             why_curated: itineraryData.whyCurated,
@@ -3056,16 +3278,18 @@
           <div class="imported-section">
             <h4 class="imported-section-title">Stories (${importedStories.reduce((sum, g) => sum + g.items.length, 0)} items in ${importedStories.length} highlights)</h4>
             <div class="imported-stories-scroll">
-              ${importedStories.map((group, gIndex) => `
+              ${importedStories.map((group, gIndex) => {
+                const coverSrc = proxyImageUrl(group.cover_url || group.items[0]?.thumbnail_url || '');
+                return `
                 <div class="imported-story-group">
                   <div class="story-highlight-circle">
-                    <img src="${group.cover_url || group.items[0]?.thumbnail_url || ''}" alt="${group.title}" onerror="this.style.display='none'">
+                    <img src="${coverSrc}" alt="${group.title}" onerror="this.style.display='none'">
                   </div>
                   <span class="story-highlight-label">${group.title}</span>
                   <span class="story-highlight-count">${group.items.length}</span>
                   <button type="button" class="remove-btn-small" onclick="removeStoryGroup(${gIndex})" title="Remove">×</button>
                 </div>
-              `).join('')}
+              `;}).join('')}
             </div>
           </div>
         `;
@@ -3079,7 +3303,7 @@
             <div class="imported-posts-grid">
               ${importedPosts.map((item, index) => {
                 const isVideo = item.content_type === 'Video' || item.content_type === 'Sidecar';
-                const thumbnailSrc = item.thumbnail_url || item.cloudinary_url || '';
+                const thumbnailSrc = proxyImageUrl(item.thumbnail_url || item.cloudinary_url || '');
                 return `
                   <div class="ig-content-item" data-index="${index}" data-shortcode="${item.instagram_shortcode}">
                     <img src="${thumbnailSrc}" alt="${item.caption || 'Instagram post'}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23e5e5e5%22 width=%22100%22 height=%22100%22/%3E%3C/svg%3E'">
@@ -3150,6 +3374,18 @@
     // ===========================================
     // Instagram Profile Sync Functions (Apify)
     // ===========================================
+
+    // Proxy Instagram images to avoid CORS issues
+    function proxyImageUrl(url) {
+      if (!url) return '';
+      // If already a Cloudinary URL, use it directly
+      if (url.includes('cloudinary')) return url;
+      // If it's an Instagram CDN URL, proxy it
+      if (url.includes('instagram') || url.includes('cdninstagram') || url.includes('fbcdn')) {
+        return `/.netlify/functions/image-proxy?url=${encodeURIComponent(url)}`;
+      }
+      return url;
+    }
 
     // Get creator ID from session
     function getCreatorId() {
@@ -3376,11 +3612,11 @@
         const isVideo = post.post_type === 'Video' || post.video_url;
         const isCarousel = post.post_type === 'Sidecar';
 
-        // thumbnail_url now contains Cloudinary URL (uploaded during sync)
-        // Fallback to display_url if thumbnail_url not available
-        const cloudinaryUrl = post.thumbnail_url;
+        // thumbnail_url should contain Cloudinary URL (uploaded during sync)
+        // Use proxy for Instagram URLs that weren't uploaded to Cloudinary
         const placeholderUrl = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23e5e5e5" width="100" height="100"/%3E%3C/svg%3E';
-        const thumbnailSrc = cloudinaryUrl || placeholderUrl;
+        const rawUrl = post.thumbnail_url || post.display_url;
+        const thumbnailSrc = rawUrl ? proxyImageUrl(rawUrl) : placeholderUrl;
 
         return `
           <div class="ig-post-item ${isSelected ? 'selected' : ''}"
@@ -3479,17 +3715,23 @@
         // Check if already imported
         const alreadyImported = importedPosts.some(p => p.instagram_shortcode === shortcode);
         if (!alreadyImported) {
+          // Use Cloudinary URL if available (thumbnail_url should have it from sync)
+          // Cloudinary URLs contain 'cloudinary.com' or 'res.cloudinary'
+          const thumbUrl = post.thumbnail_url || '';
+          const isCloudinary = thumbUrl.includes('cloudinary');
+          const imageUrl = isCloudinary ? thumbUrl : (post.display_url || '');
+
           importedPosts.push({
             id: post.id,
             instagram_url: `https://instagram.com/p/${shortcode}`,
             instagram_shortcode: shortcode,
             content_type: post.post_type || 'Image',
-            thumbnail_url: post.thumbnail_url || post.display_url,
-            cloudinary_url: post.display_url,
+            thumbnail_url: imageUrl,
+            cloudinary_url: isCloudinary ? thumbUrl : null,
             cloudinary_video_url: post.video_url,
             caption: post.caption,
             location: post.location_name,
-            status: 'ready'
+            status: isCloudinary ? 'ready' : 'pending_upload'
           });
         }
       });
@@ -3697,15 +3939,7 @@
         const initial = (highlight.title || 'H')[0].toUpperCase();
 
         // Get image URL - use Cloudinary if available, otherwise proxy Instagram URL
-        let imageUrl = null;
-        if (highlight.coverUrl) {
-          if (highlight.coverUrl.includes('cloudinary')) {
-            imageUrl = highlight.coverUrl;
-          } else {
-            // Use image proxy to bypass CORS for Instagram CDN URLs
-            imageUrl = `https://images.weserv.nl/?url=${encodeURIComponent(highlight.coverUrl)}&w=150&h=150&fit=cover`;
-          }
-        }
+        let imageUrl = highlight.coverUrl ? proxyImageUrl(highlight.coverUrl) : null;
 
         return `
           <div class="ig-highlight-item" onclick="downloadHighlightStories('${highlight.id}', '${(highlight.title || '').replace(/'/g, "\\'")}')">
@@ -3835,8 +4069,10 @@
         <div class="stories-grid">
           ${downloadedStories.map((story, index) => {
             const isVideo = story.type === 'video';
-            // Use cloudinary_url or thumbnail_url from backend
-            const thumbnailSrc = story.cloudinary_url || story.thumbnail_url || story.thumbnailUrl || story.mediaUrl || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23e5e5e5" width="100" height="100"/%3E%3C/svg%3E';
+            // Use cloudinary_url or thumbnail_url from backend, proxy if needed
+            const rawUrl = story.cloudinary_url || story.thumbnail_url || story.thumbnailUrl || story.mediaUrl;
+            const placeholderSrc = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect fill="%23e5e5e5" width="100" height="100"/%3E%3C/svg%3E';
+            const thumbnailSrc = rawUrl ? proxyImageUrl(rawUrl) : placeholderSrc;
 
             return `
               <div class="ig-story-item" data-index="${index}" onclick="toggleStorySelection(${index})">
@@ -3955,6 +4191,19 @@
       statusEl.textContent = 'AI is creating your itinerary...';
       statusEl.className = 'ig-import-status processing';
 
+      // Gather stays data
+      const staysData = [];
+      document.querySelectorAll('#staysList .stay-item').forEach(stayItem => {
+        const name = stayItem.querySelector('.stay-name')?.value?.trim();
+        const location = stayItem.querySelector('.stay-location')?.value?.trim();
+        const description = stayItem.querySelector('.stay-description')?.value?.trim();
+        const pricePerNight = parseFloat(stayItem.querySelector('.stay-price')?.value) || null;
+        const images = Array.from(stayItem.querySelectorAll('.stay-gallery-item')).map(img => img.dataset.url);
+        if (name) {
+          staysData.push({ name, location, description, price_per_night: pricePerNight, images });
+        }
+      });
+
       try {
         const response = await fetch('/.netlify/functions/generate-itinerary', {
           method: 'POST',
@@ -3964,7 +4213,8 @@
             stories: importedStories,
             num_days: numDays,
             context: tripContext,
-            creator_id: getCreatorId()
+            creator_id: getCreatorId(),
+            stays: staysData
           })
         });
 
@@ -4023,6 +4273,23 @@
             populateGallery(result.gallery);
           }
 
+          // Populate stays with AI-generated descriptions, prices, and images
+          if (result.stays && result.stays.length > 0) {
+            const staysListEl = document.getElementById('staysList');
+            staysListEl.innerHTML = '';
+            result.stays.forEach(stayData => {
+              addStay({
+                name: stayData.name || '',
+                location: stayData.location || '',
+                description: stayData.description || '',
+                price_per_night: stayData.price_per_night || null,
+                image_url: stayData.image_url || ''
+              });
+            });
+            // Update calculated price after adding stays with AI-estimated prices
+            updateCalculatedPrice();
+          }
+
           statusEl.textContent = 'Itinerary generated successfully!';
           statusEl.className = 'ig-import-status success';
           showToast('Itinerary generated! Review and edit as needed.', 'success');
@@ -4054,6 +4321,51 @@
       `;
     }
 
+    // Preview gallery functions
+    let previewGalleryImages = [];
+
+    function openPreviewGallery() {
+      const galleryHtml = `
+        <div class="pv-gallery-modal" id="pvGalleryModal" onclick="if(event.target === this) closePvGallery()">
+          <button class="pv-gallery-close" onclick="closePvGallery()">×</button>
+          <div class="pv-gallery-content">
+            <div class="pv-gallery-grid">
+              ${previewGalleryImages.map((img, i) => `
+                <div class="pv-gallery-item" onclick="showPvImage(${i})">
+                  <img src="${img.url}" alt="">
+                  ${img.type === 'video' ? '<span class="pv-gallery-video-icon">▶</span>' : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', galleryHtml);
+    }
+
+    function closePvGallery() {
+      document.getElementById('pvGalleryModal')?.remove();
+    }
+
+    function openStayGallery(images, name) {
+      const galleryHtml = `
+        <div class="pv-gallery-modal" id="pvGalleryModal" onclick="if(event.target === this) closePvGallery()">
+          <button class="pv-gallery-close" onclick="closePvGallery()">×</button>
+          <div class="pv-gallery-content">
+            <h3 style="color: #fff; margin-bottom: 16px; text-align: center;">${name}</h3>
+            <div class="pv-gallery-grid">
+              ${images.map((img, i) => `
+                <div class="pv-gallery-item">
+                  <img src="${img}" alt="${name}">
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', galleryHtml);
+    }
+
     // Preview modal - Full front-end style preview
     function showPreviewModal() {
       const title = document.getElementById('title').value || 'Untitled Itinerary';
@@ -4064,14 +4376,13 @@
       const whyCurated = document.getElementById('whyCurated')?.value || '';
       const priceFrom = document.getElementById('priceFrom')?.value || '';
       const heroImage = itineraryData.heroImage || '';
-      const heroFocalX = itineraryData.heroFocalX || 50;
-      const heroFocalY = itineraryData.heroFocalY || 50;
       const bestFor = Array.from(document.querySelectorAll('#bestForTags .tag'))
         .map(t => t.textContent.trim().replace('×', '').trim());
 
       // Get creator info from session
       const session = JSON.parse(localStorage.getItem('juno_creator_session') || '{}');
       const creatorName = session.display_name || session.instagram || 'Creator';
+      const creatorInstagram = session.instagram || creatorName.toLowerCase().replace(/\s+/g, '');
       const creatorAvatar = session.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(creatorName)}&background=c2703e&color=fff&size=100`;
 
       // Get days with media
@@ -4089,10 +4400,54 @@
         };
       });
 
-      // Get gallery items
-      const galleryItems = Array.from(document.querySelectorAll('#galleryGrid .gallery-item img')).map(img => img.src);
+      // Get stays
+      const stays = Array.from(document.getElementById('staysList').children).map(item => {
+        const images = Array.from(item.querySelectorAll('.stay-gallery-item')).map(img => img.dataset.url);
+        return {
+          name: item.querySelector('.stay-name')?.value || '',
+          location: item.querySelector('.stay-location')?.value || '',
+          description: item.querySelector('.stay-description')?.value || '',
+          price_per_night: parseFloat(item.querySelector('.stay-price')?.value) || 0,
+          images: images
+        };
+      }).filter(s => s.name);
 
-      // Create full-page preview
+      // Calculate estimated price from stays
+      // Extract number of nights from duration (e.g., "5 days / 4 nights" -> 4)
+      const nightsMatch = duration.match(/(\d+)\s*nights?/i) || duration.match(/(\d+)\s*days?/i);
+      const numNights = nightsMatch ? parseInt(nightsMatch[1]) - (duration.includes('days') && !duration.includes('nights') ? 1 : 0) : 0;
+
+      // Calculate total from stays with prices
+      const staysWithPrices = stays.filter(s => s.price_per_night > 0);
+      let calculatedPrice = 0;
+      if (staysWithPrices.length > 0 && numNights > 0) {
+        // Average nightly rate across all stays
+        const avgNightlyRate = staysWithPrices.reduce((sum, s) => sum + s.price_per_night, 0) / staysWithPrices.length;
+        calculatedPrice = Math.round(avgNightlyRate * numNights);
+      }
+
+      // Use calculated price if no manual price entered
+      const displayPrice = priceFrom || (calculatedPrice > 0 ? calculatedPrice.toString() : '');
+
+      // Get imported posts for gallery (proxy the URLs)
+      const galleryPosts = importedPosts.map(post => ({
+        url: proxyImageUrl(post.thumbnail_url || post.cloudinary_url || ''),
+        type: post.content_type === 'Video' ? 'video' : 'image',
+        caption: post.caption || '',
+        location: post.location || ''
+      }));
+
+      // Store for gallery modal
+      previewGalleryImages = galleryPosts;
+
+      // Get imported stories for carousel
+      const storyGroups = importedStories.map(group => ({
+        title: group.title,
+        coverUrl: proxyImageUrl(group.cover_url || group.items[0]?.thumbnail_url || ''),
+        count: group.items.length
+      }));
+
+      // Create full-page preview matching senegal-soul.html template
       const modal = document.createElement('div');
       modal.className = 'preview-modal-fullpage';
       modal.innerHTML = `
@@ -4110,126 +4465,263 @@
         </div>
         <div class="preview-frame">
           <!-- Hero Section -->
-          <div class="pv-hero" style="background-image: url('${heroImage || 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1600'}');">
+          <section class="pv-hero" style="background-image: url('${heroImage || 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1600'}');">
             <div class="pv-hero-overlay"></div>
+            ${galleryPosts.length > 0 ? `
+              <button class="pv-hero-gallery-btn" onclick="openPreviewGallery()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                View Gallery (${galleryPosts.length})
+              </button>
+            ` : ''}
             <div class="pv-hero-content">
-              <div class="pv-hero-inner">
-                <div class="pv-creator">
-                  <img src="${creatorAvatar}" alt="${creatorName}">
-                  <span>Curated by ${creatorName}</span>
-                </div>
-                <h1>${title}</h1>
-                <p class="pv-location">${[destination, location].filter(Boolean).join(' · ')}</p>
-                ${intro ? `<p class="pv-subtitle">${intro}</p>` : ''}
-                <div class="pv-actions">
-                  <button class="pv-btn pv-btn-primary">Request Quote</button>
-                  <button class="pv-btn pv-btn-secondary">Save Trip</button>
+              <div class="pv-container">
+                <div class="pv-hero-inner">
+                  <h1>${title}</h1>
+                  <p class="pv-hero-location">${[destination, location].filter(Boolean).join(', ')}</p>
+                  ${intro ? `<p class="pv-hero-subtitle">${intro}</p>` : ''}
+                  <div class="pv-hero-actions">
+                    <button class="pv-btn pv-btn-primary">Book or customise</button>
+                    <button class="pv-btn pv-btn-secondary">Ask a question</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
+
+          <!-- Instagram Profile Section -->
+          <section class="pv-profile-section">
+            <div class="pv-profile-header">
+              <img class="pv-profile-avatar" src="${creatorAvatar}" alt="${creatorName}">
+              <div class="pv-profile-info">
+                <span class="pv-profile-label">Curated by</span>
+                <h3 class="pv-profile-username">
+                  ${creatorInstagram}
+                  <svg class="pv-verified" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </h3>
+                <p class="pv-profile-bio">${destination || 'Travel'}, ${new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Stories Carousel -->
+          ${storyGroups.length > 0 ? `
+          <section class="pv-stories-section">
+            <div class="pv-stories-scroll">
+              ${storyGroups.map(story => `
+                <div class="pv-story-item">
+                  <div class="pv-story-ring">
+                    <div class="pv-story-ring-inner">
+                      <img src="${story.coverUrl}" alt="${story.title}" onerror="this.style.background='linear-gradient(135deg, #833AB4, #FD1D1D, #F77737)'; this.style.display='none';">
+                    </div>
+                  </div>
+                  <span class="pv-story-label">${story.title}</span>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+          ` : ''}
+
+          <!-- Content Gallery -->
+          ${galleryPosts.length > 0 ? `
+          <section class="pv-gallery-section">
+            <div class="pv-ig-tabs">
+              <div class="pv-ig-tab active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Posts
+              </div>
+              <div class="pv-ig-tab">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                Reels
+              </div>
+            </div>
+            <div class="pv-gallery-grid">
+              ${galleryPosts.map(post => `
+                <div class="pv-gallery-item">
+                  <img src="${post.url}" alt="">
+                  ${post.type === 'video' ? `
+                    <div class="pv-gallery-overlay">
+                      <svg class="pv-play-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"/></svg>
+                    </div>
+                  ` : ''}
+                  <div class="pv-gallery-caption">
+                    ${post.location ? `<div class="pv-gallery-location">${post.location}</div>` : ''}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+          ` : ''}
 
           <!-- Snapshot Bar -->
-          <div class="pv-snapshot">
-            <div class="pv-snapshot-item">
-              <div class="pv-snapshot-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              </div>
-              <div>
-                <span class="pv-snapshot-label">Duration</span>
-                <span class="pv-snapshot-value">${duration || '-- days'}</span>
-              </div>
-            </div>
-            <div class="pv-snapshot-item">
-              <div class="pv-snapshot-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              </div>
-              <div>
-                <span class="pv-snapshot-label">Best For</span>
-                <span class="pv-snapshot-value">${bestFor.slice(0, 2).join(', ') || 'Everyone'}</span>
-              </div>
-            </div>
-            <div class="pv-snapshot-item">
-              <div class="pv-snapshot-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              </div>
-              <div>
-                <span class="pv-snapshot-label">From</span>
-                <span class="pv-snapshot-value">${priceFrom ? '$' + parseInt(priceFrom).toLocaleString() : 'Custom'}</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Why I Curated This -->
-          ${whyCurated ? `
-          <div class="pv-why-section">
-            <div class="pv-section-inner">
-              <div class="pv-why-content">
-                <div class="pv-why-avatar">
-                  <img src="${creatorAvatar}" alt="${creatorName}">
+          <section class="pv-snapshot-bar">
+            <div class="pv-container">
+              <div class="pv-snapshot-grid">
+                <div class="pv-snapshot-item">
+                  <div class="pv-snapshot-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+                  </div>
+                  <div>
+                    <span class="pv-snapshot-label">Duration</span>
+                    <span class="pv-snapshot-value">${duration || '-- nights'}</span>
+                  </div>
                 </div>
-                <div>
-                  <h3>Why I Curated This</h3>
-                  <p>${whyCurated}</p>
-                  <span class="pv-why-author">— ${creatorName}</span>
+                <div class="pv-snapshot-item">
+                  <div class="pv-snapshot-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+                  </div>
+                  <div>
+                    <span class="pv-snapshot-label">Style</span>
+                    <span class="pv-snapshot-value">${bestFor[0] || 'Adventure'}</span>
+                  </div>
+                </div>
+                <div class="pv-snapshot-item">
+                  <div class="pv-snapshot-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+                  </div>
+                  <div>
+                    <span class="pv-snapshot-label">Best for</span>
+                    <span class="pv-snapshot-value">${bestFor.slice(0, 3).join(', ') || 'Everyone'}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          ` : ''}
+          </section>
 
-          <!-- Day by Day -->
-          <div class="pv-days-section">
-            <div class="pv-section-inner">
-              <h2>Day by Day</h2>
-              <div class="pv-days-list">
-                ${days.map(day => `
-                  <div class="pv-day-card">
-                    <div class="pv-day-header">
-                      <span class="pv-day-number">Day ${day.dayNumber}</span>
-                      <h3>${day.title}</h3>
+          <!-- Main Content Grid -->
+          <section class="pv-content">
+            <div class="pv-container">
+              <div class="pv-grid">
+                <div class="pv-main">
+                  <!-- Creator Voice -->
+                  ${whyCurated ? `
+                  <div class="pv-creator-voice">
+                    <div class="pv-creator-voice-header">
+                      <img src="${creatorAvatar}" alt="${creatorName}">
+                      <div>
+                        <span class="pv-label">Why I curated this</span>
+                        <p class="pv-name">${creatorName}</p>
+                      </div>
                     </div>
-                    ${day.description ? `<p class="pv-day-desc">${day.description}</p>` : ''}
-                    ${day.activities.length > 0 ? `
-                      <div class="pv-day-activities">
-                        ${day.activities.map(a => `<span class="pv-activity-tag">${a}</span>`).join('')}
+                    <blockquote>"${whyCurated}"</blockquote>
+                  </div>
+                  ` : ''}
+
+                  <!-- Itinerary Accordion -->
+                  <div class="pv-itinerary-accordion">
+                    <h2 class="pv-section-title">The Itinerary</h2>
+                    ${days.map((day, i) => `
+                      <div class="pv-accordion-item ${i === 0 ? 'active' : ''}">
+                        <button class="pv-accordion-header">
+                          <div class="pv-accordion-header-content">
+                            <span class="pv-accordion-days">Day ${day.dayNumber}</span>
+                            <div>
+                              <h3 class="pv-accordion-title">${day.title}</h3>
+                            </div>
+                          </div>
+                          <svg class="pv-accordion-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                        </button>
+                        <div class="pv-accordion-panel">
+                          ${day.description ? `<p>${day.description}</p>` : ''}
+                          ${day.activities.length > 0 ? `
+                            <div class="pv-accordion-highlights">
+                              ${day.activities.map(a => `<span class="pv-highlight-tag">${a}</span>`).join('')}
+                            </div>
+                          ` : ''}
+                        </div>
                       </div>
-                    ` : ''}
-                    ${day.media.length > 0 ? `
-                      <div class="pv-day-media">
-                        ${day.media.slice(0, 4).map(m => `<img src="${m.src}" alt="">`).join('')}
-                      </div>
+                    `).join('')}
+                  </div>
+
+                  <!-- Stays Section -->
+                  ${stays.length > 0 ? `
+                  <div class="pv-stays-section">
+                    <h2 class="pv-section-title">Where You Stay</h2>
+                    <div class="pv-stays-scroll">
+                      ${stays.map(stay => `
+                        <div class="pv-stay-card">
+                          ${stay.images && stay.images.length > 0 ? `
+                            <div class="pv-stay-card-gallery">
+                              <img src="${stay.images[0]}" alt="${stay.name}" class="pv-stay-card-main-img">
+                              ${stay.images.length > 1 ? `
+                                <button class="pv-stay-gallery-btn" onclick="openStayGallery(${JSON.stringify(stay.images).replace(/"/g, '&quot;')}, '${stay.name}')">
+                                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21 15 16 10 5 21"/>
+                                  </svg>
+                                  +${stay.images.length - 1}
+                                </button>
+                              ` : ''}
+                            </div>
+                          ` : ''}
+                          <div class="pv-stay-card-content">
+                            <h3 class="pv-stay-card-name">${stay.name}</h3>
+                            <p class="pv-stay-card-location">${stay.location}</p>
+                            ${stay.description ? `<p class="pv-stay-card-desc">${stay.description}</p>` : ''}
+                          </div>
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+                  ` : ''}
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="pv-sidebar">
+                  <div class="pv-sidebar-cta">
+                    <h3>Book this trip</h3>
+                    <p>Let us handle the details. We'll customise this itinerary to your dates and preferences.</p>
+                    <button class="pv-btn pv-btn-dark">Book or customise</button>
+                    <button class="pv-btn pv-btn-outline">Ask a question</button>
+                    ${displayPrice ? `
+                    <div class="pv-sidebar-cta-meta">
+                      <p><strong>From $${parseInt(displayPrice).toLocaleString()}</strong> per person per night</p>
+                      <p>${duration}${staysWithPrices.length > 0 ? ', all accommodation' : ''}</p>
+                      ${calculatedPrice > 0 && !priceFrom ? '<p style="font-size: 0.75rem; opacity: 0.7;">(Calculated from stay prices)</p>' : ''}
+                    </div>
                     ` : ''}
                   </div>
-                `).join('')}
+                  <div class="pv-sidebar-info">
+                    <div class="pv-sidebar-info-item">
+                      <div class="pv-sidebar-info-label">Best time to visit</div>
+                      <div class="pv-sidebar-info-value">Year-round</div>
+                    </div>
+                    <div class="pv-sidebar-info-item">
+                      <div class="pv-sidebar-info-label">Getting there</div>
+                      <div class="pv-sidebar-info-value">Fly into ${destination}</div>
+                    </div>
+                  </div>
+                </aside>
               </div>
             </div>
-          </div>
+          </section>
 
-          <!-- Gallery -->
-          ${galleryItems.length > 0 ? `
-          <div class="pv-gallery-section">
-            <div class="pv-section-inner">
-              <h2>Gallery</h2>
-              <div class="pv-gallery-grid">
-                ${galleryItems.map(src => `<img src="${src}" alt="">`).join('')}
-              </div>
+          <!-- Final CTA -->
+          <section class="pv-final-cta">
+            <div class="pv-container">
+              <h2>Ready to experience ${destination || 'this adventure'}?</h2>
+              <p>This itinerary can be customised to your dates, extended, or combined with other destinations.</p>
+              <button class="pv-btn pv-btn-primary">Start planning</button>
             </div>
-          </div>
-          ` : ''}
-
-          <!-- CTA Section -->
-          <div class="pv-cta-section">
-            <div class="pv-section-inner">
-              <h2>Ready to Experience ${destination || 'This Trip'}?</h2>
-              <p>Request a personalized quote and we'll tailor this itinerary to your preferences.</p>
-              <button class="pv-btn pv-btn-primary pv-btn-large">Request Quote</button>
-            </div>
-          </div>
+          </section>
         </div>
       `;
       document.body.appendChild(modal);
       document.body.style.overflow = 'hidden';
+
+      // Handle accordion clicks
+      modal.querySelectorAll('.pv-accordion-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const item = header.parentElement;
+          const isActive = item.classList.contains('active');
+          modal.querySelectorAll('.pv-accordion-item').forEach(i => i.classList.remove('active'));
+          if (!isActive) item.classList.add('active');
+        });
+      });
 
       // Handle close
       modal.querySelector('.preview-close-btn').addEventListener('click', () => {
@@ -4238,7 +4730,7 @@
     }
   </script>
 
-  <!-- Full Page Preview Styles -->
+  <!-- Full Page Preview Styles (matches senegal-soul.html template) -->
   <style>
     .preview-modal-fullpage {
       position: fixed;
@@ -4247,7 +4739,6 @@
       background: #fff;
       overflow-y: auto;
     }
-
     .preview-toolbar {
       position: sticky;
       top: 0;
@@ -4259,15 +4750,9 @@
       background: #1a1a1a;
       color: #fff;
     }
-
-    .preview-toolbar-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
+    .preview-toolbar-left { display: flex; align-items: center; gap: 16px; }
     .preview-badge {
-      background: var(--color-accent);
+      background: #c2703e;
       color: #fff;
       padding: 4px 12px;
       border-radius: 4px;
@@ -4276,12 +4761,7 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
-
-    .preview-device-info {
-      color: rgba(255,255,255,0.6);
-      font-size: 0.8125rem;
-    }
-
+    .preview-device-info { color: rgba(255,255,255,0.6); font-size: 0.8125rem; }
     .preview-close-btn {
       display: flex;
       align-items: center;
@@ -4293,21 +4773,11 @@
       color: #fff;
       font-size: 0.875rem;
       cursor: pointer;
-      transition: all 0.2s;
     }
-
-    .preview-close-btn:hover {
-      background: rgba(255,255,255,0.2);
-    }
-
-    .preview-close-btn svg {
-      width: 16px;
-      height: 16px;
-    }
-
-    .preview-frame {
-      font-family: 'Inter', -apple-system, sans-serif;
-    }
+    .preview-close-btn:hover { background: rgba(255,255,255,0.2); }
+    .preview-close-btn svg { width: 16px; height: 16px; }
+    .preview-frame { font-family: 'Inter', -apple-system, sans-serif; }
+    .pv-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
     /* Hero */
     .pv-hero {
@@ -4318,361 +4788,550 @@
       display: flex;
       align-items: flex-end;
     }
-
     .pv-hero-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.2) 100%);
     }
-
     .pv-hero-content {
       position: relative;
       z-index: 2;
       width: 100%;
-      padding: 60px 40px;
+      padding: 60px 0;
       color: #fff;
     }
-
-    .pv-hero-inner {
-      max-width: 700px;
-    }
-
-    .pv-creator {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .pv-creator img {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.5);
-      object-fit: cover;
-    }
-
-    .pv-creator span {
-      font-size: 0.9375rem;
-      letter-spacing: 0.03em;
-    }
-
+    .pv-hero-inner { max-width: 700px; }
     .pv-hero h1 {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 400;
       margin-bottom: 12px;
       line-height: 1.1;
     }
-
-    .pv-location {
-      font-size: 1.125rem;
-      margin-bottom: 16px;
-      opacity: 0.9;
-    }
-
-    .pv-subtitle {
-      font-size: 1rem;
-      line-height: 1.6;
-      max-width: 500px;
-      margin-bottom: 24px;
-      opacity: 0.85;
-    }
-
-    .pv-actions {
+    .pv-hero-location { font-size: 1.125rem; margin-bottom: 16px; }
+    .pv-hero-subtitle { font-size: 1rem; line-height: 1.6; max-width: 500px; margin-bottom: 24px; }
+    .pv-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .pv-hero-gallery-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10;
       display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.95);
+      color: #1a1a1a;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .pv-hero-gallery-btn:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     }
 
+    /* Buttons */
     .pv-btn {
       padding: 14px 28px;
-      border-radius: 4px;
+      border-radius: 0;
       font-size: 0.875rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s;
       border: none;
     }
+    .pv-btn-primary { background: #fff; color: #1a1a1a; }
+    .pv-btn-primary:hover { background: #f5f5f5; }
+    .pv-btn-secondary { background: transparent; border: 1px solid rgba(255,255,255,0.6); color: #fff; }
+    .pv-btn-secondary:hover { background: rgba(255,255,255,0.1); }
+    .pv-btn-dark { background: #1a1a1a; color: #fff; width: 100%; margin-bottom: 8px; }
+    .pv-btn-outline { background: transparent; border: 1px solid #1a1a1a; color: #1a1a1a; width: 100%; }
 
-    .pv-btn-primary {
-      background: #fff;
-      color: #1a1a1a;
-    }
-
-    .pv-btn-primary:hover {
-      background: #f5f5f5;
-    }
-
-    .pv-btn-secondary {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.6);
-      color: #fff;
-    }
-
-    .pv-btn-secondary:hover {
-      background: rgba(255,255,255,0.1);
-    }
-
-    .pv-btn-large {
-      padding: 16px 40px;
-      font-size: 1rem;
-    }
-
-    /* Snapshot Bar */
-    .pv-snapshot {
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      padding: 24px 40px;
-      background: #f9f7f4;
-      border-bottom: 1px solid #e5e5e5;
-      flex-wrap: wrap;
-    }
-
-    .pv-snapshot-item {
+    /* Instagram Profile Section */
+    .pv-profile-section { background: #fff; padding: 24px 0 16px; }
+    .pv-profile-header {
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-
-    .pv-snapshot-icon {
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      border-radius: 50%;
-    }
-
-    .pv-snapshot-icon svg {
-      width: 20px;
-      height: 20px;
-      color: #c2703e;
-    }
-
-    .pv-snapshot-label {
-      display: block;
-      font-size: 0.6875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #888;
-    }
-
-    .pv-snapshot-value {
-      font-size: 0.9375rem;
-      font-weight: 500;
-      color: #1a1a1a;
-    }
-
-    /* Section styles */
-    .pv-section-inner {
-      max-width: 900px;
+      gap: 16px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 24px;
     }
-
-    /* Why Section */
-    .pv-why-section {
-      padding: 60px 0;
-      background: #fff;
+    .pv-profile-avatar {
+      width: 77px;
+      height: 77px;
+      border-radius: 50%;
+      border: 1px solid #e5e5e5;
+      object-fit: cover;
     }
-
-    .pv-why-content {
+    .pv-profile-info { flex: 1; }
+    .pv-profile-label {
+      font-size: 0.75rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .pv-profile-username {
+      color: #1a1a1a;
+      font-size: 1.125rem;
+      font-weight: 500;
+      margin-bottom: 2px;
       display: flex;
-      gap: 24px;
-      align-items: flex-start;
+      align-items: center;
+      gap: 6px;
     }
+    .pv-verified { width: 16px; height: 16px; color: #3897f0; }
+    .pv-profile-bio { color: #888; font-size: 0.8125rem; }
 
-    .pv-why-avatar img {
+    /* Stories Carousel */
+    .pv-stories-section {
+      background: #fff;
+      padding: 0 24px 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .pv-stories-scroll {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .pv-stories-scroll::-webkit-scrollbar { display: none; }
+    .pv-story-item {
+      flex: 0 0 auto;
+      text-align: center;
+      width: 100px;
+    }
+    .pv-story-ring {
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      object-fit: cover;
+      padding: 3px;
+      background: linear-gradient(135deg, #833AB4 0%, #FD1D1D 50%, #F77737 100%);
+      margin: 0 auto 8px;
+    }
+    .pv-story-ring-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      overflow: hidden;
+      background: linear-gradient(135deg, #833AB4, #FD1D1D, #F77737);
+    }
+    .pv-story-ring-inner img { width: 100%; height: 100%; object-fit: cover; }
+    .pv-story-label {
+      font-size: 0.75rem;
+      color: #1a1a1a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .pv-why-content h3 {
+    /* Content Gallery */
+    .pv-gallery-section { background: #1a1a1a; padding: 8px 0 24px; }
+    .pv-ig-tabs {
+      display: flex;
+      justify-content: center;
+      border-top: 1px solid #e5e5e5;
+      background: #fff;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .pv-ig-tab {
+      padding: 12px 24px;
+      color: #888;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border-top: 1px solid transparent;
+      margin-top: -1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pv-ig-tab.active { color: #1a1a1a; border-top-color: #1a1a1a; }
+    .pv-ig-tab svg { width: 12px; height: 12px; }
+    .pv-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .pv-gallery-item {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: #000;
+    }
+    .pv-gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .pv-gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .pv-gallery-item:hover .pv-gallery-overlay { opacity: 1; }
+    .pv-play-icon { width: 48px; height: 48px; color: #fff; }
+    .pv-gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 12px;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      color: #fff;
+      font-size: 0.75rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .pv-gallery-item:hover .pv-gallery-caption { opacity: 1; }
+    .pv-gallery-location { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.6875rem; }
+
+    /* Snapshot Bar */
+    .pv-snapshot-bar { background: #f9f7f4; padding: 16px 0; border-bottom: 1px solid #e5e5e5; }
+    .pv-snapshot-grid { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+    .pv-snapshot-item { display: flex; align-items: center; gap: 12px; }
+    .pv-snapshot-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 50%;
+    }
+    .pv-snapshot-icon svg { width: 20px; height: 20px; color: #c2703e; }
+    .pv-snapshot-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+      display: block;
+    }
+    .pv-snapshot-value { font-size: 0.9375rem; color: #1a1a1a; font-weight: 500; }
+
+    /* Main Content */
+    .pv-content { padding: 48px 0; }
+    .pv-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 48px;
+      align-items: start;
+    }
+    .pv-main { min-width: 0; }
+    .pv-section-title {
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 1.5rem;
       font-weight: 400;
-      margin-bottom: 12px;
+      margin-bottom: 24px;
     }
 
-    .pv-why-content p {
-      color: #555;
-      line-height: 1.7;
+    /* Creator Voice */
+    .pv-creator-voice {
+      background: #faf8f5;
+      padding: 24px;
+      margin-bottom: 48px;
+    }
+    .pv-creator-voice-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .pv-creator-voice-header img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .pv-creator-voice-header .pv-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888;
+    }
+    .pv-creator-voice-header .pv-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.125rem;
+      margin: 0;
+    }
+    .pv-creator-voice blockquote {
       font-size: 1rem;
-    }
-
-    .pv-why-author {
-      display: block;
-      margin-top: 16px;
-      color: #c2703e;
+      line-height: 1.7;
+      color: #555;
+      margin: 0;
       font-style: italic;
     }
 
-    /* Days Section */
-    .pv-days-section {
-      padding: 60px 0;
-      background: #f9f7f4;
-    }
-
-    .pv-days-section h2 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 2rem;
-      font-weight: 400;
-      margin-bottom: 32px;
-      text-align: center;
-    }
-
-    .pv-days-list {
+    /* Accordion */
+    .pv-itinerary-accordion { margin-bottom: 48px; }
+    .pv-accordion-item { border-bottom: 1px solid #e5e5e5; }
+    .pv-accordion-header {
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      gap: 24px;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
     }
-
-    .pv-day-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 32px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    .pv-accordion-header-content { display: flex; align-items: center; gap: 16px; }
+    .pv-accordion-days {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #c2703e;
+      min-width: 50px;
     }
-
-    .pv-day-header {
+    .pv-accordion-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      margin: 0;
+    }
+    .pv-accordion-icon {
+      width: 24px;
+      height: 24px;
+      color: #888;
+      transition: transform 0.3s;
+    }
+    .pv-accordion-item.active .pv-accordion-icon { transform: rotate(180deg); }
+    .pv-accordion-panel {
+      display: none;
+      padding: 0 0 24px 66px;
+    }
+    .pv-accordion-item.active .pv-accordion-panel { display: block; }
+    .pv-accordion-panel p {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: #555;
       margin-bottom: 16px;
     }
-
-    .pv-day-number {
-      display: inline-block;
-      background: #c2703e;
-      color: #fff;
-      padding: 4px 12px;
-      border-radius: 4px;
+    .pv-accordion-highlights { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .pv-highlight-tag {
       font-size: 0.6875rem;
-      font-weight: 600;
-      text-transform: uppercase;
       letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      background: #f9f7f4;
+      color: #1a1a1a;
+    }
+
+    /* Stays Section */
+    .pv-stays-section { margin-bottom: 48px; }
+    .pv-stays-scroll { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 16px; }
+    .pv-stay-card {
+      flex: 0 0 320px;
+      background: #f9f7f4;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .pv-stay-card-image {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+    }
+    .pv-stay-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pv-stay-card-content {
+      padding: 20px;
+    }
+    .pv-stay-card-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.125rem;
+      margin-bottom: 4px;
+    }
+    .pv-stay-card-location { font-size: 0.75rem; color: #888; margin-bottom: 8px; }
+    .pv-stay-card-desc {
+      font-size: 0.875rem;
+      color: #555;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+    .pv-stay-card-nights {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 0.6875rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: #fff;
+      padding: 4px 10px;
+    }
+    .pv-stay-card-gallery {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+    }
+    .pv-stay-card-main-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pv-stay-gallery-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.95);
+      color: #1a1a1a;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .pv-stay-gallery-btn:hover {
+      background: #fff;
+    }
+
+    /* Sidebar */
+    .pv-sidebar { position: sticky; top: 80px; }
+    .pv-sidebar-cta {
+      background: #faf8f5;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .pv-sidebar-cta h3 {
+      font-size: 1.25rem;
+      color: #1a1a1a;
       margin-bottom: 8px;
     }
-
-    .pv-day-header h3 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.375rem;
-      font-weight: 400;
-    }
-
-    .pv-day-desc {
-      color: #555;
-      line-height: 1.7;
+    .pv-sidebar-cta p {
+      font-size: 0.875rem;
+      color: #888;
       margin-bottom: 16px;
+      line-height: 1.6;
     }
-
-    .pv-day-activities {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
+    .pv-sidebar-cta-meta {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(0,0,0,0.1);
     }
-
-    .pv-activity-tag {
-      background: #f0ebe6;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.8125rem;
-      color: #666;
+    .pv-sidebar-cta-meta p {
+      font-size: 0.875rem;
+      color: #1a1a1a;
+      margin: 0 0 4px;
     }
-
-    .pv-day-media {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+    .pv-sidebar-info { background: #f9f7f4; padding: 24px; }
+    .pv-sidebar-info-item { padding: 12px 0; border-bottom: 1px solid #e5e5e5; }
+    .pv-sidebar-info-item:last-child { border-bottom: none; }
+    .pv-sidebar-info-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #c2703e;
+      margin-bottom: 4px;
     }
+    .pv-sidebar-info-value { font-size: 0.9375rem; color: #1a1a1a; }
 
-    .pv-day-media img {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    /* Gallery Section */
-    .pv-gallery-section {
-      padding: 60px 0;
-      background: #fff;
-    }
-
-    .pv-gallery-section h2 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 2rem;
-      font-weight: 400;
-      margin-bottom: 32px;
-      text-align: center;
-    }
-
-    .pv-gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-    }
-
-    .pv-gallery-grid img {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    /* CTA Section */
-    .pv-cta-section {
+    /* Final CTA */
+    .pv-final-cta {
+      background: #faf8f5;
       padding: 80px 0;
-      background: #1a1a1a;
-      color: #fff;
       text-align: center;
     }
-
-    .pv-cta-section h2 {
+    .pv-final-cta h2 {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 2rem;
-      font-weight: 400;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
       margin-bottom: 12px;
     }
+    .pv-final-cta p { color: #888; max-width: 500px; margin: 0 auto 24px; }
+    .pv-final-cta .pv-btn-primary { background: #1a1a1a; color: #fff; }
 
-    .pv-cta-section p {
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 32px;
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .pv-grid { grid-template-columns: 1fr; }
+      .pv-sidebar { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .pv-gallery-grid { grid-template-columns: repeat(2, 1fr); }
     }
-
-    .pv-cta-section .pv-btn-primary {
-      background: #c2703e;
-      color: #fff;
-    }
-
-    .pv-cta-section .pv-btn-primary:hover {
-      background: #a85d32;
-    }
-
     @media (max-width: 768px) {
-      .pv-hero-content {
-        padding: 40px 20px;
-      }
-      .pv-snapshot {
-        gap: 24px;
-        padding: 20px;
-      }
-      .pv-section-inner {
-        padding: 0 20px;
-      }
-      .pv-why-content {
-        flex-direction: column;
-        text-align: center;
-      }
-      .pv-why-avatar {
-        margin: 0 auto;
-      }
-      .pv-day-media {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .pv-hero-content { padding: 40px 0; }
+      .pv-snapshot-grid { gap: 16px; }
+      .pv-snapshot-icon { display: none; }
+      .pv-accordion-panel { padding-left: 0; }
+      .pv-sidebar { grid-template-columns: 1fr; }
+    }
+
+    /* Gallery Modal */
+    .pv-gallery-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .pv-gallery-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 32px;
+      cursor: pointer;
+    }
+    .pv-gallery-content {
+      max-width: 1000px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .pv-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .pv-gallery-item {
+      position: relative;
+      aspect-ratio: 1;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+    .pv-gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pv-gallery-video-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   </style>
 </body>
