@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS itineraries (
   price_from INTEGER,
   hero_image TEXT,
   intro TEXT,
+  why_curated TEXT,
   days JSONB,
   stays JSONB,
   included TEXT[],

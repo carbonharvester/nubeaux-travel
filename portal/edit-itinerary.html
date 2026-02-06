@@ -1499,6 +1499,12 @@
           </div>
           <p class="form-hint">Tell travelers why you love this destination and what makes it special.</p>
         </div>
+
+        <div class="form-group">
+          <label class="form-label" for="whyCurated">Why I curated this trip</label>
+          <textarea id="whyCurated" class="form-textarea" rows="4" placeholder="Share your personal connection to this trip - what made it special, why you want others to experience it..."></textarea>
+          <p class="form-hint">This quote appears prominently on your itinerary page, giving travelers insight into your personal experience.</p>
+        </div>
       </section>
 
       <!-- Hero Image -->
@@ -1734,7 +1740,7 @@
       <!-- Gallery -->
       <section class="form-section">
         <h2 class="form-section-title">Gallery</h2>
-        <p class="form-hint" style="margin-bottom: 12px;">These images will appear in the trip gallery (View Gallery button)</p>
+        <p class="form-hint" style="margin-bottom: 12px;">Optional: Upload additional images here. Instagram posts and stories are displayed separately.</p>
         <div class="gallery-grid" id="galleryGrid">
           <!-- Gallery items will be added here -->
         </div>
@@ -1805,6 +1811,7 @@
       duration: '',
       priceFrom: 0,
       intro: '',
+      whyCurated: '',
       heroImage: '',
       days: [],
       included: [],
@@ -2009,6 +2016,7 @@
       document.getElementById('location').value = data.location || '';
       document.getElementById('duration').value = data.duration || '';
       document.getElementById('intro').value = data.intro || '';
+      document.getElementById('whyCurated').value = data.whyCurated || data.why_curated || '';
 
       // Hero image
       if (data.heroImage) {
@@ -2482,6 +2490,7 @@
       itineraryData.location = document.getElementById('location').value?.trim() || '';
       itineraryData.duration = document.getElementById('duration').value?.trim() || '';
       itineraryData.intro = document.getElementById('intro').value?.trim() || '';
+      itineraryData.whyCurated = document.getElementById('whyCurated').value?.trim() || '';
       itineraryData.status = currentStatus;
 
       // Validate required fields
@@ -2541,6 +2550,7 @@
             duration: itineraryData.duration,
             hero_image: itineraryData.heroImage || null,
             intro: itineraryData.intro,
+            why_curated: itineraryData.whyCurated,
             days: itineraryData.days,
             stays: itineraryData.stays,
             included: itineraryData.included,

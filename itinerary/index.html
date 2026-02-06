@@ -42,6 +42,12 @@
     .creator-badge img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
     .creator-badge-content span { display: block; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
     .creator-badge-content strong { font-family: var(--font-serif); font-weight: 400; }
+    .creator-voice { background: var(--color-warm-cream, #f5f0e8); padding: var(--space-lg); margin-bottom: var(--space-xl); }
+    .creator-voice-header { display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-md); }
+    .creator-voice-header img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; }
+    .creator-voice-header .label { font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-light); }
+    .creator-voice-header .name { font-family: var(--font-serif); font-size: 1.125rem; margin: 0; }
+    .creator-voice blockquote { font-size: 1rem; line-height: 1.7; color: var(--color-text); margin: 0; font-style: italic; }
     .book-cta { background: var(--color-accent); color: var(--color-white); padding: var(--space-md); text-align: center; }
     .book-cta h3 { font-size: 1.25rem; margin-bottom: var(--space-sm); color: var(--color-white); }
     .book-cta p { font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md); color: var(--color-white); }
@@ -127,13 +133,16 @@
       <div class="container">
         <div class="itin-grid">
           <div class="itin-main">
-            <!-- Creator Badge -->
-            <div class="creator-badge" id="creatorBadge">
-              <img id="creatorImage" src="" alt="">
-              <div class="creator-badge-content">
-                <span>Curated by</span>
-                <strong id="creatorName"></strong>
+            <!-- Why I Curated This -->
+            <div class="creator-voice" id="creatorVoice" style="display: none;">
+              <div class="creator-voice-header">
+                <img id="creatorVoiceImage" src="" alt="">
+                <div>
+                  <span class="label">Why I curated this</span>
+                  <p class="name" id="creatorVoiceName"></p>
+                </div>
               </div>
+              <blockquote id="whyCuratedText"></blockquote>
             </div>
 
             <!-- Intro -->
@@ -309,15 +318,16 @@
         document.getElementById('durationMeta').textContent = itinerary.duration || '';
         document.getElementById('regionMeta').textContent = formatRegion(itinerary.region);
 
-        // Creator badge
+        // Creator voice / Why I curated this
         const creator = itinerary.creators;
-        if (creator) {
-          document.getElementById('creatorImage').src = creator.profile_image || '../assets/avatar-placeholder.jpg';
-          document.getElementById('creatorImage').alt = creator.name;
-          document.getElementById('creatorName').textContent = creator.name;
-          document.getElementById('creatorBadge').style.display = 'flex';
+        if (creator && itinerary.why_curated) {
+          document.getElementById('creatorVoiceImage').src = creator.profile_image || '../assets/avatar-placeholder.jpg';
+          document.getElementById('creatorVoiceImage').alt = creator.name;
+          document.getElementById('creatorVoiceName').textContent = creator.name;
+          document.getElementById('whyCuratedText').textContent = `"${itinerary.why_curated}"`;
+          document.getElementById('creatorVoice').style.display = 'block';
         } else {
-          document.getElementById('creatorBadge').style.display = 'none';
+          document.getElementById('creatorVoice').style.display = 'none';
         }
 
         // Intro

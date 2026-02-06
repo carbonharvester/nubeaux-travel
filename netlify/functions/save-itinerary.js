@@ -72,6 +72,7 @@ exports.handler = async (event, context) => {
       price_from: data.price_from || null,
       hero_image: data.hero_image || null,
       intro: data.intro || null,
+      why_curated: data.why_curated || null,
       days: data.days || [],
       stays: data.stays || [],
       included: data.included || [],
