@@ -2012,50 +2012,61 @@
 
       // Show content - use cached videos for instant playback
       if (story.type === 'video') {
-        // Use cached video if available
+        // Use the preloaded video element directly (move it, don't clone)
         const cachedVideo = videoCache[story.src];
-        if (cachedVideo && cachedVideo.readyState >= 3) {
-          // Clone and use cached video
-          videoElement = cachedVideo.cloneNode(true);
-          videoElement.muted = false; // Unmute for playback
+        storiesMedia.innerHTML = '';
+
+        if (cachedVideo && cachedVideo.readyState >= 2) {
+          // Use cached video directly
+          videoElement = cachedVideo;
+          videoElement.muted = false;
           videoElement.currentTime = 0;
-          storiesMedia.innerHTML = '';
           storiesMedia.appendChild(videoElement);
         } else {
-          // Fallback to creating new video
-          storiesMedia.innerHTML = `<video src="${story.src}" autoplay playsinline></video>`;
-          videoElement = storiesMedia.querySelector('video');
+          // Fallback: create new video element
+          videoElement = document.createElement('video');
+          videoElement.src = story.src;
+          videoElement.autoplay = true;
+          videoElement.playsInline = true;
+          storiesMedia.appendChild(videoElement);
         }
 
-        videoElement.addEventListener('error', () => goToNextStory());
-        videoElement.addEventListener('ended', () => goToNextStory());
+        // Remove old listeners and add new ones
+        videoElement.onended = () => goToNextStory();
+        videoElement.onerror = () => goToNextStory();
 
-        // Update progress bar animation to match video duration
-        if (videoElement.duration) {
+        // Update progress bar
+        const setProgress = () => {
+          const duration = videoElement.duration * 1000;
           const progressBar = document.querySelector('.stories-progress-bar.active .stories-progress-fill');
-          if (progressBar) {
-            progressBar.style.animation = `storyProgress ${videoElement.duration * 1000}ms linear forwards`;
+          if (progressBar && duration) {
+            progressBar.style.animation = `storyProgress ${duration}ms linear forwards`;
           }
+        };
+
+        if (videoElement.duration) {
+          setProgress();
         } else {
-          videoElement.addEventListener('loadedmetadata', () => {
-            const duration = videoElement.duration * 1000;
-            const progressBar = document.querySelector('.stories-progress-bar.active .stories-progress-fill');
-            if (progressBar) {
-              progressBar.style.animation = `storyProgress ${duration}ms linear forwards`;
-            }
-          });
+          videoElement.onloadedmetadata = setProgress;
         }
 
         // Play immediately
-        videoElement.play().catch(() => goToNextStory());
+        const playPromise = videoElement.play();
+        if (playPromise) {
+          playPromise.catch(() => goToNextStory());
+        }
       } else {
-        // Use cached image if available
+        // Use cached image
+        storiesMedia.innerHTML = '';
         const cachedImg = imageCache[story.src];
         if (cachedImg && cachedImg.complete) {
-          storiesMedia.innerHTML = '';
-          storiesMedia.appendChild(cachedImg.cloneNode(true));
+          const img = cachedImg.cloneNode(true);
+          storiesMedia.appendChild(img);
         } else {
-          storiesMedia.innerHTML = `<img src="${story.src}" alt="Story">`;
+          const img = document.createElement('img');
+          img.src = story.src;
+          img.alt = 'Story';
+          storiesMedia.appendChild(img);
         }
         storyTimer = setTimeout(() => goToNextStory(), 5000);
       }
@@ -2084,41 +2095,36 @@
     }
 
     storiesClose.addEventListener('click', closeStoriesLightbox);
-    storiesPrev.addEventListener('click', (e) => {
+
+    // Debounce to prevent double-firing from touch + click
+    let lastNavTime = 0;
+    function handleNav(direction, e) {
       e.preventDefault();
       e.stopPropagation();
-      goToPrevStory();
-    });
-    storiesNext.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      goToNextStory();
-    });
 
-    // Touch navigation - tap left half for prev, right half for next
-    storiesMedia.addEventListener('click', (e) => {
-      const rect = storiesMedia.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const midpoint = rect.width / 2;
+      const now = Date.now();
+      if (now - lastNavTime < 300) return; // Debounce
+      lastNavTime = now;
 
-      if (x < midpoint) {
+      if (direction === 'prev') {
         goToPrevStory();
       } else {
         goToNextStory();
       }
-    });
+    }
 
-    // Prevent default touch behaviors that cause zoom
-    storiesLightbox.addEventListener('touchstart', (e) => {
-      if (e.touches.length > 1) {
+    // Nav buttons
+    storiesPrev.addEventListener('click', (e) => handleNav('prev', e));
+    storiesNext.addEventListener('click', (e) => handleNav('next', e));
+
+    // Prevent double-tap zoom on iOS
+    let lastTouchEnd = 0;
+    storiesLightbox.addEventListener('touchend', (e) => {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) {
         e.preventDefault();
       }
-    }, { passive: false });
-
-    storiesLightbox.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 1) {
-        e.preventDefault();
-      }
+      lastTouchEnd = now;
     }, { passive: false });
 
     // Keyboard navigation for stories
