@@ -476,7 +476,6 @@ p {
 
 .btn-primary:hover {
   background-color: var(--color-accent-hover);
-  transform: translateY(-2px);
 }
 
 .btn-outline {
@@ -2073,7 +2072,6 @@ p {
 
   /* Improved touch feedback */
   .btn:active {
-    transform: scale(0.98);
     opacity: 0.9;
   }
 
@@ -3761,7 +3759,6 @@ p {
   }
 
   .btn:active {
-    transform: scale(0.97);
     opacity: 0.85;
   }
 
