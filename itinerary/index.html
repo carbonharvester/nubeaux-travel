@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Curated travel itinerary from NUBEAUX Travel creators.">
+
+  <title>Itinerary | NUBEAUX Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=22">
+
+  <style>
+    .itin-hero { position: relative; margin-top: var(--header-height); display: flex; align-items: flex-end; overflow: hidden; min-height: 50vh; }
+    .itin-hero-bg { position: absolute; inset: 0; z-index: 1; background: var(--color-sand); }
+    .itin-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .itin-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.3) 100%); z-index: 2; }
+    .itin-hero-content { position: relative; z-index: 3; padding: var(--space-xl) var(--space-md); color: var(--color-white); width: 100%; }
+    .itin-hero-content .container { max-width: 800px; margin: 0; }
+    .itin-label { font-size: 0.6875rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .itin-hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: var(--space-md); color: var(--color-white); }
+    .itin-hero-meta { display: flex; gap: var(--space-lg); font-size: 1rem; opacity: 0.9; }
+    .itin-content { padding: var(--space-xl) 0; }
+    .itin-grid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--space-xl); }
+    .itin-main h2 { margin-bottom: var(--space-md); }
+    .itin-main p { color: var(--color-text-light); line-height: 1.8; margin-bottom: var(--space-md); }
+    .day-block { margin-bottom: var(--space-lg); padding-bottom: var(--space-lg); border-bottom: 1px solid var(--color-light-grey); }
+    .day-block:last-child { border-bottom: none; }
+    .day-label { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-xs); }
+    .day-title { font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: var(--space-sm); }
+    .day-content { color: var(--color-text-light); line-height: 1.8; }
+    .day-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-sm); margin-top: var(--space-md); }
+    .day-images img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 4px; }
+    .itin-sidebar { background-color: var(--color-off-white); padding: var(--space-lg); height: fit-content; position: sticky; top: calc(var(--header-height) + var(--space-md)); }
+    .sidebar-section { margin-bottom: var(--space-lg); }
+    .sidebar-section:last-child { margin-bottom: 0; }
+    .sidebar-title { font-size: 0.6875rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-accent); margin-bottom: var(--space-sm); }
+    .sidebar-content { font-size: 0.9375rem; color: var(--color-text); }
+    .creator-badge { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-md); background: var(--color-off-white); margin-bottom: var(--space-lg); }
+    .creator-badge img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .creator-badge-content span { display: block; font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+    .creator-badge-content strong { font-family: var(--font-serif); font-weight: 400; }
+    .book-cta { background: var(--color-accent); color: var(--color-white); padding: var(--space-md); text-align: center; }
+    .book-cta h3 { font-size: 1.25rem; margin-bottom: var(--space-sm); color: var(--color-white); }
+    .book-cta p { font-size: 0.875rem; opacity: 0.9; margin-bottom: var(--space-md); color: var(--color-white); }
+    .book-cta .btn { background: var(--color-white); color: var(--color-accent); width: 100%; }
+    .included-list { list-style: none; padding: 0; margin: 0; }
+    .included-list li { color: var(--color-text-light); line-height: 1.8; padding-left: 1.5rem; position: relative; }
+    .included-list li::before { content: ''; position: absolute; left: 0; top: 0.5em; width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent); }
+    .stays-grid { display: grid; gap: var(--space-md); margin-top: var(--space-md); }
+    .stay-card { display: flex; gap: var(--space-md); padding: var(--space-md); background: var(--color-sand); }
+    .stay-card img { width: 120px; height: 90px; object-fit: cover; flex-shrink: 0; }
+    .stay-card-content h4 { font-size: 1rem; margin-bottom: var(--space-xs); }
+    .stay-card-content p { font-size: 0.875rem; color: var(--color-text-light); margin: 0; }
+
+    /* Loading state */
+    .loading-state { text-align: center; padding: var(--space-2xl); }
+    .loading-spinner { width: 40px; height: 40px; border: 3px solid var(--color-light-grey); border-top-color: var(--color-accent); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto var(--space-md); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Error state */
+    .error-state { text-align: center; padding: var(--space-2xl); }
+    .error-state h2 { margin-bottom: var(--space-sm); }
+    .error-state p { color: var(--color-text-light); margin-bottom: var(--space-lg); }
+
+    @media (max-width: 768px) {
+      .itin-grid { grid-template-columns: 1fr; }
+      .itin-sidebar { position: static; }
+      .itin-hero-meta { display: none; }
+      .itin-hero h1 { margin-bottom: var(--space-xs); }
+      .stay-card { flex-direction: column; }
+      .stay-card img { width: 100%; height: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="NUBEAUX"></a>
+      <nav class="nav">
+        <a href="../trips/">Explore Trips</a>
+        <a href="../destinations/">Destinations</a>
+        <a href="mailto:support@nubeauxtravel.com">Support</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="../trips/">Explore Trips</a>
+    <a href="../destinations/">Destinations</a>
+    <a href="mailto:support@nubeauxtravel.com">Support</a>
+  </div>
+
+  <!-- Loading State -->
+  <div id="loadingState" class="loading-state" style="margin-top: calc(var(--header-height) + var(--space-xl));">
+    <div class="loading-spinner"></div>
+    <p>Loading itinerary...</p>
+  </div>
+
+  <!-- Error State -->
+  <div id="errorState" class="error-state" style="display: none; margin-top: calc(var(--header-height) + var(--space-xl));">
+    <h2>Itinerary not found</h2>
+    <p>This itinerary doesn't exist or may have been removed.</p>
+    <a href="../trips/" class="btn btn-primary">Explore other trips</a>
+  </div>
+
+  <!-- Main Content (hidden until loaded) -->
+  <main id="mainContent" style="display: none;">
+    <section class="itin-hero">
+      <div class="itin-hero-bg">
+        <img id="heroImage" src="" alt="">
+      </div>
+      <div class="itin-hero-overlay"></div>
+      <div class="itin-hero-content">
+        <div class="container">
+          <span class="itin-label" id="destinationLabel"></span>
+          <h1 id="itineraryTitle"></h1>
+          <div class="itin-hero-meta">
+            <span id="durationMeta"></span>
+            <span id="regionMeta"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="itin-content">
+      <div class="container">
+        <div class="itin-grid">
+          <div class="itin-main">
+            <!-- Creator Badge -->
+            <div class="creator-badge" id="creatorBadge">
+              <img id="creatorImage" src="" alt="">
+              <div class="creator-badge-content">
+                <span>Curated by</span>
+                <strong id="creatorName"></strong>
+              </div>
+            </div>
+
+            <!-- Intro -->
+            <div id="introSection">
+              <h2>The Journey</h2>
+              <p id="introText"></p>
+            </div>
+
+            <!-- Days -->
+            <div id="daysSection" style="margin-top: var(--space-lg);">
+              <h2>Day by Day</h2>
+              <div id="daysContainer"></div>
+            </div>
+
+            <!-- Stays -->
+            <div id="staysSection" style="margin-top: var(--space-lg); display: none;">
+              <h2>Where You'll Stay</h2>
+              <div class="stays-grid" id="staysContainer"></div>
+            </div>
+
+            <!-- What's Included -->
+            <div id="includedSection" style="margin-top: var(--space-lg); display: none;">
+              <h2>What's Included</h2>
+              <ul class="included-list" id="includedList"></ul>
+            </div>
+          </div>
+
+          <div class="itin-sidebar">
+            <div class="sidebar-section">
+              <h3 class="sidebar-title">Trip Details</h3>
+              <div class="sidebar-content">
+                <p id="sidebarDuration"><strong>Duration:</strong> <span></span></p>
+                <p id="sidebarPrice" style="margin-top: 0.5rem;"><strong>Starting from:</strong> <span></span></p>
+                <p id="sidebarRegion" style="margin-top: 0.5rem;"><strong>Region:</strong> <span></span></p>
+              </div>
+            </div>
+
+            <div class="book-cta">
+              <h3>Get Your Quote</h3>
+              <p>Ready for this trip? Get a personalized quote for your dates.</p>
+              <a id="quoteLink" href="../request-quote.html" class="btn">Request Quote</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <h2>Ready to explore?</h2>
+        <p class="text-large">Discover more curated itineraries from our travel creators.</p>
+        <a href="../trips/" class="btn btn-primary">Explore All Trips</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo.svg" alt="NUBEAUX" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>Curated luxury travel experiences from creatives who've been there.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Explore</h4>
+          <div class="footer-links">
+            <a href="../destinations/">Destinations</a>
+            <a href="../trips/">Trips</a>
+            <a href="../stays/">Stays</a>
+            <a href="../journal/">Journal</a>
+            <a href="../creators/index.html">Creators</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="../about.html">About</a>
+            <a href="https://nubeauxcollective.com" target="_blank">NUBEAUX Collective</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Connect</h4>
+          <div class="footer-links">
+            <a href="mailto:travel@nubeauxcollective.com">travel@nubeauxcollective.com</a>
+            <a href="https://instagram.com/nubeauxtravel" target="_blank">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 NUBEAUX Travel. All rights reserved.</p>
+        <p>A NUBEAUX Collective Company</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js?v=3"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      // Get itinerary ID from URL
+      function getItineraryId() {
+        // Check for query param first: /itinerary/?id=xxx
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('id')) {
+          return params.get('id');
+        }
+
+        // Check for path-based: /itinerary/xxx
+        const path = window.location.pathname;
+        const match = path.match(/\/itinerary\/([^\/\?]+)/);
+        if (match && match[1] && match[1] !== 'index.html') {
+          return match[1];
+        }
+
+        return null;
+      }
+
+      // Show error state
+      function showError() {
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('errorState').style.display = 'block';
+        document.getElementById('mainContent').style.display = 'none';
+      }
+
+      // Show content
+      function showContent() {
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('errorState').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+      }
+
+      // Load itinerary data
+      async function loadItinerary() {
+        const id = getItineraryId();
+
+        if (!id) {
+          showError();
+          return;
+        }
+
+        try {
+          const response = await fetch(`/.netlify/functions/get-itinerary?id=${encodeURIComponent(id)}`);
+          const result = await response.json();
+
+          if (!response.ok || !result.success) {
+            showError();
+            return;
+          }
+
+          renderItinerary(result.itinerary);
+          showContent();
+        } catch (error) {
+          console.error('Error loading itinerary:', error);
+          showError();
+        }
+      }
+
+      // Render itinerary data to page
+      function renderItinerary(itinerary) {
+        // Update page title
+        document.title = `${itinerary.title} | NUBEAUX Travel`;
+
+        // Hero section
+        const heroImage = document.getElementById('heroImage');
+        if (itinerary.hero_image) {
+          heroImage.src = itinerary.hero_image;
+          heroImage.alt = itinerary.title;
+        } else {
+          heroImage.parentElement.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+        }
+
+        document.getElementById('destinationLabel').textContent = itinerary.destination || '';
+        document.getElementById('itineraryTitle').textContent = itinerary.title;
+        document.getElementById('durationMeta').textContent = itinerary.duration || '';
+        document.getElementById('regionMeta').textContent = formatRegion(itinerary.region);
+
+        // Creator badge
+        const creator = itinerary.creators;
+        if (creator) {
+          document.getElementById('creatorImage').src = creator.profile_image || '../assets/avatar-placeholder.jpg';
+          document.getElementById('creatorImage').alt = creator.name;
+          document.getElementById('creatorName').textContent = creator.name;
+          document.getElementById('creatorBadge').style.display = 'flex';
+        } else {
+          document.getElementById('creatorBadge').style.display = 'none';
+        }
+
+        // Intro
+        if (itinerary.intro) {
+          document.getElementById('introText').textContent = itinerary.intro;
+          document.getElementById('introSection').style.display = 'block';
+        } else {
+          document.getElementById('introSection').style.display = 'none';
+        }
+
+        // Days
+        const days = itinerary.days || [];
+        const daysContainer = document.getElementById('daysContainer');
+        if (days.length > 0) {
+          daysContainer.innerHTML = days.map((day, index) => `
+            <div class="day-block">
+              <span class="day-label">Day ${index + 1}</span>
+              <h3 class="day-title">${day.title || `Day ${index + 1}`}</h3>
+              <p class="day-content">${day.description || ''}</p>
+              ${day.images && day.images.length > 0 ? `
+                <div class="day-images">
+                  ${day.images.map(img => `<img src="${img}" alt="" loading="lazy">`).join('')}
+                </div>
+              ` : ''}
+            </div>
+          `).join('');
+          document.getElementById('daysSection').style.display = 'block';
+        } else {
+          document.getElementById('daysSection').style.display = 'none';
+        }
+
+        // Stays
+        const stays = itinerary.stays || [];
+        const staysContainer = document.getElementById('staysContainer');
+        if (stays.length > 0) {
+          staysContainer.innerHTML = stays.map(stay => `
+            <div class="stay-card">
+              ${stay.image ? `<img src="${stay.image}" alt="${stay.name}" loading="lazy">` : ''}
+              <div class="stay-card-content">
+                <h4>${stay.name || 'Accommodation'}</h4>
+                ${stay.location ? `<p>${stay.location}</p>` : ''}
+                ${stay.nights ? `<p>${stay.nights} nights</p>` : ''}
+              </div>
+            </div>
+          `).join('');
+          document.getElementById('staysSection').style.display = 'block';
+        } else {
+          document.getElementById('staysSection').style.display = 'none';
+        }
+
+        // What's included
+        const included = itinerary.included || [];
+        const includedList = document.getElementById('includedList');
+        if (included.length > 0) {
+          includedList.innerHTML = included.map(item => `<li>${item}</li>`).join('');
+          document.getElementById('includedSection').style.display = 'block';
+        } else {
+          document.getElementById('includedSection').style.display = 'none';
+        }
+
+        // Sidebar
+        document.querySelector('#sidebarDuration span').textContent = itinerary.duration || 'Varies';
+        document.querySelector('#sidebarPrice span').textContent = itinerary.price_from
+          ? `$${itinerary.price_from.toLocaleString()} per person`
+          : 'Contact for pricing';
+        document.querySelector('#sidebarRegion span').textContent = formatRegion(itinerary.region);
+
+        // Quote link
+        const quoteLink = document.getElementById('quoteLink');
+        const tripName = encodeURIComponent(itinerary.title);
+        const priceText = itinerary.price_from
+          ? encodeURIComponent(`From $${itinerary.price_from.toLocaleString()} pp`)
+          : encodeURIComponent('Contact for pricing');
+        quoteLink.href = `../request-quote.html?trip=${tripName}&price=${priceText}`;
+      }
+
+      // Format region for display
+      function formatRegion(region) {
+        if (!region) return '';
+        const regions = {
+          'africa': 'Africa',
+          'europe': 'Europe',
+          'asia': 'Asia',
+          'middle-east': 'Middle East',
+          'americas': 'Americas',
+          'oceania': 'Oceania'
+        };
+        return regions[region] || region;
+      }
+
+      // Initialize
+      loadItinerary();
+    })();
+  </script>
+</body>
+</html>

@@ -18,6 +18,12 @@
   to = "/portal/edit-itinerary.html"
   status = 301
 
+# Dynamic itinerary pages - rewrite /itinerary/:id to /itinerary/?id=:id
+[[redirects]]
+  from = "/itinerary/:id"
+  to = "/itinerary/?id=:id"
+  status = 200
+
 [functions]
   node_bundler = "esbuild"
 
