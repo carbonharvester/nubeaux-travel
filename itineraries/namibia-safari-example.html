@@ -1032,6 +1032,41 @@
     }
 
     @media (max-width: 768px) {
+      .stories-scroll {
+        gap: 8px;
+        padding: 0 var(--space-md) var(--space-sm);
+      }
+
+      .story-item {
+        width: calc((100vw - 32px - 32px) / 5) !important;
+        min-width: calc((100vw - 32px - 32px) / 5) !important;
+      }
+
+      .story-ring {
+        width: calc((100vw - 32px - 32px) / 5 - 8px) !important;
+        height: calc((100vw - 32px - 32px) / 5 - 8px) !important;
+      }
+
+      .story-label {
+        font-size: 0.625rem;
+        max-width: 100%;
+      }
+
+      .stay-card {
+        flex: 0 0 85vw;
+        min-width: 85vw;
+      }
+
+      .stay-card-image {
+        min-height: 220px;
+      }
+
+      .stay-card-link {
+        font-size: 0.8125rem;
+        padding: var(--space-xs) 0;
+        display: block;
+      }
+
       .itin-hero {
         min-height: 85vh;
       }
