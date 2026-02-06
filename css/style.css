@@ -345,6 +345,21 @@ p {
   z-index: 1;
 }
 
+/* Hide browser's native video play button */
+.hero-bg video::-webkit-media-controls {
+  display: none !important;
+}
+
+.hero-bg video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+
+.hero-bg video::-webkit-media-controls-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
