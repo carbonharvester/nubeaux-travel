@@ -702,6 +702,167 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // ============================================
+  // WISHLIST FUNCTIONALITY
+  // ============================================
+
+  // Get or create session ID for wishlist
+  function getWishlistSessionId() {
+    let sessionId = localStorage.getItem('juno_wishlist_session');
+    if (!sessionId) {
+      sessionId = 'wl_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+      localStorage.setItem('juno_wishlist_session', sessionId);
+    }
+    return sessionId;
+  }
+
+  // Initialize wishlist button on itinerary pages
+  async function initWishlistButton(itineraryId) {
+    const heroContent = document.querySelector('.itin-hero-content');
+    const heroActions = document.querySelector('.itin-hero-actions');
+
+    if (!heroActions && !heroContent) return;
+
+    const sessionId = getWishlistSessionId();
+
+    // Check if already saved
+    let isSaved = false;
+    try {
+      const response = await fetch(`/.netlify/functions/wishlist?session_id=${sessionId}&itinerary_id=${itineraryId}`);
+      const data = await response.json();
+      isSaved = data.saved;
+    } catch (error) {
+      console.error('Failed to check wishlist status:', error);
+    }
+
+    // Create save button
+    const saveBtn = document.createElement('button');
+    saveBtn.id = 'wishlistBtn';
+    saveBtn.className = 'wishlist-btn' + (isSaved ? ' saved' : '');
+    saveBtn.innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span>${isSaved ? 'Saved' : 'Save'}</span>
+    `;
+
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+      .wishlist-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 16px;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 8px;
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .wishlist-btn:hover {
+        background: rgba(255,255,255,0.25);
+      }
+      .wishlist-btn.saved {
+        background: rgba(194,112,62,0.9);
+        border-color: transparent;
+      }
+      .wishlist-btn.saved:hover {
+        background: rgba(194,112,62,1);
+      }
+      .wishlist-btn svg {
+        transition: transform 0.2s;
+      }
+      .wishlist-btn.saving svg {
+        animation: bookmark-bounce 0.3s ease;
+      }
+      @keyframes bookmark-bounce {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Add click handler
+    saveBtn.addEventListener('click', async () => {
+      saveBtn.classList.add('saving');
+
+      const currentlySaved = saveBtn.classList.contains('saved');
+
+      try {
+        if (currentlySaved) {
+          // Remove from wishlist
+          await fetch(`/.netlify/functions/wishlist?session_id=${sessionId}&itinerary_id=${itineraryId}`, {
+            method: 'DELETE'
+          });
+          saveBtn.classList.remove('saved');
+          saveBtn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>Save</span>
+          `;
+        } else {
+          // Add to wishlist
+          await fetch('/.netlify/functions/wishlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ session_id: sessionId, itinerary_id: itineraryId })
+          });
+          saveBtn.classList.add('saved');
+          saveBtn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>Saved</span>
+          `;
+        }
+      } catch (error) {
+        console.error('Failed to update wishlist:', error);
+      }
+
+      setTimeout(() => saveBtn.classList.remove('saving'), 300);
+    });
+
+    // Insert button
+    if (heroActions) {
+      heroActions.appendChild(saveBtn);
+    } else if (heroContent) {
+      const actionsDiv = document.createElement('div');
+      actionsDiv.className = 'itin-hero-actions';
+      actionsDiv.style.cssText = 'display: flex; gap: 12px; margin-top: 16px;';
+      actionsDiv.appendChild(saveBtn);
+      heroContent.appendChild(actionsDiv);
+    }
+  }
+
+  // Modify trackItineraryView to also init wishlist
+  const originalTrackItineraryView = trackItineraryView;
+  trackItineraryView = function() {
+    const itineraryElement = document.querySelector('[data-itinerary-id]');
+    let itineraryId = itineraryElement?.getAttribute('data-itinerary-id');
+
+    if (!itineraryId) {
+      const path = window.location.pathname;
+      const match = path.match(/\/itineraries\/([^\/]+)\.html$/);
+      if (match) {
+        itineraryId = match[1];
+      }
+    }
+
+    if (itineraryId) {
+      // Initialize wishlist button
+      initWishlistButton(itineraryId);
+    }
+
+    // Call original tracking function (it will re-detect itineraryId)
+    originalTrackItineraryView();
+  };
+
   // Run tracking after a short delay to ensure supabase.js is loaded
   setTimeout(trackItineraryView, 100);
 });
