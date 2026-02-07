@@ -3447,6 +3447,12 @@
 
         if (result.success) {
           syncedPosts = result.posts || [];
+          // Sort by date (newest first)
+          syncedPosts.sort((a, b) => {
+            const dateA = new Date(a.timestamp || a.taken_at || a.created_at || 0);
+            const dateB = new Date(b.timestamp || b.taken_at || b.created_at || 0);
+            return dateB - dateA;
+          });
           selectedPostIds.clear();
           renderSyncedPosts();
           postsGrid.style.display = 'block';
@@ -3559,6 +3565,12 @@
           if (pollResult.status === 'completed') {
             // Success! Show the posts
             syncedPosts = pollResult.posts || [];
+            // Sort by date (newest first)
+            syncedPosts.sort((a, b) => {
+              const dateA = new Date(a.timestamp || a.taken_at || a.created_at || 0);
+              const dateB = new Date(b.timestamp || b.taken_at || b.created_at || 0);
+              return dateB - dateA;
+            });
             selectedPostIds.clear();
             renderSyncedPosts();
             postsGrid.style.display = 'block';

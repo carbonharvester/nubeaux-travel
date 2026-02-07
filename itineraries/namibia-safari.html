@@ -1431,6 +1431,20 @@
       object-fit: cover;
     }
 
+    /* Lazy loading placeholder for story thumbnails */
+    .story-ring-inner {
+      background: linear-gradient(135deg, #f0ebe6 0%, #e5ddd5 100%);
+    }
+
+    .story-ring-inner img {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .story-ring-inner img.loaded {
+      opacity: 1;
+    }
+
     .story-label {
       font-size: 0.8125rem;
       color: var(--color-text);
@@ -1694,7 +1708,7 @@
         <div class="story-item" data-story-group="wildlife">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/namibia-content/born-in-africa.jpg" alt="Wildlife">
+              <img src="../assets/namibia-content/born-in-africa-thumb.jpg" alt="Wildlife" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Wildlife</span>
@@ -1702,7 +1716,7 @@
         <div class="story-item" data-story-group="lodge">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/namibia-content/moving-to-africa.jpg" alt="The Lodge">
+              <img src="../assets/namibia-content/moving-to-africa-thumb.jpg" alt="The Lodge" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">The Lodge</span>
@@ -1710,7 +1724,7 @@
         <div class="story-item" data-story-group="safari">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/namibia-content/born-in-africa.jpg" alt="Safari">
+              <img src="../assets/namibia-content/born-in-africa-thumb.jpg" alt="Safari" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Safari</span>
@@ -1718,7 +1732,7 @@
         <div class="story-item" data-story-group="sunsets">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/namibia-content/moving-to-africa.jpg" alt="Sunsets">
+              <img src="../assets/namibia-content/moving-to-africa-thumb.jpg" alt="Sunsets" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Sunsets</span>
@@ -1726,7 +1740,7 @@
         <div class="story-item" data-story-group="etosha">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/namibia-content/born-in-africa.jpg" alt="Etosha">
+              <img src="../assets/namibia-content/born-in-africa-thumb.jpg" alt="Etosha" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Etosha</span>
@@ -1734,7 +1748,7 @@
         <div class="story-item" data-story-group="moments">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/namibia-content/moving-to-africa.jpg" alt="Moments">
+              <img src="../assets/namibia-content/moving-to-africa-thumb.jpg" alt="Moments" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Moments</span>

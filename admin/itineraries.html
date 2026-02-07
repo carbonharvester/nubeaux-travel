@@ -184,6 +184,12 @@
     .itinerary-title { font-weight: 500; }
     .itinerary-destination { font-size: 0.75rem; color: var(--color-text-light); }
 
+    .analytics-cell { text-align: center; }
+    .analytics-value { font-weight: 600; font-size: 0.9375rem; }
+    .analytics-label { font-size: 0.6875rem; color: var(--color-text-light); }
+    .conversion-rate { color: var(--color-success); }
+    .conversion-rate.low { color: var(--color-warning); }
+
     .status-badge {
       display: inline-block;
       padding: 0.25rem 0.5rem;
@@ -362,6 +368,39 @@
             .execute();
 
           allItineraries = results || [];
+
+          // Fetch analytics data (views and quotes per itinerary)
+          const [viewsData, quotesData] = await Promise.all([
+            supabase.from('page_views')
+              .select('itinerary_id')
+              .execute(),
+            supabase.from('quote_requests')
+              .select('itinerary_id')
+              .execute()
+          ]);
+
+          // Count views per itinerary
+          const viewCounts = {};
+          (viewsData || []).forEach(v => {
+            if (v.itinerary_id) {
+              viewCounts[v.itinerary_id] = (viewCounts[v.itinerary_id] || 0) + 1;
+            }
+          });
+
+          // Count quotes per itinerary
+          const quoteCounts = {};
+          (quotesData || []).forEach(q => {
+            if (q.itinerary_id) {
+              quoteCounts[q.itinerary_id] = (quoteCounts[q.itinerary_id] || 0) + 1;
+            }
+          });
+
+          // Attach analytics to itineraries
+          allItineraries = allItineraries.map(i => ({
+            ...i,
+            views: viewCounts[i.id] || 0,
+            quotes: quoteCounts[i.id] || 0
+          }));
         } else {
           allItineraries = [];
         }
@@ -391,19 +430,36 @@
             <tr>
               <th>Itinerary</th>
               <th>Duration</th>
+              <th style="text-align: center;">Views</th>
+              <th style="text-align: center;">Quotes</th>
+              <th style="text-align: center;">Conversion</th>
               <th>Status</th>
               <th>Created</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            ${filtered.map(i => `
+            ${filtered.map(i => {
+              const views = i.views || 0;
+              const quotes = i.quotes || 0;
+              const conversion = views > 0 ? ((quotes / views) * 100).toFixed(1) : '0.0';
+              const conversionClass = parseFloat(conversion) >= 2 ? 'conversion-rate' : 'conversion-rate low';
+              return `
               <tr>
                 <td>
                   <div class="itinerary-title">${i.title || 'Untitled'}</div>
                   <div class="itinerary-destination">${i.destination || 'No destination'}</div>
                 </td>
                 <td>${i.duration || '-'}</td>
+                <td class="analytics-cell">
+                  <div class="analytics-value">${views.toLocaleString()}</div>
+                </td>
+                <td class="analytics-cell">
+                  <div class="analytics-value">${quotes.toLocaleString()}</div>
+                </td>
+                <td class="analytics-cell">
+                  <div class="analytics-value ${conversionClass}">${conversion}%</div>
+                </td>
                 <td><span class="status-badge ${i.status || 'draft'}">${capitalize(i.status || 'draft')}</span></td>
                 <td>${formatDate(i.created_at)}</td>
                 <td>
@@ -413,7 +469,7 @@
                   <button class="action-btn" onclick="viewItinerary('${i.id}')">View</button>
                 </td>
               </tr>
-            `).join('')}
+            `}).join('')}
           </tbody>
         </table>
       `;

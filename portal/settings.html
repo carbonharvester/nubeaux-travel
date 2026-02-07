@@ -370,6 +370,66 @@
       background: var(--color-success);
     }
 
+    /* Verification Badge Styles */
+    .verification-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .verification-badge.verified {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .verification-badge.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .verification-badge.unverified {
+      background: var(--color-bg);
+      color: var(--color-text-light);
+    }
+
+    .verification-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .verification-requirements {
+      background: var(--color-bg);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .requirement-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 0.875rem;
+    }
+
+    .requirement-item.met svg {
+      color: var(--color-success);
+    }
+
+    .requirement-item.not-met svg {
+      color: var(--color-border);
+    }
+
+    .requirement-item svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
     @media (max-width: 1024px) {
       .portal-layout {
         grid-template-columns: 1fr;
@@ -407,6 +467,10 @@
         <a href="media.html">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           Media Library
+        </a>
+        <a href="earnings.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Earnings
         </a>
         <a href="analytics.html">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
@@ -478,6 +542,39 @@
           </div>
 
           <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+        </div>
+      </div>
+
+      <!-- Verification Section -->
+      <div class="settings-section">
+        <div class="settings-section-header">
+          <h2 style="display: flex; align-items: center; gap: 10px;">
+            Verification
+            <span class="verification-badge unverified" id="verificationBadge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              Not Verified
+            </span>
+          </h2>
+          <p>Get a verified badge on your creator profile</p>
+        </div>
+        <div class="settings-section-content">
+          <div class="verification-requirements">
+            <p style="font-size: 0.8125rem; color: var(--color-text-light); margin-bottom: 12px;">To request verification, you need:</p>
+            <div class="requirement-item not-met" id="reqInstagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+              Instagram account connected
+            </div>
+            <div class="requirement-item not-met" id="reqItinerary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+              At least 1 published itinerary
+            </div>
+          </div>
+
+          <button class="btn btn-outline" id="requestVerificationBtn" onclick="requestVerification()" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+            Request Verification
+          </button>
+          <p class="form-hint">Verification requests are reviewed within 48 hours.</p>
         </div>
       </div>
 
@@ -734,6 +831,88 @@
       localStorage.removeItem('juno_creator_session');
       window.location.href = 'login.html';
     }
+
+    // Verification functionality
+    function updateVerificationUI(creator) {
+      const badge = document.getElementById('verificationBadge');
+      const reqInstagram = document.getElementById('reqInstagram');
+      const reqItinerary = document.getElementById('reqItinerary');
+      const requestBtn = document.getElementById('requestVerificationBtn');
+
+      // Check verification status
+      if (creator.verified) {
+        badge.className = 'verification-badge verified';
+        badge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Verified';
+        requestBtn.style.display = 'none';
+      } else if (creator.verification_status === 'pending') {
+        badge.className = 'verification-badge pending';
+        badge.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Pending Review';
+        requestBtn.disabled = true;
+        requestBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Verification Pending';
+      }
+
+      // Check requirements
+      const hasInstagram = creator.instagram && creator.instagram.length > 0;
+      const hasPublishedItinerary = creator.published_itineraries_count > 0;
+
+      if (hasInstagram) {
+        reqInstagram.className = 'requirement-item met';
+        reqInstagram.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Instagram account connected';
+      }
+
+      if (hasPublishedItinerary) {
+        reqItinerary.className = 'requirement-item met';
+        reqItinerary.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> At least 1 published itinerary';
+      }
+
+      // Enable button if all requirements met
+      if (hasInstagram && hasPublishedItinerary && !creator.verified && creator.verification_status !== 'pending') {
+        requestBtn.disabled = false;
+      }
+    }
+
+    async function requestVerification() {
+      if (!creatorId) {
+        showToast('Not logged in', 'error');
+        return;
+      }
+
+      const requestBtn = document.getElementById('requestVerificationBtn');
+      requestBtn.disabled = true;
+      requestBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10"/></svg> Submitting...';
+
+      try {
+        const response = await fetch('/.netlify/functions/update-creator', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            creator_id: creatorId,
+            verification_status: 'pending'
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showToast('Verification request submitted!', 'success');
+          updateVerificationUI({ ...creatorData, verification_status: 'pending' });
+        } else {
+          throw new Error(data.error || 'Failed to submit');
+        }
+      } catch (error) {
+        console.error('Verification error:', error);
+        showToast('Failed to submit: ' + error.message, 'error');
+        requestBtn.disabled = false;
+        requestBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Request Verification';
+      }
+    }
+
+    // Update loadCreatorProfile to also check verification
+    const originalPopulateForm = populateForm;
+    populateForm = function(creator) {
+      originalPopulateForm(creator);
+      updateVerificationUI(creator);
+    };
   </script>
 </body>
 </html>

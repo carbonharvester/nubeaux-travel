@@ -136,6 +136,20 @@
       object-fit: cover;
     }
 
+    /* Lazy loading placeholder for story thumbnails */
+    .story-ring-inner {
+      background: linear-gradient(135deg, #f0ebe6 0%, #e5ddd5 100%);
+    }
+
+    .story-ring-inner img {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .story-ring-inner img.loaded {
+      opacity: 1;
+    }
+
     .story-label {
       font-size: 0.8125rem;
       color: var(--color-text);
@@ -291,6 +305,49 @@
 
     .stories-nav.prev { left: 0; }
     .stories-nav.next { right: 0; }
+
+    /* Instagram-style video loading */
+    .story-video-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    .story-video-container video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .story-poster {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 1;
+    }
+
+    .story-loading-spinner {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(255,255,255,0.2);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      z-index: 2;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
 
     .stories-header-info {
       position: absolute;
@@ -1241,7 +1298,7 @@
         <div class="story-item" data-story-group="arrival">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/senegal-content/stories/story-01.jpg" alt="Arrival">
+              <img src="../assets/senegal-content/stories/story-01-thumb.jpg" alt="Arrival" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Arrival</span>
@@ -1249,7 +1306,7 @@
         <div class="story-item" data-story-group="goree">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/senegal-content/stories/story-09.jpg" alt="Gorée Island">
+              <img src="../assets/senegal-content/stories/story-09-thumb.jpg" alt="Gorée Island" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Gorée Island</span>
@@ -1257,7 +1314,7 @@
         <div class="story-item" data-story-group="stlouis">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/senegal-content/stories/story-20.jpg" alt="Saint Louis">
+              <img src="../assets/senegal-content/stories/story-20-thumb.jpg" alt="Saint Louis" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Saint Louis</span>
@@ -1265,7 +1322,7 @@
         <div class="story-item" data-story-group="hotel">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/senegal-content/stories/story-31.jpg" alt="The Hotel">
+              <img src="../assets/senegal-content/stories/story-31-thumb.jpg" alt="The Hotel" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">The Hotel</span>
@@ -1273,7 +1330,7 @@
         <div class="story-item" data-story-group="streets">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/senegal-content/stories/story-41.jpg" alt="The Streets">
+              <img src="../assets/senegal-content/stories/story-41-thumb.jpg" alt="The Streets" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">The Streets</span>
@@ -1281,7 +1338,7 @@
         <div class="story-item" data-story-group="photoshoot">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/senegal-content/stories/story-51.jpg" alt="Photoshoot">
+              <img src="../assets/senegal-content/stories/story-51-thumb.jpg" alt="Photoshoot" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Photoshoot</span>
@@ -1289,7 +1346,7 @@
         <div class="story-item" data-story-group="food">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/senegal-content/stories/story-61.jpg" alt="Food & Culture">
+              <img src="../assets/senegal-content/stories/story-61-thumb.jpg" alt="Food & Culture" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Food</span>
@@ -1297,7 +1354,7 @@
         <div class="story-item" data-story-group="final">
           <div class="story-ring">
             <div class="story-ring-inner">
-              <img src="../assets/senegal-content/stories/story-71.jpg" alt="Final Days">
+              <img src="../assets/senegal-content/stories/story-71-thumb.jpg" alt="Final Days" loading="lazy" decoding="async" onload="this.classList.add('loaded')">
             </div>
           </div>
           <span class="story-label">Final Days</span>
@@ -1921,34 +1978,76 @@
       ]
     };
 
-    // Cache for preloaded videos
+    // Cache for preloaded videos - Instagram-style smart preloading
     const videoCache = {};
     const imageCache = {};
+    const preloadingVideos = new Set();
 
-    // Preload all story videos and images on page load
-    function preloadStories() {
-      Object.entries(storyGroups).forEach(([groupName, stories]) => {
-        stories.forEach((story, index) => {
-          if (story.type === 'video') {
-            const video = document.createElement('video');
-            video.preload = 'auto';
-            video.playsInline = true;
-            video.muted = true; // Muted for preload only
-            video.src = story.src;
-            video.load();
-            // Cache reference
-            videoCache[story.src] = video;
-          } else {
+    // Preload a single video and return a promise
+    function preloadVideo(src) {
+      if (videoCache[src] || preloadingVideos.has(src)) return;
+      preloadingVideos.add(src);
+
+      const video = document.createElement('video');
+      video.preload = 'auto';
+      video.playsInline = true;
+      video.muted = true;
+      video.src = src;
+
+      video.oncanplaythrough = () => {
+        videoCache[src] = video;
+        preloadingVideos.delete(src);
+      };
+
+      video.onerror = () => {
+        preloadingVideos.delete(src);
+      };
+
+      video.load();
+    }
+
+    // Preload upcoming videos (next 2) while current plays - Instagram strategy
+    function preloadUpcoming(stories, currentIndex) {
+      for (let i = 1; i <= 2; i++) {
+        const nextIndex = currentIndex + i;
+        if (nextIndex < stories.length) {
+          const nextStory = stories[nextIndex];
+          if (nextStory.type === 'video') {
+            preloadVideo(nextStory.src);
+          } else if (!imageCache[nextStory.src]) {
             const img = new Image();
-            img.src = story.src;
-            imageCache[story.src] = img;
+            img.src = nextStory.src;
+            imageCache[nextStory.src] = img;
+          }
+        }
+      }
+    }
+
+    // Initial preload: only first video of each group + thumbnails (lightweight)
+    function preloadFirstStories() {
+      Object.entries(storyGroups).forEach(([groupName, stories]) => {
+        // Preload first video of each group
+        const firstVideo = stories.find(s => s.type === 'video');
+        if (firstVideo) {
+          preloadVideo(firstVideo.src);
+        }
+        // Preload all thumbnails (tiny files)
+        stories.forEach(story => {
+          if (story.thumb && !imageCache[story.thumb]) {
+            const img = new Image();
+            img.src = story.thumb;
+            imageCache[story.thumb] = img;
           }
         });
       });
     }
 
-    // Start preloading immediately
-    preloadStories();
+    // Start lightweight preload after page loads
+    if (document.readyState === 'complete') {
+      preloadFirstStories();
+    } else {
+      window.addEventListener('load', preloadFirstStories);
+    }
 
     const storiesLightbox = document.getElementById('storiesLightbox');
     const storiesMedia = document.getElementById('storiesMedia');
@@ -1996,6 +2095,9 @@
       currentStoryIndex = index;
       const story = currentStories[index];
 
+      // Preload upcoming videos while this one plays (Instagram strategy)
+      preloadUpcoming(currentStories, index);
+
       // Update progress bars
       document.querySelectorAll('.stories-progress-bar').forEach((bar, i) => {
         bar.classList.remove('active', 'complete');
@@ -2010,26 +2112,52 @@
         videoElement = null;
       }
 
-      // Show content - use cached videos for instant playback
+      // Show content
       if (story.type === 'video') {
-        // Use the preloaded video element directly (move it, don't clone)
         const cachedVideo = videoCache[story.src];
-        storiesMedia.innerHTML = '';
 
-        if (cachedVideo && cachedVideo.readyState >= 2) {
-          // Use cached video directly
+        // Instagram-style: show thumbnail + loading spinner immediately
+        storiesMedia.innerHTML = `
+          <div class="story-video-container">
+            ${story.thumb ? `<img src="${story.thumb}" class="story-poster" alt="">` : ''}
+            <div class="story-loading-spinner"></div>
+          </div>
+        `;
+
+        const container = storiesMedia.querySelector('.story-video-container');
+        const spinner = storiesMedia.querySelector('.story-loading-spinner');
+        const poster = storiesMedia.querySelector('.story-poster');
+
+        // Use cached video if ready, otherwise create new
+        if (cachedVideo && cachedVideo.readyState >= 3) {
           videoElement = cachedVideo;
           videoElement.muted = false;
           videoElement.currentTime = 0;
-          storiesMedia.appendChild(videoElement);
         } else {
-          // Fallback: create new video element
           videoElement = document.createElement('video');
           videoElement.src = story.src;
-          videoElement.autoplay = true;
           videoElement.playsInline = true;
-          storiesMedia.appendChild(videoElement);
+          videoElement.preload = 'auto';
         }
+
+        // Hide spinner and poster when video can play
+        const onCanPlay = () => {
+          if (spinner) spinner.style.display = 'none';
+          if (poster) poster.style.display = 'none';
+          videoElement.removeEventListener('canplay', onCanPlay);
+        };
+        videoElement.addEventListener('canplay', onCanPlay);
+
+        // Show buffering state
+        videoElement.addEventListener('waiting', () => {
+          if (spinner) spinner.style.display = 'block';
+        });
+        videoElement.addEventListener('playing', () => {
+          if (spinner) spinner.style.display = 'none';
+          if (poster) poster.style.display = 'none';
+        });
+
+        container.appendChild(videoElement);
 
         // Remove old listeners and add new ones
         videoElement.onended = () => goToNextStory();
@@ -2053,7 +2181,11 @@
         // Play immediately
         const playPromise = videoElement.play();
         if (playPromise) {
-          playPromise.catch(() => goToNextStory());
+          playPromise.catch(() => {
+            // Autoplay blocked - try muted
+            videoElement.muted = true;
+            videoElement.play().catch(() => goToNextStory());
+          });
         }
       } else {
         // Use cached image

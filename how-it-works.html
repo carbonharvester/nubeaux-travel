@@ -466,8 +466,8 @@
     }
 
     .earnings-tiers {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      display: flex;
+      flex-direction: column;
       gap: var(--space-sm);
     }
 
@@ -475,21 +475,88 @@
       background: var(--color-white);
       padding: var(--space-md);
       border-radius: 8px;
-      text-align: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .tier-card.highlight {
+      border: 2px solid var(--color-accent);
+      background: #fdf9f6;
     }
 
     .tier-name {
-      font-size: 0.6875rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    .tier-gmv {
+      font-size: 0.75rem;
       color: var(--color-text-light);
-      margin-bottom: var(--space-xs);
+      text-align: center;
     }
 
     .tier-rate {
       font-family: var(--font-serif);
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       color: var(--color-accent);
+      text-align: right;
+    }
+
+    .tier-note {
+      font-size: 0.6875rem;
+      color: var(--color-text-light);
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-top: calc(-1 * var(--space-xs));
+    }
+
+    .commission-categories {
+      margin-top: var(--space-lg);
+      background: var(--color-white);
+      border-radius: 8px;
+      padding: var(--space-md);
+    }
+
+    .commission-categories h4 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .category-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-xs);
+    }
+
+    .category-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+      padding: var(--space-xs) 0;
+    }
+
+    .category-item span:last-child {
+      color: var(--color-accent);
+      font-weight: 500;
+    }
+
+    .tier-rules {
+      margin-top: var(--space-md);
+      padding: var(--space-md);
+      background: #f5f5f5;
+      border-radius: 8px;
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    .tier-rules strong {
+      color: var(--color-text);
     }
 
     .earnings-visual {
@@ -680,6 +747,94 @@
     .animate-on-scroll.animated {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Itinerary Preview Modal */
+    .preview-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .preview-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+    }
+
+    .preview-modal-container {
+      position: relative;
+      width: 90%;
+      max-width: 1000px;
+      height: 85vh;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .preview-modal.active .preview-modal-container {
+      transform: scale(1);
+    }
+
+    .preview-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: var(--color-charcoal);
+      color: white;
+    }
+
+    .preview-modal-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .preview-modal-subtitle {
+      font-size: 0.75rem;
+      opacity: 0.7;
+    }
+
+    .preview-modal-close {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    .preview-modal-close:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .preview-modal-close svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .preview-modal-body {
+      height: calc(100% - 60px);
+      overflow: hidden;
+    }
+
+    .preview-modal-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
     /* Mobile Sticky CTA */
@@ -928,27 +1083,52 @@
             <h2 id="earnings-heading">Clear, honest earnings.</h2>
 
             <div class="earnings-highlight">
-              <div class="earnings-number">40%</div>
-              <div class="earnings-label">of total commission on confirmed bookings</div>
+              <div class="earnings-number">35-55%</div>
+              <div class="earnings-label">of commission on confirmed bookings, based on your tier</div>
             </div>
 
             <div class="earnings-tiers">
               <div class="tier-card">
-                <div class="tier-name">Starter</div>
-                <div class="tier-rate">40%</div>
+                <div class="tier-name">Tier 0</div>
+                <div class="tier-gmv">$0 - $50k TTM</div>
+                <div class="tier-rate">35%</div>
               </div>
               <div class="tier-card">
-                <div class="tier-name">Growing</div>
+                <div class="tier-name">Tier 1</div>
+                <div class="tier-gmv">$50k - $300k TTM</div>
+                <div class="tier-rate">40%</div>
+              </div>
+              <div class="tier-card highlight">
+                <div class="tier-name">Tier 2</div>
+                <div class="tier-gmv">$300k - $1m TTM</div>
                 <div class="tier-rate">45%</div>
               </div>
               <div class="tier-card">
-                <div class="tier-name">Established</div>
+                <div class="tier-name">Tier 3</div>
+                <div class="tier-gmv">$1m - $3m TTM</div>
                 <div class="tier-rate">50%</div>
               </div>
               <div class="tier-card">
-                <div class="tier-name">Partner</div>
+                <div class="tier-name">Tier 4</div>
+                <div class="tier-gmv">$3m+ TTM</div>
                 <div class="tier-rate">55%</div>
+                <div class="tier-note">Strategic partners may earn up to 60%</div>
               </div>
+            </div>
+
+            <div class="commission-categories">
+              <h4>Commission by Category</h4>
+              <div class="category-list">
+                <div class="category-item"><span>Hotels</span><span>10-20%</span></div>
+                <div class="category-item"><span>Cruises</span><span>10-18%</span></div>
+                <div class="category-item"><span>Tours & Experiences</span><span>15-25%</span></div>
+                <div class="category-item"><span>Car Rentals</span><span>8-12%</span></div>
+                <div class="category-item"><span>Travel Insurance</span><span>20-30%</span></div>
+              </div>
+            </div>
+
+            <div class="tier-rules">
+              <strong>How tiers work:</strong> Your tier is based on your Trailing Twelve Month (TTM) gross merchandise value. If your GMV drops below your tier threshold, you have a 6-month grace period before downgrading.
             </div>
           </div>
 
@@ -1035,7 +1215,7 @@
         <span class="section-label" style="color: rgba(255,255,255,0.7);">Live Example</span>
         <h2 id="example-heading">See it in action.</h2>
         <p>A real trip by Nia The Light. Fully bookable. This is what your audience sees when they click your link.</p>
-        <a href="itineraries/namibia-safari-example.html" class="btn btn-outline">View the itinerary</a>
+        <button type="button" class="btn btn-outline" onclick="openPreviewModal()" style="border-color: rgba(255,255,255,0.5); color: white; cursor: pointer;">View the itinerary</button>
       </div>
     </section>
 
@@ -1054,6 +1234,24 @@
   <!-- Mobile Sticky CTA -->
   <div class="mobile-sticky-cta">
     <a href="early-access.html" class="btn btn-primary">Get Early Access</a>
+  </div>
+
+  <!-- Itinerary Preview Modal -->
+  <div class="preview-modal" id="previewModal" onclick="closePreviewModal(event)">
+    <div class="preview-modal-container" onclick="event.stopPropagation()">
+      <div class="preview-modal-header">
+        <div>
+          <div class="preview-modal-title">Namibia: Wilderness & Wonder</div>
+          <div class="preview-modal-subtitle">Curated by @niathelight</div>
+        </div>
+        <button type="button" class="preview-modal-close" onclick="closePreviewModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="preview-modal-body">
+        <iframe class="preview-modal-iframe" id="previewIframe" src="about:blank"></iframe>
+      </div>
+    </div>
   </div>
 
   <footer class="footer">
@@ -1154,6 +1352,62 @@
           btn.classList.add('active');
         }
       });
+    });
+
+    // Preview Modal
+    function openPreviewModal() {
+      const modal = document.getElementById('previewModal');
+      const iframe = document.getElementById('previewIframe');
+
+      // Load the itinerary page
+      iframe.src = 'itineraries/namibia-safari.html?preview=true';
+
+      // Show modal
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+
+      // Trigger animation
+      requestAnimationFrame(() => {
+        modal.classList.add('active');
+      });
+
+      // Hide header/footer in iframe once loaded
+      iframe.onload = function() {
+        try {
+          const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+          const style = iframeDoc.createElement('style');
+          style.textContent = `
+            .header, .footer, .mobile-sticky-cta, .mobile-menu { display: none !important; }
+            body { padding-top: 0 !important; }
+            .itin-hero { margin-top: 0 !important; }
+          `;
+          iframeDoc.head.appendChild(style);
+        } catch(e) {
+          // Cross-origin restriction, page still works
+        }
+      };
+    }
+
+    function closePreviewModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+
+      const modal = document.getElementById('previewModal');
+      const iframe = document.getElementById('previewIframe');
+
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+
+      setTimeout(() => {
+        modal.style.display = 'none';
+        iframe.src = 'about:blank';
+      }, 300);
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closePreviewModal();
+      }
     });
   </script>
 </body>
