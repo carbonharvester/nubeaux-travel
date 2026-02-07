@@ -261,6 +261,19 @@
       margin: 0 auto;
     }
 
+    .floating-comments-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      z-index: 0;
+    }
+
     .comment-bubble {
       position: absolute;
       background: var(--color-white);
@@ -270,6 +283,7 @@
       font-size: 0.9rem;
       max-width: 280px;
       animation: float 6s ease-in-out infinite;
+      z-index: 1;
     }
 
     .comment-bubble::after {
@@ -338,6 +352,10 @@
 
       .comment-bubble:nth-child(even) {
         align-self: flex-end;
+      }
+
+      .floating-comments-image {
+        display: none;
       }
     }
 
@@ -2018,6 +2036,7 @@
         </div>
 
         <div class="floating-comments animate-on-scroll">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_640,h_800,q_auto,f_auto/v1770005019/Namibia_onguma_Klein-158_bezogc.jpg" alt="" class="floating-comments-image" loading="lazy">
           <div class="comment-bubble bubble-1">
             <span class="username">@sarah_travels</span>
             <span class="text">OMG where is this?? I need the full itinerary! 😍</span>
