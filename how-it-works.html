@@ -3,43 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="How JUNO works for creators and travellers. Creators share trips. Travellers book. JUNO handles everything in between.">
+  <meta name="description" content="How JUNO works. Creators share trips. Travellers book. JUNO handles everything in between.">
   <meta name="theme-color" content="#ffffff">
 
   <title>How It Works | JUNO Travel</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=24">
 
   <style>
     /* Hero */
     .hiw-hero {
-      padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-xl);
-      background: var(--color-warm-cream);
-      text-align: center;
-    }
-
-    .hiw-hero h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
-      margin-bottom: var(--space-sm);
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hiw-hero .lead {
-      font-size: 1.125rem;
-      color: var(--color-text-light);
-      max-width: 560px;
-      margin: 0 auto var(--space-lg);
-    }
-
-    .hiw-hero-ctas {
+      min-height: 70vh;
       display: flex;
-      justify-content: center;
-      gap: var(--space-md);
+      align-items: flex-end;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hiw-hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hiw-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hiw-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+    }
+
+    .hiw-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: var(--space-2xl);
+      max-width: 800px;
+    }
+
+    .hiw-hero-content h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: white;
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .hiw-hero-content .lead {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: var(--space-lg);
+      max-width: 600px;
+      animation: fadeInUp 0.8s ease 0.15s forwards;
+      opacity: 0;
     }
 
     /* Path Toggle */
@@ -56,7 +79,7 @@
     }
 
     .path-toggle-btn {
-      padding: var(--space-sm) var(--space-lg);
+      padding: var(--space-sm) var(--space-xl);
       border: 1px solid var(--color-light-grey);
       border-radius: 100px;
       background: var(--color-white);
@@ -77,114 +100,166 @@
       border-color: var(--color-charcoal);
     }
 
+    /* Section Label */
+    .section-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+
     /* Section Styles */
     .hiw-section {
       padding: var(--space-2xl) 0;
     }
 
     .hiw-section.alt {
-      background: var(--color-sand);
+      background: var(--color-off-white);
     }
 
-    .hiw-section.dark {
-      background: var(--color-charcoal);
-      color: var(--color-white);
+    /* Creator Steps - Visual Flow */
+    .creator-flow {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
     }
 
-    .hiw-section.dark h2,
-    .hiw-section.dark h3 {
-      color: var(--color-white);
-    }
-
-    .hiw-section.dark p {
-      color: rgba(255,255,255,0.8);
-    }
-
-    .section-header {
+    .creator-flow-header {
       text-align: center;
-      margin-bottom: var(--space-xl);
+      margin-bottom: var(--space-2xl);
     }
 
-    .section-header h2 {
-      font-size: clamp(1.75rem, 4vw, 2.25rem);
+    .creator-flow-header h2 {
       margin-bottom: var(--space-sm);
     }
 
-    .section-header p {
+    .creator-flow-header p {
       color: var(--color-text-light);
       max-width: 500px;
       margin: 0 auto;
     }
 
-    .section-label {
-      display: inline-block;
-      font-size: 0.6875rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      margin-bottom: var(--space-sm);
-    }
-
-    /* Steps */
-    .hiw-steps {
+    .flow-steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: var(--space-xl);
-      max-width: 960px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
-    .hiw-step {
+    .flow-step {
       text-align: center;
+      position: relative;
     }
 
-    .hiw-step-number {
-      width: 56px;
-      height: 56px;
-      border: 2px solid currentColor;
+    .flow-step::after {
+      content: '';
+      position: absolute;
+      top: 60px;
+      right: -30%;
+      width: 60%;
+      height: 2px;
+      background: linear-gradient(to right, var(--color-accent), transparent);
+    }
+
+    .flow-step:last-child::after {
+      display: none;
+    }
+
+    .flow-step-visual {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto var(--space-lg);
+      background: var(--color-off-white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .flow-step-visual svg {
+      width: 48px;
+      height: 48px;
+      color: var(--color-accent);
+    }
+
+    .flow-step-number {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 32px;
+      height: 32px;
+      background: var(--color-charcoal);
+      color: white;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-serif);
-      font-size: 1.5rem;
-      margin: 0 auto var(--space-md);
+      font-size: 1rem;
     }
 
-    .hiw-section.dark .hiw-step-number {
-      border-color: rgba(255,255,255,0.5);
-    }
-
-    .hiw-step h3 {
+    .flow-step h3 {
       font-size: 1.125rem;
       margin-bottom: var(--space-sm);
     }
 
-    .hiw-step p {
+    .flow-step p {
       font-size: 0.9375rem;
-      line-height: 1.6;
       color: var(--color-text-light);
+      line-height: 1.6;
     }
 
-    /* Responsibilities */
-    .responsibilities {
+    /* Responsibility Split */
+    .responsibility-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-charcoal);
+      color: white;
+    }
+
+    .responsibility-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .responsibility-header h2 {
+      color: white;
+      margin-bottom: var(--space-sm);
+    }
+
+    .responsibility-header p {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .responsibility-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: var(--space-lg);
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
     }
 
     .responsibility-card {
-      background: var(--color-white);
-      padding: var(--space-lg);
-      border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: var(--space-xl);
     }
 
     .responsibility-card h3 {
-      font-size: 1rem;
-      margin-bottom: var(--space-md);
-      color: var(--color-charcoal);
+      color: white;
+      font-size: 1.25rem;
+      margin-bottom: var(--space-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .responsibility-card h3 svg {
+      width: 24px;
+      height: 24px;
     }
 
     .responsibility-list {
@@ -197,130 +272,202 @@
       display: flex;
       align-items: flex-start;
       gap: var(--space-sm);
-      padding: var(--space-xs) 0;
+      padding: var(--space-sm) 0;
       font-size: 0.9375rem;
-      color: var(--color-text-light);
+      color: rgba(255,255,255,0.8);
     }
 
-    .responsibility-list .icon {
+    .responsibility-list li svg {
       width: 20px;
       height: 20px;
       flex-shrink: 0;
       margin-top: 2px;
     }
 
-    .responsibility-list .icon.check {
+    .you-do .responsibility-list li svg {
       color: var(--color-accent);
     }
 
-    .responsibility-list .icon.x {
-      color: var(--color-medium-grey);
+    .we-do .responsibility-list li svg {
+      color: #28c840;
     }
 
-    /* Customisation */
-    .customisation-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-2xl);
+    /* Traveller Section */
+    .traveller-section {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
       align-items: center;
-      max-width: 900px;
-      margin: 0 auto;
+      overflow: hidden;
     }
 
-    .customisation-content h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
+    .traveller-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .traveller-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .traveller-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
+    }
+
+    .traveller-content {
+      position: relative;
+      z-index: 2;
+      padding: var(--space-2xl);
+      max-width: 550px;
+    }
+
+    .traveller-content h2 {
+      color: white;
       margin-bottom: var(--space-md);
     }
 
-    .customisation-content p {
-      color: var(--color-text-light);
-      margin-bottom: var(--space-md);
+    .traveller-content p {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.125rem;
+      margin-bottom: var(--space-lg);
+      line-height: 1.7;
     }
 
-    .customisation-options {
+    .traveller-features {
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 0 0 var(--space-lg);
     }
 
-    .customisation-options li {
+    .traveller-features li {
       display: flex;
       align-items: center;
       gap: var(--space-sm);
-      padding: var(--space-sm) 0;
+      padding: var(--space-xs) 0;
+      color: white;
       font-size: 0.9375rem;
     }
 
-    .customisation-options .icon {
+    .traveller-features svg {
       width: 20px;
       height: 20px;
       color: var(--color-accent);
     }
 
-    .customisation-visual {
-      background: var(--color-sand);
-      padding: var(--space-xl);
-      border-radius: 8px;
+    /* Earnings Visual */
+    .earnings-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-off-white);
     }
 
-    .customisation-example {
+    .earnings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .earnings-content h2 {
+      margin-bottom: var(--space-md);
+    }
+
+    .earnings-highlight {
       background: var(--color-white);
-      padding: var(--space-md);
-      border-radius: 8px;
-      margin-bottom: var(--space-sm);
+      padding: var(--space-xl);
+      border-radius: 12px;
+      margin-bottom: var(--space-lg);
+      border-left: 4px solid var(--color-accent);
     }
 
-    .customisation-example:last-child {
-      margin-bottom: 0;
-    }
-
-    .example-label {
-      font-size: 0.6875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--color-medium-grey);
+    .earnings-number {
+      font-family: var(--font-serif);
+      font-size: 3rem;
+      color: var(--color-accent);
       margin-bottom: var(--space-xs);
     }
 
-    .example-value {
+    .earnings-label {
       font-size: 1rem;
-      color: var(--color-charcoal);
+      color: var(--color-text);
     }
 
-    /* Earnings */
-    .earnings-box {
+    .earnings-tiers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+    }
+
+    .tier-card {
       background: var(--color-white);
-      padding: var(--space-xl);
+      padding: var(--space-md);
       border-radius: 8px;
-      max-width: 600px;
-      margin: 0 auto;
       text-align: center;
     }
 
-    .earnings-box h3 {
-      font-size: 1.25rem;
-      margin-bottom: var(--space-md);
+    .tier-name {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-xs);
     }
 
-    .earnings-statement {
-      font-size: 1.125rem;
-      color: var(--color-charcoal);
-      margin-bottom: var(--space-md);
-      padding: var(--space-md);
-      background: var(--color-sand);
-      border-radius: 8px;
-    }
-
-    .earnings-statement strong {
+    .tier-rate {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
       color: var(--color-accent);
     }
 
-    .earnings-note {
-      font-size: 0.875rem;
-      color: var(--color-text-light);
+    .earnings-visual {
+      position: relative;
     }
 
-    /* Trust */
+    .earnings-visual img {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .earnings-badge {
+      position: absolute;
+      bottom: var(--space-lg);
+      right: var(--space-lg);
+      background: white;
+      padding: var(--space-md) var(--space-lg);
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+
+    .earnings-badge-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-xs);
+    }
+
+    .earnings-badge-value {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--color-accent);
+    }
+
+    /* Trust Section */
+    .trust-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+
+    .trust-header {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
     .trust-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -329,72 +476,142 @@
       margin: 0 auto;
     }
 
-    .trust-item {
+    .trust-card {
       text-align: center;
       padding: var(--space-lg);
+      background: var(--color-off-white);
+      border-radius: 12px;
+      transition: transform 0.3s ease;
     }
 
-    .trust-item h3 {
+    .trust-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .trust-card svg {
+      width: 40px;
+      height: 40px;
+      color: var(--color-accent);
+      margin-bottom: var(--space-md);
+    }
+
+    .trust-card h3 {
       font-size: 1rem;
-      margin-bottom: var(--space-xs);
+      margin-bottom: var(--space-sm);
     }
 
-    .trust-item p {
+    .trust-card p {
       font-size: 0.875rem;
-      color: rgba(255,255,255,0.7);
+      color: var(--color-text-light);
+      margin: 0;
     }
 
-    /* Example */
+    /* Example Section */
     .example-section {
-      padding: var(--space-2xl) 0;
-      background: var(--color-warm-cream);
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
     }
 
-    .example-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: var(--space-2xl);
-      align-items: center;
+    .example-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .example-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center right;
+    }
+
+    .example-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 70%);
+    }
+
+    .example-content {
+      position: relative;
+      z-index: 2;
+      padding: var(--space-2xl);
+      max-width: 500px;
     }
 
     .example-content h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: white;
       margin-bottom: var(--space-md);
     }
 
     .example-content p {
-      color: var(--color-text-light);
+      color: rgba(255,255,255,0.9);
+      font-size: 1.125rem;
       margin-bottom: var(--space-lg);
     }
 
-    .example-image {
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    .example-content .btn-outline {
+      border-color: rgba(255,255,255,0.5);
+      color: white;
     }
 
-    .example-image img {
-      width: 100%;
-      height: auto;
-      display: block;
+    .example-content .btn-outline:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
     }
 
     /* Final CTA */
     .final-cta {
+      background: #d4c4b0;
       padding: var(--space-2xl) 0;
-      background: var(--color-white);
       text-align: center;
     }
 
     .final-cta h2 {
-      font-size: clamp(1.5rem, 4vw, 2rem);
-      margin-bottom: var(--space-md);
+      margin-bottom: var(--space-lg);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .final-cta p {
-      color: var(--color-text-light);
-      max-width: 450px;
-      margin: 0 auto var(--space-lg);
+    .final-cta-buttons {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+    }
+
+    .final-cta .btn-primary {
+      background: var(--color-text);
+      color: white;
+    }
+
+    .final-cta .btn-outline {
+      border-color: var(--color-text);
+      color: var(--color-text);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.animated {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Mobile Sticky CTA */
@@ -417,32 +634,36 @@
 
     /* Responsive */
     @media (max-width: 1024px) {
-      .hiw-steps {
+      .flow-steps {
         grid-template-columns: 1fr;
-        gap: var(--space-lg);
+        gap: var(--space-xl);
         max-width: 400px;
       }
 
-      .responsibilities {
+      .flow-step::after {
+        display: none;
+      }
+
+      .responsibility-grid {
         grid-template-columns: 1fr;
       }
 
-      .customisation-grid,
-      .example-grid {
+      .earnings-grid {
         grid-template-columns: 1fr;
-        gap: var(--space-xl);
       }
 
       .trust-grid {
         grid-template-columns: 1fr;
-        gap: var(--space-md);
       }
     }
 
     @media (max-width: 768px) {
-      .hiw-hero-ctas {
-        flex-direction: column;
-        padding: 0 var(--space-lg);
+      .hiw-hero {
+        min-height: 60vh;
+      }
+
+      .hiw-hero-content {
+        padding: var(--space-xl);
       }
 
       .path-toggle {
@@ -456,12 +677,26 @@
         text-align: center;
       }
 
+      .earnings-tiers {
+        grid-template-columns: 1fr;
+      }
+
+      .final-cta-buttons {
+        flex-direction: column;
+        padding: 0 var(--space-lg);
+      }
+
       .mobile-sticky-cta {
         display: block;
       }
 
       .final-cta {
         padding-bottom: calc(var(--space-2xl) + 80px);
+      }
+
+      .traveller-overlay,
+      .example-overlay {
+        background: rgba(0,0,0,0.6);
       }
     }
   </style>
@@ -490,13 +725,13 @@
   <main>
     <!-- Hero -->
     <section class="hiw-hero" aria-labelledby="hero-heading">
-      <div class="container">
+      <div class="hiw-hero-bg">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_900,q_auto,f_auto/v1770005011/S_africa_Klein-2_xqck3i.jpg" alt="Travel in Africa" fetchpriority="high">
+      </div>
+      <div class="hiw-hero-overlay"></div>
+      <div class="hiw-hero-content">
         <h1 id="hero-heading">Creators share trips. Travellers book. JUNO handles everything in between.</h1>
         <p class="lead">A simple platform connecting real travel experiences with the people who want them.</p>
-        <div class="hiw-hero-ctas">
-          <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
-          <a href="itineraries/namibia-safari-example.html" class="btn btn-outline-dark">See a live example</a>
-        </div>
       </div>
     </section>
 
@@ -507,83 +742,104 @@
     </nav>
 
     <!-- FOR CREATORS -->
-    <section id="creators" class="hiw-section" aria-labelledby="creators-heading">
+    <section id="creators" class="creator-flow" aria-labelledby="creator-heading">
       <div class="container">
-        <div class="section-header">
+        <div class="creator-flow-header animate-on-scroll">
           <span class="section-label">For Creators</span>
-          <h2 id="creators-heading">Share your trip. Earn when people book.</h2>
+          <h2 id="creator-heading">Share your trip. Earn when people book.</h2>
           <p>You've already done the travel. Now let it generate income without any extra work.</p>
         </div>
 
-        <div class="hiw-steps">
-          <div class="hiw-step">
-            <div class="hiw-step-number">1</div>
-            <h3>Share a trip you've taken.</h3>
+        <div class="flow-steps animate-on-scroll">
+          <div class="flow-step">
+            <div class="flow-step-visual">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <div class="flow-step-number">1</div>
+            </div>
+            <h3>Share a trip you've taken</h3>
             <p>The hotels you stayed at. The experiences you had. Real trips from your own travels.</p>
           </div>
-          <div class="hiw-step">
-            <div class="hiw-step-number">2</div>
-            <h3>JUNO makes it bookable.</h3>
-            <p>Your trip becomes a structured itinerary. We handle enquiries, pricing, payments, and booking confirmations.</p>
+
+          <div class="flow-step">
+            <div class="flow-step-visual">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+              <div class="flow-step-number">2</div>
+            </div>
+            <h3>We make it bookable</h3>
+            <p>Your trip becomes a structured itinerary. We handle enquiries, pricing, and payments.</p>
           </div>
-          <div class="hiw-step">
-            <div class="hiw-step-number">3</div>
-            <h3>You earn commission.</h3>
-            <p>When bookings are confirmed, you earn a share of the commission. Passive income from travel you've already done.</p>
+
+          <div class="flow-step">
+            <div class="flow-step-visual">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+              <div class="flow-step-number">3</div>
+            </div>
+            <h3>You earn commission</h3>
+            <p>When bookings confirm, you earn a share. Passive income from travel you've already done.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Creator Responsibilities -->
-    <section class="hiw-section alt" aria-labelledby="responsibilities-heading">
+    <!-- Responsibilities -->
+    <section class="responsibility-section" aria-labelledby="responsibility-heading">
       <div class="container">
-        <div class="section-header">
-          <h2 id="responsibilities-heading">What you do. What we do.</h2>
-          <p>Clear responsibilities. No overlap. No confusion.</p>
+        <div class="responsibility-header animate-on-scroll">
+          <h2 id="responsibility-heading">What you do. What we do.</h2>
+          <p>Clear responsibilities. No overlap.</p>
         </div>
 
-        <div class="responsibilities">
-          <div class="responsibility-card">
-            <h3>You do</h3>
+        <div class="responsibility-grid animate-on-scroll">
+          <div class="responsibility-card you-do">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              You do
+            </h3>
             <ul class="responsibility-list">
               <li>
-                <svg class="icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
                 Share trips you've actually taken
               </li>
               <li>
-                <svg class="icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
                 Provide details about your stays
               </li>
               <li>
-                <svg class="icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
                 Share your itinerary link
               </li>
               <li>
-                <svg class="icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
                 Receive commission on bookings
               </li>
             </ul>
           </div>
 
-          <div class="responsibility-card">
-            <h3>You don't do</h3>
+          <div class="responsibility-card we-do">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+              We handle
+            </h3>
             <ul class="responsibility-list">
               <li>
-                <svg class="icon x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                Handle enquiries or questions
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                All enquiries and questions
               </li>
               <li>
-                <svg class="icon x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                Quote prices or negotiate
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Pricing and quotes
               </li>
               <li>
-                <svg class="icon x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                Process payments or bookings
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Payment processing
               </li>
               <li>
-                <svg class="icon x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                Provide traveller support
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Booking confirmations
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Traveller support
               </li>
             </ul>
           </div>
@@ -591,109 +847,105 @@
       </div>
     </section>
 
-    <!-- Creator Earnings -->
-    <section class="hiw-section" aria-labelledby="earnings-heading">
+    <!-- Earnings -->
+    <section id="earnings" class="earnings-section" aria-labelledby="earnings-heading">
       <div class="container">
-        <div class="earnings-box">
-          <h3 id="earnings-heading">How creators earn</h3>
-          <div class="earnings-statement">
-            Creators earn <strong>40% of the total commission</strong> generated on confirmed bookings.
+        <div class="earnings-grid">
+          <div class="earnings-content animate-on-scroll">
+            <span class="section-label">Earnings</span>
+            <h2 id="earnings-heading">Clear, honest earnings.</h2>
+
+            <div class="earnings-highlight">
+              <div class="earnings-number">40%</div>
+              <div class="earnings-label">of total commission on confirmed bookings</div>
+            </div>
+
+            <div class="earnings-tiers">
+              <div class="tier-card">
+                <div class="tier-name">Starter</div>
+                <div class="tier-rate">40%</div>
+              </div>
+              <div class="tier-card">
+                <div class="tier-name">Growing</div>
+                <div class="tier-rate">45%</div>
+              </div>
+              <div class="tier-card">
+                <div class="tier-name">Established</div>
+                <div class="tier-rate">50%</div>
+              </div>
+              <div class="tier-card">
+                <div class="tier-name">Partner</div>
+                <div class="tier-rate">55%</div>
+              </div>
+            </div>
           </div>
-          <p class="earnings-note">Higher tiers unlock as your bookings grow. No admin. No calls. No customer support. Just earnings from trips you've already taken.</p>
+
+          <div class="earnings-visual animate-on-scroll">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_700,q_auto,f_auto/v1770230458/Namibia_onguma_Klein-113_f6iean.jpg" alt="Creator travelling" loading="lazy">
+            <div class="earnings-badge">
+              <div class="earnings-badge-label">No fees to join</div>
+              <div class="earnings-badge-value">$0 upfront</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- FOR TRAVELLERS -->
-    <section id="travellers" class="hiw-section dark" aria-labelledby="travellers-heading">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-label" style="color: var(--color-terracotta-soft);">For Travellers</span>
-          <h2 id="travellers-heading">Book trips from people who've been there.</h2>
-          <p style="color: rgba(255,255,255,0.7);">Real itineraries from real trips. Book as-is or customise to fit your plans.</p>
-        </div>
-
-        <div class="hiw-steps">
-          <div class="hiw-step">
-            <div class="hiw-step-number">1</div>
-            <h3>Discover an itinerary.</h3>
-            <p style="color: rgba(255,255,255,0.7);">Browse trips from creators you follow or discover new destinations through curated itineraries.</p>
-          </div>
-          <div class="hiw-step">
-            <div class="hiw-step-number">2</div>
-            <h3>Book or customise.</h3>
-            <p style="color: rgba(255,255,255,0.7);">Book the exact trip as-is, or adjust dates, length, and accommodation to suit your preferences.</p>
-          </div>
-          <div class="hiw-step">
-            <div class="hiw-step-number">3</div>
-            <h3>Travel with full support.</h3>
-            <p style="color: rgba(255,255,255,0.7);">Confirm your booking and travel with complete support from JUNO before and during your trip.</p>
-          </div>
-        </div>
+    <section id="travellers" class="traveller-section" aria-labelledby="traveller-heading">
+      <div class="traveller-bg">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_900,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Beach destination" loading="lazy">
       </div>
-    </section>
+      <div class="traveller-overlay"></div>
+      <div class="traveller-content animate-on-scroll">
+        <span class="section-label" style="color: var(--color-terracotta-soft);">For Travellers</span>
+        <h2 id="traveller-heading">Book trips from people who've been there.</h2>
+        <p>Real itineraries from real trips. Book as-is or customise to fit your plans.</p>
 
-    <!-- Customisation -->
-    <section class="hiw-section alt" aria-labelledby="customise-heading">
-      <div class="container">
-        <div class="customisation-grid">
-          <div class="customisation-content">
-            <h2 id="customise-heading">Customise to fit your plans.</h2>
-            <p>Every itinerary can be adjusted. Change what you need. Keep what you love.</p>
-            <ul class="customisation-options">
-              <li>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-                Adjust travel dates
-              </li>
-              <li>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-                Change trip length
-              </li>
-              <li>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-                Upgrade or change accommodation
-              </li>
-              <li>
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-                Add or remove experiences
-              </li>
-            </ul>
-            <p style="margin-top: var(--space-md); font-size: 0.875rem;">No obligation until you confirm. Clear communication throughout.</p>
-          </div>
-          <div class="customisation-visual">
-            <div class="customisation-example">
-              <div class="example-label">Original</div>
-              <div class="example-value">7 nights in March</div>
-            </div>
-            <div class="customisation-example">
-              <div class="example-label">Your version</div>
-              <div class="example-value">5 nights in June</div>
-            </div>
-            <div class="customisation-example">
-              <div class="example-label">Status</div>
-              <div class="example-value" style="color: var(--color-accent);">Quote ready in 24 hours</div>
-            </div>
-          </div>
-        </div>
+        <ul class="traveller-features">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Adjust travel dates
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Change trip length
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Upgrade accommodation
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Add or remove experiences
+          </li>
+        </ul>
+
+        <a href="trips/" class="btn btn-outline" style="border-color: rgba(255,255,255,0.5); color: white;">Browse trips</a>
       </div>
     </section>
 
     <!-- Trust -->
-    <section class="hiw-section dark" aria-labelledby="trust-heading">
+    <section class="trust-section" aria-labelledby="trust-heading">
       <div class="container">
-        <div class="section-header">
+        <div class="trust-header animate-on-scroll">
+          <span class="section-label">Why Trust JUNO</span>
           <h2 id="trust-heading">Booked with confidence.</h2>
         </div>
-        <div class="trust-grid">
-          <div class="trust-item">
+
+        <div class="trust-grid animate-on-scroll">
+          <div class="trust-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
             <h3>Secure payments</h3>
             <p>All transactions processed securely. Pay with confidence.</p>
           </div>
-          <div class="trust-item">
+          <div class="trust-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
             <h3>Professional booking</h3>
-            <p>Every booking handled by travel professionals. Nothing left to chance.</p>
+            <p>Every booking handled by travel professionals.</p>
           </div>
-          <div class="trust-item">
+          <div class="trust-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
             <h3>Dedicated support</h3>
             <p>Help available before, during, and after your trip.</p>
           </div>
@@ -703,26 +955,26 @@
 
     <!-- Live Example -->
     <section class="example-section" aria-labelledby="example-heading">
-      <div class="container">
-        <div class="example-grid">
-          <div class="example-content">
-            <h2 id="example-heading">This is what travellers see when they book.</h2>
-            <p>A real itinerary from a real trip. Clean, detailed, and fully bookable. This is the experience your audience gets.</p>
-            <a href="itineraries/namibia-safari-example.html" class="btn btn-outline-dark">View live example</a>
-          </div>
-          <div class="example-image">
-            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Example itinerary" loading="lazy">
-          </div>
-        </div>
+      <div class="example-bg">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_900,q_auto,f_auto/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Safari experience" loading="lazy">
+      </div>
+      <div class="example-overlay"></div>
+      <div class="example-content animate-on-scroll">
+        <span class="section-label" style="color: rgba(255,255,255,0.7);">Live Example</span>
+        <h2 id="example-heading">See it in action.</h2>
+        <p>A real trip by Nia The Light. Fully bookable. This is what your audience sees when they click your link.</p>
+        <a href="itineraries/namibia-safari-example.html" class="btn btn-outline">View the itinerary</a>
       </div>
     </section>
 
     <!-- Final CTA -->
-    <section class="final-cta" aria-labelledby="final-cta-heading">
+    <section class="final-cta" aria-labelledby="final-heading">
       <div class="container">
-        <h2 id="final-cta-heading">You share the trip. JUNO handles the rest.</h2>
-        <p>Start with a trip you've already taken. See how it becomes a bookable itinerary.</p>
-        <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
+        <h2 id="final-heading">Ready to start?</h2>
+        <div class="final-cta-buttons">
+          <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
+          <a href="trips/" class="btn btn-outline">Browse trips</a>
+        </div>
       </div>
     </section>
   </main>
@@ -774,7 +1026,29 @@
 
   <script src="js/main.js?v=2"></script>
   <script>
-    // Path toggle functionality
+    // Scroll animations
+    const animateOnScroll = () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', animateOnScroll);
+    } else {
+      animateOnScroll();
+    }
+
+    // Path toggle
     document.querySelectorAll('.path-toggle-btn').forEach(btn => {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
@@ -782,7 +1056,9 @@
         this.classList.add('active');
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const offset = document.querySelector('.path-toggle').offsetHeight + 80;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
         }
       });
     });
@@ -792,7 +1068,7 @@
     const toggleBtns = document.querySelectorAll('.path-toggle-btn');
 
     window.addEventListener('scroll', () => {
-      let current = '';
+      let current = 'creators';
       sections.forEach(section => {
         const sectionTop = section.offsetTop - 200;
         if (window.scrollY >= sectionTop) {
