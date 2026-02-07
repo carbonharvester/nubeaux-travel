@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Join the JUNO waitlist. Be among the first creators to turn your trips into bookable itineraries and start earning.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Get Early Access | JUNO Travel</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 5 for Prefinery social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    :root {
+      --color-bg: #fafafa;
+      --color-white: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-light: #6b6b6b;
+      --color-border: #e5e5e5;
+      --color-accent: #c2703e;
+      --color-accent-hover: #a85d32;
+      --color-accent-light: #f5ebe4;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Split Layout */
+    .early-access-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Left - Image */
+    .early-access-image {
+      flex: 1;
+      background-image: url('https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_1600,q_auto,f_auto/v1770005201/S_africa_Klein-116_rm2lxw.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .early-access-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 100%);
+    }
+
+    /* Right - Content */
+    .early-access-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem;
+      max-width: 600px;
+      background: var(--color-white);
+    }
+
+    .early-access-logo {
+      margin-bottom: 3rem;
+    }
+
+    .early-access-logo img {
+      height: 24px;
+    }
+
+    .early-access-badge {
+      display: inline-block;
+      background: var(--color-accent);
+      color: white;
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .early-access-title {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: var(--color-text);
+    }
+
+    .early-access-subtitle {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--color-text-light);
+      margin-bottom: 2.5rem;
+    }
+
+    /* Prefinery Form Container */
+    .prefinery-form-embed {
+      text-align: left;
+    }
+
+    /* Footer */
+    .early-access-footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border);
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    .early-access-footer a {
+      color: var(--color-text-light);
+      text-decoration: underline;
+    }
+
+    .early-access-footer a:hover {
+      color: var(--color-accent);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+
+    .back-link:hover {
+      color: var(--color-accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .early-access-content {
+        padding: 3rem;
+      }
+
+      .early-access-title {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .early-access-container {
+        flex-direction: column;
+      }
+
+      .early-access-image {
+        height: 40vh;
+        min-height: 300px;
+      }
+
+      .early-access-content {
+        max-width: none;
+        padding: 2rem;
+      }
+
+      .early-access-title {
+        font-size: 1.75rem;
+      }
+
+      .early-access-subtitle {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="early-access-container">
+    <!-- Left - Image -->
+    <div class="early-access-image"></div>
+
+    <!-- Right - Content -->
+    <div class="early-access-content">
+      <a href="index.html" class="early-access-logo">
+        <img src="assets/logo.svg" alt="JUNO Travel">
+      </a>
+
+      <span class="early-access-badge">Early Access</span>
+      <h1 class="early-access-title">Turn your travels into income</h1>
+      <p class="early-access-subtitle">Your content already inspires real bookings. Now earn every time your followers travel.</p>
+
+      <!-- Prefinery Waitlist Form -->
+      <div class="prefinery-form-embed"></div>
+
+      <div class="early-access-footer">
+        <p>&copy; 2026 JUNO Travel. <a href="about.html">About</a> &middot; <a href="terms.html">Terms</a></p>
+        <a href="index.html" class="back-link">&larr; Back to JUNO Travel</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prefinery Waitlist -->
+  <script>prefinery=window.prefinery||function(){(window.prefinery.q=window.prefinery.q||[]).push(arguments)};</script>
+  <script src="https://widget.prefinery.com/widget/v2/l1grqwyx.js" defer></script>
+</body>
+</html>

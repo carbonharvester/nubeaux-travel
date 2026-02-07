@@ -20,6 +20,69 @@
       --color-charcoal: #2d2d2d;
     }
 
+    /* Nav button group - match index.html */
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-buttons .nav-cta {
+      padding: 0.5rem 1rem !important;
+      margin-left: 0 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+    }
+
+    .nav-buttons .nav-login {
+      border: 1px solid var(--color-text) !important;
+      padding: 0.5rem 1rem !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+      margin-left: 0 !important;
+      transition: all var(--transition-fast) !important;
+    }
+
+    .nav-buttons .nav-login:hover {
+      background: var(--color-accent) !important;
+      border-color: var(--color-accent) !important;
+      color: var(--color-white) !important;
+    }
+
+    /* Mobile menu buttons */
+    .mobile-menu-cta,
+    .mobile-menu-login {
+      display: inline-block;
+      padding: 1rem 2rem !important;
+      text-align: center;
+      font-size: 0.875rem !important;
+      font-family: var(--font-sans) !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      width: 100%;
+      max-width: 280px;
+      box-sizing: border-box;
+    }
+
+    .mobile-menu-cta {
+      background-color: var(--color-accent);
+      color: var(--color-white) !important;
+      margin-top: var(--space-md);
+    }
+
+    .mobile-menu-login {
+      border: 1px solid var(--color-text);
+      background: transparent;
+      color: var(--color-text) !important;
+      margin-top: var(--space-sm);
+    }
+
+    .mobile-menu-login:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-white) !important;
+    }
+
     /* Hero */
     .hiw-hero {
       min-height: 70vh;
@@ -712,9 +775,11 @@
       <a href="index.html" class="logo"><img src="assets/logo.svg" alt="JUNO"></a>
       <nav class="nav">
         <a href="for-creators.html">For Creators</a>
-        <a href="how-it-works.html" class="active">How It Works</a>
         <a href="trips/">For Travellers</a>
-        <a href="portal/login.html" class="nav-cta">Log In</a>
+        <a href="how-it-works.html" class="active">How It Works</a>
+        <div class="nav-buttons">
+          <a href="early-access.html" class="nav-cta">Get Early Access</a>
+        </div>
       </nav>
       <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
@@ -722,9 +787,9 @@
 
   <div class="mobile-menu">
     <a href="for-creators.html">For Creators</a>
-    <a href="how-it-works.html">How It Works</a>
     <a href="trips/">For Travellers</a>
-    <a href="portal/login.html" class="mobile-menu-cta">Log In</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="early-access.html" class="mobile-menu-cta">Get Early Access</a>
   </div>
 
   <main>
@@ -904,8 +969,8 @@
       <div class="traveller-overlay"></div>
       <div class="traveller-content animate-on-scroll">
         <span class="section-label" style="color: var(--color-terracotta-soft);">For Travellers</span>
-        <h2 id="traveller-heading">Book trips from people who've been there.</h2>
-        <p>Real itineraries from real trips. Book as-is or customise to fit your plans.</p>
+        <h2 id="traveller-heading">Skip the research. Book trips that actually work.</h2>
+        <p>Every itinerary is a real trip someone loved. Book as-is or customise to make it yours.</p>
 
         <ul class="traveller-features">
           <li>
@@ -977,7 +1042,7 @@
       <div class="container">
         <h2 id="final-heading">Ready to start?</h2>
         <div class="final-cta-buttons">
-          <a href="portal/login.html" class="btn btn-primary">Create an itinerary</a>
+          <a href="early-access.html" class="btn btn-primary">Get Early Access</a>
           <a href="trips/" class="btn btn-outline">Browse trips</a>
         </div>
       </div>
@@ -986,7 +1051,7 @@
 
   <!-- Mobile Sticky CTA -->
   <div class="mobile-sticky-cta">
-    <a href="portal/login.html" class="btn btn-primary">Create an itinerary</a>
+    <a href="early-access.html" class="btn btn-primary">Get Early Access</a>
   </div>
 
   <footer class="footer">
