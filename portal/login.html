@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | JUNO Creator Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Sign in to the JUNO Creator Portal to manage your itineraries and earnings.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Sign In | JUNO Creator Portal</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +20,7 @@
       --color-text-light: #6b6b6b;
       --color-border: #e5e5e5;
       --color-accent: #c2703e;
+      --color-accent-hover: #a85d32;
       --color-accent-light: #f5ebe4;
       --color-error: #ef4444;
       --font-sans: 'Inter', -apple-system, sans-serif;
@@ -31,56 +35,96 @@
       color: var(--color-text);
       line-height: 1.6;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
+    /* Split Layout */
     .login-container {
-      width: 100%;
-      max-width: 420px;
-      padding: 20px;
+      display: flex;
+      min-height: 100vh;
     }
 
-    .login-card {
+    /* Left - Content */
+    .login-content {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem;
       background: var(--color-white);
-      border-radius: 16px;
-      padding: 48px 40px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Right - Image */
+    .login-image {
+      flex: 0 0 50%;
+      background-image: url('https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_1600,q_auto,f_auto/v1770005201/S_africa_Klein-116_rm2lxw.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .login-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.1) 100%);
     }
 
     .login-logo {
+      margin-bottom: 3rem;
+    }
+
+    .login-logo img {
+      height: 24px;
+    }
+
+    .login-badge {
+      display: inline-block;
+      background: var(--color-accent);
+      color: white;
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .login-title {
       font-family: var(--font-serif);
-      font-size: 1.5rem;
-      color: var(--color-accent);
-      text-align: center;
-      margin-bottom: 8px;
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: var(--color-text);
     }
 
     .login-subtitle {
-      text-align: center;
+      font-size: 1.125rem;
+      line-height: 1.6;
       color: var(--color-text-light);
-      font-size: 0.9375rem;
-      margin-bottom: 40px;
+      margin-bottom: 2.5rem;
     }
 
+    /* Form Styles */
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 1.25rem;
     }
 
     .form-label {
       display: block;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: 500;
-      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
       color: var(--color-text);
     }
 
     .form-input {
       width: 100%;
-      padding: 14px 16px;
+      padding: 0.875rem 1rem;
       border: 1px solid var(--color-border);
-      border-radius: 8px;
+      border-radius: 4px;
       font-size: 1rem;
       font-family: var(--font-sans);
       transition: border-color 0.2s, box-shadow 0.2s;
@@ -99,7 +143,7 @@
     .form-error {
       color: var(--color-error);
       font-size: 0.8125rem;
-      margin-top: 6px;
+      margin-top: 0.5rem;
       display: none;
     }
 
@@ -108,21 +152,23 @@
     }
 
     .btn-login {
-      width: 100%;
-      padding: 14px 24px;
+      width: auto;
+      padding: 0.875rem 2rem;
       background: var(--color-accent);
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 1rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
       font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
       cursor: pointer;
       transition: background 0.2s;
-      margin-top: 8px;
+      margin-top: 0.5rem;
     }
 
     .btn-login:hover {
-      background: #a85d32;
+      background: var(--color-accent-hover);
     }
 
     .btn-login:disabled {
@@ -130,28 +176,8 @@
       cursor: not-allowed;
     }
 
-    .login-divider {
-      display: flex;
-      align-items: center;
-      margin: 32px 0;
-      color: var(--color-text-light);
-      font-size: 0.8125rem;
-    }
-
-    .login-divider::before,
-    .login-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--color-border);
-    }
-
-    .login-divider span {
-      padding: 0 16px;
-    }
-
     .login-help {
-      text-align: center;
+      margin-top: 1.5rem;
       font-size: 0.875rem;
       color: var(--color-text-light);
     }
@@ -165,45 +191,95 @@
       text-decoration: underline;
     }
 
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 24px;
-      color: var(--color-text-light);
-      text-decoration: none;
-      font-size: 0.875rem;
-    }
-
-    .back-link:hover {
-      color: var(--color-accent);
-    }
-
     /* Demo notice */
     .demo-notice {
       background: var(--color-accent-light);
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-bottom: 24px;
+      border-radius: 4px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
       font-size: 0.8125rem;
       color: var(--color-text);
     }
 
     .demo-notice strong {
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Footer */
+    .login-footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border);
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    .login-footer a {
+      color: var(--color-text-light);
+      text-decoration: underline;
+    }
+
+    .login-footer a:hover {
+      color: var(--color-accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .login-content {
+        padding: 3rem;
+      }
+
+      .login-title {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .login-container {
+        flex-direction: column;
+      }
+
+      .login-image {
+        height: 40vh;
+        min-height: 300px;
+        order: -1;
+      }
+
+      .login-content {
+        flex: 1;
+        padding: 2rem;
+      }
+
+      .login-title {
+        font-size: 1.75rem;
+      }
+
+      .login-subtitle {
+        font-size: 1rem;
+      }
+
+      .btn-login {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
   <div class="login-container">
-    <div class="login-card">
-      <h1 class="login-logo">JUNO Creator</h1>
-      <p class="login-subtitle">Sign in to manage your itineraries</p>
+    <!-- Left - Content -->
+    <div class="login-content">
+      <a href="../index.html" class="login-logo">
+        <img src="../assets/logo.svg?v=2" alt="JUNO Travel">
+      </a>
+
+      <span class="login-badge">Creator Portal</span>
+      <h1 class="login-title">Welcome back</h1>
+      <p class="login-subtitle">Sign in to manage your itineraries and track your earnings.</p>
 
       <div class="demo-notice">
         <strong>Demo Access</strong>
-        Email: nia@junotravel.com<br>
-        Password: demo123
+        Email: nia@junotravel.com | Password: demo123
       </div>
 
       <form id="loginForm">
@@ -222,14 +298,17 @@
         <button type="submit" class="btn-login" id="loginBtn">Sign In</button>
       </form>
 
-      <div class="login-divider"><span>or</span></div>
-
       <p class="login-help">
-        Want to become a creator? <a href="mailto:travel@junotravel.com">Contact us</a>
+        Want to become a creator? <a href="../early-access.html">Get early access</a>
       </p>
+
+      <div class="login-footer">
+        <p>&copy; 2026 JUNO Travel. <a href="../about.html">About</a> &middot; <a href="../terms.html">Terms</a></p>
+      </div>
     </div>
 
-    <a href="../index.html" class="back-link">Back to JUNO Travel</a>
+    <!-- Right - Image -->
+    <div class="login-image"></div>
   </div>
 
   <script src="../js/supabase.js"></script>
@@ -250,9 +329,6 @@
 
     // Trigger background sync if creator hasn't synced yet
     async function triggerBackgroundSyncIfNeeded(creator) {
-      // Only sync if:
-      // 1. Creator has an Instagram handle
-      // 2. Sync status is not 'completed' or 'syncing'
       if (!creator.instagram) {
         console.log('No Instagram handle, skipping background sync');
         return;
@@ -270,7 +346,6 @@
         const result = await JunoDB.triggerBackgroundSync(creator.id, creator.instagram);
         if (result.success) {
           console.log('Background sync started:', result);
-          // Update session with syncing status
           const session = JSON.parse(localStorage.getItem('juno_creator_session') || '{}');
           session.sync_status = 'syncing';
           localStorage.setItem('juno_creator_session', JSON.stringify(session));
@@ -279,14 +354,12 @@
         }
       } catch (error) {
         console.error('Error triggering background sync:', error);
-        // Don't block login on sync failure
       }
     }
 
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      // Reset errors
       emailError.classList.remove('show');
       passwordError.classList.remove('show');
       emailInput.classList.remove('error');
@@ -295,7 +368,6 @@
       const email = emailInput.value.trim();
       const password = passwordInput.value;
 
-      // Validate
       let hasError = false;
 
       if (!email || !email.includes('@')) {
@@ -313,7 +385,6 @@
 
       if (hasError) return;
 
-      // Show loading
       loginBtn.disabled = true;
       loginBtn.textContent = 'Signing in...';
 
@@ -321,11 +392,9 @@
         let loginSuccess = false;
         let creator = null;
 
-        // Try Supabase Auth first if configured
         if (window.SUPABASE_CONFIGURED) {
           try {
             const { user } = await supabase.auth.signIn(email, password);
-            // Get creator profile from database
             creator = await JunoDB.getCreatorByEmail(email);
             if (creator) {
               loginSuccess = true;
@@ -335,19 +404,11 @@
           }
         }
 
-        // Fallback to demo credentials if Supabase auth failed or not configured
         if (!loginSuccess) {
-          console.log('Checking demo credentials...');
-          console.log('Input email:', email, 'Expected:', DEMO_CREDENTIALS.email);
-          console.log('Match:', email === DEMO_CREDENTIALS.email && password === DEMO_CREDENTIALS.password);
-
           if (email.toLowerCase() === DEMO_CREDENTIALS.email.toLowerCase() && password === DEMO_CREDENTIALS.password) {
-            console.log('Demo credentials matched!');
-            // Try to get creator from database even for demo login
             if (window.SUPABASE_CONFIGURED) {
               try {
                 creator = await JunoDB.getCreatorByEmail(email);
-                console.log('Creator from DB:', creator);
               } catch (dbError) {
                 console.log('Could not fetch creator from database:', dbError.message);
               }
@@ -357,7 +418,6 @@
         }
 
         if (loginSuccess) {
-          // Store session info
           localStorage.setItem('juno_creator_session', JSON.stringify({
             creatorId: creator?.id || 'nia-the-light',
             handle: creator?.handle || 'niathelight',
@@ -367,7 +427,6 @@
             loggedInAt: new Date().toISOString()
           }));
 
-          // Trigger background sync if needed
           if (creator) {
             await triggerBackgroundSyncIfNeeded(creator);
           }
@@ -386,8 +445,6 @@
       }
     });
 
-    // Check if already logged in (only redirect if valid session exists)
-    // Skip auto-redirect if ?logout param is present (allows manual logout)
     const urlParams = new URLSearchParams(window.location.search);
     if (!urlParams.has('logout')) {
       const existingSession = supabase.auth.getSession();
@@ -395,7 +452,6 @@
         window.location.href = 'index.html';
       }
     } else {
-      // Clear session if logout param present
       localStorage.removeItem('juno_creator_session');
       supabase.auth.signOut();
     }
