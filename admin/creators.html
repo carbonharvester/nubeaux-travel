@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Creators | Admin - JUNO Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #f5f5f5;
+      --color-white: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-light: #6b6b6b;
+      --color-border: #e5e5e5;
+      --color-accent: #c2703e;
+      --color-accent-hover: #a85d32;
+      --color-success: #22c55e;
+      --color-warning: #f59e0b;
+      --color-error: #ef4444;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --sidebar-width: 240px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+    }
+
+    .admin-layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--color-text);
+      color: white;
+      padding: 1.5rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      text-decoration: none;
+      color: white;
+    }
+
+    .sidebar-logo img {
+      height: 20px;
+      filter: brightness(0) invert(1);
+    }
+
+    .sidebar-logo span {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 3px;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.875rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav a:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .sidebar-nav a.active {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    .sidebar-nav svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      margin: 1rem 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .sidebar-user-info { flex: 1; min-width: 0; }
+    .sidebar-user-name { font-size: 0.8125rem; font-weight: 500; }
+    .sidebar-user-role { font-size: 0.6875rem; color: rgba(255,255,255,0.5); }
+    .sidebar-logout { display: block; text-align: center; padding: 0.5rem; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.75rem; }
+    .sidebar-logout:hover { color: white; }
+
+    .main-content { padding: 2rem; }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .page-title { font-size: 1.5rem; font-weight: 600; }
+    .page-subtitle { color: var(--color-text-light); font-size: 0.875rem; }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      width: 300px;
+    }
+
+    .search-box svg { width: 16px; height: 16px; color: var(--color-text-light); }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      font-size: 0.875rem;
+      flex: 1;
+      font-family: inherit;
+    }
+
+    .card {
+      background: var(--color-white);
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+    }
+
+    .table { width: 100%; border-collapse: collapse; }
+
+    .table th,
+    .table td {
+      padding: 0.875rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .table th {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-light);
+      background: #fafafa;
+    }
+
+    .table td { font-size: 0.875rem; }
+    .table tr:last-child td { border-bottom: none; }
+    .table tr:hover td { background: #fafafa; }
+
+    .creator-info { display: flex; align-items: center; gap: 0.75rem; }
+
+    .creator-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .creator-name { font-weight: 500; }
+    .creator-email { font-size: 0.75rem; color: var(--color-text-light); }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      border-radius: 4px;
+    }
+
+    .status-badge.active { background: #dcfce7; color: #166534; }
+    .status-badge.pending { background: #fef3c7; color: #92400e; }
+    .status-badge.suspended { background: #fee2e2; color: #991b1b; }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      color: var(--color-text-light);
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 0.75rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--color-text-light);
+    }
+
+    @media (max-width: 768px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .page-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+      .search-box { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <a href="../index.html" class="sidebar-logo">
+        <img src="../assets/logo.svg?v=2" alt="JUNO">
+        <span>Admin</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="index.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Dashboard
+        </a>
+        <a href="creators.html" class="active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          Creators
+        </a>
+        <a href="itineraries.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Itineraries
+        </a>
+        <a href="bookings.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          Bookings
+        </a>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+
+      <nav class="sidebar-nav">
+        <a href="../portal/index.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+          Creator Portal
+        </a>
+        <a href="../index.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          View Site
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-user-avatar" id="adminAvatar">A</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name" id="adminName">Admin</div>
+            <div class="sidebar-user-role">Administrator</div>
+          </div>
+        </div>
+        <a href="../portal/login.html?logout" class="sidebar-logout">Sign Out</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Creators</h1>
+          <p class="page-subtitle">Manage all registered creators</p>
+        </div>
+        <div class="search-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input type="text" placeholder="Search creators..." id="searchInput">
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="creatorsTable">
+          <div class="loading">
+            <div class="spinner"></div>
+            Loading creators...
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/supabase.js"></script>
+  <script>
+    const ADMIN_EMAILS = ['matthew@kapes.co', 'nia@junotravel.com', 'admin@junotravel.com'];
+
+    function checkAdminAccess() {
+      const session = localStorage.getItem('juno_creator_session');
+      if (!session) {
+        window.location.href = '../portal/login.html';
+        return null;
+      }
+      const sessionData = JSON.parse(session);
+      if (!ADMIN_EMAILS.includes(sessionData.email?.toLowerCase())) {
+        alert('Access denied. Admin privileges required.');
+        window.location.href = '../portal/index.html';
+        return null;
+      }
+      return sessionData;
+    }
+
+    const adminSession = checkAdminAccess();
+    if (adminSession) {
+      document.getElementById('adminName').textContent = adminSession.email.split('@')[0];
+      document.getElementById('adminAvatar').textContent = adminSession.email[0].toUpperCase();
+    }
+
+    let allCreators = [];
+
+    async function loadCreators() {
+      try {
+        const response = await fetch('/.netlify/functions/admin-stats');
+        const data = await response.json();
+        allCreators = data.creators || [];
+        renderCreators(allCreators);
+      } catch (error) {
+        console.error('Failed to load creators:', error);
+        document.getElementById('creatorsTable').innerHTML = '<div class="empty-state">Failed to load creators</div>';
+      }
+    }
+
+    function renderCreators(creators) {
+      if (creators.length === 0) {
+        document.getElementById('creatorsTable').innerHTML = '<div class="empty-state">No creators found</div>';
+        return;
+      }
+
+      const html = `
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Creator</th>
+              <th>Instagram</th>
+              <th>Itineraries</th>
+              <th>Views (30d)</th>
+              <th>Quotes (30d)</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${creators.map(c => `
+              <tr>
+                <td>
+                  <div class="creator-info">
+                    <div class="creator-avatar">${(c.name || 'C')[0].toUpperCase()}</div>
+                    <div>
+                      <div class="creator-name">${c.name || 'Unknown'}</div>
+                      <div class="creator-email">${c.email || ''}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>${c.instagram ? `@${c.instagram}` : '-'}</td>
+                <td>${c.itineraries || 0}</td>
+                <td>${formatNumber(c.views || 0)}</td>
+                <td>${c.quotes || 0}</td>
+                <td><span class="status-badge active">Active</span></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+
+      document.getElementById('creatorsTable').innerHTML = html;
+    }
+
+    function formatNumber(num) {
+      if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+      if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+      return num.toString();
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const filtered = allCreators.filter(c =>
+        (c.name || '').toLowerCase().includes(query) ||
+        (c.instagram || '').toLowerCase().includes(query) ||
+        (c.email || '').toLowerCase().includes(query)
+      );
+      renderCreators(filtered);
+    });
+
+    loadCreators();
+  </script>
+</body>
+</html>

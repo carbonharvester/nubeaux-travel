@@ -394,10 +394,38 @@
 
         if (window.SUPABASE_CONFIGURED) {
           try {
-            const { user } = await supabase.auth.signIn(email, password);
-            creator = await JunoDB.getCreatorByEmail(email);
-            if (creator) {
+            const authResult = await supabase.auth.signIn(email, password);
+            if (authResult && authResult.access_token) {
               loginSuccess = true;
+              // Try to get creator profile
+              creator = await JunoDB.getCreatorByEmail(email);
+
+              // If no creator profile exists, create one
+              if (!creator) {
+                console.log('Auth succeeded but no creator profile, creating one...');
+                try {
+                  const profileResponse = await fetch('https://qnhqtlpkwscbguossfmn.supabase.co/rest/v1/creators', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuaHF0bHBrd3NjYmd1b3NzZm1uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwOTcwMjEsImV4cCI6MjA4NTY3MzAyMX0.yxFPvTLJnmCD0zxl_ub_ms7xXafcmR5rC6JuSm3Vzik',
+                      'Authorization': `Bearer ${authResult.access_token}`,
+                      'Prefer': 'return=representation'
+                    },
+                    body: JSON.stringify({
+                      email: email,
+                      display_name: email.split('@')[0],
+                      sync_status: 'pending'
+                    })
+                  });
+                  if (profileResponse.ok) {
+                    const newCreator = await profileResponse.json();
+                    creator = newCreator[0] || null;
+                  }
+                } catch (createErr) {
+                  console.error('Failed to create creator profile:', createErr);
+                }
+              }
             }
           } catch (supabaseError) {
             console.log('Supabase auth failed, trying demo credentials...', supabaseError.message);

@@ -831,24 +831,48 @@
           loggedInAt: new Date().toISOString()
         }));
 
-        // Try to create creator profile in Supabase (don't block redirect on this)
-        fetch(`${supabaseUrl}/rest/v1/creators`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': supabaseKey,
-            'Authorization': `Bearer ${accessToken || supabaseKey}`,
-            'Prefer': 'return=representation'
-          },
-          body: JSON.stringify({
-            email: email,
-            instagram: instagram,
-            display_name: instagram,
-            sync_status: 'pending'
-          })
-        }).catch(err => console.error('Failed to create creator profile:', err));
+        // Create creator profile in Supabase
+        try {
+          const profileResponse = await fetch(`${supabaseUrl}/rest/v1/creators`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': supabaseKey,
+              'Authorization': `Bearer ${accessToken || supabaseKey}`,
+              'Prefer': 'return=representation'
+            },
+            body: JSON.stringify({
+              email: email,
+              instagram: instagram,
+              display_name: instagram,
+              sync_status: 'pending'
+            })
+          });
 
-        // Redirect directly to portal dashboard
+          if (!profileResponse.ok) {
+            const profileError = await profileResponse.json().catch(() => ({}));
+            // Ignore duplicate key error (profile already exists)
+            if (!profileError.message?.includes('duplicate') && !profileError.code?.includes('23505')) {
+              console.error('Failed to create creator profile:', profileError);
+            }
+          } else {
+            const creatorData = await profileResponse.json();
+            // Update session with creator ID
+            if (creatorData && creatorData[0]) {
+              localStorage.setItem('juno_creator_session', JSON.stringify({
+                creatorId: creatorData[0].id,
+                email: email,
+                instagram: instagram,
+                display_name: instagram,
+                loggedInAt: new Date().toISOString()
+              }));
+            }
+          }
+        } catch (profileErr) {
+          console.error('Error creating creator profile:', profileErr);
+        }
+
+        // Redirect to portal dashboard
         window.location.href = '/portal/index.html';
       } catch (error) {
         console.error('Signup error:', error);

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Bookings | Admin - JUNO Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #f5f5f5;
+      --color-white: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-light: #6b6b6b;
+      --color-border: #e5e5e5;
+      --color-accent: #c2703e;
+      --color-accent-hover: #a85d32;
+      --color-success: #22c55e;
+      --color-warning: #f59e0b;
+      --color-error: #ef4444;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --sidebar-width: 240px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.5;
+    }
+
+    .admin-layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: var(--color-text);
+      color: white;
+      padding: 1.5rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      text-decoration: none;
+      color: white;
+    }
+
+    .sidebar-logo img { height: 20px; filter: brightness(0) invert(1); }
+
+    .sidebar-logo span {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 3px;
+    }
+
+    .sidebar-nav { display: flex; flex-direction: column; gap: 0.25rem; }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.875rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav a:hover { background: rgba(255,255,255,0.1); color: white; }
+    .sidebar-nav a.active { background: var(--color-accent); color: white; }
+    .sidebar-nav svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .sidebar-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 1rem 0; }
+
+    .sidebar-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
+
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .sidebar-user-info { flex: 1; min-width: 0; }
+    .sidebar-user-name { font-size: 0.8125rem; font-weight: 500; }
+    .sidebar-user-role { font-size: 0.6875rem; color: rgba(255,255,255,0.5); }
+    .sidebar-logout { display: block; text-align: center; padding: 0.5rem; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.75rem; }
+    .sidebar-logout:hover { color: white; }
+
+    .main-content { padding: 2rem; }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .page-title { font-size: 1.5rem; font-weight: 600; }
+    .page-subtitle { color: var(--color-text-light); font-size: 0.875rem; }
+
+    .filters { display: flex; gap: 0.5rem; }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.8125rem;
+      border: 1px solid var(--color-border);
+      background: var(--color-white);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .filter-btn:hover { border-color: var(--color-accent); }
+    .filter-btn.active { background: var(--color-accent); color: white; border-color: var(--color-accent); }
+
+    .card {
+      background: var(--color-white);
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+    }
+
+    .table { width: 100%; border-collapse: collapse; }
+
+    .table th,
+    .table td {
+      padding: 0.875rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .table th {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-light);
+      background: #fafafa;
+    }
+
+    .table td { font-size: 0.875rem; }
+    .table tr:last-child td { border-bottom: none; }
+    .table tr:hover td { background: #fafafa; }
+
+    .customer-name { font-weight: 500; }
+    .customer-email { font-size: 0.75rem; color: var(--color-text-light); }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      border-radius: 4px;
+    }
+
+    .status-badge.new { background: #dbeafe; color: #1d4ed8; }
+    .status-badge.contacted { background: #fef3c7; color: #92400e; }
+    .status-badge.booked { background: #dcfce7; color: #166534; }
+    .status-badge.closed { background: #f3f4f6; color: #6b7280; }
+
+    .action-btn {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.75rem;
+      border: 1px solid var(--color-border);
+      background: var(--color-white);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      margin-right: 0.25rem;
+    }
+
+    .action-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      color: var(--color-text-light);
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 0.75rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .empty-state { text-align: center; padding: 3rem; color: var(--color-text-light); }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--color-white);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title { font-size: 1rem; font-weight: 600; }
+
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-light);
+      padding: 0.25rem;
+    }
+
+    .modal-close:hover { color: var(--color-text); }
+
+    .modal-body { padding: 1.5rem; }
+
+    .detail-row {
+      display: flex;
+      margin-bottom: 1rem;
+    }
+
+    .detail-label {
+      width: 120px;
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .detail-value { flex: 1; font-size: 0.875rem; }
+
+    @media (max-width: 768px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .page-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <a href="../index.html" class="sidebar-logo">
+        <img src="../assets/logo.svg?v=2" alt="JUNO">
+        <span>Admin</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="index.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Dashboard
+        </a>
+        <a href="creators.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          Creators
+        </a>
+        <a href="itineraries.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Itineraries
+        </a>
+        <a href="bookings.html" class="active">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          Bookings
+        </a>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+
+      <nav class="sidebar-nav">
+        <a href="../portal/index.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+          Creator Portal
+        </a>
+        <a href="../index.html">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          View Site
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-user-avatar" id="adminAvatar">A</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name" id="adminName">Admin</div>
+            <div class="sidebar-user-role">Administrator</div>
+          </div>
+        </div>
+        <a href="../portal/login.html?logout" class="sidebar-logout">Sign Out</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Quote Requests</h1>
+          <p class="page-subtitle">Manage customer inquiries and bookings</p>
+        </div>
+        <div class="filters">
+          <button class="filter-btn active" data-status="all">All</button>
+          <button class="filter-btn" data-status="new">New</button>
+          <button class="filter-btn" data-status="contacted">Contacted</button>
+          <button class="filter-btn" data-status="booked">Booked</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="bookingsTable">
+          <div class="loading">
+            <div class="spinner"></div>
+            Loading bookings...
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Quote Request Details</h3>
+        <button class="modal-close" onclick="closeModal()">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="../js/supabase.js"></script>
+  <script>
+    const ADMIN_EMAILS = ['matthew@kapes.co', 'nia@junotravel.com', 'admin@junotravel.com'];
+
+    function checkAdminAccess() {
+      const session = localStorage.getItem('juno_creator_session');
+      if (!session) {
+        window.location.href = '../portal/login.html';
+        return null;
+      }
+      const sessionData = JSON.parse(session);
+      if (!ADMIN_EMAILS.includes(sessionData.email?.toLowerCase())) {
+        alert('Access denied. Admin privileges required.');
+        window.location.href = '../portal/index.html';
+        return null;
+      }
+      return sessionData;
+    }
+
+    const adminSession = checkAdminAccess();
+    if (adminSession) {
+      document.getElementById('adminName').textContent = adminSession.email.split('@')[0];
+      document.getElementById('adminAvatar').textContent = adminSession.email[0].toUpperCase();
+    }
+
+    let allBookings = [];
+    let currentFilter = 'all';
+
+    async function loadBookings() {
+      try {
+        if (window.SUPABASE_CONFIGURED) {
+          const results = await supabase.from('quote_requests')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .execute();
+
+          allBookings = results || [];
+        } else {
+          allBookings = [];
+        }
+
+        renderBookings(allBookings);
+      } catch (error) {
+        console.error('Failed to load bookings:', error);
+        document.getElementById('bookingsTable').innerHTML = '<div class="empty-state">Failed to load bookings</div>';
+      }
+    }
+
+    function renderBookings(bookings) {
+      let filtered = bookings;
+      if (currentFilter !== 'all') {
+        filtered = bookings.filter(b => (b.status || 'new') === currentFilter);
+      }
+
+      if (filtered.length === 0) {
+        document.getElementById('bookingsTable').innerHTML = '<div class="empty-state">No quote requests found</div>';
+        return;
+      }
+
+      const html = `
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Dates</th>
+              <th>Travelers</th>
+              <th>Status</th>
+              <th>Submitted</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filtered.map(b => `
+              <tr>
+                <td>
+                  <div class="customer-name">${b.first_name || ''} ${b.last_name || ''}</div>
+                  <div class="customer-email">${b.email || ''}</div>
+                </td>
+                <td>${formatDateRange(b.start_date, b.end_date)}</td>
+                <td>${b.adults || 0} adults${b.children ? `, ${b.children} children` : ''}</td>
+                <td><span class="status-badge ${b.status || 'new'}">${capitalize(b.status || 'new')}</span></td>
+                <td>${formatDate(b.created_at)}</td>
+                <td>
+                  <button class="action-btn" onclick="viewDetails('${b.id}')">View</button>
+                  <button class="action-btn" onclick="emailCustomer('${b.email}')">Email</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+
+      document.getElementById('bookingsTable').innerHTML = html;
+    }
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '-';
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function formatDateRange(start, end) {
+      if (!start) return '-';
+      const startDate = formatDate(start);
+      if (!end) return startDate;
+      const endDate = formatDate(end);
+      return `${startDate} - ${endDate}`;
+    }
+
+    function viewDetails(id) {
+      const booking = allBookings.find(b => b.id === id);
+      if (!booking) return;
+
+      const html = `
+        <div class="detail-row">
+          <div class="detail-label">Name</div>
+          <div class="detail-value">${booking.first_name || ''} ${booking.last_name || ''}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Email</div>
+          <div class="detail-value"><a href="mailto:${booking.email}">${booking.email || '-'}</a></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Phone</div>
+          <div class="detail-value">${booking.phone || '-'}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Travel Dates</div>
+          <div class="detail-value">${formatDateRange(booking.start_date, booking.end_date)}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Travelers</div>
+          <div class="detail-value">${booking.adults || 0} adults${booking.children ? `, ${booking.children} children` : ''}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Special Requests</div>
+          <div class="detail-value">${booking.special_requests || '-'}</div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Submitted</div>
+          <div class="detail-value">${formatDate(booking.created_at)}</div>
+        </div>
+      `;
+
+      document.getElementById('modalBody').innerHTML = html;
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    function emailCustomer(email) {
+      window.location.href = `mailto:${email}`;
+    }
+
+    // Close modal on overlay click
+    document.getElementById('modalOverlay').addEventListener('click', (e) => {
+      if (e.target.id === 'modalOverlay') closeModal();
+    });
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.status;
+        renderBookings(allBookings);
+      });
+    });
+
+    // Check URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const statusParam = urlParams.get('status');
+    if (statusParam) {
+      currentFilter = statusParam;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.status === statusParam);
+      });
+    }
+
+    loadBookings();
+  </script>
+</body>
+</html>
