@@ -130,6 +130,124 @@
       position: relative;
     }
 
+    /* Critical fallback skin so form is styled before Prefinery CSS arrives */
+    .prefinery-form-embed form,
+    .prefinery-form-embed .prefinery,
+    .prefinery-form-embed .prefinery-widget,
+    .prefinery-form-embed .prefinery-signup-form {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .prefinery-form-embed h1,
+    .prefinery-form-embed h2,
+    .prefinery-form-embed h3,
+    .prefinery-form-embed p,
+    .prefinery-form-embed label,
+    .prefinery-form-embed li,
+    .prefinery-form-embed small,
+    .prefinery-form-embed span {
+      color: var(--color-text);
+      font-family: var(--font-sans);
+    }
+
+    .prefinery-form-embed p,
+    .prefinery-form-embed small {
+      color: var(--color-text-light);
+      line-height: 1.5;
+    }
+
+    .prefinery-form-embed form {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .prefinery-form-embed input[type="text"],
+    .prefinery-form-embed input[type="email"],
+    .prefinery-form-embed input[type="tel"],
+    .prefinery-form-embed input[type="url"],
+    .prefinery-form-embed input[type="number"],
+    .prefinery-form-embed select,
+    .prefinery-form-embed textarea {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--color-text);
+      font-size: 0.95rem;
+      font-family: var(--font-sans);
+      padding: 0.72rem 0.9rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .prefinery-form-embed textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    .prefinery-form-embed input:focus,
+    .prefinery-form-embed select:focus,
+    .prefinery-form-embed textarea:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(194, 112, 62, 0.12);
+      outline: none;
+    }
+
+    .prefinery-form-embed button,
+    .prefinery-form-embed input[type="submit"],
+    .prefinery-form-embed .btn {
+      border: 0;
+      border-radius: 8px;
+      background: var(--color-accent);
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      line-height: 1.1;
+      transition: background-color 0.2s ease, transform 0.08s ease;
+    }
+
+    .prefinery-form-embed button:hover,
+    .prefinery-form-embed input[type="submit"]:hover,
+    .prefinery-form-embed .btn:hover {
+      background: var(--color-accent-hover);
+    }
+
+    .prefinery-form-embed button:active,
+    .prefinery-form-embed input[type="submit"]:active,
+    .prefinery-form-embed .btn:active {
+      transform: translateY(1px);
+    }
+
+    .prefinery-form-embed ul,
+    .prefinery-form-embed ol {
+      padding-left: 1.25rem;
+      color: var(--color-text-light);
+    }
+
+    .prefinery-form-embed a {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .prefinery-form-embed .error,
+    .prefinery-form-embed .errors,
+    .prefinery-form-embed .field_with_errors,
+    .prefinery-form-embed .invalid-feedback {
+      color: #b00020;
+      font-size: 0.86rem;
+    }
+
+    .prefinery-form-embed .success,
+    .prefinery-form-embed .notice,
+    .prefinery-form-embed .flash-success {
+      color: #0a7a3b;
+      font-size: 0.9rem;
+    }
+
     .prefinery-form-embed.is-loading::before {
       content: 'Loading waitlist form...';
       position: absolute;
