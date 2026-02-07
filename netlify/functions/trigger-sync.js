@@ -25,6 +25,14 @@ function getSiteUrl() {
   return process.env.SITE_URL || 'http://localhost:8888';
 }
 
+function extractAdminKey(event) {
+  const authHeader = event.headers?.authorization || event.headers?.Authorization || '';
+  if (authHeader.startsWith('Bearer ')) {
+    return authHeader.slice(7).trim();
+  }
+  return event.headers?.['x-admin-key'] || event.headers?.['X-Admin-Key'] || '';
+}
+
 exports.handler = async (event, context) => {
   // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
@@ -32,7 +40,7 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Key',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
       },
       body: ''
@@ -45,6 +53,22 @@ exports.handler = async (event, context) => {
       statusCode: 405,
       headers: { 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({ error: 'Method not allowed' })
+    };
+  }
+
+  const adminKey = process.env.ADMIN_API_KEY;
+  if (!adminKey) {
+    return {
+      statusCode: 500,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'Admin API key is not configured' })
+    };
+  }
+  if (extractAdminKey(event) !== adminKey) {
+    return {
+      statusCode: 401,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'Unauthorized' })
     };
   }
 
@@ -85,8 +109,17 @@ exports.handler = async (event, context) => {
       };
     }
 
+    const syncWebhookSecret = process.env.SYNC_WEBHOOK_SECRET;
+    if (!syncWebhookSecret) {
+      return {
+        statusCode: 500,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        body: JSON.stringify({ error: 'SYNC_WEBHOOK_SECRET not configured' })
+      };
+    }
+
     const siteUrl = getSiteUrl();
-    const webhookUrl = `${siteUrl}/.netlify/functions/process-sync-background`;
+    const webhookUrl = `${siteUrl}/.netlify/functions/process-sync-background?secret=${encodeURIComponent(syncWebhookSecret)}`;
     const username = extractUsername(instagram_username);
 
     console.log(`Starting background sync for @${username} (creator: ${creator_id})`);

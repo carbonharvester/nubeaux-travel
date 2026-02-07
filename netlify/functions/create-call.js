@@ -4,14 +4,14 @@
  * Uses Node 18+ built-in fetch
  */
 
-const RETELL_API_KEY = 'key_a6ee76b112984554800dff4fda95';
-const RETELL_AGENT_ID = 'agent_d260ad3b05df011da73fbbbb4a';
-
 exports.handler = async (event, context) => {
+  const RETELL_API_KEY = process.env.RETELL_API_KEY;
+  const RETELL_AGENT_ID = process.env.RETELL_AGENT_ID;
+
   // CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json'
   };
@@ -26,6 +26,14 @@ exports.handler = async (event, context) => {
       statusCode: 405,
       headers,
       body: JSON.stringify({ error: 'Method not allowed' })
+    };
+  }
+
+  if (!RETELL_API_KEY || !RETELL_AGENT_ID) {
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: 'Retell is not configured' })
     };
   }
 

@@ -12,6 +12,14 @@ function getSupabase() {
   );
 }
 
+function extractAdminKey(event) {
+  const authHeader = event.headers?.authorization || event.headers?.Authorization || '';
+  if (authHeader.startsWith('Bearer ')) {
+    return authHeader.slice(7).trim();
+  }
+  return event.headers?.['x-admin-key'] || event.headers?.['X-Admin-Key'] || '';
+}
+
 exports.handler = async (event, context) => {
   // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
@@ -19,7 +27,7 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Key',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS'
       },
       body: ''
@@ -27,11 +35,27 @@ exports.handler = async (event, context) => {
   }
 
   const supabase = getSupabase();
+  const adminKey = process.env.ADMIN_API_KEY;
+
   if (!supabase) {
     return {
       statusCode: 500,
       headers: { 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({ error: 'Database not configured' })
+    };
+  }
+  if (!adminKey) {
+    return {
+      statusCode: 500,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'Admin API key is not configured' })
+    };
+  }
+  if (extractAdminKey(event) !== adminKey) {
+    return {
+      statusCode: 401,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'Unauthorized' })
     };
   }
 

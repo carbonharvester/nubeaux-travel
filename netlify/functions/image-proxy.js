@@ -33,17 +33,34 @@ exports.handler = async (event, context) => {
     };
   }
 
-  // Only allow proxying from known domains (security)
-  const allowedDomains = [
-    'cdninstagram.com',
-    'instagram.com',
-    'fbcdn.net',
-    'scontent',
-    'res.cloudinary.com'
-  ];
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(imageUrl);
+  } catch (e) {
+    return {
+      statusCode: 400,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: 'Invalid url parameter'
+    };
+  }
 
-  const isAllowed = allowedDomains.some(domain => imageUrl.includes(domain));
-  if (!isAllowed) {
+  if (!['https:', 'http:'].includes(parsedUrl.protocol)) {
+    return {
+      statusCode: 400,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: 'Unsupported URL protocol'
+    };
+  }
+
+  const host = parsedUrl.hostname.toLowerCase();
+  const isAllowedHost =
+    host === 'instagram.com' ||
+    host === 'www.instagram.com' ||
+    host === 'res.cloudinary.com' ||
+    host.endsWith('.cdninstagram.com') ||
+    host.endsWith('.fbcdn.net');
+
+  if (!isAllowedHost) {
     return {
       statusCode: 403,
       headers: { 'Access-Control-Allow-Origin': '*' },
@@ -52,7 +69,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const response = await fetch(imageUrl, {
+    const response = await fetch(parsedUrl.toString(), {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
       }

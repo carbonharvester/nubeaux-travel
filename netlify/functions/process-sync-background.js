@@ -5,6 +5,25 @@
 const { createClient } = require('@supabase/supabase-js');
 const crypto = require('crypto');
 
+function safeEqual(a, b) {
+  if (!a || !b) return false;
+  if (a.length !== b.length) return false;
+  let result = 0;
+  for (let i = 0; i < a.length; i++) {
+    result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return result === 0;
+}
+
+function verifySyncWebhookSecret(event, expectedSecret) {
+  if (!expectedSecret) return false;
+  const headerSecret =
+    event.headers?.['x-webhook-secret'] ||
+    event.headers?.['X-Webhook-Secret'];
+  const querySecret = event.queryStringParameters?.secret;
+  return safeEqual(headerSecret || '', expectedSecret) || safeEqual(querySecret || '', expectedSecret);
+}
+
 // Initialize Supabase client
 function getSupabase() {
   if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
@@ -23,7 +42,7 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, X-Webhook-Secret',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
       },
       body: ''
@@ -36,6 +55,23 @@ exports.handler = async (event, context) => {
       statusCode: 405,
       headers: { 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({ error: 'Method not allowed' })
+    };
+  }
+
+  const syncWebhookSecret = process.env.SYNC_WEBHOOK_SECRET;
+  if (!syncWebhookSecret) {
+    return {
+      statusCode: 500,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'SYNC_WEBHOOK_SECRET not configured' })
+    };
+  }
+
+  if (!verifySyncWebhookSecret(event, syncWebhookSecret)) {
+    return {
+      statusCode: 401,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'Unauthorized webhook request' })
     };
   }
 

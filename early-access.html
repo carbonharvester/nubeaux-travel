@@ -13,6 +13,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
+  <!-- Prefinery: warm up connection and fetch widget early -->
+  <link rel="dns-prefetch" href="//widget.prefinery.com">
+  <link rel="preconnect" href="https://widget.prefinery.com" crossorigin>
+  <link rel="preload" href="https://widget.prefinery.com/widget/v2/l1grqwyx.js" as="script" crossorigin>
+  <script>prefinery=window.prefinery||function(){(window.prefinery.q=window.prefinery.q||[]).push(arguments)};</script>
+  <script src="https://widget.prefinery.com/widget/v2/l1grqwyx.js" defer fetchpriority="high"></script>
+
   <!-- Font Awesome 5 for Prefinery social icons - inline critical styles -->
   <style>
     /* Inline Font Awesome icons used by Prefinery */
@@ -119,6 +126,17 @@
     /* Prefinery Form Container */
     .prefinery-form-embed {
       text-align: left;
+      min-height: 220px;
+      position: relative;
+    }
+
+    .prefinery-form-embed.is-loading::before {
+      content: 'Loading waitlist form...';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--color-text-light);
+      font-size: 0.95rem;
     }
 
     /* Prefinery Button Styling */
@@ -224,7 +242,7 @@
       <p class="early-access-subtitle">Your content already inspires real bookings. Now earn every time your followers travel.</p>
 
       <!-- Prefinery Waitlist Form -->
-      <div class="prefinery-form-embed"></div>
+      <div class="prefinery-form-embed is-loading"></div>
     </div>
 
     <!-- Image - appears between content and footer on mobile -->
@@ -236,8 +254,20 @@
     </div>
   </div>
 
-  <!-- Prefinery Waitlist -->
-  <script>prefinery=window.prefinery||function(){(window.prefinery.q=window.prefinery.q||[]).push(arguments)};</script>
-  <script src="https://widget.prefinery.com/widget/v2/l1grqwyx.js" defer></script>
+  <script>
+    (function () {
+      var mount = document.querySelector('.prefinery-form-embed');
+      if (!mount) return;
+      var timeoutId = setTimeout(function () { mount.classList.remove('is-loading'); }, 8000);
+      var observer = new MutationObserver(function () {
+        if (mount.children.length > 0) {
+          mount.classList.remove('is-loading');
+          clearTimeout(timeoutId);
+          observer.disconnect();
+        }
+      });
+      observer.observe(mount, { childList: true, subtree: true });
+    })();
+  </script>
 </body>
 </html>

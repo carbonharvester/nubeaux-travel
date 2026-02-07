@@ -11,11 +11,27 @@ function getSupabase() {
   );
 }
 
+function extractAdminKey(event) {
+  const authHeader = event.headers?.authorization || event.headers?.Authorization || '';
+  if (authHeader.startsWith('Bearer ')) {
+    return authHeader.slice(7).trim();
+  }
+  return event.headers?.['x-admin-key'] || event.headers?.['X-Admin-Key'] || '';
+}
+
+function slugify(value) {
+  return String(value || '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
 exports.handler = async (event, context) => {
   // CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Admin-Key',
     'Content-Type': 'application/json'
   };
 
@@ -32,12 +48,37 @@ exports.handler = async (event, context) => {
   }
 
   try {
+    const adminKey = process.env.ADMIN_API_KEY;
+    if (!adminKey) {
+      return {
+        statusCode: 500,
+        headers,
+        body: JSON.stringify({ error: 'Admin API key is not configured' })
+      };
+    }
+    if (extractAdminKey(event) !== adminKey) {
+      return {
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({ error: 'Unauthorized' })
+      };
+    }
+
     const supabase = getSupabase();
     if (!supabase) {
       throw new Error('Database not configured');
     }
 
-    const data = JSON.parse(event.body);
+    let data;
+    try {
+      data = JSON.parse(event.body || '{}');
+    } catch (parseError) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'Invalid JSON body' })
+      };
+    }
 
     // Validate required fields
     if (!data.title || !data.title.trim()) {
@@ -56,14 +97,7 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Generate ID from title if not provided
-    const id = data.id || data.title.toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '');
-
-    // Prepare the record
-    const record = {
-      id: id,
+    const baseRecord = {
       creator_id: data.creator_id,
       title: data.title.trim(),
       destination: data.destination || null,
@@ -82,20 +116,73 @@ exports.handler = async (event, context) => {
       published_at: data.status === 'published' ? new Date().toISOString() : null
     };
 
-    console.log('Saving itinerary:', id);
+    let saved;
 
-    // Upsert (insert or update)
-    const { data: saved, error } = await supabase
-      .from('itineraries')
-      .upsert(record, {
-        onConflict: 'id'
-      })
-      .select()
-      .single();
+    // Update existing itinerary only when the creator owns it.
+    if (data.id) {
+      const { data: existing, error: existingError } = await supabase
+        .from('itineraries')
+        .select('id, creator_id')
+        .eq('id', data.id)
+        .maybeSingle();
+      if (existingError) throw new Error(existingError.message);
+      if (!existing) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'Itinerary not found' })
+        };
+      }
+      if (existing.creator_id !== data.creator_id) {
+        return {
+          statusCode: 403,
+          headers,
+          body: JSON.stringify({ error: 'Creator does not own this itinerary' })
+        };
+      }
 
-    if (error) {
-      console.error('Supabase error:', error);
-      throw new Error(error.message);
+      const { data: updated, error: updateError } = await supabase
+        .from('itineraries')
+        .update(baseRecord)
+        .eq('id', data.id)
+        .eq('creator_id', data.creator_id)
+        .select()
+        .single();
+      if (updateError) throw new Error(updateError.message);
+      saved = updated;
+    } else {
+      // Create new itinerary with a creator-scoped slug and collision suffix.
+      const creatorSlug = slugify(data.creator_id);
+      const titleSlug = slugify(data.title);
+      const stem = `${creatorSlug}-${titleSlug}`.slice(0, 100) || `itinerary-${Date.now()}`;
+      let id = stem;
+      let attempt = 1;
+
+      while (attempt <= 25) {
+        const { data: existingId, error: idCheckError } = await supabase
+          .from('itineraries')
+          .select('id')
+          .eq('id', id)
+          .maybeSingle();
+        if (idCheckError) throw new Error(idCheckError.message);
+        if (!existingId) break;
+        attempt += 1;
+        id = `${stem}-${attempt}`;
+      }
+
+      if (attempt > 25) {
+        id = `${stem}-${Date.now()}`;
+      }
+
+      console.log('Saving itinerary:', id);
+      const record = { id, ...baseRecord };
+      const { data: inserted, error: insertError } = await supabase
+        .from('itineraries')
+        .insert(record)
+        .select()
+        .single();
+      if (insertError) throw new Error(insertError.message);
+      saved = inserted;
     }
 
     return {

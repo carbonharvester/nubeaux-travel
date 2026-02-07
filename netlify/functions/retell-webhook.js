@@ -5,16 +5,32 @@
  * Uses Node 18+ built-in fetch
  */
 
-const SUPABASE_URL = 'https://qnhqtlpkwscbguossfmn.supabase.co';
-const SUPABASE_SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuaHF0bHBrd3NjYmd1b3NzZm1uIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MDA5NzAyMSwiZXhwIjoyMDg1NjczMDIxfQ.7h9SrfrLjeVV-HpKsRcTfp99Z4p2x5wFC-erxxw0VWY';
+function safeEqual(a, b) {
+  if (!a || !b) return false;
+  if (a.length !== b.length) return false;
+  let result = 0;
+  for (let i = 0; i < a.length; i++) {
+    result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return result === 0;
+}
+
+function verifyWebhookSecret(event, expectedSecret) {
+  if (!expectedSecret) return false;
+  const headerSecret =
+    event.headers?.['x-webhook-secret'] ||
+    event.headers?.['X-Webhook-Secret'];
+  const querySecret = event.queryStringParameters?.secret;
+  return safeEqual(headerSecret || '', expectedSecret) || safeEqual(querySecret || '', expectedSecret);
+}
 
 // Helper to make Supabase requests
-async function supabaseRequest(endpoint, options = {}) {
-  const response = await fetch(`${SUPABASE_URL}${endpoint}`, {
+async function supabaseRequest(endpoint, options = {}, supabaseUrl, supabaseServiceKey) {
+  const response = await fetch(`${supabaseUrl}${endpoint}`, {
     ...options,
     headers: {
-      'apikey': SUPABASE_SERVICE_KEY,
-      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+      'apikey': supabaseServiceKey,
+      'Authorization': `Bearer ${supabaseServiceKey}`,
       'Content-Type': 'application/json',
       'Prefer': 'return=representation',
       ...options.headers
@@ -58,16 +74,46 @@ function extractCallerInfo(callData) {
 }
 
 exports.handler = async (event, context) => {
+  const SUPABASE_URL = process.env.SUPABASE_URL;
+  const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+  const RETELL_WEBHOOK_SECRET = process.env.RETELL_WEBHOOK_SECRET;
+
   const headers = {
     'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, X-Webhook-Secret',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json'
   };
+
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+      body: ''
+    };
+  }
 
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
       headers,
       body: JSON.stringify({ error: 'Method not allowed' })
+    };
+  }
+
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY || !RETELL_WEBHOOK_SECRET) {
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: 'Webhook is not configured' })
+    };
+  }
+
+  if (!verifyWebhookSecret(event, RETELL_WEBHOOK_SECRET)) {
+    return {
+      statusCode: 401,
+      headers,
+      body: JSON.stringify({ error: 'Unauthorized webhook request' })
     };
   }
 
@@ -139,7 +185,7 @@ exports.handler = async (event, context) => {
         'Prefer': 'resolution=merge-duplicates'
       },
       body: JSON.stringify(voiceCallData)
-    });
+    }, SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
     console.log('Voice call saved:', call.call_id);
 
@@ -161,7 +207,7 @@ exports.handler = async (event, context) => {
       await supabaseRequest('/rest/v1/trip_inquiries', {
         method: 'POST',
         body: JSON.stringify(inquiryData)
-      });
+      }, SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
       console.log('Trip inquiry created from voice call');
     }

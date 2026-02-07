@@ -2,18 +2,49 @@
 // Using native fetch (Node 18+)
 
 exports.handler = async (event) => {
-  // Only allow POST
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+  const headers = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS'
+  };
+
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
   }
 
-  const { firstName, lastName, email, bookingId } = JSON.parse(event.body);
+  // Only allow POST
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, headers, body: 'Method Not Allowed' };
+  }
+
+  let payload;
+  try {
+    payload = JSON.parse(event.body || '{}');
+  } catch (error) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: 'Invalid JSON body' })
+    };
+  }
+
+  const { firstName, lastName, email, bookingId } = payload;
 
   // Validate required fields
   if (!firstName || !lastName || !email) {
     return {
       statusCode: 400,
+      headers,
       body: JSON.stringify({ error: 'Missing required fields' })
+    };
+  }
+
+  if (!process.env.VERIFF_API_KEY) {
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: 'VERIFF_API_KEY not configured' })
     };
   }
 
@@ -42,10 +73,7 @@ exports.handler = async (event) => {
     if (data.verification && data.verification.url) {
       return {
         statusCode: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        },
+        headers,
         body: JSON.stringify({
           verificationUrl: data.verification.url,
           sessionId: data.verification.id
@@ -58,6 +86,7 @@ exports.handler = async (event) => {
     console.error('Veriff error:', error);
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({ error: 'Failed to create verification session' })
     };
   }
