@@ -253,70 +253,92 @@
       height: 20px;
     }
 
-    /* Comment Thread */
-    .comment-thread {
+    /* Floating Comment Bubbles */
+    .floating-comments {
+      position: relative;
+      min-height: 500px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .comment-bubble {
+      position: absolute;
       background: var(--color-white);
-      border: 1px solid var(--color-light-grey);
-      border-radius: 8px;
-      padding: var(--space-lg);
-      max-width: 360px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-radius: 20px;
+      padding: 12px 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      font-size: 0.9rem;
+      max-width: 280px;
+      animation: float 6s ease-in-out infinite;
     }
 
-    .comment {
-      display: flex;
-      gap: var(--space-sm);
-      margin-bottom: var(--space-md);
-    }
-
-    .comment:last-child {
-      margin-bottom: 0;
-    }
-
-    .comment-avatar {
-      width: 32px;
-      height: 32px;
+    .comment-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 20px;
+      width: 16px;
+      height: 16px;
+      background: var(--color-white);
       border-radius: 50%;
-      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
-    .comment-content {
-      flex: 1;
+    .comment-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 28px;
+      width: 10px;
+      height: 10px;
+      background: var(--color-white);
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
-    .comment-header {
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-      margin-bottom: 4px;
-    }
+    .bubble-1 { top: 5%; left: 5%; animation-delay: 0s; }
+    .bubble-2 { top: 15%; right: 10%; animation-delay: 1s; }
+    .bubble-3 { top: 40%; left: 0; animation-delay: 2s; }
+    .bubble-4 { top: 50%; right: 5%; animation-delay: 0.5s; }
+    .bubble-5 { top: 70%; left: 8%; animation-delay: 1.5s; }
+    .bubble-6 { top: 75%; right: 15%; animation-delay: 2.5s; }
 
-    .comment-username {
-      font-size: 0.8125rem;
+    .comment-bubble .username {
       font-weight: 600;
-    }
-
-    .comment-time {
-      font-size: 0.75rem;
-      color: var(--color-text-light);
-    }
-
-    .comment-text {
-      font-size: 0.8125rem;
-      line-height: 1.5;
       color: var(--color-text);
+      margin-right: 6px;
     }
 
-    .comment-reply {
-      margin-left: var(--space-xl);
-    }
-
-    .comment-badge {
-      font-size: 0.625rem;
-      padding: 2px 6px;
-      background: var(--color-off-white);
+    .comment-bubble .text {
       color: var(--color-text-light);
-      border-radius: 4px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 768px) {
+      .floating-comments {
+        min-height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+        padding: var(--space-md);
+      }
+
+      .comment-bubble {
+        position: relative;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        max-width: 100%;
+        animation: none;
+      }
+
+      .comment-bubble:nth-child(even) {
+        align-self: flex-end;
+      }
     }
 
     .problem-punchline {
@@ -1995,72 +2017,30 @@
           <h2 id="problem-heading">Your content drives bookings. You see nothing.</h2>
         </div>
 
-        <div class="ig-showcase animate-on-scroll">
-          <!-- Instagram Post -->
-          <div class="ig-post-mockup">
-            <div class="ig-post-header">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia" class="ig-avatar">
-              <span class="ig-username">niathelight</span>
-            </div>
-            <div class="ig-post-image">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_500,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Namibia sunset" loading="lazy">
-            </div>
-            <div class="ig-post-engagement">
-              <div class="ig-engagement-row">
-                <div class="ig-engagement-item">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                  <span>47.2K</span>
-                </div>
-                <div class="ig-engagement-item">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
-                  <span>892</span>
-                </div>
-              </div>
-            </div>
+        <div class="floating-comments animate-on-scroll">
+          <div class="comment-bubble bubble-1">
+            <span class="username">@sarah_travels</span>
+            <span class="text">OMG where is this?? I need the full itinerary! 😍</span>
           </div>
-
-          <!-- Comment Thread -->
-          <div class="comment-thread">
-            <div class="comment">
-              <img src="https://ui-avatars.com/api/?name=S&background=e0e0e0&color=666&size=64" alt="" class="comment-avatar">
-              <div class="comment-content">
-                <div class="comment-header">
-                  <span class="comment-username">sarah_travels</span>
-                  <span class="comment-time">2d</span>
-                </div>
-                <p class="comment-text">OMG this is stunning!! Where is this?? I need to go 😍</p>
-              </div>
-            </div>
-            <div class="comment">
-              <img src="https://ui-avatars.com/api/?name=M&background=e0e0e0&color=666&size=64" alt="" class="comment-avatar">
-              <div class="comment-content">
-                <div class="comment-header">
-                  <span class="comment-username">michaelonfood</span>
-                  <span class="comment-time">2d</span>
-                </div>
-                <p class="comment-text">What hotel is this? Can you share the name? Looks incredible!</p>
-              </div>
-            </div>
-            <div class="comment">
-              <img src="https://ui-avatars.com/api/?name=J&background=e0e0e0&color=666&size=64" alt="" class="comment-avatar">
-              <div class="comment-content">
-                <div class="comment-header">
-                  <span class="comment-username">jenna.wandering</span>
-                  <span class="comment-time">1d</span>
-                </div>
-                <p class="comment-text">Can you DM me your full itinerary? Planning a trip next month!</p>
-              </div>
-            </div>
-            <div class="comment comment-reply">
-              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia" class="comment-avatar">
-              <div class="comment-content">
-                <div class="comment-header">
-                  <span class="comment-username">niathelight</span>
-                  <span class="comment-badge">Author</span>
-                </div>
-                <p class="comment-text">Just sent you the details! 💕</p>
-              </div>
-            </div>
+          <div class="comment-bubble bubble-2">
+            <span class="username">@jetsetter_mike</span>
+            <span class="text">Can you DM me the hotel name? Planning my honeymoon!</span>
+          </div>
+          <div class="comment-bubble bubble-3">
+            <span class="username">@wanderlust.jen</span>
+            <span class="text">How many days did you spend here? Need all the details!</span>
+          </div>
+          <div class="comment-bubble bubble-4">
+            <span class="username">@travel.with.tom</span>
+            <span class="text">What's your complete itinerary? Want to book the same trip!</span>
+          </div>
+          <div class="comment-bubble bubble-5">
+            <span class="username">@nomad.nicole</span>
+            <span class="text">Is this place as amazing as it looks? Share the deets! 🙏</span>
+          </div>
+          <div class="comment-bubble bubble-6">
+            <span class="username">@adventures.anna</span>
+            <span class="text">Following! Please post your full trip breakdown!</span>
           </div>
         </div>
 
