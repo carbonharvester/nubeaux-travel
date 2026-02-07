@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="How JUNO Travel works. Creators share trips. We handle bookings. You earn.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="How JUNO works for creators and travellers. Creators share trips. Travellers book. JUNO handles everything in between.">
+  <meta name="theme-color" content="#ffffff">
 
   <title>How It Works | JUNO Travel</title>
 
@@ -13,478 +14,454 @@
   <link rel="stylesheet" href="css/style.css?v=24">
 
   <style>
-    /* Header styles */
-    .header .header-inner {
-      padding: 0 var(--space-lg);
-      max-width: none;
-      margin: 0;
-    }
-
-    .nav-buttons {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .nav-buttons .nav-cta {
-      padding: 0.5rem 1rem !important;
-      margin-left: 0 !important;
-      font-size: 0.75rem !important;
-      letter-spacing: 0.08em !important;
-    }
-
-    .nav-buttons .nav-login {
-      border: 1px solid var(--color-text) !important;
-      padding: 0.5rem 1rem !important;
-      font-size: 0.75rem !important;
-      letter-spacing: 0.08em !important;
-      margin-left: 0 !important;
-      transition: all var(--transition-fast) !important;
-    }
-
-    .nav-buttons .nav-login:hover {
-      background: var(--color-accent) !important;
-      border-color: var(--color-accent) !important;
-      color: var(--color-white) !important;
-    }
-
-    .mobile-menu-cta,
-    .mobile-menu-login {
-      display: inline-block;
-      padding: 1rem 2rem !important;
-      text-align: center;
-      font-size: 0.875rem !important;
-      font-family: var(--font-sans) !important;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      width: 100%;
-      max-width: 280px;
-      box-sizing: border-box;
-    }
-
-    .mobile-menu-cta {
-      background-color: var(--color-accent);
-      color: var(--color-white) !important;
-      margin-top: var(--space-md);
-    }
-
-    .mobile-menu-login {
-      border: 1px solid var(--color-text);
-      background: transparent;
-      color: var(--color-text) !important;
-      margin-top: var(--space-sm);
-    }
-
-    /* Section Label */
-    .section-label {
-      font-size: 0.6875rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--color-accent);
-      margin-bottom: var(--space-xs);
-      display: block;
-    }
-
-    /* Hero - Full viewport height */
+    /* Hero */
     .hiw-hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: flex-end;
-      color: white;
-    }
-
-    .hiw-hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .hiw-hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .hiw-hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);
-    }
-
-    .hiw-hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-      padding: var(--space-2xl);
+      padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-xl);
+      background: var(--color-warm-cream);
+      text-align: center;
     }
 
     .hiw-hero h1 {
-      font-size: 2.5rem;
-      color: white;
-      margin-bottom: var(--space-md);
-    }
-
-    .hiw-hero p {
-      font-size: 1.125rem;
-      color: rgba(255,255,255,0.9);
-      margin-bottom: var(--space-lg);
-      line-height: 1.7;
-    }
-
-    .hiw-hero .btn-outline {
-      border-color: rgba(255,255,255,0.6);
-      color: white;
-    }
-
-    .hiw-hero .btn-outline:hover {
-      background: var(--color-accent);
-      border-color: var(--color-accent);
-    }
-
-    /* Steps Section - Edge to edge */
-    .steps-banner {
-      background: var(--color-off-white);
-    }
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid var(--color-light-grey);
-      border-bottom: 1px solid var(--color-light-grey);
-    }
-
-    .step {
-      text-align: center;
-      padding: var(--space-xl) var(--space-md);
-      border-right: 1px solid var(--color-light-grey);
-    }
-
-    .step:last-child {
-      border-right: none;
-    }
-
-    .step-number {
-      font-family: var(--font-serif);
-      font-size: 2.5rem;
-      color: var(--color-accent);
+      font-size: clamp(2rem, 5vw, 3rem);
       margin-bottom: var(--space-sm);
-      line-height: 1;
-    }
-
-    .step h3 {
-      font-size: 1rem;
-      margin-bottom: var(--space-xs);
-    }
-
-    .step p {
-      color: var(--color-text-light);
-      font-size: 0.875rem;
-      margin: 0;
-    }
-
-    /* Split Section */
-    .split-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 70vh;
-    }
-
-    .split-image {
-      position: relative;
-    }
-
-    .split-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .split-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: var(--space-2xl);
-      background: #1a1a1a;
-      color: white;
-    }
-
-    .split-content h2 {
-      color: white;
-      margin-bottom: var(--space-md);
-    }
-
-    .split-content p {
-      color: rgba(255,255,255,0.8);
-      line-height: 1.8;
-      margin-bottom: var(--space-md);
-      font-size: 1.0625rem;
-    }
-
-    .split-content .section-label {
-      color: var(--color-accent);
-    }
-
-    .check-list {
-      list-style: none;
-      padding: 0;
-      margin: var(--space-lg) 0;
-    }
-
-    .check-list li {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      margin-bottom: var(--space-sm);
-      color: rgba(255,255,255,0.9);
-    }
-
-    .check-list svg {
-      width: 20px;
-      height: 20px;
-      color: var(--color-accent);
-      flex-shrink: 0;
-    }
-
-    /* For Travellers Section */
-    .travellers-section {
-      padding: var(--space-2xl) 0;
-      background: var(--color-off-white);
-    }
-
-    .travellers-header {
-      text-align: center;
-      margin-bottom: var(--space-xl);
-    }
-
-    .travellers-header h2 {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .travellers-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-md);
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .traveller-card {
-      background: white;
-      padding: var(--space-lg);
-      text-align: center;
-    }
-
-    .traveller-card h3 {
-      font-size: 1.125rem;
-      margin-bottom: var(--space-sm);
-    }
-
-    .traveller-card p {
-      color: var(--color-text-light);
-      font-size: 0.9375rem;
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    /* Full Bleed CTA */
-    .full-bleed-cta {
-      position: relative;
-      min-height: 50vh;
-      display: flex;
-      align-items: center;
-    }
-
-    .full-bleed-cta .full-bleed-bg {
-      position: absolute;
-      inset: 0;
-    }
-
-    .full-bleed-cta .full-bleed-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .full-bleed-cta .overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
-    }
-
-    .full-bleed-cta .content {
-      position: relative;
-      z-index: 1;
-      padding: var(--space-2xl);
-      max-width: 500px;
-    }
-
-    .full-bleed-cta h2 {
-      color: white;
-      margin-bottom: var(--space-md);
-    }
-
-    .full-bleed-cta p {
-      color: rgba(255,255,255,0.9);
-      margin-bottom: var(--space-lg);
-      line-height: 1.7;
-    }
-
-    .full-bleed-cta .btn-outline {
-      border-color: rgba(255,255,255,0.6);
-      color: white;
-    }
-
-    .full-bleed-cta .btn-outline:hover {
-      background: var(--color-accent);
-      border-color: var(--color-accent);
-    }
-
-    /* Final CTA */
-    .final-cta {
-      background: #d4c4b0;
-      padding: var(--space-2xl) 0;
-      text-align: center;
-    }
-
-    .final-cta h2 {
-      margin-bottom: var(--space-lg);
-      max-width: 600px;
+      max-width: 700px;
       margin-left: auto;
       margin-right: auto;
     }
 
-    .final-cta .btn-primary {
-      background: var(--color-text);
-      color: white;
+    .hiw-hero .lead {
+      font-size: 1.125rem;
+      color: var(--color-text-light);
+      max-width: 560px;
+      margin: 0 auto var(--space-lg);
     }
 
-    /* Creator Footer */
-    .creator-footer {
-      background: #1a1a1a;
-      color: rgba(255,255,255,0.7);
-      padding: var(--space-xl) 0 var(--space-lg);
+    .hiw-hero-ctas {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
     }
 
-    .creator-footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: var(--space-xl);
+    /* Path Toggle */
+    .path-toggle {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: var(--space-lg) 0;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-light-grey);
+      position: sticky;
+      top: var(--header-height);
+      z-index: 50;
+    }
+
+    .path-toggle-btn {
+      padding: var(--space-sm) var(--space-lg);
+      border: 1px solid var(--color-light-grey);
+      border-radius: 100px;
+      background: var(--color-white);
+      font-size: 0.9375rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      color: var(--color-text);
+    }
+
+    .path-toggle-btn:hover {
+      border-color: var(--color-charcoal);
+    }
+
+    .path-toggle-btn.active {
+      background: var(--color-charcoal);
+      color: var(--color-white);
+      border-color: var(--color-charcoal);
+    }
+
+    /* Section Styles */
+    .hiw-section {
+      padding: var(--space-2xl) 0;
+    }
+
+    .hiw-section.alt {
+      background: var(--color-sand);
+    }
+
+    .hiw-section.dark {
+      background: var(--color-charcoal);
+      color: var(--color-white);
+    }
+
+    .hiw-section.dark h2,
+    .hiw-section.dark h3 {
+      color: var(--color-white);
+    }
+
+    .hiw-section.dark p {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .section-header {
+      text-align: center;
       margin-bottom: var(--space-xl);
     }
 
-    .creator-footer-brand p {
-      font-size: 0.875rem;
-      line-height: 1.7;
-      max-width: 280px;
+    .section-header h2 {
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      margin-bottom: var(--space-sm);
     }
 
-    .creator-footer-col h4 {
-      color: white;
-      font-family: var(--font-sans);
+    .section-header p {
+      color: var(--color-text-light);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-block;
       font-size: 0.6875rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    /* Steps */
+    .hiw-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hiw-step {
+      text-align: center;
+    }
+
+    .hiw-step-number {
+      width: 56px;
+      height: 56px;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin: 0 auto var(--space-md);
+    }
+
+    .hiw-section.dark .hiw-step-number {
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    .hiw-step h3 {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .hiw-step p {
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--color-text-light);
+    }
+
+    /* Responsibilities */
+    .responsibilities {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .responsibility-card {
+      background: var(--color-white);
+      padding: var(--space-lg);
+      border-radius: 8px;
+    }
+
+    .responsibility-card h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-md);
+      color: var(--color-charcoal);
+    }
+
+    .responsibility-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .responsibility-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-xs) 0;
+      font-size: 0.9375rem;
+      color: var(--color-text-light);
+    }
+
+    .responsibility-list .icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .responsibility-list .icon.check {
+      color: var(--color-accent);
+    }
+
+    .responsibility-list .icon.x {
+      color: var(--color-medium-grey);
+    }
+
+    /* Customisation */
+    .customisation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .customisation-content h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
       margin-bottom: var(--space-md);
     }
 
-    .creator-footer-col a {
-      display: block;
+    .customisation-content p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-md);
+    }
+
+    .customisation-options {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .customisation-options li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) 0;
+      font-size: 0.9375rem;
+    }
+
+    .customisation-options .icon {
+      width: 20px;
+      height: 20px;
+      color: var(--color-accent);
+    }
+
+    .customisation-visual {
+      background: var(--color-sand);
+      padding: var(--space-xl);
+      border-radius: 8px;
+    }
+
+    .customisation-example {
+      background: var(--color-white);
+      padding: var(--space-md);
+      border-radius: 8px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .customisation-example:last-child {
+      margin-bottom: 0;
+    }
+
+    .example-label {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-medium-grey);
+      margin-bottom: var(--space-xs);
+    }
+
+    .example-value {
+      font-size: 1rem;
+      color: var(--color-charcoal);
+    }
+
+    /* Earnings */
+    .earnings-box {
+      background: var(--color-white);
+      padding: var(--space-xl);
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .earnings-box h3 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .earnings-statement {
+      font-size: 1.125rem;
+      color: var(--color-charcoal);
+      margin-bottom: var(--space-md);
+      padding: var(--space-md);
+      background: var(--color-sand);
+      border-radius: 8px;
+    }
+
+    .earnings-statement strong {
+      color: var(--color-accent);
+    }
+
+    .earnings-note {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+    }
+
+    /* Trust */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .trust-item {
+      text-align: center;
+      padding: var(--space-lg);
+    }
+
+    .trust-item h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .trust-item p {
       font-size: 0.875rem;
       color: rgba(255,255,255,0.7);
-      margin-bottom: var(--space-sm);
-      transition: color var(--transition-fast);
     }
 
-    .creator-footer-col a:hover {
-      color: white;
+    /* Example */
+    .example-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-warm-cream);
     }
 
-    .creator-footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: var(--space-md);
-      font-size: 0.8125rem;
+    .example-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--space-2xl);
+      align-items: center;
+    }
+
+    .example-content h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .example-content p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+    }
+
+    .example-image {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .example-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Final CTA */
+    .final-cta {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+      text-align: center;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .final-cta p {
+      color: var(--color-text-light);
+      max-width: 450px;
+      margin: 0 auto var(--space-lg);
+    }
+
+    /* Mobile Sticky CTA */
+    .mobile-sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-md);
+      background: var(--color-white);
+      border-top: 1px solid var(--color-light-grey);
+      z-index: 100;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    }
+
+    .mobile-sticky-cta .btn {
+      width: 100%;
     }
 
     /* Responsive */
     @media (max-width: 1024px) {
-      .steps-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .hiw-steps {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+        max-width: 400px;
       }
 
-      .step:nth-child(2) {
-        border-right: none;
-      }
-
-      .step:nth-child(1),
-      .step:nth-child(2) {
-        border-bottom: 1px solid var(--color-light-grey);
-      }
-
-      .split-section {
+      .responsibilities {
         grid-template-columns: 1fr;
       }
 
-      .split-image {
-        min-height: 50vh;
+      .customisation-grid,
+      .example-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
       }
 
-      .creator-footer-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-lg);
-      }
-
-      .creator-footer-brand {
-        grid-column: span 2;
+      .trust-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
       }
     }
 
     @media (max-width: 768px) {
-      .hiw-hero-content {
-        padding: var(--space-xl);
+      .hiw-hero-ctas {
+        flex-direction: column;
+        padding: 0 var(--space-lg);
       }
 
-      .hiw-hero h1 {
-        font-size: 1.75rem;
+      .path-toggle {
+        flex-direction: column;
+        gap: var(--space-xs);
+        padding: var(--space-md);
       }
 
-      .hiw-hero p {
-        font-size: 1rem;
+      .path-toggle-btn {
+        width: 100%;
+        text-align: center;
       }
 
-      .steps-grid {
-        grid-template-columns: 1fr;
+      .mobile-sticky-cta {
+        display: block;
       }
 
-      .step {
-        border-right: none;
-        border-bottom: 1px solid var(--color-light-grey);
-      }
-
-      .step:last-child {
-        border-bottom: none;
-      }
-
-      .split-content {
-        padding: var(--space-xl);
-      }
-
-      .travellers-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .full-bleed-cta .content {
-        padding: var(--space-xl);
-      }
-
-      .creator-footer-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .creator-footer-brand {
-        grid-column: auto;
+      .final-cta {
+        padding-bottom: calc(var(--space-2xl) + 80px);
       }
     }
   </style>
@@ -492,182 +469,344 @@
 <body>
   <header class="header">
     <div class="header-inner">
-      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="JUNO Travel"></a>
-      <nav class="nav" aria-label="Main navigation">
-        <a href="creators/index.html">For Creators</a>
-        <a href="trips/">Explore Trips</a>
-        <a href="how-it-works.html">How It Works</a>
-        <div class="nav-buttons">
-          <a href="creators/start.html" class="nav-cta">Sign up</a>
-          <a href="login.html" class="nav-login">Log in</a>
-        </div>
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="JUNO"></a>
+      <nav class="nav">
+        <a href="for-creators.html">For Creators</a>
+        <a href="how-it-works.html" class="active">How It Works</a>
+        <a href="trips/">Trips</a>
+        <a href="portal/login.html" class="nav-cta">Log In</a>
       </nav>
       <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
   </header>
 
   <div class="mobile-menu">
-    <a href="creators/index.html">For Creators</a>
-    <a href="trips/">Explore Trips</a>
+    <a href="for-creators.html">For Creators</a>
     <a href="how-it-works.html">How It Works</a>
-    <a href="creators/start.html" class="mobile-menu-cta">Sign up</a>
-    <a href="login.html" class="mobile-menu-login">Log in</a>
+    <a href="trips/">Trips</a>
+    <a href="portal/login.html" class="mobile-menu-cta">Log In</a>
   </div>
 
-  <!-- Hero -->
-  <section class="hiw-hero">
-    <div class="hiw-hero-bg">
-      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Safari landscape">
-    </div>
-    <div class="hiw-hero-content">
-      <h1>Share a trip. Earn when people book.</h1>
-      <p>You share trips you've taken. We turn them into bookable itineraries and handle everything else. You earn commission on every booking.</p>
-      <div style="display: flex; gap: var(--space-md); flex-wrap: wrap;">
-        <a href="creators/start.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.7); color: white;">Start earning</a>
-        <a href="itineraries/namibia-safari-example.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.7); color: white;">See a live example</a>
+  <main>
+    <!-- Hero -->
+    <section class="hiw-hero" aria-labelledby="hero-heading">
+      <div class="container">
+        <h1 id="hero-heading">Creators share trips. Travellers book. JUNO handles everything in between.</h1>
+        <p class="lead">A simple platform connecting real travel experiences with the people who want them.</p>
+        <div class="hiw-hero-ctas">
+          <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
+          <a href="itineraries/namibia-safari-example.html" class="btn btn-outline-dark">See a live example</a>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Steps -->
-  <section class="steps-banner">
-    <div class="steps-grid">
-      <div class="step">
-        <div class="step-number">01</div>
-        <h3>Share a Trip</h3>
-        <p>Tell us about a trip you loved</p>
-      </div>
-      <div class="step">
-        <div class="step-number">02</div>
-        <h3>We Build It</h3>
-        <p>We turn it into a bookable itinerary</p>
-      </div>
-      <div class="step">
-        <div class="step-number">03</div>
-        <h3>We Handle the Rest</h3>
-        <p>Enquiries, bookings, payments, support</p>
-      </div>
-      <div class="step">
-        <div class="step-number">04</div>
-        <h3>You Earn</h3>
-        <p>Commission on every booking</p>
-      </div>
-    </div>
-  </section>
+    <!-- Path Toggle -->
+    <nav class="path-toggle" aria-label="View selection">
+      <a href="#creators" class="path-toggle-btn active">For Creators</a>
+      <a href="#travellers" class="path-toggle-btn">For Travellers</a>
+    </nav>
 
-  <!-- For Creators - Split Section -->
-  <section class="split-section">
-    <div class="split-image">
-      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_960,h_800,q_auto,f_auto/v1770005195/Mozambique_Klein-57_ruphjt.jpg" alt="Creator capturing travel content">
-    </div>
-    <div class="split-content">
-      <span class="section-label">For Creators</span>
-      <h2>Your content already drives bookings. Now you can earn from them.</h2>
-      <p>You've built an audience that trusts your recommendations. When they book trips you've shared, you should earn. We make that happen—without you becoming a travel agent.</p>
-      <ul class="check-list">
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-          No booking admin
-        </li>
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-          No calls with travellers
-        </li>
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-          No payment handling
-        </li>
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
-          No fees to join or list
-        </li>
-      </ul>
-      <a href="creators/start.html" class="btn btn-primary">Start earning</a>
-    </div>
-  </section>
+    <!-- FOR CREATORS -->
+    <section id="creators" class="hiw-section" aria-labelledby="creators-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">For Creators</span>
+          <h2 id="creators-heading">Share your trip. Earn when people book.</h2>
+          <p>You've already done the travel. Now let it generate income without any extra work.</p>
+        </div>
 
-  <!-- For Travellers -->
-  <section class="travellers-section">
+        <div class="hiw-steps">
+          <div class="hiw-step">
+            <div class="hiw-step-number">1</div>
+            <h3>Share a trip you've taken.</h3>
+            <p>The hotels you stayed at. The experiences you had. Real trips from your own travels.</p>
+          </div>
+          <div class="hiw-step">
+            <div class="hiw-step-number">2</div>
+            <h3>JUNO makes it bookable.</h3>
+            <p>Your trip becomes a structured itinerary. We handle enquiries, pricing, payments, and booking confirmations.</p>
+          </div>
+          <div class="hiw-step">
+            <div class="hiw-step-number">3</div>
+            <h3>You earn commission.</h3>
+            <p>When bookings are confirmed, you earn a share of the commission. Passive income from travel you've already done.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Creator Responsibilities -->
+    <section class="hiw-section alt" aria-labelledby="responsibilities-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="responsibilities-heading">What you do. What we do.</h2>
+          <p>Clear responsibilities. No overlap. No confusion.</p>
+        </div>
+
+        <div class="responsibilities">
+          <div class="responsibility-card">
+            <h3>You do</h3>
+            <ul class="responsibility-list">
+              <li>
+                <svg class="icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Share trips you've actually taken
+              </li>
+              <li>
+                <svg class="icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Provide details about your stays
+              </li>
+              <li>
+                <svg class="icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Share your itinerary link
+              </li>
+              <li>
+                <svg class="icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Receive commission on bookings
+              </li>
+            </ul>
+          </div>
+
+          <div class="responsibility-card">
+            <h3>You don't do</h3>
+            <ul class="responsibility-list">
+              <li>
+                <svg class="icon x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                Handle enquiries or questions
+              </li>
+              <li>
+                <svg class="icon x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                Quote prices or negotiate
+              </li>
+              <li>
+                <svg class="icon x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                Process payments or bookings
+              </li>
+              <li>
+                <svg class="icon x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                Provide traveller support
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Creator Earnings -->
+    <section class="hiw-section" aria-labelledby="earnings-heading">
+      <div class="container">
+        <div class="earnings-box">
+          <h3 id="earnings-heading">How creators earn</h3>
+          <div class="earnings-statement">
+            Creators earn <strong>40% of the total commission</strong> generated on confirmed bookings.
+          </div>
+          <p class="earnings-note">Higher tiers unlock as your bookings grow. No admin. No calls. No customer support. Just earnings from trips you've already taken.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOR TRAVELLERS -->
+    <section id="travellers" class="hiw-section dark" aria-labelledby="travellers-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label" style="color: var(--color-terracotta-soft);">For Travellers</span>
+          <h2 id="travellers-heading">Book trips from people who've been there.</h2>
+          <p style="color: rgba(255,255,255,0.7);">Real itineraries from real trips. Book as-is or customise to fit your plans.</p>
+        </div>
+
+        <div class="hiw-steps">
+          <div class="hiw-step">
+            <div class="hiw-step-number">1</div>
+            <h3>Discover an itinerary.</h3>
+            <p style="color: rgba(255,255,255,0.7);">Browse trips from creators you follow or discover new destinations through curated itineraries.</p>
+          </div>
+          <div class="hiw-step">
+            <div class="hiw-step-number">2</div>
+            <h3>Book or customise.</h3>
+            <p style="color: rgba(255,255,255,0.7);">Book the exact trip as-is, or adjust dates, length, and accommodation to suit your preferences.</p>
+          </div>
+          <div class="hiw-step">
+            <div class="hiw-step-number">3</div>
+            <h3>Travel with full support.</h3>
+            <p style="color: rgba(255,255,255,0.7);">Confirm your booking and travel with complete support from JUNO before and during your trip.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Customisation -->
+    <section class="hiw-section alt" aria-labelledby="customise-heading">
+      <div class="container">
+        <div class="customisation-grid">
+          <div class="customisation-content">
+            <h2 id="customise-heading">Customise to fit your plans.</h2>
+            <p>Every itinerary can be adjusted. Change what you need. Keep what you love.</p>
+            <ul class="customisation-options">
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Adjust travel dates
+              </li>
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Change trip length
+              </li>
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Upgrade or change accommodation
+              </li>
+              <li>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Add or remove experiences
+              </li>
+            </ul>
+            <p style="margin-top: var(--space-md); font-size: 0.875rem;">No obligation until you confirm. Clear communication throughout.</p>
+          </div>
+          <div class="customisation-visual">
+            <div class="customisation-example">
+              <div class="example-label">Original</div>
+              <div class="example-value">7 nights in March</div>
+            </div>
+            <div class="customisation-example">
+              <div class="example-label">Your version</div>
+              <div class="example-value">5 nights in June</div>
+            </div>
+            <div class="customisation-example">
+              <div class="example-label">Status</div>
+              <div class="example-value" style="color: var(--color-accent);">Quote ready in 24 hours</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust -->
+    <section class="hiw-section dark" aria-labelledby="trust-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="trust-heading">Booked with confidence.</h2>
+        </div>
+        <div class="trust-grid">
+          <div class="trust-item">
+            <h3>Secure payments</h3>
+            <p>All transactions processed securely. Pay with confidence.</p>
+          </div>
+          <div class="trust-item">
+            <h3>Professional booking</h3>
+            <p>Every booking handled by travel professionals. Nothing left to chance.</p>
+          </div>
+          <div class="trust-item">
+            <h3>Dedicated support</h3>
+            <p>Help available before, during, and after your trip.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Example -->
+    <section class="example-section" aria-labelledby="example-heading">
+      <div class="container">
+        <div class="example-grid">
+          <div class="example-content">
+            <h2 id="example-heading">This is what travellers see when they book.</h2>
+            <p>A real itinerary from a real trip. Clean, detailed, and fully bookable. This is the experience your audience gets.</p>
+            <a href="itineraries/namibia-safari-example.html" class="btn btn-outline-dark">View live example</a>
+          </div>
+          <div class="example-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Example itinerary" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" aria-labelledby="final-cta-heading">
+      <div class="container">
+        <h2 id="final-cta-heading">You share the trip. JUNO handles the rest.</h2>
+        <p>Start with a trip you've already taken. See how it becomes a bookable itinerary.</p>
+        <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile Sticky CTA -->
+  <div class="mobile-sticky-cta">
+    <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
+  </div>
+
+  <footer class="footer">
     <div class="container">
-      <div class="travellers-header">
-        <span class="section-label">For Travellers</span>
-        <h2>Book trips from creators you trust</h2>
-      </div>
-      <div class="travellers-grid">
-        <div class="traveller-card">
-          <h3>Real trips, real details</h3>
-          <p>Every itinerary comes from a trip someone actually took. Real stays, real experiences, real recommendations.</p>
-        </div>
-        <div class="traveller-card">
-          <h3>Book or customise</h3>
-          <p>Book the exact trip or adjust dates, length, and accommodation to fit your schedule.</p>
-        </div>
-        <div class="traveller-card">
-          <h3>Full support</h3>
-          <p>Professional booking handling from enquiry to departure. Help when you need it.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Live Example -->
-  <section class="full-bleed-cta">
-    <div class="full-bleed-bg">
-      <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_1920,h_1080,q_auto,f_auto,a_hflip/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Namibia Safari" style="object-position: center;">
-    </div>
-    <div class="overlay"></div>
-    <div class="content">
-      <span class="section-label" style="color: rgba(255,255,255,0.7);">Live Example</span>
-      <h2>See what a real itinerary looks like</h2>
-      <p>This is what your followers see when you share a trip. Real details. Real availability. Ready to book.</p>
-      <a href="itineraries/namibia-safari-example.html" class="btn btn-outline">View Namibia itinerary</a>
-    </div>
-  </section>
-
-  <!-- Final CTA -->
-  <section class="final-cta">
-    <div class="container">
-      <h2>Your trips already drive bookings.<br>Now you can earn from them.</h2>
-      <a href="creators/start.html" class="btn btn-primary">Start earning</a>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="creator-footer">
-    <div class="container">
-      <div class="creator-footer-grid">
-        <div class="creator-footer-brand">
-          <img src="assets/logo-white.svg" alt="JUNO" style="height: 20px; margin-bottom: var(--space-md);" onerror="this.src='assets/logo.svg'; this.style.filter='invert(1)';">
-          <p>Turn your trips into bookable itineraries. We handle everything. You earn when people book.</p>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.svg" alt="JUNO" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>Creator-led travel. Bookable itineraries from people who've been there.</p>
         </div>
 
-        <div class="creator-footer-col">
-          <h4>Creators</h4>
-          <a href="creators/start.html">Start earning</a>
-          <a href="how-it-works.html">How it works</a>
-          <a href="creators/faq.html">Creator FAQ</a>
+        <div class="footer-col">
+          <h4 class="footer-heading">For Creators</h4>
+          <div class="footer-links">
+            <a href="for-creators.html">Overview</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="portal/login.html">Log In</a>
+          </div>
         </div>
 
-        <div class="creator-footer-col">
-          <h4>Travellers</h4>
-          <a href="trips/">Explore trips</a>
-          <a href="support.html">Support</a>
+        <div class="footer-col">
+          <h4 class="footer-heading">For Travellers</h4>
+          <div class="footer-links">
+            <a href="trips/">Browse Trips</a>
+            <a href="how-it-works.html#travellers">How It Works</a>
+          </div>
         </div>
 
-        <div class="creator-footer-col">
-          <h4>Company</h4>
-          <a href="about.html">About</a>
-          <a href="mailto:hello@junotravel.com">Contact</a>
-          <a href="legal.html">Legal</a>
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="mailto:hello@junotravel.com">Contact</a>
+          </div>
         </div>
       </div>
 
-      <div class="creator-footer-bottom">
+      <div class="footer-bottom">
         <p>&copy; 2026 JUNO Travel. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
   <script src="js/main.js?v=2"></script>
+  <script>
+    // Path toggle functionality
+    document.querySelectorAll('.path-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.path-toggle-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Update active toggle on scroll
+    const sections = document.querySelectorAll('#creators, #travellers');
+    const toggleBtns = document.querySelectorAll('.path-toggle-btn');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 200;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      toggleBtns.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('href') === '#' + current) {
+          btn.classList.add('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>

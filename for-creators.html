@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Turn your trips into income. Share the places you've stayed. Earn commission when your audience books. No admin. Fully supported.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>For Creators | JUNO Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=24">
+
+  <style>
+    /* Hero */
+    .creator-hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-2xl);
+      background: var(--color-warm-cream);
+    }
+
+    .creator-hero-inner {
+      max-width: 720px;
+    }
+
+    .creator-hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+    }
+
+    .creator-hero .lead {
+      font-size: 1.125rem;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+      max-width: 540px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-microcopy {
+      font-size: 0.875rem;
+      color: var(--color-medium-grey);
+    }
+
+    /* Pain Section */
+    .pain-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+
+    .pain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+    }
+
+    .pain-content h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .pain-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .pain-list li {
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-light-grey);
+      font-size: 1rem;
+      color: var(--color-text);
+    }
+
+    .pain-list li:last-child {
+      border-bottom: none;
+    }
+
+    .pain-visual {
+      background: var(--color-sand);
+      padding: var(--space-xl);
+      border-radius: 8px;
+    }
+
+    .dm-mockup {
+      background: var(--color-white);
+      border-radius: 12px;
+      padding: var(--space-md);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .dm-message {
+      padding: var(--space-sm) var(--space-md);
+      background: var(--color-sand);
+      border-radius: 16px;
+      margin-bottom: var(--space-sm);
+      font-size: 0.875rem;
+      max-width: 85%;
+    }
+
+    .dm-message.received {
+      background: var(--color-light-grey);
+      margin-left: auto;
+    }
+
+    /* Outcome Section */
+    .outcome-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-charcoal);
+      color: var(--color-white);
+    }
+
+    .outcome-section h2 {
+      color: var(--color-white);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: var(--space-sm);
+      text-align: center;
+    }
+
+    .outcome-section .section-lead {
+      text-align: center;
+      color: rgba(255,255,255,0.8);
+      max-width: 600px;
+      margin: 0 auto var(--space-xl);
+    }
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .outcome-card {
+      text-align: center;
+      padding: var(--space-lg);
+    }
+
+    .outcome-card h3 {
+      color: var(--color-white);
+      font-size: 1.125rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .outcome-card p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* How It Works */
+    .steps-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+
+    .steps-section h2 {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .step {
+      text-align: center;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      border: 2px solid var(--color-charcoal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      margin: 0 auto var(--space-md);
+    }
+
+    .step h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .step p {
+      font-size: 0.9375rem;
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+
+    /* Earnings Section */
+    .earnings-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-sand);
+    }
+
+    .earnings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+    }
+
+    .earnings-content h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .earnings-highlight {
+      background: var(--color-white);
+      padding: var(--space-lg);
+      border-radius: 8px;
+      margin-bottom: var(--space-md);
+    }
+
+    .earnings-highlight p {
+      font-size: 1.125rem;
+      color: var(--color-charcoal);
+      margin: 0;
+    }
+
+    .earnings-highlight strong {
+      color: var(--color-accent);
+    }
+
+    .earnings-note {
+      font-size: 0.9375rem;
+      color: var(--color-text-light);
+    }
+
+    .earnings-visual {
+      background: var(--color-white);
+      padding: var(--space-xl);
+      border-radius: 8px;
+    }
+
+    .earnings-tiers {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .earnings-tiers li {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid var(--color-light-grey);
+      align-items: center;
+    }
+
+    .earnings-tiers li:last-child {
+      border-bottom: none;
+    }
+
+    .tier-name {
+      font-weight: 500;
+    }
+
+    .tier-rate {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--color-accent);
+    }
+
+    /* Not Your Job Section */
+    .relief-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+
+    .relief-section h2 {
+      text-align: center;
+      margin-bottom: var(--space-sm);
+    }
+
+    .relief-section .section-lead {
+      text-align: center;
+      color: var(--color-text-light);
+      max-width: 500px;
+      margin: 0 auto var(--space-xl);
+    }
+
+    .relief-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .relief-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-md);
+      background: var(--color-sand);
+      border-radius: 8px;
+    }
+
+    .relief-icon {
+      width: 24px;
+      height: 24px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .relief-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: white;
+    }
+
+    .relief-item span {
+      font-size: 0.9375rem;
+    }
+
+    /* Live Example */
+    .example-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-warm-cream);
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--space-2xl);
+      align-items: center;
+    }
+
+    .example-content h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: var(--space-md);
+    }
+
+    .example-content p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+    }
+
+    .example-image {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+
+    .example-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Trust Section */
+    .trust-section {
+      padding: var(--space-xl) 0;
+      background: var(--color-white);
+      text-align: center;
+    }
+
+    .trust-badges {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-xl);
+      flex-wrap: wrap;
+    }
+
+    .trust-badge {
+      font-size: 0.875rem;
+      color: var(--color-medium-grey);
+    }
+
+    /* Final CTA */
+    .final-cta {
+      padding: var(--space-2xl) 0;
+      background: var(--color-charcoal);
+      text-align: center;
+    }
+
+    .final-cta h2 {
+      color: var(--color-white);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: var(--space-md);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .final-cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    .final-cta .microcopy {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.875rem;
+    }
+
+    /* Mobile Sticky CTA */
+    .mobile-sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-md);
+      background: var(--color-white);
+      border-top: 1px solid var(--color-light-grey);
+      z-index: 100;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    }
+
+    .mobile-sticky-cta .btn {
+      width: 100%;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .pain-grid,
+      .earnings-grid,
+      .example-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+      }
+
+      .outcome-grid,
+      .steps-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+      }
+
+      .relief-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .creator-hero {
+        min-height: auto;
+        padding-bottom: var(--space-xl);
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+      }
+
+      .hero-ctas .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .relief-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .final-cta-buttons {
+        flex-direction: column;
+        padding: 0 var(--space-lg);
+      }
+
+      .mobile-sticky-cta {
+        display: block;
+      }
+
+      .final-cta {
+        padding-bottom: calc(var(--space-2xl) + 80px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.svg" alt="JUNO"></a>
+      <nav class="nav">
+        <a href="for-creators.html" class="active">For Creators</a>
+        <a href="how-it-works.html">How It Works</a>
+        <a href="trips/">Trips</a>
+        <a href="portal/login.html" class="nav-cta">Log In</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="for-creators.html">For Creators</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="trips/">Trips</a>
+    <a href="portal/login.html" class="mobile-menu-cta">Log In</a>
+  </div>
+
+  <main>
+    <!-- Hero -->
+    <section class="creator-hero" aria-labelledby="hero-heading">
+      <div class="container">
+        <div class="creator-hero-inner">
+          <h1 id="hero-heading">Turn your trips into income.</h1>
+          <p class="lead">Share the places you've stayed. Earn 40% of the commission when your audience books. No admin. No calls. No booking management.</p>
+          <div class="hero-ctas">
+            <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
+            <a href="creators/start.html" class="btn btn-outline-dark">Get started</a>
+          </div>
+          <p class="hero-microcopy">No admin. Fully supported.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pain Recognition -->
+    <section class="pain-section" aria-labelledby="pain-heading">
+      <div class="container">
+        <div class="pain-grid">
+          <div class="pain-content">
+            <h2 id="pain-heading">You've been here before.</h2>
+            <ul class="pain-list">
+              <li>Another DM asking where you stayed.</li>
+              <li>Another request for your full itinerary.</li>
+              <li>Another hour spent copying and pasting the same details.</li>
+              <li>Properties getting bookings from your content. You getting nothing.</li>
+              <li>Brand deals and creator fees declining.</li>
+            </ul>
+          </div>
+          <div class="pain-visual">
+            <div class="dm-mockup">
+              <div class="dm-message">"Omg where is this?? I need to go"</div>
+              <div class="dm-message">"Can you send me the hotel name?"</div>
+              <div class="dm-message">"What was your full itinerary?"</div>
+              <div class="dm-message">"How much did it cost?"</div>
+              <div class="dm-message received">Typing...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Outcome -->
+    <section class="outcome-section" aria-labelledby="outcome-heading">
+      <div class="container">
+        <h2 id="outcome-heading">Now it works differently.</h2>
+        <p class="section-lead">You share a trip. It becomes a bookable page. Your audience books. You earn.</p>
+        <div class="outcome-grid">
+          <div class="outcome-card">
+            <h3>Your trips live on.</h3>
+            <p>Each trip becomes a clean, bookable itinerary page. No more copy-pasting. No more lost DMs.</p>
+          </div>
+          <div class="outcome-card">
+            <h3>Your audience books directly.</h3>
+            <p>They book as-is or customise dates and stays. You never have to coordinate anything.</p>
+          </div>
+          <div class="outcome-card">
+            <h3>We handle everything else.</h3>
+            <p>Enquiries. Pricing. Payments. Booking confirmations. Traveller support. All of it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="steps-section" aria-labelledby="steps-heading">
+      <div class="container">
+        <h2 id="steps-heading">Three steps. That's it.</h2>
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Share a trip you've taken.</h3>
+            <p>The places you stayed. The experiences you had. Real trips, not hypotheticals.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>We make it bookable.</h3>
+            <p>Your trip becomes a structured itinerary. We handle enquiries, pricing, payments, and bookings.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>You earn on every booking.</h3>
+            <p>When bookings confirm, you earn a share of the commission. Passive income from travel you've already done.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Earnings -->
+    <section class="earnings-section" aria-labelledby="earnings-heading">
+      <div class="container">
+        <div class="earnings-grid">
+          <div class="earnings-content">
+            <h2 id="earnings-heading">Clear, honest earnings.</h2>
+            <div class="earnings-highlight">
+              <p>Creators earn <strong>40% of the total commission</strong> generated on confirmed bookings.</p>
+            </div>
+            <p class="earnings-note">Higher tiers unlock as your bookings grow. No calls. No admin. No customer support. Just earnings from trips you've already taken.</p>
+          </div>
+          <div class="earnings-visual">
+            <ul class="earnings-tiers">
+              <li>
+                <span class="tier-name">Starter</span>
+                <span class="tier-rate">40%</span>
+              </li>
+              <li>
+                <span class="tier-name">Growing</span>
+                <span class="tier-rate">45%</span>
+              </li>
+              <li>
+                <span class="tier-name">Established</span>
+                <span class="tier-rate">50%</span>
+              </li>
+              <li>
+                <span class="tier-name">Partner</span>
+                <span class="tier-rate">55%</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Relief -->
+    <section class="relief-section" aria-labelledby="relief-heading">
+      <div class="container">
+        <h2 id="relief-heading">What you don't have to do.</h2>
+        <p class="section-lead">We handle the operations. You stay focused on content.</p>
+        <div class="relief-grid">
+          <div class="relief-item">
+            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
+            <span>Handle enquiries</span>
+          </div>
+          <div class="relief-item">
+            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
+            <span>Answer booking questions</span>
+          </div>
+          <div class="relief-item">
+            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
+            <span>Quote prices</span>
+          </div>
+          <div class="relief-item">
+            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
+            <span>Book hotels</span>
+          </div>
+          <div class="relief-item">
+            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
+            <span>Take payments</span>
+          </div>
+          <div class="relief-item">
+            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
+            <span>Support travellers</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Example -->
+    <section class="example-section" aria-labelledby="example-heading">
+      <div class="container">
+        <div class="example-grid">
+          <div class="example-content">
+            <h2 id="example-heading">This is what your audience sees.</h2>
+            <p>A real itinerary from a real trip. Clean, bookable, and ready to share. Your followers get the details they've been asking for. You earn when they book.</p>
+            <a href="itineraries/namibia-safari-example.html" class="btn btn-outline-dark">View live example</a>
+          </div>
+          <div class="example-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Example itinerary" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust -->
+    <section class="trust-section">
+      <div class="container">
+        <div class="trust-badges">
+          <span class="trust-badge">Early access creators now onboarding</span>
+          <span class="trust-badge">Creator-led itineraries across multiple regions</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" aria-labelledby="final-cta-heading">
+      <div class="container">
+        <h2 id="final-cta-heading">You've already done the travel. Now let it work for you.</h2>
+        <div class="final-cta-buttons">
+          <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
+          <a href="creators/start.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.5); color: white;">Get started</a>
+        </div>
+        <p class="microcopy">No fees to join. No fees to list. Earn when bookings confirm.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Mobile Sticky CTA -->
+  <div class="mobile-sticky-cta">
+    <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.svg" alt="JUNO" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>Creator-led travel. Bookable itineraries from people who've been there.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Creators</h4>
+          <div class="footer-links">
+            <a href="for-creators.html">Overview</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="portal/login.html">Log In</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Travellers</h4>
+          <div class="footer-links">
+            <a href="trips/">Browse Trips</a>
+            <a href="how-it-works.html#travellers">How It Works</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="mailto:hello@junotravel.com">Contact</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 JUNO Travel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+</body>
+</html>
