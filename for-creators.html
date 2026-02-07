@@ -3,194 +3,467 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="Turn your trips into income. Share the places you've stayed. Earn commission when your audience books. No admin. Fully supported.">
+  <meta name="description" content="Turn your trips into income. Share the places you've stayed. Earn when your audience books.">
   <meta name="theme-color" content="#ffffff">
 
   <title>For Creators | JUNO Travel</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=24">
 
   <style>
     /* Hero */
     .creator-hero {
-      min-height: 80vh;
+      min-height: 90vh;
       display: flex;
-      align-items: center;
-      padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-2xl);
-      background: var(--color-warm-cream);
+      align-items: flex-end;
+      position: relative;
+      overflow: hidden;
     }
 
-    .creator-hero-inner {
-      max-width: 720px;
+    .creator-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
     }
 
-    .creator-hero h1 {
+    .creator-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .creator-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
+    }
+
+    .creator-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: var(--space-2xl);
+      max-width: 700px;
+    }
+
+    .creator-hero-content h1 {
       font-size: clamp(2.5rem, 6vw, 4rem);
+      color: white;
       line-height: 1.1;
       margin-bottom: var(--space-md);
+      animation: fadeInUp 0.8s ease forwards;
     }
 
-    .creator-hero .lead {
-      font-size: 1.125rem;
-      color: var(--color-text-light);
+    .creator-hero-content .lead {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.9);
       margin-bottom: var(--space-lg);
-      max-width: 540px;
+      animation: fadeInUp 0.8s ease 0.15s forwards;
+      opacity: 0;
     }
 
-    .hero-ctas {
+    .creator-hero-ctas {
       display: flex;
       gap: var(--space-md);
-      margin-bottom: var(--space-md);
+      animation: fadeInUp 0.8s ease 0.3s forwards;
+      opacity: 0;
     }
 
-    .hero-microcopy {
-      font-size: 0.875rem;
-      color: var(--color-medium-grey);
+    .creator-hero-ctas .btn-outline {
+      border-color: rgba(255,255,255,0.7);
+      color: white;
     }
 
-    /* Pain Section */
-    .pain-section {
+    .creator-hero-ctas .btn-outline:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+    }
+
+    /* Section Label */
+    .section-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+
+    /* The Problem Section */
+    .problem-section {
       padding: var(--space-2xl) 0;
-      background: var(--color-white);
+      background: var(--color-off-white);
     }
 
-    .pain-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-2xl);
+    .problem-header {
+      text-align: center;
+      margin-bottom: var(--space-lg);
+    }
+
+    .problem-header h2 {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Instagram Mockup */
+    .ig-showcase {
+      display: flex;
+      justify-content: center;
       align-items: center;
+      gap: var(--space-xl);
+      padding: var(--space-xl) 0;
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
-    .pain-content h2 {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      margin-bottom: var(--space-md);
+    .ig-post-mockup {
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      border-radius: 8px;
+      max-width: 340px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+      flex-shrink: 0;
     }
 
-    .pain-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .pain-list li {
-      padding: var(--space-sm) 0;
+    .ig-post-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
       border-bottom: 1px solid var(--color-light-grey);
-      font-size: 1rem;
+    }
+
+    .ig-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .ig-username {
+      font-size: 0.875rem;
+      font-weight: 600;
       color: var(--color-text);
     }
 
-    .pain-list li:last-child {
-      border-bottom: none;
+    .ig-post-image {
+      aspect-ratio: 4/5;
+      background: #000;
     }
 
-    .pain-visual {
-      background: var(--color-sand);
-      padding: var(--space-xl);
-      border-radius: 8px;
+    .ig-post-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
-    .dm-mockup {
+    .ig-post-engagement {
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    .ig-engagement-row {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .ig-engagement-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .ig-engagement-item svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Comment Thread */
+    .comment-thread {
       background: var(--color-white);
-      border-radius: 12px;
-      padding: var(--space-md);
+      border: 1px solid var(--color-light-grey);
+      border-radius: 8px;
+      padding: var(--space-lg);
+      max-width: 360px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     }
 
-    .dm-message {
-      padding: var(--space-sm) var(--space-md);
-      background: var(--color-sand);
-      border-radius: 16px;
-      margin-bottom: var(--space-sm);
-      font-size: 0.875rem;
-      max-width: 85%;
+    .comment {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
     }
 
-    .dm-message.received {
-      background: var(--color-light-grey);
-      margin-left: auto;
+    .comment:last-child {
+      margin-bottom: 0;
     }
 
-    /* Outcome Section */
-    .outcome-section {
+    .comment-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .comment-content {
+      flex: 1;
+    }
+
+    .comment-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-bottom: 4px;
+    }
+
+    .comment-username {
+      font-size: 0.8125rem;
+      font-weight: 600;
+    }
+
+    .comment-time {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
+    }
+
+    .comment-text {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--color-text);
+    }
+
+    .comment-reply {
+      margin-left: var(--space-xl);
+    }
+
+    .comment-badge {
+      font-size: 0.625rem;
+      padding: 2px 6px;
+      background: var(--color-off-white);
+      color: var(--color-text-light);
+      border-radius: 4px;
+    }
+
+    .problem-punchline {
+      text-align: center;
+      margin-top: var(--space-lg);
+    }
+
+    .problem-punchline h3 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      text-decoration: underline;
+      text-underline-offset: 6px;
+      margin-bottom: var(--space-md);
+    }
+
+    .problem-punchline p {
+      font-size: 1.125rem;
+      color: var(--color-text-light);
+      max-width: 600px;
+      margin: 0 auto var(--space-lg);
+      line-height: 1.7;
+    }
+
+    /* Live Demo Section */
+    .demo-section {
       padding: var(--space-2xl) 0;
       background: var(--color-charcoal);
-      color: var(--color-white);
+      color: white;
     }
 
-    .outcome-section h2 {
-      color: var(--color-white);
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      margin-bottom: var(--space-sm);
-      text-align: center;
-    }
-
-    .outcome-section .section-lead {
-      text-align: center;
-      color: rgba(255,255,255,0.8);
-      max-width: 600px;
-      margin: 0 auto var(--space-xl);
-    }
-
-    .outcome-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-lg);
-    }
-
-    .outcome-card {
-      text-align: center;
-      padding: var(--space-lg);
-    }
-
-    .outcome-card h3 {
-      color: var(--color-white);
-      font-size: 1.125rem;
-      margin-bottom: var(--space-sm);
-    }
-
-    .outcome-card p {
-      color: rgba(255,255,255,0.7);
-      font-size: 0.9375rem;
-      line-height: 1.6;
-    }
-
-    /* How It Works */
-    .steps-section {
-      padding: var(--space-2xl) 0;
-      background: var(--color-white);
-    }
-
-    .steps-section h2 {
+    .demo-header {
       text-align: center;
       margin-bottom: var(--space-xl);
     }
 
+    .demo-header h2 {
+      color: white;
+      margin-bottom: var(--space-sm);
+    }
+
+    .demo-header p {
+      color: rgba(255,255,255,0.7);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .demo-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--color-white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .demo-toolbar {
+      background: var(--color-off-white);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .demo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--color-light-grey);
+    }
+
+    .demo-dot.red { background: #ff5f57; }
+    .demo-dot.yellow { background: #febc2e; }
+    .demo-dot.green { background: #28c840; }
+
+    .demo-content {
+      padding: var(--space-xl);
+    }
+
+    .demo-step {
+      margin-bottom: var(--space-xl);
+    }
+
+    .demo-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .demo-step-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+
+    .demo-step h3 {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-md);
+      color: var(--color-text);
+    }
+
+    .demo-input {
+      width: 100%;
+      padding: var(--space-md);
+      border: 1px solid var(--color-light-grey);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: var(--font-sans);
+      transition: border-color var(--transition-fast);
+    }
+
+    .demo-input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+
+    .demo-input::placeholder {
+      color: var(--color-medium-grey);
+    }
+
+    .demo-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .demo-stays {
+      display: flex;
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .demo-stay-card {
+      flex: 1;
+      border: 2px dashed var(--color-light-grey);
+      border-radius: 8px;
+      padding: var(--space-lg);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .demo-stay-card:hover {
+      border-color: var(--color-accent);
+      background: var(--color-warm-cream);
+    }
+
+    .demo-stay-card.active {
+      border-style: solid;
+      border-color: var(--color-accent);
+      background: var(--color-warm-cream);
+    }
+
+    .demo-stay-card svg {
+      width: 32px;
+      height: 32px;
+      color: var(--color-medium-grey);
+      margin-bottom: var(--space-sm);
+    }
+
+    .demo-stay-card.active svg {
+      color: var(--color-accent);
+    }
+
+    .demo-stay-card span {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      display: block;
+    }
+
+    .demo-cta {
+      text-align: center;
+      margin-top: var(--space-xl);
+    }
+
+    .demo-note {
+      text-align: center;
+      margin-top: var(--space-lg);
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* How It Works Steps */
+    .steps-section {
+      background: var(--color-white);
+    }
+
     .steps-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-xl);
-      max-width: 900px;
-      margin: 0 auto;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--color-light-grey);
+      border-bottom: 1px solid var(--color-light-grey);
     }
 
     .step {
       text-align: center;
+      padding: var(--space-xl) var(--space-lg);
+      border-right: 1px solid var(--color-light-grey);
+      transition: background-color 0.3s ease;
+    }
+
+    .step:last-child {
+      border-right: none;
+    }
+
+    .step:hover {
+      background: rgba(0,0,0,0.02);
     }
 
     .step-number {
-      width: 48px;
-      height: 48px;
-      border: 2px solid var(--color-charcoal);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-family: var(--font-serif);
-      font-size: 1.25rem;
-      margin: 0 auto var(--space-md);
+      font-size: 2.5rem;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+      line-height: 1;
     }
 
     .step h3 {
@@ -199,15 +472,15 @@
     }
 
     .step p {
-      font-size: 0.9375rem;
       color: var(--color-text-light);
-      line-height: 1.6;
+      font-size: 0.875rem;
+      margin: 0;
     }
 
     /* Earnings Section */
     .earnings-section {
       padding: var(--space-2xl) 0;
-      background: var(--color-sand);
+      background: var(--color-off-white);
     }
 
     .earnings-grid {
@@ -215,205 +488,238 @@
       grid-template-columns: 1fr 1fr;
       gap: var(--space-2xl);
       align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
     .earnings-content h2 {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
       margin-bottom: var(--space-md);
     }
 
-    .earnings-highlight {
+    .earnings-stat {
       background: var(--color-white);
       padding: var(--space-lg);
       border-radius: 8px;
       margin-bottom: var(--space-md);
+      border-left: 4px solid var(--color-accent);
     }
 
-    .earnings-highlight p {
-      font-size: 1.125rem;
-      color: var(--color-charcoal);
-      margin: 0;
-    }
-
-    .earnings-highlight strong {
+    .earnings-stat-number {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
       color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+    }
+
+    .earnings-stat-label {
+      font-size: 1rem;
+      color: var(--color-text);
     }
 
     .earnings-note {
       font-size: 0.9375rem;
       color: var(--color-text-light);
+      line-height: 1.7;
     }
 
     .earnings-visual {
-      background: var(--color-white);
-      padding: var(--space-xl);
+      position: relative;
+    }
+
+    .earnings-visual img {
+      width: 100%;
       border-radius: 8px;
     }
 
-    .earnings-tiers {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .earnings-badge {
+      position: absolute;
+      bottom: var(--space-lg);
+      left: var(--space-lg);
+      background: white;
+      padding: var(--space-md) var(--space-lg);
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
     }
 
-    .earnings-tiers li {
-      display: flex;
-      justify-content: space-between;
-      padding: var(--space-md) 0;
-      border-bottom: 1px solid var(--color-light-grey);
-      align-items: center;
+    .earnings-badge-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-light);
+      margin-bottom: var(--space-xs);
     }
 
-    .earnings-tiers li:last-child {
-      border-bottom: none;
-    }
-
-    .tier-name {
-      font-weight: 500;
-    }
-
-    .tier-rate {
+    .earnings-badge-value {
       font-family: var(--font-serif);
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       color: var(--color-accent);
     }
 
-    /* Not Your Job Section */
-    .relief-section {
+    /* What We Handle */
+    .handled-section {
       padding: var(--space-2xl) 0;
       background: var(--color-white);
     }
 
-    .relief-section h2 {
+    .handled-header {
       text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .handled-header h2 {
       margin-bottom: var(--space-sm);
     }
 
-    .relief-section .section-lead {
-      text-align: center;
+    .handled-header p {
       color: var(--color-text-light);
       max-width: 500px;
-      margin: 0 auto var(--space-xl);
-    }
-
-    .relief-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-md);
-      max-width: 800px;
       margin: 0 auto;
     }
 
-    .relief-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      padding: var(--space-md);
-      background: var(--color-sand);
+    .handled-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .handled-card {
+      background: var(--color-off-white);
+      padding: var(--space-lg);
       border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .relief-icon {
-      width: 24px;
-      height: 24px;
-      background: var(--color-accent);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+    .handled-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
     }
 
-    .relief-icon svg {
-      width: 14px;
-      height: 14px;
-      fill: white;
+    .handled-card svg {
+      width: 32px;
+      height: 32px;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
     }
 
-    .relief-item span {
-      font-size: 0.9375rem;
+    .handled-card h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .handled-card p {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      margin: 0;
     }
 
     /* Live Example */
     .example-section {
-      padding: var(--space-2xl) 0;
-      background: var(--color-warm-cream);
+      position: relative;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
     }
 
-    .example-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: var(--space-2xl);
-      align-items: center;
+    .example-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .example-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .example-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 70%);
+    }
+
+    .example-content {
+      position: relative;
+      z-index: 2;
+      padding: var(--space-2xl);
+      max-width: 500px;
     }
 
     .example-content h2 {
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      color: white;
       margin-bottom: var(--space-md);
     }
 
     .example-content p {
-      color: var(--color-text-light);
+      color: rgba(255,255,255,0.9);
+      font-size: 1.125rem;
       margin-bottom: var(--space-lg);
     }
 
-    .example-image {
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    .example-content .btn-outline {
+      border-color: rgba(255,255,255,0.5);
+      color: white;
     }
 
-    .example-image img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* Trust Section */
-    .trust-section {
-      padding: var(--space-xl) 0;
-      background: var(--color-white);
-      text-align: center;
-    }
-
-    .trust-badges {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-xl);
-      flex-wrap: wrap;
-    }
-
-    .trust-badge {
-      font-size: 0.875rem;
-      color: var(--color-medium-grey);
+    .example-content .btn-outline:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
     }
 
     /* Final CTA */
     .final-cta {
+      background: #d4c4b0;
       padding: var(--space-2xl) 0;
-      background: var(--color-charcoal);
       text-align: center;
     }
 
     .final-cta h2 {
-      color: var(--color-white);
-      font-size: clamp(1.75rem, 4vw, 2.5rem);
-      margin-bottom: var(--space-md);
-      max-width: 600px;
+      margin-bottom: var(--space-lg);
+      max-width: 700px;
       margin-left: auto;
       margin-right: auto;
     }
 
     .final-cta-buttons {
       display: flex;
-      justify-content: center;
       gap: var(--space-md);
-      margin-bottom: var(--space-md);
+      justify-content: center;
     }
 
-    .final-cta .microcopy {
-      color: rgba(255,255,255,0.6);
-      font-size: 0.875rem;
+    .final-cta .btn-primary {
+      background: var(--color-text);
+      color: white;
+    }
+
+    .final-cta .btn-outline {
+      border-color: var(--color-text);
+      color: var(--color-text);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-on-scroll.animated {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Mobile Sticky CTA */
@@ -436,40 +742,70 @@
 
     /* Responsive */
     @media (max-width: 1024px) {
-      .pain-grid,
-      .earnings-grid,
-      .example-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-xl);
-      }
-
-      .outcome-grid,
-      .steps-grid {
-        grid-template-columns: 1fr;
+      .ig-showcase {
+        flex-direction: column;
         gap: var(--space-lg);
       }
 
-      .relief-grid {
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .step:nth-child(2),
+      .step:nth-child(4) {
+        border-right: none;
+      }
+
+      .step:nth-child(1),
+      .step:nth-child(2) {
+        border-bottom: 1px solid var(--color-light-grey);
+      }
+
+      .earnings-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .handled-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 768px) {
       .creator-hero {
-        min-height: auto;
-        padding-bottom: var(--space-xl);
+        min-height: 80vh;
       }
 
-      .hero-ctas {
+      .creator-hero-content {
+        padding: var(--space-xl);
+      }
+
+      .creator-hero-ctas {
         flex-direction: column;
       }
 
-      .hero-ctas .btn {
-        width: 100%;
-        text-align: center;
+      .ig-post-mockup,
+      .comment-thread {
+        max-width: 100%;
       }
 
-      .relief-grid {
+      .demo-stays {
+        flex-direction: column;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .step {
+        border-right: none;
+        border-bottom: 1px solid var(--color-light-grey);
+      }
+
+      .step:last-child {
+        border-bottom: none;
+      }
+
+      .handled-grid {
         grid-template-columns: 1fr;
       }
 
@@ -484,6 +820,10 @@
 
       .final-cta {
         padding-bottom: calc(var(--space-2xl) + 80px);
+      }
+
+      .example-overlay {
+        background: rgba(0,0,0,0.5);
       }
     }
   </style>
@@ -512,88 +852,184 @@
   <main>
     <!-- Hero -->
     <section class="creator-hero" aria-labelledby="hero-heading">
-      <div class="container">
-        <div class="creator-hero-inner">
-          <h1 id="hero-heading">Turn your trips into income.</h1>
-          <p class="lead">Share the places you've stayed. Earn 40% of the commission when your audience books. No admin. No calls. No booking management.</p>
-          <div class="hero-ctas">
-            <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
-            <a href="creators/start.html" class="btn btn-outline-dark">Get started</a>
-          </div>
-          <p class="hero-microcopy">No admin. Fully supported.</p>
+      <div class="creator-hero-bg">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_1080,q_auto,f_auto/v1770230458/Namibia_onguma_Klein-113_f6iean.jpg" alt="Creator enjoying safari" fetchpriority="high">
+      </div>
+      <div class="creator-hero-overlay"></div>
+      <div class="creator-hero-content">
+        <h1 id="hero-heading">Turn your trips into income.</h1>
+        <p class="lead">Share a trip you've taken. We make it bookable. You earn when your audience travels.</p>
+        <div class="creator-hero-ctas">
+          <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
+          <a href="#demo" class="btn btn-outline">Try the demo</a>
         </div>
       </div>
     </section>
 
-    <!-- Pain Recognition -->
-    <section class="pain-section" aria-labelledby="pain-heading">
+    <!-- The Problem -->
+    <section class="problem-section" aria-labelledby="problem-heading">
       <div class="container">
-        <div class="pain-grid">
-          <div class="pain-content">
-            <h2 id="pain-heading">You've been here before.</h2>
-            <ul class="pain-list">
-              <li>Another DM asking where you stayed.</li>
-              <li>Another request for your full itinerary.</li>
-              <li>Another hour spent copying and pasting the same details.</li>
-              <li>Properties getting bookings from your content. You getting nothing.</li>
-              <li>Brand deals and creator fees declining.</li>
-            </ul>
+        <div class="problem-header animate-on-scroll">
+          <span class="section-label">The Problem</span>
+          <h2 id="problem-heading">Your comments are full of the same questions.</h2>
+        </div>
+
+        <div class="ig-showcase animate-on-scroll">
+          <!-- Instagram Post -->
+          <div class="ig-post-mockup">
+            <div class="ig-post-header">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia" class="ig-avatar">
+              <span class="ig-username">niathelight</span>
+            </div>
+            <div class="ig-post-image">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_500,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Namibia sunset" loading="lazy">
+            </div>
+            <div class="ig-post-engagement">
+              <div class="ig-engagement-row">
+                <div class="ig-engagement-item">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  <span>47.2K</span>
+                </div>
+                <div class="ig-engagement-item">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18z"/></svg>
+                  <span>892</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="pain-visual">
-            <div class="dm-mockup">
-              <div class="dm-message">"Omg where is this?? I need to go"</div>
-              <div class="dm-message">"Can you send me the hotel name?"</div>
-              <div class="dm-message">"What was your full itinerary?"</div>
-              <div class="dm-message">"How much did it cost?"</div>
-              <div class="dm-message received">Typing...</div>
+
+          <!-- Comment Thread -->
+          <div class="comment-thread">
+            <div class="comment">
+              <img src="https://ui-avatars.com/api/?name=S&background=e0e0e0&color=666&size=64" alt="" class="comment-avatar">
+              <div class="comment-content">
+                <div class="comment-header">
+                  <span class="comment-username">sarah_travels</span>
+                  <span class="comment-time">2d</span>
+                </div>
+                <p class="comment-text">OMG this is stunning!! Where is this?? I need to go 😍</p>
+              </div>
+            </div>
+            <div class="comment">
+              <img src="https://ui-avatars.com/api/?name=M&background=e0e0e0&color=666&size=64" alt="" class="comment-avatar">
+              <div class="comment-content">
+                <div class="comment-header">
+                  <span class="comment-username">michaelonfood</span>
+                  <span class="comment-time">2d</span>
+                </div>
+                <p class="comment-text">What hotel is this? Can you share the name? Looks incredible!</p>
+              </div>
+            </div>
+            <div class="comment">
+              <img src="https://ui-avatars.com/api/?name=J&background=e0e0e0&color=666&size=64" alt="" class="comment-avatar">
+              <div class="comment-content">
+                <div class="comment-header">
+                  <span class="comment-username">jenna.wandering</span>
+                  <span class="comment-time">1d</span>
+                </div>
+                <p class="comment-text">Can you DM me your full itinerary? Planning a trip next month!</p>
+              </div>
+            </div>
+            <div class="comment comment-reply">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_64,h_64,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia" class="comment-avatar">
+              <div class="comment-content">
+                <div class="comment-header">
+                  <span class="comment-username">niathelight</span>
+                  <span class="comment-badge">Author</span>
+                </div>
+                <p class="comment-text">Just sent you the details! 💕</p>
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="problem-punchline animate-on-scroll">
+          <h3>1.1 million views. 47K likes. Zero earnings.</h3>
+          <p>You reply. They book. The hotel gets paid. The booking platform gets paid. You get nothing. Your content drives real revenue. Start earning from it.</p>
+          <a href="portal/create.html" class="btn btn-primary">Start earning from your trips</a>
+        </div>
       </div>
     </section>
 
-    <!-- Outcome -->
-    <section class="outcome-section" aria-labelledby="outcome-heading">
+    <!-- Live Demo -->
+    <section id="demo" class="demo-section" aria-labelledby="demo-heading">
       <div class="container">
-        <h2 id="outcome-heading">Now it works differently.</h2>
-        <p class="section-lead">You share a trip. It becomes a bookable page. Your audience books. You earn.</p>
-        <div class="outcome-grid">
-          <div class="outcome-card">
-            <h3>Your trips live on.</h3>
-            <p>Each trip becomes a clean, bookable itinerary page. No more copy-pasting. No more lost DMs.</p>
+        <div class="demo-header animate-on-scroll">
+          <span class="section-label" style="color: var(--color-terracotta-soft);">Try It Now</span>
+          <h2 id="demo-heading">See how easy it is.</h2>
+          <p>Create an itinerary in 60 seconds. We handle everything else.</p>
+        </div>
+
+        <div class="demo-container animate-on-scroll">
+          <div class="demo-toolbar">
+            <div class="demo-dot red"></div>
+            <div class="demo-dot yellow"></div>
+            <div class="demo-dot green"></div>
           </div>
-          <div class="outcome-card">
-            <h3>Your audience books directly.</h3>
-            <p>They book as-is or customise dates and stays. You never have to coordinate anything.</p>
-          </div>
-          <div class="outcome-card">
-            <h3>We handle everything else.</h3>
-            <p>Enquiries. Pricing. Payments. Booking confirmations. Traveller support. All of it.</p>
+          <div class="demo-content">
+            <div class="demo-step">
+              <div class="demo-step-label">Step 1</div>
+              <h3>Name your trip</h3>
+              <input type="text" class="demo-input" placeholder="e.g. Wilderness & Wonder in Namibia" id="demoTripName">
+            </div>
+
+            <div class="demo-step">
+              <div class="demo-step-label">Step 2</div>
+              <h3>Where did you stay?</h3>
+              <div class="demo-stays">
+                <div class="demo-stay-card" id="demoStay1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span>Add a stay</span>
+                </div>
+                <div class="demo-stay-card" id="demoStay2">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span>Add a stay</span>
+                </div>
+                <div class="demo-stay-card" id="demoStay3">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span>Add a stay</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-step">
+              <div class="demo-step-label">Step 3</div>
+              <h3>Add a quick intro</h3>
+              <textarea class="demo-input demo-textarea" placeholder="Tell your audience what made this trip special..." id="demoIntro"></textarea>
+            </div>
+
+            <div class="demo-cta">
+              <a href="portal/create.html" class="btn btn-primary">Create your real itinerary</a>
+            </div>
           </div>
         </div>
+
+        <p class="demo-note">This is a preview. Create your real itinerary to start earning.</p>
       </div>
     </section>
 
     <!-- How It Works -->
     <section class="steps-section" aria-labelledby="steps-heading">
-      <div class="container">
-        <h2 id="steps-heading">Three steps. That's it.</h2>
-        <div class="steps-grid">
-          <div class="step">
-            <div class="step-number">1</div>
-            <h3>Share a trip you've taken.</h3>
-            <p>The places you stayed. The experiences you had. Real trips, not hypotheticals.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">2</div>
-            <h3>We make it bookable.</h3>
-            <p>Your trip becomes a structured itinerary. We handle enquiries, pricing, payments, and bookings.</p>
-          </div>
-          <div class="step">
-            <div class="step-number">3</div>
-            <h3>You earn on every booking.</h3>
-            <p>When bookings confirm, you earn a share of the commission. Passive income from travel you've already done.</p>
-          </div>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">01</div>
+          <h3>Share a Trip</h3>
+          <p>Tell us about a trip you loved</p>
+        </div>
+        <div class="step">
+          <div class="step-number">02</div>
+          <h3>We Build It</h3>
+          <p>We turn it into a bookable itinerary</p>
+        </div>
+        <div class="step">
+          <div class="step-number">03</div>
+          <h3>We Handle the Rest</h3>
+          <p>Enquiries, payments, support</p>
+        </div>
+        <div class="step">
+          <div class="step-number">04</div>
+          <h3>You Earn</h3>
+          <p>Commission on every booking</p>
         </div>
       </div>
     </section>
@@ -602,66 +1038,65 @@
     <section class="earnings-section" aria-labelledby="earnings-heading">
       <div class="container">
         <div class="earnings-grid">
-          <div class="earnings-content">
-            <h2 id="earnings-heading">Clear, honest earnings.</h2>
-            <div class="earnings-highlight">
-              <p>Creators earn <strong>40% of the total commission</strong> generated on confirmed bookings.</p>
+          <div class="earnings-content animate-on-scroll">
+            <span class="section-label">Earnings</span>
+            <h2 id="earnings-heading">Earn from trips you've already taken.</h2>
+            <div class="earnings-stat">
+              <div class="earnings-stat-number">40%</div>
+              <div class="earnings-stat-label">of commission on every booking</div>
             </div>
-            <p class="earnings-note">Higher tiers unlock as your bookings grow. No calls. No admin. No customer support. Just earnings from trips you've already taken.</p>
+            <p class="earnings-note">Higher tiers unlock as you grow. No fees to join. No fees to list. You earn when bookings confirm. We handle all the admin so you can focus on content.</p>
           </div>
-          <div class="earnings-visual">
-            <ul class="earnings-tiers">
-              <li>
-                <span class="tier-name">Starter</span>
-                <span class="tier-rate">40%</span>
-              </li>
-              <li>
-                <span class="tier-name">Growing</span>
-                <span class="tier-rate">45%</span>
-              </li>
-              <li>
-                <span class="tier-name">Established</span>
-                <span class="tier-rate">50%</span>
-              </li>
-              <li>
-                <span class="tier-name">Partner</span>
-                <span class="tier-rate">55%</span>
-              </li>
-            </ul>
+          <div class="earnings-visual animate-on-scroll">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_700,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Creator on beach" loading="lazy">
+            <div class="earnings-badge">
+              <div class="earnings-badge-label">Example earning</div>
+              <div class="earnings-badge-value">$420 commission</div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Relief -->
-    <section class="relief-section" aria-labelledby="relief-heading">
+    <!-- What We Handle -->
+    <section class="handled-section" aria-labelledby="handled-heading">
       <div class="container">
-        <h2 id="relief-heading">What you don't have to do.</h2>
-        <p class="section-lead">We handle the operations. You stay focused on content.</p>
-        <div class="relief-grid">
-          <div class="relief-item">
-            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
-            <span>Handle enquiries</span>
+        <div class="handled-header animate-on-scroll">
+          <span class="section-label">What We Handle</span>
+          <h2 id="handled-heading">You share. We do everything else.</h2>
+          <p>No DMs. No pricing quotes. No payment processing. No customer support.</p>
+        </div>
+
+        <div class="handled-grid animate-on-scroll">
+          <div class="handled-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <h3>Enquiries</h3>
+            <p>We respond to all traveller questions</p>
           </div>
-          <div class="relief-item">
-            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
-            <span>Answer booking questions</span>
+          <div class="handled-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <h3>Pricing</h3>
+            <p>We quote accurate, real-time prices</p>
           </div>
-          <div class="relief-item">
-            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
-            <span>Quote prices</span>
+          <div class="handled-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <h3>Payments</h3>
+            <p>Secure payment processing</p>
           </div>
-          <div class="relief-item">
-            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
-            <span>Book hotels</span>
+          <div class="handled-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <h3>Bookings</h3>
+            <p>We confirm every reservation</p>
           </div>
-          <div class="relief-item">
-            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
-            <span>Take payments</span>
+          <div class="handled-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <h3>Support</h3>
+            <p>Pre and post-trip assistance</p>
           </div>
-          <div class="relief-item">
-            <span class="relief-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></span>
-            <span>Support travellers</span>
+          <div class="handled-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <h3>Documentation</h3>
+            <p>Confirmations and travel docs</p>
           </div>
         </div>
       </div>
@@ -669,39 +1104,26 @@
 
     <!-- Live Example -->
     <section class="example-section" aria-labelledby="example-heading">
-      <div class="container">
-        <div class="example-grid">
-          <div class="example-content">
-            <h2 id="example-heading">This is what your audience sees.</h2>
-            <p>A real itinerary from a real trip. Clean, bookable, and ready to share. Your followers get the details they've been asking for. You earn when they book.</p>
-            <a href="itineraries/namibia-safari-example.html" class="btn btn-outline-dark">View live example</a>
-          </div>
-          <div class="example-image">
-            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_600,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Example itinerary" loading="lazy">
-          </div>
-        </div>
+      <div class="example-bg">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_900,q_auto,f_auto/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Namibia Safari" loading="lazy">
       </div>
-    </section>
-
-    <!-- Trust -->
-    <section class="trust-section">
-      <div class="container">
-        <div class="trust-badges">
-          <span class="trust-badge">Early access creators now onboarding</span>
-          <span class="trust-badge">Creator-led itineraries across multiple regions</span>
-        </div>
+      <div class="example-overlay"></div>
+      <div class="example-content animate-on-scroll">
+        <span class="section-label" style="color: rgba(255,255,255,0.7);">Live Example</span>
+        <h2 id="example-heading">See a real itinerary.</h2>
+        <p>This is what your audience sees. A real trip by Nia The Light. Fully bookable. Ready to share.</p>
+        <a href="itineraries/namibia-safari-example.html" class="btn btn-outline">View the itinerary</a>
       </div>
     </section>
 
     <!-- Final CTA -->
-    <section class="final-cta" aria-labelledby="final-cta-heading">
+    <section class="final-cta" aria-labelledby="final-heading">
       <div class="container">
-        <h2 id="final-cta-heading">You've already done the travel. Now let it work for you.</h2>
+        <h2 id="final-heading">Your trips already drive bookings.<br>Now you can earn from them.</h2>
         <div class="final-cta-buttons">
           <a href="portal/create.html" class="btn btn-primary">Create an itinerary</a>
-          <a href="creators/start.html" class="btn btn-outline" style="border-color: rgba(255,255,255,0.5); color: white;">Get started</a>
+          <a href="how-it-works.html" class="btn btn-outline">Learn more</a>
         </div>
-        <p class="microcopy">No fees to join. No fees to list. Earn when bookings confirm.</p>
       </div>
     </section>
   </main>
@@ -752,5 +1174,58 @@
   </footer>
 
   <script src="js/main.js?v=2"></script>
+  <script>
+    // Scroll animations
+    const animateOnScroll = () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(el => {
+        observer.observe(el);
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', animateOnScroll);
+    } else {
+      animateOnScroll();
+    }
+
+    // Demo interactivity
+    const stayCards = document.querySelectorAll('.demo-stay-card');
+    stayCards.forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('active');
+        if (card.classList.contains('active')) {
+          card.querySelector('span').textContent = 'Onguma Camp';
+        } else {
+          card.querySelector('span').textContent = 'Add a stay';
+        }
+      });
+    });
+
+    // Demo input animation
+    const demoTripName = document.getElementById('demoTripName');
+    if (demoTripName) {
+      setTimeout(() => {
+        const text = 'Wilderness & Wonder in Namibia';
+        let i = 0;
+        const typeInterval = setInterval(() => {
+          if (document.activeElement !== demoTripName && i < text.length) {
+            demoTripName.value = text.substring(0, i + 1);
+            i++;
+          } else {
+            clearInterval(typeInterval);
+          }
+        }, 80);
+      }, 2000);
+    }
+  </script>
 </body>
 </html>
