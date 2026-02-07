@@ -15,6 +15,11 @@
   <link rel="stylesheet" href="css/style.css?v=24">
 
   <style>
+    /* Define missing color variable */
+    :root {
+      --color-charcoal: #2d2d2d;
+    }
+
     /* Hero */
     .creator-hero {
       min-height: 90vh;
@@ -422,6 +427,38 @@
     .demo-cta {
       text-align: center;
       margin-top: var(--space-xl);
+    }
+
+    .demo-hero-upload {
+      border: 2px dashed var(--color-light-grey);
+      border-radius: 8px;
+      padding: var(--space-xl);
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .demo-hero-upload:hover {
+      border-color: var(--color-accent);
+      background: var(--color-warm-cream);
+    }
+
+    .demo-hero-upload svg {
+      width: 48px;
+      height: 48px;
+      color: var(--color-medium-grey);
+      margin-bottom: var(--space-sm);
+    }
+
+    .demo-hero-upload p {
+      font-size: 0.9375rem;
+      color: var(--color-text);
+      margin-bottom: var(--space-xs);
+    }
+
+    .demo-hero-upload span {
+      font-size: 0.75rem;
+      color: var(--color-text-light);
     }
 
     .demo-note {
@@ -957,7 +994,7 @@
         <div class="demo-header animate-on-scroll">
           <span class="section-label" style="color: var(--color-terracotta-soft);">Try It Now</span>
           <h2 id="demo-heading">See how easy it is.</h2>
-          <p>Create an itinerary in 60 seconds. We handle everything else.</p>
+          <p>This is exactly how you create an itinerary in the portal.</p>
         </div>
 
         <div class="demo-container animate-on-scroll">
@@ -965,46 +1002,70 @@
             <div class="demo-dot red"></div>
             <div class="demo-dot yellow"></div>
             <div class="demo-dot green"></div>
+            <span style="margin-left: auto; font-size: 0.75rem; color: var(--color-text-light);">JUNO Creator Portal</span>
           </div>
           <div class="demo-content">
+            <!-- Trip Information -->
             <div class="demo-step">
-              <div class="demo-step-label">Step 1</div>
-              <h3>Name your trip</h3>
-              <input type="text" class="demo-input" placeholder="e.g. Wilderness & Wonder in Namibia" id="demoTripName">
+              <div class="demo-step-label">Trip Information</div>
+              <h3>Title</h3>
+              <input type="text" class="demo-input" placeholder="e.g. Wilderness & Wonder" id="demoTripName">
             </div>
 
-            <div class="demo-step">
-              <div class="demo-step-label">Step 2</div>
-              <h3>Where did you stay?</h3>
-              <div class="demo-stays">
-                <div class="demo-stay-card" id="demoStay1">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                  <span>Add a stay</span>
-                </div>
-                <div class="demo-stay-card" id="demoStay2">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                  <span>Add a stay</span>
-                </div>
-                <div class="demo-stay-card" id="demoStay3">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                  <span>Add a stay</span>
-                </div>
+            <div class="demo-step" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md);">
+              <div>
+                <h3 style="font-size: 0.875rem; margin-bottom: var(--space-sm); color: var(--color-text);">Destination</h3>
+                <input type="text" class="demo-input" placeholder="e.g. Namibia" id="demoDestination">
+              </div>
+              <div>
+                <h3 style="font-size: 0.875rem; margin-bottom: var(--space-sm); color: var(--color-text);">Duration</h3>
+                <input type="text" class="demo-input" placeholder="e.g. 4 days / 3 nights" id="demoDuration">
               </div>
             </div>
 
             <div class="demo-step">
-              <div class="demo-step-label">Step 3</div>
-              <h3>Add a quick intro</h3>
-              <textarea class="demo-input demo-textarea" placeholder="Tell your audience what made this trip special..." id="demoIntro"></textarea>
+              <h3>Introduction</h3>
+              <textarea class="demo-input demo-textarea" placeholder="Write a personal introduction to this itinerary..." id="demoIntro"></textarea>
+              <p style="font-size: 0.75rem; color: var(--color-text-light); margin-top: var(--space-xs);">Tell travellers why you love this destination.</p>
+            </div>
+
+            <!-- Where You Stayed -->
+            <div class="demo-step">
+              <div class="demo-step-label">Where You Stayed</div>
+              <h3>Add the properties you stayed at</h3>
+              <div class="demo-stays">
+                <div class="demo-stay-card" data-name="Onguma The Fort">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span>Add property</span>
+                </div>
+                <div class="demo-stay-card" data-name="Okonjima Bush Camp">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span>Add property</span>
+                </div>
+                <div class="demo-stay-card" data-name="Sossusvlei Lodge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <span>Add property</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="demo-step">
+              <div class="demo-step-label">Hero Image</div>
+              <div class="demo-hero-upload">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <p>Click to upload or drag image here</p>
+                <span>Recommended: 1920x1080px</span>
+              </div>
             </div>
 
             <div class="demo-cta">
-              <a href="portal/create.html" class="btn btn-primary">Create your real itinerary</a>
+              <a href="portal/edit-itinerary.html" class="btn btn-primary">Create your itinerary</a>
             </div>
           </div>
         </div>
 
-        <p class="demo-note">This is a preview. Create your real itinerary to start earning.</p>
+        <p class="demo-note">This is a preview. Sign up to access the full creator portal.</p>
       </div>
     </section>
 
@@ -1202,30 +1263,55 @@
     stayCards.forEach(card => {
       card.addEventListener('click', () => {
         card.classList.toggle('active');
+        const propertyName = card.dataset.name || 'Property';
         if (card.classList.contains('active')) {
-          card.querySelector('span').textContent = 'Onguma Camp';
+          card.querySelector('span').textContent = propertyName;
+          card.querySelector('svg').style.color = 'var(--color-accent)';
         } else {
-          card.querySelector('span').textContent = 'Add a stay';
+          card.querySelector('span').textContent = 'Add property';
+          card.querySelector('svg').style.color = '';
         }
       });
     });
 
-    // Demo input animation
-    const demoTripName = document.getElementById('demoTripName');
-    if (demoTripName) {
-      setTimeout(() => {
-        const text = 'Wilderness & Wonder in Namibia';
-        let i = 0;
-        const typeInterval = setInterval(() => {
-          if (document.activeElement !== demoTripName && i < text.length) {
-            demoTripName.value = text.substring(0, i + 1);
-            i++;
-          } else {
-            clearInterval(typeInterval);
-          }
-        }, 80);
-      }, 2000);
+    // Demo hero upload click
+    const heroUpload = document.querySelector('.demo-hero-upload');
+    if (heroUpload) {
+      heroUpload.addEventListener('click', () => {
+        heroUpload.innerHTML = `
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_225,q_auto,f_auto/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Hero preview" style="border-radius: 4px; margin-bottom: var(--space-sm);">
+          <p style="font-size: 0.75rem; color: var(--color-text-light);">namibia-sunset.jpg</p>
+        `;
+        heroUpload.style.borderStyle = 'solid';
+        heroUpload.style.borderColor = 'var(--color-accent)';
+        heroUpload.style.background = 'var(--color-warm-cream)';
+      });
     }
+
+    // Demo input animation - fill in fields sequentially
+    const demoInputs = [
+      { id: 'demoTripName', text: 'Wilderness & Wonder', delay: 1500 },
+      { id: 'demoDestination', text: 'Namibia', delay: 3500 },
+      { id: 'demoDuration', text: '4 days / 3 nights', delay: 4500 },
+      { id: 'demoIntro', text: 'This trip changed my perspective on wilderness travel. The silence of the desert, the drama of Etosha\'s waterholes, and the warmth of the lodges made it unforgettable.', delay: 5500 }
+    ];
+
+    demoInputs.forEach(({ id, text, delay }) => {
+      const input = document.getElementById(id);
+      if (input) {
+        setTimeout(() => {
+          let i = 0;
+          const typeInterval = setInterval(() => {
+            if (document.activeElement !== input && i < text.length) {
+              input.value = text.substring(0, i + 1);
+              i++;
+            } else {
+              clearInterval(typeInterval);
+            }
+          }, 50);
+        }, delay);
+      }
+    });
   </script>
 </body>
 </html>
