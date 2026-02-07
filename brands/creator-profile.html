@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="View Nia The Light's creator profile - audience demographics, content portfolio, and campaign options for travel brands.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Nia The Light - Creator Profile | JUNO for Brands</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=24">
+
+  <style>
+    /* Profile Header */
+    .profile-header {
+      background: var(--color-charcoal);
+      padding: calc(var(--header-height) + var(--space-xl)) 0 var(--space-xl);
+    }
+
+    .profile-header-inner {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: var(--space-lg);
+      align-items: center;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid var(--color-white);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-info h1 {
+      color: var(--color-white);
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .verified-badge {
+      width: 24px;
+      height: 24px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .verified-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: white;
+    }
+
+    .profile-handle {
+      color: rgba(255,255,255,0.7);
+      font-size: 1rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .profile-social-links {
+      display: flex;
+      gap: var(--space-md);
+    }
+
+    .profile-social-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.875rem;
+      text-decoration: none;
+    }
+
+    .profile-social-links a:hover {
+      color: var(--color-white);
+    }
+
+    .profile-social-links svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .profile-actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    /* Quick Stats Bar */
+    .quick-stats {
+      background: var(--color-sand);
+      padding: var(--space-lg) 0;
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .quick-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: var(--space-md);
+    }
+
+    .quick-stat {
+      text-align: center;
+      padding: 0 var(--space-sm);
+      border-right: 1px solid var(--color-light-grey);
+    }
+
+    .quick-stat:last-child {
+      border-right: none;
+    }
+
+    .quick-stat-value {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--color-charcoal);
+      margin-bottom: 0.25rem;
+    }
+
+    .quick-stat-label {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-medium-grey);
+    }
+
+    /* Profile Content */
+    .profile-content {
+      padding: var(--space-xl) 0;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    /* Sections */
+    .profile-section {
+      margin-bottom: var(--space-xl);
+    }
+
+    .profile-section h2 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    /* Bio */
+    .profile-bio {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--color-text);
+    }
+
+    /* Tags */
+    .profile-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .profile-tag {
+      font-size: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: var(--color-sand);
+      border-radius: 20px;
+      color: var(--color-text);
+    }
+
+    /* Audience Demographics */
+    .demographics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .demo-card {
+      background: var(--color-sand);
+      padding: var(--space-md);
+      border-radius: 8px;
+    }
+
+    .demo-card h4 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-medium-grey);
+      margin-bottom: var(--space-sm);
+    }
+
+    .demo-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: 0.5rem;
+    }
+
+    .demo-bar-label {
+      font-size: 0.875rem;
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .demo-bar-track {
+      flex: 1;
+      height: 8px;
+      background: var(--color-light-grey);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .demo-bar-fill {
+      height: 100%;
+      background: var(--color-accent);
+      border-radius: 4px;
+    }
+
+    .demo-bar-value {
+      font-size: 0.875rem;
+      font-weight: 500;
+      width: 40px;
+      text-align: right;
+    }
+
+    /* Content Portfolio */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+    }
+
+    .portfolio-item {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .portfolio-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .portfolio-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .portfolio-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.875rem;
+    }
+
+    .portfolio-item:hover .portfolio-item-overlay {
+      opacity: 1;
+    }
+
+    /* Itineraries */
+    .itinerary-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .itinerary-item {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background: var(--color-sand);
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow var(--transition-fast);
+    }
+
+    .itinerary-item:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .itinerary-item-image {
+      aspect-ratio: 16/10;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .itinerary-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .itinerary-item-info h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .itinerary-item-meta {
+      font-size: 0.875rem;
+      color: var(--color-medium-grey);
+    }
+
+    .itinerary-item-stats {
+      text-align: right;
+    }
+
+    .itinerary-item-stats .stat-value {
+      font-weight: 600;
+      color: var(--color-charcoal);
+    }
+
+    .itinerary-item-stats .stat-label {
+      font-size: 0.75rem;
+      color: var(--color-medium-grey);
+    }
+
+    /* Sidebar */
+    .profile-sidebar {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-lg));
+    }
+
+    .sidebar-card {
+      background: var(--color-sand);
+      padding: var(--space-lg);
+      border-radius: 8px;
+      margin-bottom: var(--space-lg);
+    }
+
+    .sidebar-card h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-md);
+    }
+
+    /* Rate Card */
+    .rate-item {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .rate-item:last-child {
+      border-bottom: none;
+    }
+
+    .rate-label {
+      font-size: 0.875rem;
+      color: var(--color-text);
+    }
+
+    .rate-value {
+      font-weight: 600;
+      color: var(--color-charcoal);
+    }
+
+    /* Past Partners */
+    .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-sm);
+    }
+
+    .partner-logo {
+      background: var(--color-white);
+      padding: var(--space-sm);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--color-medium-grey);
+      height: 50px;
+    }
+
+    /* CTA Card */
+    .cta-card {
+      background: var(--color-charcoal);
+      color: var(--color-white);
+      padding: var(--space-lg);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .cta-card h3 {
+      color: var(--color-white);
+      font-size: 1.125rem;
+      margin-bottom: var(--space-sm);
+    }
+
+    .cta-card p {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: var(--space-md);
+    }
+
+    .cta-card .btn {
+      width: 100%;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-sidebar {
+        position: static;
+      }
+
+      .quick-stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .quick-stat:nth-child(3) {
+        border-right: none;
+      }
+
+      .quick-stat:nth-child(4) {
+        border-right: 1px solid var(--color-light-grey);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .profile-header-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .profile-avatar {
+        margin: 0 auto;
+      }
+
+      .profile-info h1 {
+        justify-content: center;
+      }
+
+      .profile-social-links {
+        justify-content: center;
+      }
+
+      .profile-actions {
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      .quick-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .quick-stat {
+        border-right: none;
+        border-bottom: 1px solid var(--color-light-grey);
+        padding: var(--space-sm) 0;
+      }
+
+      .quick-stat:nth-last-child(-n+2) {
+        border-bottom: none;
+      }
+
+      .demographics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .itinerary-item {
+        grid-template-columns: 1fr;
+      }
+
+      .itinerary-item-image {
+        aspect-ratio: 16/9;
+      }
+
+      .itinerary-item-stats {
+        text-align: left;
+        display: flex;
+        gap: var(--space-md);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="JUNO"></a>
+      <nav class="nav">
+        <a href="index.html">Browse Creators</a>
+        <a href="campaigns.html">Campaigns</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="#contact" class="nav-cta">Contact Us</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="index.html">Browse Creators</a>
+    <a href="campaigns.html">Campaigns</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="case-studies.html">Case Studies</a>
+    <a href="#contact" class="mobile-menu-cta">Contact Us</a>
+  </div>
+
+  <!-- Profile Header -->
+  <section class="profile-header">
+    <div class="container">
+      <div class="profile-header-inner">
+        <div class="profile-avatar">
+          <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_240,h_240,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
+        </div>
+        <div class="profile-info">
+          <h1>
+            Nia The Light
+            <span class="verified-badge">
+              <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            </span>
+          </h1>
+          <div class="profile-handle">@niathelight</div>
+          <div class="profile-social-links">
+            <a href="https://instagram.com/niathelight" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/></svg>
+              430K followers
+            </a>
+            <a href="https://tiktok.com/@niathelight" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+              125K followers
+            </a>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <a href="#contact" class="btn btn-primary">Request Quote</a>
+          <a href="mailto:partnerships@junotravel.com?subject=Partnership with Nia The Light" class="btn btn-outline" style="border-color: rgba(255,255,255,0.5); color: white;">Download Media Kit</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Stats -->
+  <section class="quick-stats">
+    <div class="container">
+      <div class="quick-stats-grid">
+        <div class="quick-stat">
+          <div class="quick-stat-value">555K</div>
+          <div class="quick-stat-label">Total Reach</div>
+        </div>
+        <div class="quick-stat">
+          <div class="quick-stat-value">4.2%</div>
+          <div class="quick-stat-label">Engagement Rate</div>
+        </div>
+        <div class="quick-stat">
+          <div class="quick-stat-value">$47K</div>
+          <div class="quick-stat-label">Bookings Generated</div>
+        </div>
+        <div class="quick-stat">
+          <div class="quick-stat-value">12</div>
+          <div class="quick-stat-label">Brand Partnerships</div>
+        </div>
+        <div class="quick-stat">
+          <div class="quick-stat-value">23</div>
+          <div class="quick-stat-label">Countries Visited</div>
+        </div>
+        <div class="quick-stat">
+          <div class="quick-stat-value">4</div>
+          <div class="quick-stat-label">Live Itineraries</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Profile Content -->
+  <section class="profile-content">
+    <div class="container">
+      <div class="profile-grid">
+        <div class="profile-main">
+
+          <!-- Bio -->
+          <div class="profile-section">
+            <h2>About</h2>
+            <p class="profile-bio">
+              Content creator and storyteller with a passion for African luxury, wellness, and the art of solo travel. My philosophy: slow down, immerse deeply, and return transformed.
+              <br><br>
+              I specialize in creating visually stunning, high-converting content that showcases the authentic essence of a destination. My audience trusts my recommendations because I only share places I've genuinely experienced and loved.
+              <br><br>
+              Past campaigns have delivered 3-5x ROI for luxury safari lodges and boutique hotels across Southern and East Africa.
+            </p>
+          </div>
+
+          <!-- Expertise -->
+          <div class="profile-section">
+            <h2>Expertise & Destinations</h2>
+            <div class="profile-tags">
+              <span class="profile-tag">Namibia</span>
+              <span class="profile-tag">Kenya</span>
+              <span class="profile-tag">South Africa</span>
+              <span class="profile-tag">Mozambique</span>
+              <span class="profile-tag">Tanzania</span>
+              <span class="profile-tag">Rwanda</span>
+              <span class="profile-tag">Luxury Safari</span>
+              <span class="profile-tag">Wellness Retreats</span>
+              <span class="profile-tag">Solo Travel</span>
+              <span class="profile-tag">Photography</span>
+              <span class="profile-tag">Boutique Hotels</span>
+            </div>
+          </div>
+
+          <!-- Audience Demographics -->
+          <div class="profile-section">
+            <h2>Audience Demographics</h2>
+            <div class="demographics-grid">
+              <div class="demo-card">
+                <h4>Age Distribution</h4>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">18-24</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 15%"></div></div>
+                  <span class="demo-bar-value">15%</span>
+                </div>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">25-34</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 45%"></div></div>
+                  <span class="demo-bar-value">45%</span>
+                </div>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">35-44</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 28%"></div></div>
+                  <span class="demo-bar-value">28%</span>
+                </div>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">45+</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 12%"></div></div>
+                  <span class="demo-bar-value">12%</span>
+                </div>
+              </div>
+
+              <div class="demo-card">
+                <h4>Top Locations</h4>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">USA</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 42%"></div></div>
+                  <span class="demo-bar-value">42%</span>
+                </div>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">UK</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 18%"></div></div>
+                  <span class="demo-bar-value">18%</span>
+                </div>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">Canada</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 12%"></div></div>
+                  <span class="demo-bar-value">12%</span>
+                </div>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">Germany</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 8%"></div></div>
+                  <span class="demo-bar-value">8%</span>
+                </div>
+              </div>
+
+              <div class="demo-card">
+                <h4>Gender</h4>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">Female</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 72%"></div></div>
+                  <span class="demo-bar-value">72%</span>
+                </div>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">Male</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 28%"></div></div>
+                  <span class="demo-bar-value">28%</span>
+                </div>
+              </div>
+
+              <div class="demo-card">
+                <h4>Interests</h4>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">Travel</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 94%"></div></div>
+                  <span class="demo-bar-value">94%</span>
+                </div>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">Wellness</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 67%"></div></div>
+                  <span class="demo-bar-value">67%</span>
+                </div>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">Luxury</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 58%"></div></div>
+                  <span class="demo-bar-value">58%</span>
+                </div>
+                <div class="demo-bar">
+                  <span class="demo-bar-label">Adventure</span>
+                  <div class="demo-bar-track"><div class="demo-bar-fill" style="width: 45%"></div></div>
+                  <span class="demo-bar-value">45%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Portfolio -->
+          <div class="profile-section">
+            <h2>Content Portfolio</h2>
+            <div class="portfolio-grid">
+              <div class="portfolio-item">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Content sample">
+                <div class="portfolio-item-overlay">23K likes</div>
+              </div>
+              <div class="portfolio-item">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Content sample">
+                <div class="portfolio-item-overlay">18K likes</div>
+              </div>
+              <div class="portfolio-item">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Content sample">
+                <div class="portfolio-item-overlay">31K likes</div>
+              </div>
+              <div class="portfolio-item">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1769958277/Namibia_onguma_Klein-163_e01x4h.jpg" alt="Content sample">
+                <div class="portfolio-item-overlay">15K likes</div>
+              </div>
+              <div class="portfolio-item">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1770005011/S_africa_Klein-2_xqck3i.jpg" alt="Content sample">
+                <div class="portfolio-item-overlay">22K likes</div>
+              </div>
+              <div class="portfolio-item">
+                <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_400,h_400,q_auto,f_auto/v1749400855/KleinNettoh--8_1_gtxyvk.jpg" alt="Content sample">
+                <div class="portfolio-item-overlay">27K likes</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Itineraries -->
+          <div class="profile-section">
+            <h2>Live Itineraries</h2>
+            <div class="itinerary-list">
+              <a href="../itineraries/namibia-safari-example.html" class="itinerary-item">
+                <div class="itinerary-item-image">
+                  <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_240,h_150,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Namibia Safari">
+                </div>
+                <div class="itinerary-item-info">
+                  <h4>Wilderness & Wonder</h4>
+                  <div class="itinerary-item-meta">Onguma, Namibia · 7 nights · Safari & Wellness</div>
+                </div>
+                <div class="itinerary-item-stats">
+                  <div>
+                    <div class="stat-value">$32K</div>
+                    <div class="stat-label">Bookings</div>
+                  </div>
+                  <div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Travelers</div>
+                  </div>
+                </div>
+              </a>
+              <a href="#" class="itinerary-item">
+                <div class="itinerary-item-image">
+                  <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_240,h_150,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Mozambique">
+                </div>
+                <div class="itinerary-item-info">
+                  <h4>Archipelago Dreams</h4>
+                  <div class="itinerary-item-meta">Bazaruto, Mozambique · 6 nights · Island & Marine</div>
+                </div>
+                <div class="itinerary-item-stats">
+                  <div>
+                    <div class="stat-value">$15K</div>
+                    <div class="stat-label">Bookings</div>
+                  </div>
+                  <div>
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Travelers</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="profile-sidebar">
+
+          <!-- Rate Card -->
+          <div class="sidebar-card">
+            <h3>Starting Rates</h3>
+            <div class="rate-item">
+              <span class="rate-label">Instagram Post</span>
+              <span class="rate-value">$2,500</span>
+            </div>
+            <div class="rate-item">
+              <span class="rate-label">Instagram Reel</span>
+              <span class="rate-value">$4,000</span>
+            </div>
+            <div class="rate-item">
+              <span class="rate-label">Story Package (5)</span>
+              <span class="rate-value">$1,500</span>
+            </div>
+            <div class="rate-item">
+              <span class="rate-label">Itinerary Feature</span>
+              <span class="rate-value">$3,000</span>
+            </div>
+            <div class="rate-item">
+              <span class="rate-label">Full Campaign</span>
+              <span class="rate-value">From $8,000</span>
+            </div>
+          </div>
+
+          <!-- Past Partners -->
+          <div class="sidebar-card">
+            <h3>Past Partners</h3>
+            <div class="partners-grid">
+              <div class="partner-logo">Singita</div>
+              <div class="partner-logo">Wilderness</div>
+              <div class="partner-logo">Emirates</div>
+              <div class="partner-logo">Aman</div>
+              <div class="partner-logo">One&Only</div>
+              <div class="partner-logo">Belmond</div>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="cta-card" id="contact">
+            <h3>Work with Nia</h3>
+            <p>Tell us about your brand and campaign goals. We'll put together a custom proposal.</p>
+            <a href="mailto:brands@junotravel.com?subject=Partnership Inquiry: Nia The Light" class="btn btn-primary">Request Quote</a>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo.svg" alt="JUNO" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>The platform connecting travel brands with travel creators.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Brands</h4>
+          <div class="footer-links">
+            <a href="index.html">Browse Creators</a>
+            <a href="campaigns.html">Campaign Types</a>
+            <a href="pricing.html">Pricing</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Creators</h4>
+          <div class="footer-links">
+            <a href="../creators/start.html">Join as Creator</a>
+            <a href="../portal/login.html">Creator Login</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-links">
+            <a href="mailto:brands@junotravel.com">brands@junotravel.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 JUNO Travel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js?v=2"></script>
+</body>
+</html>

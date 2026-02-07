@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Connect with travel creators to promote your destination, hotel, or travel brand. Browse verified creators with engaged audiences.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Creator Marketplace | JUNO for Brands</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css?v=24">
+
+  <style>
+    /* Hero */
+    .brands-hero {
+      background: var(--color-charcoal);
+      color: var(--color-white);
+      padding: calc(var(--header-height) + var(--space-2xl)) 0 var(--space-2xl);
+      text-align: center;
+    }
+
+    .brands-hero h1 {
+      color: var(--color-white);
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: var(--space-sm);
+    }
+
+    .brands-hero p {
+      color: rgba(255,255,255,0.8);
+      max-width: 600px;
+      margin: 0 auto var(--space-lg);
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-2xl);
+      margin-top: var(--space-xl);
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat-value {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      color: var(--color-white);
+    }
+
+    .hero-stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Filters */
+    .filters-section {
+      background: var(--color-sand);
+      padding: var(--space-lg) 0;
+      position: sticky;
+      top: var(--header-height);
+      z-index: 100;
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+
+    .filters-bar {
+      display: flex;
+      gap: var(--space-md);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .filter-label {
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-medium-grey);
+    }
+
+    .filter-select {
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      border: 1px solid var(--color-light-grey);
+      border-radius: 4px;
+      font-size: 0.875rem;
+      background: var(--color-white);
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+    }
+
+    .filter-search {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--color-light-grey);
+      border-radius: 4px;
+      font-size: 0.875rem;
+    }
+
+    .filter-search::placeholder {
+      color: var(--color-medium-grey);
+    }
+
+    /* Creators Grid */
+    .creators-section {
+      padding: var(--space-xl) 0;
+    }
+
+    .creators-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+
+    /* Creator Card */
+    .creator-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-light-grey);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .creator-card:hover {
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+    }
+
+    .creator-card-header {
+      position: relative;
+      height: 120px;
+      background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-mocha) 100%);
+    }
+
+    .creator-card-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .creator-card-avatar {
+      position: absolute;
+      bottom: -40px;
+      left: var(--space-md);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid var(--color-white);
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .creator-card-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .creator-card-verified {
+      position: absolute;
+      bottom: -40px;
+      left: 70px;
+      width: 24px;
+      height: 24px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      border: 2px solid var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .creator-card-verified svg {
+      width: 12px;
+      height: 12px;
+      fill: white;
+    }
+
+    .creator-card-body {
+      padding: calc(40px + var(--space-md)) var(--space-md) var(--space-md);
+    }
+
+    .creator-card-name {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .creator-card-handle {
+      font-size: 0.875rem;
+      color: var(--color-medium-grey);
+      margin-bottom: var(--space-sm);
+    }
+
+    .creator-card-bio {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      line-height: 1.5;
+      margin-bottom: var(--space-md);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .creator-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: var(--space-md);
+    }
+
+    .creator-tag {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.5rem;
+      background: var(--color-sand);
+      border-radius: 3px;
+      color: var(--color-text-light);
+    }
+
+    .creator-card-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-sm);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--color-light-grey);
+    }
+
+    .creator-stat {
+      text-align: center;
+    }
+
+    .creator-stat-value {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-charcoal);
+    }
+
+    .creator-stat-label {
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-medium-grey);
+    }
+
+    .creator-card-footer {
+      padding: var(--space-md);
+      background: var(--color-sand);
+      display: flex;
+      gap: var(--space-sm);
+    }
+
+    .creator-card-footer .btn {
+      flex: 1;
+      text-align: center;
+      font-size: 0.8125rem;
+      padding: 0.5rem;
+    }
+
+    /* Featured Creator */
+    .creator-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .creator-card.featured .creator-card-header {
+      height: 100%;
+      min-height: 300px;
+    }
+
+    .creator-card.featured .creator-card-avatar {
+      bottom: var(--space-md);
+      left: var(--space-md);
+    }
+
+    .creator-card.featured .creator-card-verified {
+      bottom: var(--space-md);
+      left: calc(70px + var(--space-md) - 10px);
+    }
+
+    .creator-card.featured .creator-card-body {
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .creator-card.featured .creator-card-bio {
+      -webkit-line-clamp: 4;
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-sm);
+      background: var(--color-white);
+      color: var(--color-charcoal);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.75rem;
+      border-radius: 3px;
+    }
+
+    /* CTA Section */
+    .brands-cta {
+      background: var(--color-warm-cream);
+      padding: var(--space-2xl) 0;
+      text-align: center;
+    }
+
+    .brands-cta h2 {
+      margin-bottom: var(--space-sm);
+    }
+
+    .brands-cta p {
+      max-width: 500px;
+      margin: 0 auto var(--space-lg);
+      color: var(--color-text-light);
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+    }
+
+    /* How It Works */
+    .how-it-works {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+
+    .how-it-works h2 {
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .step {
+      text-align: center;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--color-charcoal);
+      color: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      margin: 0 auto var(--space-md);
+    }
+
+    .step h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+    }
+
+    .step p {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .creators-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .creator-card.featured {
+        grid-column: span 2;
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-stats {
+        flex-wrap: wrap;
+        gap: var(--space-lg);
+      }
+
+      .filters-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-group {
+        width: 100%;
+      }
+
+      .filter-select, .filter-search {
+        width: 100%;
+      }
+
+      .creators-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .creator-card.featured {
+        grid-column: span 1;
+        grid-template-columns: 1fr;
+      }
+
+      .creator-card.featured .creator-card-header {
+        min-height: 150px;
+      }
+
+      .creator-card.featured .creator-card-avatar {
+        bottom: -40px;
+      }
+
+      .creator-card.featured .creator-card-verified {
+        bottom: -40px;
+        left: 70px;
+      }
+
+      .creator-card.featured .creator-card-body {
+        padding-top: calc(40px + var(--space-md));
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="../index.html" class="logo"><img src="../assets/logo.svg" alt="JUNO"></a>
+      <nav class="nav">
+        <a href="index.html" class="active">Browse Creators</a>
+        <a href="campaigns.html">Campaigns</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="case-studies.html">Case Studies</a>
+        <a href="#contact" class="nav-cta">Contact Us</a>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="index.html">Browse Creators</a>
+    <a href="campaigns.html">Campaigns</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="case-studies.html">Case Studies</a>
+    <a href="#contact" class="mobile-menu-cta">Contact Us</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="brands-hero">
+    <div class="container">
+      <h1>Find Your Perfect Travel Creator</h1>
+      <p>Connect with verified travel creators who have real audiences and proven engagement. From luxury safari to budget backpacking.</p>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-value">2,400+</div>
+          <div class="hero-stat-label">Verified Creators</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">180M+</div>
+          <div class="hero-stat-label">Combined Reach</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">45+</div>
+          <div class="hero-stat-label">Countries Covered</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value">$2.3M</div>
+          <div class="hero-stat-label">Bookings Generated</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section class="filters-section">
+    <div class="container">
+      <div class="filters-bar">
+        <div class="filter-group">
+          <span class="filter-label">Destination</span>
+          <select class="filter-select">
+            <option value="">All Regions</option>
+            <option value="africa">Africa</option>
+            <option value="asia">Asia</option>
+            <option value="europe">Europe</option>
+            <option value="north-america">North America</option>
+            <option value="south-america">South America</option>
+            <option value="oceania">Oceania</option>
+            <option value="middle-east">Middle East</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label">Audience Size</span>
+          <select class="filter-select">
+            <option value="">Any Size</option>
+            <option value="nano">1K - 10K (Nano)</option>
+            <option value="micro">10K - 50K (Micro)</option>
+            <option value="mid">50K - 200K (Mid)</option>
+            <option value="macro">200K - 1M (Macro)</option>
+            <option value="mega">1M+ (Mega)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label">Travel Style</span>
+          <select class="filter-select">
+            <option value="">All Styles</option>
+            <option value="luxury">Luxury</option>
+            <option value="adventure">Adventure</option>
+            <option value="budget">Budget</option>
+            <option value="solo">Solo Travel</option>
+            <option value="family">Family</option>
+            <option value="wellness">Wellness</option>
+            <option value="food">Food & Culinary</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label">Content Type</span>
+          <select class="filter-select">
+            <option value="">All Types</option>
+            <option value="photo">Photography</option>
+            <option value="video">Video/Reels</option>
+            <option value="blog">Blog/Written</option>
+            <option value="vlog">YouTube/Vlog</option>
+          </select>
+        </div>
+
+        <input type="text" class="filter-search" placeholder="Search by name, handle, or destination...">
+      </div>
+    </div>
+  </section>
+
+  <!-- Creators Grid -->
+  <section class="creators-section">
+    <div class="container">
+      <div class="creators-grid">
+
+        <!-- Featured Creator -->
+        <article class="creator-card featured">
+          <div class="creator-card-header">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_800,h_600,q_auto,f_auto/v1770005193/Namibia_onguma_Klein-268_gjsdoh.jpg" alt="Nia's content">
+            <span class="featured-badge">Featured</span>
+            <div class="creator-card-avatar">
+              <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_160,h_160,q_auto,f_auto/v1769949588/RNI-Films-IMG-3CFAE959-6D3F-4C6A-96D4-F3158BB2F3E8_shblk6.jpg" alt="Nia The Light">
+            </div>
+            <div class="creator-card-verified">
+              <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            </div>
+          </div>
+          <div class="creator-card-body">
+            <h3 class="creator-card-name">Nia The Light</h3>
+            <div class="creator-card-handle">@niathelight</div>
+            <p class="creator-card-bio">Luxury travel creator specializing in African destinations. Known for stunning visual storytelling and high-converting content. Past partners include Singita, Wilderness Safaris, and Emirates.</p>
+            <div class="creator-card-tags">
+              <span class="creator-tag">Africa</span>
+              <span class="creator-tag">Luxury</span>
+              <span class="creator-tag">Safari</span>
+              <span class="creator-tag">Wellness</span>
+            </div>
+            <div class="creator-card-stats">
+              <div class="creator-stat">
+                <div class="creator-stat-value">430K</div>
+                <div class="creator-stat-label">Followers</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">4.2%</div>
+                <div class="creator-stat-label">Eng. Rate</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">$47K</div>
+                <div class="creator-stat-label">Bookings</div>
+              </div>
+            </div>
+            <div class="creator-card-footer">
+              <a href="../creators/nia.html" class="btn btn-outline-dark">View Profile</a>
+              <a href="#contact" class="btn btn-primary">Request Quote</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Creator 2 -->
+        <article class="creator-card">
+          <div class="creator-card-header">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_400,h_200,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg" alt="Creator content">
+            <div class="creator-card-avatar">
+              <img src="https://ui-avatars.com/api/?name=Marcus+Chen&background=6B8E7B&color=fff&size=160" alt="Marcus Chen">
+            </div>
+            <div class="creator-card-verified">
+              <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            </div>
+          </div>
+          <div class="creator-card-body">
+            <h3 class="creator-card-name">Marcus Chen</h3>
+            <div class="creator-card-handle">@marcuswanders</div>
+            <p class="creator-card-bio">Adventure photographer capturing raw, authentic moments. Specializes in off-the-beaten-path destinations across Southeast Asia.</p>
+            <div class="creator-card-tags">
+              <span class="creator-tag">Asia</span>
+              <span class="creator-tag">Adventure</span>
+              <span class="creator-tag">Photography</span>
+            </div>
+            <div class="creator-card-stats">
+              <div class="creator-stat">
+                <div class="creator-stat-value">185K</div>
+                <div class="creator-stat-label">Followers</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">5.8%</div>
+                <div class="creator-stat-label">Eng. Rate</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">$23K</div>
+                <div class="creator-stat-label">Bookings</div>
+              </div>
+            </div>
+          </div>
+          <div class="creator-card-footer">
+            <a href="#" class="btn btn-outline-dark">View Profile</a>
+            <a href="#contact" class="btn btn-primary">Request Quote</a>
+          </div>
+        </article>
+
+        <!-- Creator 3 -->
+        <article class="creator-card">
+          <div class="creator-card-header">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_400,h_200,q_auto,f_auto/v1770005011/S_africa_Klein-2_xqck3i.jpg" alt="Creator content">
+            <div class="creator-card-avatar">
+              <img src="https://ui-avatars.com/api/?name=Sofia+Rivera&background=C4A77D&color=fff&size=160" alt="Sofia Rivera">
+            </div>
+            <div class="creator-card-verified">
+              <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            </div>
+          </div>
+          <div class="creator-card-body">
+            <h3 class="creator-card-name">Sofia Rivera</h3>
+            <div class="creator-card-handle">@sofiatravels</div>
+            <p class="creator-card-bio">Solo female travel advocate. Budget-friendly tips and hidden gems across Latin America and Europe.</p>
+            <div class="creator-card-tags">
+              <span class="creator-tag">Europe</span>
+              <span class="creator-tag">South America</span>
+              <span class="creator-tag">Solo</span>
+            </div>
+            <div class="creator-card-stats">
+              <div class="creator-stat">
+                <div class="creator-stat-value">92K</div>
+                <div class="creator-stat-label">Followers</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">6.1%</div>
+                <div class="creator-stat-label">Eng. Rate</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">$15K</div>
+                <div class="creator-stat-label">Bookings</div>
+              </div>
+            </div>
+          </div>
+          <div class="creator-card-footer">
+            <a href="#" class="btn btn-outline-dark">View Profile</a>
+            <a href="#contact" class="btn btn-primary">Request Quote</a>
+          </div>
+        </article>
+
+        <!-- Creator 4 -->
+        <article class="creator-card">
+          <div class="creator-card-header">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,g_auto,w_400,h_200,q_auto,f_auto/v1749400855/KleinNettoh--8_1_gtxyvk.jpg" alt="Creator content">
+            <div class="creator-card-avatar">
+              <img src="https://ui-avatars.com/api/?name=James+Okonkwo&background=8B7355&color=fff&size=160" alt="James Okonkwo">
+            </div>
+          </div>
+          <div class="creator-card-body">
+            <h3 class="creator-card-name">James Okonkwo</h3>
+            <div class="creator-card-handle">@jamesokonkwo</div>
+            <p class="creator-card-bio">Nigerian-British creator focusing on ancestral tourism and luxury experiences across West Africa.</p>
+            <div class="creator-card-tags">
+              <span class="creator-tag">West Africa</span>
+              <span class="creator-tag">Culture</span>
+              <span class="creator-tag">Luxury</span>
+            </div>
+            <div class="creator-card-stats">
+              <div class="creator-stat">
+                <div class="creator-stat-value">78K</div>
+                <div class="creator-stat-label">Followers</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">7.2%</div>
+                <div class="creator-stat-label">Eng. Rate</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">$31K</div>
+                <div class="creator-stat-label">Bookings</div>
+              </div>
+            </div>
+          </div>
+          <div class="creator-card-footer">
+            <a href="#" class="btn btn-outline-dark">View Profile</a>
+            <a href="#contact" class="btn btn-primary">Request Quote</a>
+          </div>
+        </article>
+
+        <!-- Creator 5 -->
+        <article class="creator-card">
+          <div class="creator-card-header">
+            <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=400&h=200&fit=crop&q=80" alt="Creator content">
+            <div class="creator-card-avatar">
+              <img src="https://ui-avatars.com/api/?name=Emma+Larsson&background=A8C5B5&color=fff&size=160" alt="Emma Larsson">
+            </div>
+            <div class="creator-card-verified">
+              <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+            </div>
+          </div>
+          <div class="creator-card-body">
+            <h3 class="creator-card-name">Emma Larsson</h3>
+            <div class="creator-card-handle">@emmalarsson</div>
+            <p class="creator-card-bio">Wellness and retreat specialist. Yoga, meditation, and transformative travel experiences worldwide.</p>
+            <div class="creator-card-tags">
+              <span class="creator-tag">Global</span>
+              <span class="creator-tag">Wellness</span>
+              <span class="creator-tag">Retreats</span>
+            </div>
+            <div class="creator-card-stats">
+              <div class="creator-stat">
+                <div class="creator-stat-value">156K</div>
+                <div class="creator-stat-label">Followers</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">4.8%</div>
+                <div class="creator-stat-label">Eng. Rate</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">$52K</div>
+                <div class="creator-stat-label">Bookings</div>
+              </div>
+            </div>
+          </div>
+          <div class="creator-card-footer">
+            <a href="#" class="btn btn-outline-dark">View Profile</a>
+            <a href="#contact" class="btn btn-primary">Request Quote</a>
+          </div>
+        </article>
+
+        <!-- Creator 6 -->
+        <article class="creator-card">
+          <div class="creator-card-header">
+            <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&h=200&fit=crop&q=80" alt="Creator content">
+            <div class="creator-card-avatar">
+              <img src="https://ui-avatars.com/api/?name=David+Kim&background=5C6B73&color=fff&size=160" alt="David Kim">
+            </div>
+          </div>
+          <div class="creator-card-body">
+            <h3 class="creator-card-name">David Kim</h3>
+            <div class="creator-card-handle">@davidkimtravels</div>
+            <p class="creator-card-bio">Food and culinary travel creator. Street food to Michelin stars across Asia and Europe.</p>
+            <div class="creator-card-tags">
+              <span class="creator-tag">Asia</span>
+              <span class="creator-tag">Europe</span>
+              <span class="creator-tag">Food</span>
+            </div>
+            <div class="creator-card-stats">
+              <div class="creator-stat">
+                <div class="creator-stat-value">245K</div>
+                <div class="creator-stat-label">Followers</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">5.3%</div>
+                <div class="creator-stat-label">Eng. Rate</div>
+              </div>
+              <div class="creator-stat">
+                <div class="creator-stat-value">$38K</div>
+                <div class="creator-stat-label">Bookings</div>
+              </div>
+            </div>
+          </div>
+          <div class="creator-card-footer">
+            <a href="#" class="btn btn-outline-dark">View Profile</a>
+            <a href="#contact" class="btn btn-primary">Request Quote</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2>How It Works</h2>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Browse & Filter</h3>
+          <p>Search our verified creator database by destination, audience, style, and budget.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Request a Quote</h3>
+          <p>Tell us about your campaign. We'll match you with ideal creators and provide pricing.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>We Handle Everything</h3>
+          <p>Contracts, briefings, content review, and payments. You approve, we execute.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Track Results</h3>
+          <p>Real-time reporting on reach, engagement, and bookings generated.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="brands-cta" id="contact">
+    <div class="container">
+      <h2>Ready to Work With Travel Creators?</h2>
+      <p>Tell us about your brand and goals. We'll recommend the right creators and build a custom campaign.</p>
+      <div class="cta-buttons">
+        <a href="mailto:brands@junotravel.com" class="btn btn-primary">Contact Our Team</a>
+        <a href="campaigns.html" class="btn btn-outline-dark">View Campaign Options</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/logo.svg" alt="JUNO" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>The platform connecting travel brands with travel creators.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Brands</h4>
+          <div class="footer-links">
+            <a href="index.html">Browse Creators</a>
+            <a href="campaigns.html">Campaign Types</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="case-studies.html">Case Studies</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Creators</h4>
+          <div class="footer-links">
+            <a href="../creators/start.html">Join as Creator</a>
+            <a href="../portal/login.html">Creator Login</a>
+            <a href="../how-it-works.html">How It Works</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Contact</h4>
+          <div class="footer-links">
+            <a href="mailto:brands@junotravel.com">brands@junotravel.com</a>
+            <a href="https://instagram.com/junotravel" target="_blank">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 JUNO Travel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js?v=2"></script>
+</body>
+</html>
