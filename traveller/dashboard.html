@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="View your upcoming trips, booking details, and travel documents.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>My Trips | JUNO Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #fafafa;
+      --color-white: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-light: #6b6b6b;
+      --color-border: #e5e5e5;
+      --color-accent: #c2703e;
+      --color-accent-hover: #a85d32;
+      --color-accent-light: #f5ebe4;
+      --color-success: #22c55e;
+      --color-warning: #f59e0b;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --header-height: 70px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .dashboard-header {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+      height: var(--header-height);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .header-logo img {
+      height: 20px;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .header-nav a {
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .header-nav a:hover,
+    .header-nav a.active {
+      color: var(--color-text);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .header-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--color-accent-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: var(--color-accent);
+      font-size: 0.875rem;
+    }
+
+    .header-user-menu {
+      position: relative;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      min-width: 180px;
+      display: none;
+    }
+
+    .user-dropdown.visible {
+      display: block;
+    }
+
+    .user-dropdown a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: var(--color-text);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+
+    .user-dropdown a:hover {
+      background: var(--color-bg);
+    }
+
+    .user-dropdown a.logout {
+      border-top: 1px solid var(--color-border);
+      color: var(--color-text-light);
+    }
+
+    /* Main Content */
+    .dashboard-main {
+      margin-top: var(--header-height);
+      padding: 2rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Page Header */
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      color: var(--color-text-light);
+    }
+
+    /* Trip Cards */
+    .trips-section {
+      margin-bottom: 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .section-badge {
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+    }
+
+    .trips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .trip-card {
+      background: var(--color-white);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--color-border);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .trip-card:hover {
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .trip-card-image {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .trip-card-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--color-white);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .trip-card-badge.upcoming {
+      background: var(--color-success);
+      color: white;
+    }
+
+    .trip-card-badge.past {
+      background: var(--color-text-light);
+      color: white;
+    }
+
+    .trip-card-content {
+      padding: 1.5rem;
+    }
+
+    .trip-card-destination {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .trip-card-dates {
+      color: var(--color-text-light);
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .trip-card-dates svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .trip-card-meta {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      margin-bottom: 1rem;
+    }
+
+    .trip-card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .trip-card-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-accent-hover);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-text);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--color-white);
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+    }
+
+    .empty-state-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: var(--color-accent-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-state-icon svg {
+      width: 40px;
+      height: 40px;
+      color: var(--color-accent);
+    }
+
+    .empty-state h2 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+      color: var(--color-text-light);
+      margin-bottom: 1.5rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .quick-action {
+      background: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--color-text);
+      transition: all 0.2s;
+    }
+
+    .quick-action:hover {
+      border-color: var(--color-accent);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .quick-action svg {
+      width: 32px;
+      height: 32px;
+      color: var(--color-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .quick-action h3 {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .quick-action p {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .dashboard-header {
+        padding: 0 1rem;
+      }
+
+      .header-nav {
+        display: none;
+      }
+
+      .dashboard-main {
+        padding: 1.5rem 1rem;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .trips-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-left">
+      <a href="../index.html" class="header-logo"><img src="../assets/logo.svg?v=2" alt="JUNO"></a>
+      <nav class="header-nav">
+        <a href="dashboard.html" class="active">My Trips</a>
+        <a href="documents.html">Documents</a>
+        <a href="support.html">Support</a>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="header-user-menu">
+        <div class="header-user" onclick="toggleUserMenu()">
+          <div class="header-avatar" id="userAvatar">?</div>
+        </div>
+        <div class="user-dropdown" id="userDropdown">
+          <a href="settings.html">Settings</a>
+          <a href="#" class="logout" onclick="handleLogout()">Sign out</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="dashboard-main">
+    <div id="loadingState" class="loading">
+      <div class="spinner"></div>
+    </div>
+
+    <div id="mainContent" style="display: none;">
+      <div class="page-header">
+        <h1 class="page-title">My Trips</h1>
+        <p class="page-subtitle">View and manage your upcoming and past travel.</p>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <a href="../trips/" class="quick-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <h3>Browse Trips</h3>
+          <p>Find your next adventure</p>
+        </a>
+        <a href="documents.html" class="quick-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          <h3>Documents</h3>
+          <p>Itineraries & confirmations</p>
+        </a>
+        <a href="../contact.html" class="quick-action">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <h3>Get Support</h3>
+          <p>We're here to help</p>
+        </a>
+      </div>
+
+      <!-- Upcoming Trips -->
+      <section class="trips-section" id="upcomingTrips">
+        <div class="section-header">
+          <h2 class="section-title">Upcoming Trips</h2>
+          <span class="section-badge" id="upcomingCount">0</span>
+        </div>
+        <div id="upcomingTripsGrid" class="trips-grid"></div>
+      </section>
+
+      <!-- Past Trips -->
+      <section class="trips-section" id="pastTrips">
+        <div class="section-header">
+          <h2 class="section-title">Past Trips</h2>
+        </div>
+        <div id="pastTripsGrid" class="trips-grid"></div>
+      </section>
+    </div>
+
+    <!-- Empty State (shown when no trips) -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <div class="empty-state-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="10" r="3"/><path d="M12 2C7.58 2 4 5.58 4 10c0 5.25 8 12 8 12s8-6.75 8-12c0-4.42-3.58-8-8-8z"/></svg>
+      </div>
+      <h2>No trips yet</h2>
+      <p>When you book a trip through JUNO, it will appear here. Ready to start exploring?</p>
+      <a href="../trips/" class="btn btn-primary">Browse Trips</a>
+    </div>
+  </main>
+
+  <script src="../js/supabase.js"></script>
+  <script>
+    // Auth check
+    function checkAuth() {
+      // Check for traveller-specific auth
+      const stored = localStorage.getItem('juno_traveller_auth');
+      if (!stored) {
+        window.location.href = 'login.html';
+        return null;
+      }
+
+      const session = JSON.parse(stored);
+      if (session.expiresAt < Date.now()) {
+        localStorage.removeItem('juno_traveller_auth');
+        window.location.href = 'login.html';
+        return null;
+      }
+
+      supabase.accessToken = session.accessToken;
+      return session;
+    }
+
+    // Get user info
+    async function getUserInfo() {
+      try {
+        const response = await fetch(`${supabase.url}/auth/v1/user`, {
+          headers: {
+            'apikey': supabase.key,
+            'Authorization': `Bearer ${supabase.accessToken}`
+          }
+        });
+
+        if (!response.ok) throw new Error('Failed to get user');
+        return await response.json();
+      } catch (error) {
+        console.error('Error getting user:', error);
+        return null;
+      }
+    }
+
+    // Get user's bookings
+    async function getBookings(userId) {
+      try {
+        const bookings = await supabase.from('bookings')
+          .select('*')
+          .eq('traveller_id', userId)
+          .order('start_date', { ascending: false })
+          .execute();
+
+        return bookings || [];
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+        return [];
+      }
+    }
+
+    // Render trip card
+    function renderTripCard(booking) {
+      const startDate = new Date(booking.start_date);
+      const endDate = booking.end_date ? new Date(booking.end_date) : null;
+      const isUpcoming = startDate > new Date();
+      const isPast = startDate < new Date();
+
+      const dateFormat = { month: 'short', day: 'numeric', year: 'numeric' };
+      const dateRange = endDate
+        ? `${startDate.toLocaleDateString('en-US', dateFormat)} - ${endDate.toLocaleDateString('en-US', dateFormat)}`
+        : startDate.toLocaleDateString('en-US', dateFormat);
+
+      return `
+        <div class="trip-card">
+          <div class="trip-card-image" style="background-image: url('${booking.hero_image || 'https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_800,h_400,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg'}')">
+            <span class="trip-card-badge ${isUpcoming ? 'upcoming' : 'past'}">${isUpcoming ? 'Upcoming' : 'Completed'}</span>
+          </div>
+          <div class="trip-card-content">
+            <h3 class="trip-card-destination">${booking.destination || booking.itinerary_title || 'Trip'}</h3>
+            <div class="trip-card-dates">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              ${dateRange}
+            </div>
+            <div class="trip-card-meta">
+              <span>${booking.adults || 2} traveller${(booking.adults || 2) > 1 ? 's' : ''}</span>
+              <span>${booking.nights || '?'} nights</span>
+            </div>
+            <div class="trip-card-actions">
+              <a href="trip.html?id=${booking.id}" class="btn btn-primary">View Details</a>
+              ${isUpcoming ? `<a href="documents.html?booking=${booking.id}" class="btn btn-outline">Documents</a>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Initialize
+    async function init() {
+      const session = checkAuth();
+      if (!session) return;
+
+      // Get user info
+      const user = await getUserInfo();
+      if (user) {
+        // Set avatar initial
+        const initial = user.email ? user.email[0].toUpperCase() : '?';
+        document.getElementById('userAvatar').textContent = initial;
+      }
+
+      // Get bookings
+      const bookings = await getBookings(user?.id);
+
+      // Hide loading
+      document.getElementById('loadingState').style.display = 'none';
+
+      if (bookings.length === 0) {
+        document.getElementById('emptyState').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('mainContent').style.display = 'block';
+
+      // Split into upcoming and past
+      const now = new Date();
+      const upcoming = bookings.filter(b => new Date(b.start_date) > now);
+      const past = bookings.filter(b => new Date(b.start_date) <= now);
+
+      // Render upcoming
+      document.getElementById('upcomingCount').textContent = upcoming.length;
+      const upcomingGrid = document.getElementById('upcomingTripsGrid');
+      if (upcoming.length > 0) {
+        upcomingGrid.innerHTML = upcoming.map(renderTripCard).join('');
+      } else {
+        upcomingGrid.innerHTML = '<p style="color: var(--color-text-light);">No upcoming trips. <a href="../trips/" style="color: var(--color-accent);">Browse trips</a> to plan your next adventure.</p>';
+      }
+
+      // Render past
+      const pastGrid = document.getElementById('pastTripsGrid');
+      if (past.length > 0) {
+        pastGrid.innerHTML = past.map(renderTripCard).join('');
+      } else {
+        document.getElementById('pastTrips').style.display = 'none';
+      }
+    }
+
+    // Toggle user menu
+    function toggleUserMenu() {
+      document.getElementById('userDropdown').classList.toggle('visible');
+    }
+
+    // Close menu on outside click
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.header-user-menu')) {
+        document.getElementById('userDropdown').classList.remove('visible');
+      }
+    });
+
+    // Logout
+    function handleLogout() {
+      localStorage.removeItem('juno_traveller_auth');
+      window.location.href = 'login.html';
+    }
+
+    // Run
+    init();
+  </script>
+</body>
+</html>

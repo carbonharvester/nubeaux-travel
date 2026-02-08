@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Sign in to your JUNO account to view your trips, booking details, and travel documents.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Sign In | My JUNO</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-bg: #fafafa;
+      --color-white: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-light: #6b6b6b;
+      --color-border: #e5e5e5;
+      --color-accent: #c2703e;
+      --color-accent-hover: #a85d32;
+      --color-accent-light: #f5ebe4;
+      --color-error: #ef4444;
+      --color-success: #22c55e;
+      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Split Layout */
+    .login-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Left - Content */
+    .login-content {
+      flex: 0 0 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem;
+      background: var(--color-white);
+    }
+
+    /* Right - Image */
+    .login-image {
+      flex: 0 0 50%;
+      background-image: url('https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1200,h_1600,q_auto,f_auto/v1770004990/Mozambique_Klein-191_opghyh.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .login-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.1) 100%);
+    }
+
+    .login-logo {
+      margin-bottom: 3rem;
+    }
+
+    .login-logo img {
+      height: 24px;
+    }
+
+    .login-badge {
+      display: inline-block;
+      background: var(--color-accent-light);
+      color: var(--color-accent);
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
+
+    .login-title {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      color: var(--color-text);
+    }
+
+    .login-subtitle {
+      color: var(--color-text-light);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+      max-width: 400px;
+    }
+
+    /* Form */
+    .login-form {
+      max-width: 400px;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      font-size: 1rem;
+      font-family: var(--font-sans);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(194, 112, 62, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: #aaa;
+    }
+
+    .form-error {
+      color: var(--color-error);
+      font-size: 0.8125rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .form-error.visible {
+      display: block;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: var(--color-accent);
+      color: var(--color-white);
+      border: none;
+      border-radius: 4px;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-submit:hover {
+      background: var(--color-accent-hover);
+    }
+
+    .btn-submit:active {
+      transform: scale(0.98);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-submit.loading {
+      position: relative;
+      color: transparent;
+    }
+
+    .btn-submit.loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      margin: -10px 0 0 -10px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Alternative Actions */
+    .login-alt {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .login-alt-text {
+      font-size: 0.875rem;
+      color: var(--color-text-light);
+      text-align: center;
+    }
+
+    .login-alt-text a {
+      color: var(--color-accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .login-alt-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* Magic Link Sent */
+    .magic-link-sent {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .magic-link-sent.visible {
+      display: block;
+    }
+
+    .magic-link-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1.5rem;
+      background: var(--color-success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .magic-link-icon svg {
+      width: 32px;
+      height: 32px;
+      color: white;
+    }
+
+    .magic-link-sent h2 {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .magic-link-sent p {
+      color: var(--color-text-light);
+      font-size: 0.9375rem;
+    }
+
+    .magic-link-sent .email-highlight {
+      color: var(--color-text);
+      font-weight: 500;
+    }
+
+    /* Back Link */
+    .back-link {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+
+    .back-link:hover {
+      color: var(--color-text);
+    }
+
+    .back-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .login-container {
+        flex-direction: column-reverse;
+      }
+
+      .login-content {
+        flex: none;
+        padding: 3rem 2rem;
+      }
+
+      .login-image {
+        flex: none;
+        height: 30vh;
+        min-height: 200px;
+      }
+
+      .back-link {
+        position: static;
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-content">
+      <a href="../index.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to home
+      </a>
+
+      <div class="login-logo">
+        <a href="../index.html"><img src="../assets/logo.svg?v=2" alt="JUNO"></a>
+      </div>
+
+      <span class="login-badge">My JUNO</span>
+      <h1 class="login-title">Welcome back</h1>
+      <p class="login-subtitle">Sign in to view your trips, booking details, and travel documents.</p>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label class="form-label" for="email">Email address</label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required>
+          <p id="emailError" class="form-error">Please enter a valid email address</p>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn-submit">Send sign in link</button>
+      </form>
+
+      <div id="magicLinkSent" class="magic-link-sent">
+        <div class="magic-link-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+        </div>
+        <h2>Check your email</h2>
+        <p>We sent a sign in link to <span id="sentEmail" class="email-highlight"></span></p>
+        <p style="margin-top: 1rem; font-size: 0.875rem;">Click the link in the email to access your trips.</p>
+      </div>
+
+      <div class="login-alt">
+        <p class="login-alt-text">
+          New to JUNO? <a href="../trips/">Browse trips</a> to get started.
+        </p>
+      </div>
+    </div>
+
+    <div class="login-image"></div>
+  </div>
+
+  <script src="../js/supabase.js"></script>
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+    const magicLinkSent = document.getElementById('magicLinkSent');
+    const sentEmail = document.getElementById('sentEmail');
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = emailInput.value.trim().toLowerCase();
+
+      // Validate email
+      if (!email || !email.includes('@')) {
+        emailError.classList.add('visible');
+        return;
+      }
+      emailError.classList.remove('visible');
+
+      // Show loading
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      try {
+        // Send magic link via Supabase
+        const response = await fetch(`${supabase.url}/auth/v1/magiclink`, {
+          method: 'POST',
+          headers: {
+            'apikey': supabase.key,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email,
+            options: {
+              emailRedirectTo: window.location.origin + '/traveller/dashboard.html'
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to send magic link');
+        }
+
+        // Show success message
+        loginForm.style.display = 'none';
+        sentEmail.textContent = email;
+        magicLinkSent.classList.add('visible');
+
+      } catch (error) {
+        console.error('Login error:', error);
+        emailError.textContent = 'Something went wrong. Please try again.';
+        emailError.classList.add('visible');
+      } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+    });
+
+    // Clear error on input
+    emailInput.addEventListener('input', () => {
+      emailError.classList.remove('visible');
+    });
+
+    // Check if user is already logged in
+    const session = supabase.auth.getSession();
+    if (session && session.accessToken) {
+      window.location.href = 'dashboard.html';
+    }
+
+    // Handle magic link callback
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const accessToken = hashParams.get('access_token');
+    const refreshToken = hashParams.get('refresh_token');
+
+    if (accessToken) {
+      // Store the tokens
+      supabase.accessToken = accessToken;
+      localStorage.setItem('juno_traveller_auth', JSON.stringify({
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        expiresAt: Date.now() + (3600 * 1000) // 1 hour
+      }));
+      window.location.href = 'dashboard.html';
+    }
+  </script>
+</body>
+</html>
