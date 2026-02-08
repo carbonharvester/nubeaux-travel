@@ -256,6 +256,72 @@ p {
   background-color: var(--color-accent-hover);
 }
 
+/* Dropdown Navigation */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown > a {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-dropdown > a svg {
+  width: 10px;
+  height: 10px;
+  transition: transform var(--transition-fast);
+}
+
+.nav-dropdown:hover > a svg {
+  transform: rotate(180deg);
+}
+
+.nav-subnav {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-white);
+  min-width: 180px;
+  padding: 1rem 0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-fast), visibility var(--transition-fast);
+  z-index: 1000;
+  margin-top: 0.5rem;
+}
+
+.nav-subnav::before {
+  content: '';
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+  right: 0;
+  height: 0.5rem;
+}
+
+.nav-dropdown:hover .nav-subnav {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-subnav a {
+  display: block;
+  padding: 0.5rem 1.5rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  text-transform: none;
+  color: var(--color-text-light);
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.nav-subnav a:hover {
+  color: var(--color-accent);
+  background: var(--color-cream);
+}
+
 /* Mobile Menu */
 .menu-toggle {
   display: none;
