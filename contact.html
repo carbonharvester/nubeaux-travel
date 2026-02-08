@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Contact JUNO Travel. Get in touch with our team for booking support, creator enquiries, or partnership opportunities.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Contact | JUNO Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=24">
+
+  <style>
+    /* Nav button group */
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-buttons .nav-cta {
+      padding: 0.5rem 1rem !important;
+      margin-left: 0 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+    }
+
+    .nav-buttons .nav-login {
+      border: 1px solid var(--color-text) !important;
+      padding: 0.5rem 1rem !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+      margin-left: 0 !important;
+      transition: all var(--transition-fast) !important;
+    }
+
+    .nav-buttons .nav-login:hover {
+      background: var(--color-accent) !important;
+      border-color: var(--color-accent) !important;
+      color: var(--color-white) !important;
+    }
+
+    /* Mobile menu buttons */
+    .mobile-menu-cta,
+    .mobile-menu-login {
+      display: inline-block;
+      padding: 1rem 2rem !important;
+      text-align: center;
+      font-size: 0.875rem !important;
+      font-family: var(--font-sans) !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      width: 100%;
+      max-width: 280px;
+      box-sizing: border-box;
+    }
+
+    .mobile-menu-cta {
+      background-color: var(--color-accent);
+      color: var(--color-white) !important;
+      margin-top: var(--space-md);
+    }
+
+    .mobile-menu-login {
+      border: 1px solid var(--color-text);
+      background: transparent;
+      color: var(--color-text) !important;
+      margin-top: var(--space-sm);
+    }
+
+    .mobile-menu-login:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-white) !important;
+    }
+
+    /* Page Header */
+    .contact-header {
+      margin-top: var(--header-height);
+      padding: var(--space-2xl) 0;
+      background: var(--color-warm-cream);
+      text-align: center;
+    }
+    .contact-header h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: var(--space-sm);
+    }
+    .contact-header p {
+      color: var(--color-text-light);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* Contact Cards */
+    .contact-cards {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .contact-card {
+      background: var(--color-off-white);
+      padding: var(--space-xl);
+      border-radius: 12px;
+      text-align: center;
+    }
+    .contact-card-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-md);
+      background: var(--color-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-card-icon svg {
+      width: 28px;
+      height: 28px;
+      color: var(--color-white);
+    }
+    .contact-card h2 {
+      font-size: 1.25rem;
+      margin-bottom: var(--space-sm);
+    }
+    .contact-card p {
+      color: var(--color-text-light);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      margin-bottom: var(--space-md);
+    }
+    .contact-card a.contact-email {
+      display: inline-block;
+      color: var(--color-accent);
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .contact-card a.contact-email:hover {
+      text-decoration: underline;
+    }
+
+    /* Response Times */
+    .response-section {
+      padding: var(--space-xl) 0;
+      background: var(--color-sage-light);
+    }
+    .response-content {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .response-content h2 {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-md);
+    }
+    .response-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .response-item {
+      background: var(--color-white);
+      padding: var(--space-lg);
+      border-radius: 8px;
+    }
+    .response-item h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+    }
+    .response-item p {
+      color: var(--color-text-light);
+      font-size: 0.875rem;
+      margin: 0;
+    }
+
+    /* Emergency Support */
+    .emergency-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-charcoal);
+      color: var(--color-white);
+    }
+    .emergency-content {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .emergency-content h2 {
+      color: var(--color-white);
+      margin-bottom: var(--space-md);
+    }
+    .emergency-content p {
+      opacity: 0.9;
+      line-height: 1.7;
+      margin-bottom: var(--space-lg);
+    }
+    .emergency-email {
+      display: inline-block;
+      background: var(--color-accent);
+      color: var(--color-white);
+      padding: var(--space-md) var(--space-xl);
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .emergency-email:hover {
+      opacity: 0.9;
+    }
+
+    /* Social Links */
+    .social-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+    .social-content {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .social-content h2 {
+      font-size: 1.5rem;
+      margin-bottom: var(--space-sm);
+    }
+    .social-content > p {
+      color: var(--color-text-light);
+      margin-bottom: var(--space-lg);
+    }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+    }
+    .social-link {
+      width: 56px;
+      height: 56px;
+      background: var(--color-off-white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .social-link:hover {
+      background: var(--color-accent);
+    }
+    .social-link svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-text);
+      transition: color 0.2s ease;
+    }
+    .social-link:hover svg {
+      color: var(--color-white);
+    }
+
+    @media (max-width: 1024px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .response-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.svg?v=2" alt="JUNO"></a>
+      <nav class="nav">
+        <a href="for-creators.html">For Creators</a>
+        <a href="trips/">For Travellers</a>
+        <a href="how-it-works.html">How It Works</a>
+        <div class="nav-buttons">
+          <a href="early-access.html" class="nav-cta">Get Early Access</a>
+          <a href="portal/login.html" class="nav-login">Log in</a>
+        </div>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="for-creators.html">For Creators</a>
+    <a href="trips/">For Travellers</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="early-access.html" class="mobile-menu-cta">Get Early Access</a>
+    <a href="portal/login.html" class="mobile-menu-login">Log in</a>
+  </div>
+
+  <main>
+    <!-- Header -->
+    <section class="contact-header">
+      <div class="container">
+        <h1>Get in touch</h1>
+        <p>We're here to help with booking enquiries, creator questions, or anything else.</p>
+      </div>
+    </section>
+
+    <!-- Contact Cards -->
+    <section class="contact-cards">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h2>For Travellers</h2>
+            <p>Questions about bookings, itineraries, perks, or your upcoming trip.</p>
+            <a href="mailto:support@junotravel.com" class="contact-email">support@junotravel.com</a>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <h2>For Creators</h2>
+            <p>Getting started, itinerary questions, earnings, or portal support.</p>
+            <a href="mailto:creators@junotravel.com" class="contact-email">creators@junotravel.com</a>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>
+            </div>
+            <h2>Partnerships</h2>
+            <p>Hotel partnerships, brand collaborations, or press enquiries.</p>
+            <a href="mailto:partnerships@junotravel.com" class="contact-email">partnerships@junotravel.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Response Times -->
+    <section class="response-section">
+      <div class="container">
+        <div class="response-content">
+          <h2>When to expect a response</h2>
+
+          <div class="response-grid">
+            <div class="response-item">
+              <h3>General enquiries</h3>
+              <p>Within 24 hours</p>
+            </div>
+            <div class="response-item">
+              <h3>Quote requests</h3>
+              <p>Within 24-48 hours</p>
+            </div>
+            <div class="response-item">
+              <h3>Booking modifications</h3>
+              <p>Within 24 hours</p>
+            </div>
+            <div class="response-item">
+              <h3>Urgent travel issues</h3>
+              <p>Same day during business hours</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Support -->
+    <section class="emergency-section">
+      <div class="container">
+        <div class="emergency-content">
+          <h2>Travelling now and need help?</h2>
+          <p>If you're currently on a trip and experiencing an issue that needs immediate attention, contact our emergency support line. We have direct relationships with our partners and can help resolve issues quickly.</p>
+          <a href="mailto:urgent@junotravel.com" class="emergency-email">urgent@junotravel.com</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social -->
+    <section class="social-section">
+      <div class="container">
+        <div class="social-content">
+          <h2>Follow along</h2>
+          <p>Travel inspiration and behind-the-scenes updates.</p>
+          <div class="social-links">
+            <a href="https://instagram.com/junotravel" class="social-link" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://twitter.com/junotravel" class="social-link" target="_blank" rel="noopener" aria-label="Twitter">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+            </a>
+            <a href="https://linkedin.com/company/junotravel" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.svg?v=2" alt="JUNO" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>Creator-led travel. Bookable itineraries from people who've been there.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Creators</h4>
+          <div class="footer-links">
+            <a href="for-creators.html">Overview</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="portal/login.html">Log In</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Travellers</h4>
+          <div class="footer-links">
+            <a href="trips/">Browse Trips</a>
+            <a href="why-book-with-us.html">Why Book With Us</a>
+            <a href="perks.html">Exclusive Perks</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="safety.html">Safety & Security</a>
+            <a href="admin/">Admin</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 JUNO Travel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+</body>
+</html>

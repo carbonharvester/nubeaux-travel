@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Frequently asked questions about booking travel through JUNO. Learn about perks, payments, customization, and creator earnings.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>FAQ | JUNO Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=24">
+
+  <style>
+    /* Nav button group */
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-buttons .nav-cta {
+      padding: 0.5rem 1rem !important;
+      margin-left: 0 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+    }
+
+    .nav-buttons .nav-login {
+      border: 1px solid var(--color-text) !important;
+      padding: 0.5rem 1rem !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+      margin-left: 0 !important;
+      transition: all var(--transition-fast) !important;
+    }
+
+    .nav-buttons .nav-login:hover {
+      background: var(--color-accent) !important;
+      border-color: var(--color-accent) !important;
+      color: var(--color-white) !important;
+    }
+
+    /* Mobile menu buttons */
+    .mobile-menu-cta,
+    .mobile-menu-login {
+      display: inline-block;
+      padding: 1rem 2rem !important;
+      text-align: center;
+      font-size: 0.875rem !important;
+      font-family: var(--font-sans) !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      width: 100%;
+      max-width: 280px;
+      box-sizing: border-box;
+    }
+
+    .mobile-menu-cta {
+      background-color: var(--color-accent);
+      color: var(--color-white) !important;
+      margin-top: var(--space-md);
+    }
+
+    .mobile-menu-login {
+      border: 1px solid var(--color-text);
+      background: transparent;
+      color: var(--color-text) !important;
+      margin-top: var(--space-sm);
+    }
+
+    .mobile-menu-login:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-white) !important;
+    }
+
+    /* Page Header */
+    .faq-header {
+      margin-top: var(--header-height);
+      padding: var(--space-2xl) 0;
+      background: var(--color-warm-cream);
+      text-align: center;
+    }
+    .faq-header h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: var(--space-sm);
+    }
+    .faq-header p {
+      color: var(--color-text-light);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* FAQ Toggle */
+    .faq-toggle {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: var(--space-lg) 0;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-light-grey);
+      position: sticky;
+      top: var(--header-height);
+      z-index: 50;
+    }
+    .faq-toggle-btn {
+      padding: var(--space-sm) var(--space-xl);
+      border: 1px solid var(--color-light-grey);
+      border-radius: 100px;
+      background: var(--color-white);
+      font-size: 0.9375rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      color: var(--color-text);
+    }
+    .faq-toggle-btn:hover {
+      border-color: var(--color-charcoal);
+    }
+    .faq-toggle-btn.active {
+      background: var(--color-charcoal);
+      color: var(--color-white);
+      border-color: var(--color-charcoal);
+    }
+
+    /* FAQ Content */
+    .faq-content {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+    .faq-section {
+      max-width: 800px;
+      margin: 0 auto;
+      display: none;
+    }
+    .faq-section.active {
+      display: block;
+    }
+    .faq-section-header {
+      margin-bottom: var(--space-lg);
+    }
+    .faq-section-header .section-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+    .faq-section-header h2 {
+      font-size: 1.75rem;
+    }
+
+    /* Accordion */
+    .faq-item {
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+    .faq-question {
+      width: 100%;
+      padding: var(--space-lg) 0;
+      background: none;
+      border: none;
+      text-align: left;
+      font-size: 1.0625rem;
+      font-family: var(--font-sans);
+      color: var(--color-text);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .faq-question:hover {
+      color: var(--color-accent);
+    }
+    .faq-question svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .faq-item.open .faq-question svg {
+      transform: rotate(180deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .faq-answer-inner {
+      padding-bottom: var(--space-lg);
+      color: var(--color-text-light);
+      line-height: 1.7;
+    }
+    .faq-answer-inner p {
+      margin-bottom: var(--space-sm);
+    }
+    .faq-answer-inner p:last-child {
+      margin-bottom: 0;
+    }
+    .faq-answer-inner ul {
+      margin: var(--space-sm) 0;
+      padding-left: var(--space-lg);
+    }
+    .faq-answer-inner li {
+      margin-bottom: var(--space-xs);
+    }
+
+    /* CTA Section */
+    .faq-cta {
+      padding: var(--space-2xl) 0;
+      text-align: center;
+      background: var(--color-sage-light);
+    }
+    .faq-cta h2 {
+      margin-bottom: var(--space-sm);
+    }
+    .faq-cta p {
+      max-width: 500px;
+      margin: 0 auto var(--space-lg);
+      color: var(--color-text-light);
+    }
+    .faq-cta-buttons {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .faq-toggle {
+        flex-direction: column;
+        gap: var(--space-xs);
+        padding: var(--space-md);
+      }
+      .faq-toggle-btn {
+        width: 100%;
+        text-align: center;
+      }
+      .faq-question {
+        font-size: 1rem;
+      }
+      .faq-cta-buttons {
+        flex-direction: column;
+        padding: 0 var(--space-lg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.svg?v=2" alt="JUNO"></a>
+      <nav class="nav">
+        <a href="for-creators.html">For Creators</a>
+        <a href="trips/">For Travellers</a>
+        <a href="how-it-works.html">How It Works</a>
+        <div class="nav-buttons">
+          <a href="early-access.html" class="nav-cta">Get Early Access</a>
+          <a href="portal/login.html" class="nav-login">Log in</a>
+        </div>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="for-creators.html">For Creators</a>
+    <a href="trips/">For Travellers</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="early-access.html" class="mobile-menu-cta">Get Early Access</a>
+    <a href="portal/login.html" class="mobile-menu-login">Log in</a>
+  </div>
+
+  <main>
+    <!-- Header -->
+    <section class="faq-header">
+      <div class="container">
+        <h1>Frequently Asked Questions</h1>
+        <p>Everything you need to know about booking through JUNO and becoming a creator.</p>
+      </div>
+    </section>
+
+    <!-- Toggle -->
+    <nav class="faq-toggle">
+      <button class="faq-toggle-btn active" data-section="travellers">For Travellers</button>
+      <button class="faq-toggle-btn" data-section="creators">For Creators</button>
+    </nav>
+
+    <!-- FAQ Content -->
+    <section class="faq-content">
+      <div class="container">
+        <!-- Travellers Section -->
+        <div class="faq-section active" id="travellers">
+          <div class="faq-section-header">
+            <span class="section-label">For Travellers</span>
+            <h2>Booking with JUNO</h2>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              How do I book a trip?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>Browse trips from creators, find one you love, and click "Request Quote." We'll check availability for your dates, put together pricing, and send you a detailed quote within 24-48 hours.</p>
+                <p>Once you're happy with the quote, you can confirm your booking and we handle everything from there.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              Can I customize an itinerary?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>Absolutely. Every itinerary is a starting point. You can:</p>
+                <ul>
+                  <li>Adjust travel dates</li>
+                  <li>Change trip length (add or remove days)</li>
+                  <li>Upgrade or change accommodation</li>
+                  <li>Add or remove experiences and activities</li>
+                  <li>Modify for group size</li>
+                </ul>
+                <p>Just let us know your preferences when you request a quote.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              What perks do I get when booking through JUNO?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>At Virtuoso partner properties (over 2,000 luxury hotels worldwide), you automatically receive:</p>
+                <ul>
+                  <li>Complimentary daily breakfast for two</li>
+                  <li>$100 property credit (spa, dining, or experiences)</li>
+                  <li>Room upgrade when available</li>
+                  <li>Early check-in and late checkout when available</li>
+                </ul>
+                <p>These perks are included at no extra cost when you book the Best Available Rate.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              How is payment handled?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>All payments are processed securely. Typically, we collect a deposit (usually 20-30%) to confirm your booking, with the balance due closer to your travel date.</p>
+                <p>We accept major credit cards. You still earn your credit card points on all transactions.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              What if something goes wrong during my trip?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>You have an advocate. Unlike OTAs where you speak to a different agent every time, we have direct relationships with our partners and can resolve issues quickly.</p>
+                <p>Flight cancelled? Room not as expected? Need last-minute changes? Contact us and we'll work with the property directly to find a solution.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              Do I still earn hotel loyalty points?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>Yes. Unlike many OTA bookings, reservations made through JUNO are eligible for hotel loyalty program points at participating properties. Make sure to provide your loyalty number when booking.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              Are your prices competitive with booking direct?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>Yes. We book at the Best Available Rate, which is typically the same rate you'd find on the hotel's website. The difference is you get exclusive perks on top of that rate.</p>
+                <p>The value of included perks (breakfast, property credits, potential upgrades) often exceeds $150-200+ per night at luxury properties.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Creators Section -->
+        <div class="faq-section" id="creators">
+          <div class="faq-section-header">
+            <span class="section-label">For Creators</span>
+            <h2>Earning with JUNO</h2>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              How do I get started as a creator?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>Sign up for early access and connect your Instagram. Share the details of a trip you've taken - the hotels, experiences, and what made it special. We'll work with you to turn it into a bookable itinerary.</p>
+                <p>You don't need a massive following. You just need to have taken trips worth sharing.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              What commission do I earn?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>Creators earn 35-55% of the commission on confirmed bookings, depending on tier:</p>
+                <ul>
+                  <li><strong>Tier 0:</strong> $0-$50k TTM GMV = 35%</li>
+                  <li><strong>Tier 1:</strong> $50k-$300k TTM GMV = 40%</li>
+                  <li><strong>Tier 2:</strong> $300k-$1m TTM GMV = 45%</li>
+                  <li><strong>Tier 3:</strong> $1m-$3m TTM GMV = 50%</li>
+                  <li><strong>Tier 4:</strong> $3m+ TTM GMV = 55%</li>
+                </ul>
+                <p>Commission rates by booking type: Hotels (10-20%), Cruises (10-18%), Tours (15-25%), Car Rentals (8-12%), Travel Insurance (20-30%).</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              How do I get paid?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>Commission is paid after bookings are completed (post-travel). We handle all invoicing with partners and pay you directly via bank transfer.</p>
+                <p>You'll have access to an earnings dashboard showing pending and completed commissions.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              What support do you provide?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>JUNO handles everything operational:</p>
+                <ul>
+                  <li>All traveller enquiries and questions</li>
+                  <li>Pricing and quote creation</li>
+                  <li>Payment processing</li>
+                  <li>Booking confirmations and modifications</li>
+                  <li>Traveller support before, during, and after trips</li>
+                  <li>Commission chasing and invoicing</li>
+                </ul>
+                <p>You focus on sharing trips. We handle the rest.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              Do I need a large following?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>No. Bookings often come from your existing network - friends, family, colleagues, and their extended connections. The best creators start by reaching out to people they already know.</p>
+                <p>A polished brand or massive following isn't required. What matters is having trips worth sharing and people who trust your recommendations.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              What industry perks do creators get?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>As you grow, you unlock access to industry benefits:</p>
+                <ul>
+                  <li><strong>Pro Status:</strong> Travel agent (TA) rates at hotels, FAM trip eligibility, Virtuoso login access</li>
+                  <li><strong>X Status:</strong> All Pro benefits plus Marriott Stars and Luminous access</li>
+                </ul>
+                <p>These perks help you experience properties firsthand and create better recommendations.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              Is there a fee to join?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>No. There's no upfront cost to join JUNO. We only earn when you earn - through commission on confirmed bookings.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="faq-cta">
+      <div class="container">
+        <h2>Still have questions?</h2>
+        <p>We're here to help. Reach out and we'll get back to you within 24 hours.</p>
+        <div class="faq-cta-buttons">
+          <a href="contact.html" class="btn btn-primary">Contact Us</a>
+          <a href="trips/" class="btn btn-outline" style="border-color: var(--color-text); color: var(--color-text);">Browse Trips</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.svg?v=2" alt="JUNO" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>Creator-led travel. Bookable itineraries from people who've been there.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Creators</h4>
+          <div class="footer-links">
+            <a href="for-creators.html">Overview</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="portal/login.html">Log In</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Travellers</h4>
+          <div class="footer-links">
+            <a href="trips/">Browse Trips</a>
+            <a href="why-book-with-us.html">Why Book With Us</a>
+            <a href="perks.html">Exclusive Perks</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="safety.html">Safety & Security</a>
+            <a href="admin/">Admin</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 JUNO Travel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+  <script>
+    // FAQ Toggle
+    document.querySelectorAll('.faq-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Update buttons
+        document.querySelectorAll('.faq-toggle-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        // Update sections
+        const sectionId = this.dataset.section;
+        document.querySelectorAll('.faq-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+      });
+    });
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', function() {
+        const item = this.parentElement;
+        const answer = this.nextElementSibling;
+        const inner = answer.querySelector('.faq-answer-inner');
+
+        // Close other open items in the same section
+        const section = item.closest('.faq-section');
+        section.querySelectorAll('.faq-item.open').forEach(openItem => {
+          if (openItem !== item) {
+            openItem.classList.remove('open');
+            openItem.querySelector('.faq-answer').style.maxHeight = '0';
+          }
+        });
+
+        // Toggle current item
+        if (item.classList.contains('open')) {
+          item.classList.remove('open');
+          answer.style.maxHeight = '0';
+        } else {
+          item.classList.add('open');
+          answer.style.maxHeight = inner.offsetHeight + 'px';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

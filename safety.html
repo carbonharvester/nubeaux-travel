@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="JUNO Travel safety and security. IATA-certified agency, secure payments, and professional booking protection for every trip.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Safety & Security | JUNO Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=24">
+
+  <style>
+    /* Nav button group */
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-buttons .nav-cta {
+      padding: 0.5rem 1rem !important;
+      margin-left: 0 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+    }
+
+    .nav-buttons .nav-login {
+      border: 1px solid var(--color-text) !important;
+      padding: 0.5rem 1rem !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+      margin-left: 0 !important;
+      transition: all var(--transition-fast) !important;
+    }
+
+    .nav-buttons .nav-login:hover {
+      background: var(--color-accent) !important;
+      border-color: var(--color-accent) !important;
+      color: var(--color-white) !important;
+    }
+
+    /* Mobile menu buttons */
+    .mobile-menu-cta,
+    .mobile-menu-login {
+      display: inline-block;
+      padding: 1rem 2rem !important;
+      text-align: center;
+      font-size: 0.875rem !important;
+      font-family: var(--font-sans) !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      width: 100%;
+      max-width: 280px;
+      box-sizing: border-box;
+    }
+
+    .mobile-menu-cta {
+      background-color: var(--color-accent);
+      color: var(--color-white) !important;
+      margin-top: var(--space-md);
+    }
+
+    .mobile-menu-login {
+      border: 1px solid var(--color-text);
+      background: transparent;
+      color: var(--color-text) !important;
+      margin-top: var(--space-sm);
+    }
+
+    .mobile-menu-login:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-white) !important;
+    }
+
+    /* Hero */
+    .safety-hero {
+      position: relative;
+      min-height: 50vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--color-charcoal);
+    }
+    .safety-hero-content {
+      max-width: 700px;
+      padding: var(--space-2xl);
+      color: var(--color-white);
+    }
+    .safety-hero-content h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+      color: var(--color-white);
+    }
+    .safety-hero-content p {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      opacity: 0.9;
+      color: var(--color-white);
+      max-width: 550px;
+    }
+
+    /* Section Label */
+    .section-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
+
+    /* Trust Badges */
+    .badges-section {
+      padding: var(--space-xl) 0;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+    .badges-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-lg);
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .badge-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .badge-item svg {
+      width: 48px;
+      height: 48px;
+      color: var(--color-accent);
+    }
+    .badge-item span {
+      font-size: 0.875rem;
+      color: var(--color-text);
+    }
+
+    /* Security Features */
+    .security-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+    .security-header {
+      max-width: 600px;
+      margin-bottom: var(--space-xl);
+    }
+    .security-header h2 {
+      margin-bottom: var(--space-sm);
+    }
+    .security-header p {
+      color: var(--color-text-light);
+    }
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+      max-width: 900px;
+    }
+    .security-card {
+      background: var(--color-off-white);
+      padding: var(--space-xl);
+      border-radius: 8px;
+    }
+    .security-card h3 {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 1.125rem;
+      margin-bottom: var(--space-md);
+    }
+    .security-card h3 svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-accent);
+    }
+    .security-card p {
+      color: var(--color-text-light);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+    }
+
+    /* Credentials Section */
+    .credentials-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-sage-light);
+    }
+    .credentials-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .credentials-content h2 {
+      margin-bottom: var(--space-md);
+    }
+    .credentials-content > p {
+      color: var(--color-text-light);
+      line-height: 1.7;
+      margin-bottom: var(--space-lg);
+    }
+    .credential-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .credential-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+    .credential-list li:last-child {
+      border-bottom: none;
+    }
+    .credential-list svg {
+      width: 20px;
+      height: 20px;
+      color: #28c840;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .credential-list strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+    .credential-list span {
+      color: var(--color-text-light);
+      font-size: 0.875rem;
+    }
+    .credentials-image {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .credentials-image img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    /* Booking Protection */
+    .protection-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+    .protection-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto var(--space-xl);
+    }
+    .protection-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-md);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .protection-step {
+      text-align: center;
+      padding: var(--space-lg);
+      background: var(--color-off-white);
+      border-radius: 8px;
+    }
+    .protection-step-number {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto var(--space-md);
+      background: var(--color-charcoal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      color: var(--color-white);
+    }
+    .protection-step h3 {
+      font-size: 1rem;
+      margin-bottom: var(--space-xs);
+    }
+    .protection-step p {
+      font-size: 0.8125rem;
+      color: var(--color-text-light);
+      margin: 0;
+    }
+
+    /* Partner Verification */
+    .partners-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-warm-cream);
+    }
+    .partners-content {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .partners-content h2 {
+      margin-bottom: var(--space-md);
+    }
+    .partners-content > p {
+      color: var(--color-text-light);
+      line-height: 1.7;
+      margin-bottom: var(--space-lg);
+    }
+    .partner-checks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-md);
+    }
+    .partner-check {
+      background: var(--color-white);
+      padding: var(--space-md);
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+    .partner-check svg {
+      width: 20px;
+      height: 20px;
+      color: #28c840;
+    }
+
+    /* CTA Section */
+    .safety-cta {
+      padding: var(--space-2xl) 0;
+      text-align: center;
+      background: var(--color-charcoal);
+      color: var(--color-white);
+    }
+    .safety-cta h2 {
+      color: var(--color-white);
+      margin-bottom: var(--space-sm);
+    }
+    .safety-cta p {
+      max-width: 500px;
+      margin: 0 auto var(--space-lg);
+      opacity: 0.9;
+    }
+    .safety-cta-buttons {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+    }
+    .safety-cta .btn-primary {
+      background: var(--color-accent);
+    }
+    .safety-cta .btn-outline {
+      border-color: rgba(255,255,255,0.5);
+      color: var(--color-white);
+    }
+
+    @media (max-width: 1024px) {
+      .badges-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .security-grid {
+        grid-template-columns: 1fr;
+      }
+      .credentials-grid {
+        grid-template-columns: 1fr;
+      }
+      .protection-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .partner-checks {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .safety-hero-content {
+        padding: var(--space-lg);
+      }
+      .badges-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+      }
+      .protection-steps {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+      .safety-cta-buttons {
+        flex-direction: column;
+        padding: 0 var(--space-lg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.svg?v=2" alt="JUNO"></a>
+      <nav class="nav">
+        <a href="for-creators.html">For Creators</a>
+        <a href="trips/">For Travellers</a>
+        <a href="how-it-works.html">How It Works</a>
+        <div class="nav-buttons">
+          <a href="early-access.html" class="nav-cta">Get Early Access</a>
+          <a href="portal/login.html" class="nav-login">Log in</a>
+        </div>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="for-creators.html">For Creators</a>
+    <a href="trips/">For Travellers</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="early-access.html" class="mobile-menu-cta">Get Early Access</a>
+    <a href="portal/login.html" class="mobile-menu-login">Log in</a>
+  </div>
+
+  <main>
+    <!-- Hero -->
+    <section class="safety-hero">
+      <div class="container">
+        <div class="safety-hero-content">
+          <h1>Book with confidence.</h1>
+          <p>Every booking is handled by professional travel agents using secure systems. Your payment is protected, your reservation is confirmed, and you have an advocate if anything goes wrong.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <section class="badges-section">
+      <div class="container">
+        <div class="badges-grid">
+          <div class="badge-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            <span>Secure Payments</span>
+          </div>
+          <div class="badge-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+            <span>IATA Certified</span>
+          </div>
+          <div class="badge-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+            <span>Verified Partners</span>
+          </div>
+          <div class="badge-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            <span>Dedicated Support</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Security Features -->
+    <section class="security-section">
+      <div class="container">
+        <div class="security-header">
+          <span class="section-label">Security</span>
+          <h2>How we protect your booking</h2>
+          <p>Multiple layers of protection for every transaction.</p>
+        </div>
+
+        <div class="security-grid">
+          <div class="security-card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              Encrypted Payments
+            </h3>
+            <p>All payment data is encrypted using industry-standard SSL/TLS. We never store your full card details. Payments are processed through PCI-compliant systems.</p>
+          </div>
+          <div class="security-card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+              Confirmed Reservations
+            </h3>
+            <p>Every booking is confirmed directly with the property or supplier. You receive confirmation numbers and documentation for all reservations.</p>
+          </div>
+          <div class="security-card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              Real-Time Updates
+            </h3>
+            <p>Booking confirmations, itinerary changes, and important updates are sent immediately. You're never left wondering about your reservation status.</p>
+          </div>
+          <div class="security-card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+              Professional Handling
+            </h3>
+            <p>Every booking is processed by experienced travel professionals who verify details, confirm rates, and ensure perks are properly applied.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Credentials -->
+    <section class="credentials-section">
+      <div class="container">
+        <div class="credentials-grid">
+          <div class="credentials-content">
+            <span class="section-label">Credentials</span>
+            <h2>A properly licensed travel agency.</h2>
+            <p>JUNO operates as a licensed travel agency with all required industry certifications and memberships.</p>
+
+            <ul class="credential-list">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <div>
+                  <strong>IATA Accredited</strong>
+                  <span>International Air Transport Association member with agency identification number</span>
+                </div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <div>
+                  <strong>Virtuoso Member</strong>
+                  <span>Part of the world's largest luxury travel consortium</span>
+                </div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <div>
+                  <strong>Errors & Omissions Insurance</strong>
+                  <span>Professional liability coverage protecting your bookings</span>
+                </div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                <div>
+                  <strong>Seller of Travel Registration</strong>
+                  <span>Properly registered in all required jurisdictions</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="credentials-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_400,q_auto,f_auto/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Professional travel booking" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Protection -->
+    <section class="protection-section">
+      <div class="container">
+        <div class="protection-header">
+          <span class="section-label">Process</span>
+          <h2>How every booking is protected</h2>
+        </div>
+
+        <div class="protection-steps">
+          <div class="protection-step">
+            <div class="protection-step-number">1</div>
+            <h3>Quote Request</h3>
+            <p>You request a quote with your dates and preferences</p>
+          </div>
+          <div class="protection-step">
+            <div class="protection-step-number">2</div>
+            <h3>Verification</h3>
+            <p>We verify availability and confirm rates directly with partners</p>
+          </div>
+          <div class="protection-step">
+            <div class="protection-step-number">3</div>
+            <h3>Secure Payment</h3>
+            <p>Payment processed through encrypted, PCI-compliant systems</p>
+          </div>
+          <div class="protection-step">
+            <div class="protection-step-number">4</div>
+            <h3>Confirmation</h3>
+            <p>You receive documented confirmation for all reservations</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Partner Verification -->
+    <section class="partners-section">
+      <div class="container">
+        <div class="partners-content">
+          <span class="section-label">Partners</span>
+          <h2>Verified hotels and suppliers.</h2>
+          <p>We work with established, reputable partners. Every property and experience in our itineraries has been vetted for quality and reliability.</p>
+
+          <div class="partner-checks">
+            <div class="partner-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+              Established properties
+            </div>
+            <div class="partner-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+              Verified reviews
+            </div>
+            <div class="partner-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+              Direct relationships
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="safety-cta">
+      <div class="container">
+        <h2>Ready to book with confidence?</h2>
+        <p>Browse trips from creators who've been there. Book knowing you're protected every step of the way.</p>
+        <div class="safety-cta-buttons">
+          <a href="trips/" class="btn btn-primary">Browse Trips</a>
+          <a href="faq.html" class="btn btn-outline">Read FAQ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.svg?v=2" alt="JUNO" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>Creator-led travel. Bookable itineraries from people who've been there.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Creators</h4>
+          <div class="footer-links">
+            <a href="for-creators.html">Overview</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="portal/login.html">Log In</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Travellers</h4>
+          <div class="footer-links">
+            <a href="trips/">Browse Trips</a>
+            <a href="why-book-with-us.html">Why Book With Us</a>
+            <a href="perks.html">Exclusive Perks</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="safety.html">Safety & Security</a>
+            <a href="admin/">Admin</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 JUNO Travel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+</body>
+</html>

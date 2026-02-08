@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Why book travel through JUNO instead of OTAs? Exclusive perks, personalized support, and real advocacy when things go wrong.">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>Why Book With Us | JUNO Travel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=24">
+
+  <style>
+    /* Nav button group */
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-buttons .nav-cta {
+      padding: 0.5rem 1rem !important;
+      margin-left: 0 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+    }
+
+    .nav-buttons .nav-login {
+      border: 1px solid var(--color-text) !important;
+      padding: 0.5rem 1rem !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em !important;
+      margin-left: 0 !important;
+      transition: all var(--transition-fast) !important;
+    }
+
+    .nav-buttons .nav-login:hover {
+      background: var(--color-accent) !important;
+      border-color: var(--color-accent) !important;
+      color: var(--color-white) !important;
+    }
+
+    /* Mobile menu buttons */
+    .mobile-menu-cta,
+    .mobile-menu-login {
+      display: inline-block;
+      padding: 1rem 2rem !important;
+      text-align: center;
+      font-size: 0.875rem !important;
+      font-family: var(--font-sans) !important;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      width: 100%;
+      max-width: 280px;
+      box-sizing: border-box;
+    }
+
+    .mobile-menu-cta {
+      background-color: var(--color-accent);
+      color: var(--color-white) !important;
+      margin-top: var(--space-md);
+    }
+
+    .mobile-menu-login {
+      border: 1px solid var(--color-text);
+      background: transparent;
+      color: var(--color-text) !important;
+      margin-top: var(--space-sm);
+    }
+
+    .mobile-menu-login:hover {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-white) !important;
+    }
+
+    /* Hero */
+    .why-hero {
+      position: relative;
+      min-height: 60vh;
+      margin-top: var(--header-height);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .why-hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .why-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .why-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.2) 100%);
+    }
+    .why-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      padding: var(--space-2xl);
+      color: var(--color-white);
+    }
+    .why-hero-content h1 {
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+      color: var(--color-white);
+    }
+    .why-hero-content p {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      opacity: 0.9;
+      color: var(--color-white);
+      max-width: 550px;
+    }
+
+    /* Section Label */
+    .section-label {
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+      display: block;
+    }
+
+    /* Problem Section */
+    .problem-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+    .problem-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto var(--space-xl);
+    }
+    .problem-header h2 {
+      margin-bottom: var(--space-sm);
+    }
+    .problem-header p {
+      color: var(--color-text-light);
+      font-size: 1.0625rem;
+    }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .problem-card {
+      background: var(--color-off-white);
+      padding: var(--space-xl);
+      border-radius: 8px;
+      text-align: center;
+    }
+    .problem-card svg {
+      width: 48px;
+      height: 48px;
+      color: #c9a87c;
+      margin-bottom: var(--space-md);
+    }
+    .problem-card h3 {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-sm);
+    }
+    .problem-card p {
+      color: var(--color-text-light);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-sage-light);
+    }
+    .benefits-header {
+      max-width: 600px;
+      margin-bottom: var(--space-xl);
+    }
+    .benefits-header h2 {
+      margin-bottom: var(--space-sm);
+    }
+    .benefits-header p {
+      color: var(--color-text-light);
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+      max-width: 1000px;
+    }
+    .benefit-card {
+      background: var(--color-white);
+      padding: var(--space-xl);
+      border-radius: 8px;
+      display: flex;
+      gap: var(--space-md);
+    }
+    .benefit-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .benefit-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--color-white);
+    }
+    .benefit-content h3 {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-xs);
+    }
+    .benefit-content p {
+      color: var(--color-text-light);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* Comparison Section */
+    .comparison-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-white);
+    }
+    .comparison-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto var(--space-xl);
+    }
+    .comparison-table {
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      border-bottom: 1px solid var(--color-light-grey);
+    }
+    .comparison-row:last-child {
+      border-bottom: none;
+    }
+    .comparison-row.header {
+      background: var(--color-charcoal);
+      color: var(--color-white);
+    }
+    .comparison-cell {
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      align-items: center;
+    }
+    .comparison-row.header .comparison-cell {
+      font-weight: 500;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .comparison-cell:nth-child(2),
+    .comparison-cell:nth-child(3) {
+      justify-content: center;
+      text-align: center;
+    }
+    .comparison-cell.feature {
+      font-size: 0.9375rem;
+    }
+    .check-yes {
+      color: #28c840;
+    }
+    .check-no {
+      color: #ccc;
+    }
+    .comparison-cell svg {
+      width: 24px;
+      height: 24px;
+    }
+    .juno-col {
+      background: #fdf9f6;
+    }
+
+    /* Support Section */
+    .support-section {
+      position: relative;
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .support-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .support-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .support-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
+    }
+    .support-content {
+      position: relative;
+      z-index: 2;
+      max-width: 550px;
+      padding: var(--space-2xl);
+      color: var(--color-white);
+    }
+    .support-content h2 {
+      color: var(--color-white);
+      margin-bottom: var(--space-md);
+    }
+    .support-content p {
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      margin-bottom: var(--space-md);
+      opacity: 0.9;
+    }
+    .support-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .support-list li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-xs) 0;
+      font-size: 0.9375rem;
+    }
+    .support-list svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    /* Points Section */
+    .points-section {
+      padding: var(--space-2xl) 0;
+      background: var(--color-warm-cream);
+    }
+    .points-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .points-content h2 {
+      margin-bottom: var(--space-md);
+    }
+    .points-content p {
+      color: var(--color-text-light);
+      line-height: 1.7;
+      margin-bottom: var(--space-md);
+    }
+    .points-highlight {
+      background: var(--color-white);
+      padding: var(--space-lg);
+      border-radius: 8px;
+      border-left: 4px solid var(--color-accent);
+    }
+    .points-highlight p {
+      margin: 0;
+      font-style: italic;
+    }
+    .points-image {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .points-image img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    /* CTA Section */
+    .why-cta {
+      padding: var(--space-2xl) 0;
+      text-align: center;
+      background: var(--color-sand);
+    }
+    .why-cta h2 {
+      margin-bottom: var(--space-sm);
+    }
+    .why-cta p {
+      max-width: 500px;
+      margin: 0 auto var(--space-lg);
+      color: var(--color-text-light);
+    }
+    .why-cta-buttons {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+    }
+
+    @media (max-width: 1024px) {
+      .problem-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+      .comparison-row {
+        grid-template-columns: 1.5fr 1fr 1fr;
+      }
+      .points-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .why-hero {
+        min-height: 50vh;
+      }
+      .why-hero-content {
+        padding: var(--space-lg);
+      }
+      .why-hero-overlay {
+        background: rgba(0,0,0,0.6);
+      }
+      .comparison-cell {
+        padding: var(--space-sm) var(--space-md);
+        font-size: 0.875rem;
+      }
+      .comparison-cell.feature {
+        font-size: 0.8125rem;
+      }
+      .support-overlay {
+        background: rgba(0,0,0,0.6);
+      }
+      .why-cta-buttons {
+        flex-direction: column;
+        padding: 0 var(--space-lg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><img src="assets/logo.svg?v=2" alt="JUNO"></a>
+      <nav class="nav">
+        <a href="for-creators.html">For Creators</a>
+        <a href="trips/">For Travellers</a>
+        <a href="how-it-works.html">How It Works</a>
+        <div class="nav-buttons">
+          <a href="early-access.html" class="nav-cta">Get Early Access</a>
+          <a href="portal/login.html" class="nav-login">Log in</a>
+        </div>
+      </nav>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <a href="for-creators.html">For Creators</a>
+    <a href="trips/">For Travellers</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="early-access.html" class="mobile-menu-cta">Get Early Access</a>
+    <a href="portal/login.html" class="mobile-menu-login">Log in</a>
+  </div>
+
+  <main>
+    <!-- Hero -->
+    <section class="why-hero">
+      <div class="why-hero-bg">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_900,q_auto,f_auto/v1770230458/Namibia_onguma_Klein-113_f6iean.jpg" alt="Luxury travel experience" fetchpriority="high">
+      </div>
+      <div class="why-hero-overlay"></div>
+      <div class="why-hero-content">
+        <h1>Same prices. Better experience. Exclusive perks.</h1>
+        <p>When you book through a creator on JUNO, you get room upgrades, complimentary breakfast, property credits, and a dedicated advocate. All at the same price you'd pay anywhere else.</p>
+      </div>
+    </section>
+
+    <!-- The Problem with OTAs -->
+    <section class="problem-section">
+      <div class="container">
+        <div class="problem-header">
+          <span class="section-label">The Problem</span>
+          <h2>What you miss when you book through an OTA</h2>
+          <p>Online travel agencies charge hotels over 20% in fees. To recoup costs, hotels deprioritise OTA bookings for upgrades, perks, and service.</p>
+        </div>
+
+        <div class="problem-grid">
+          <div class="problem-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4M12 16h.01"/></svg>
+            <h3>No upgrade priority</h3>
+            <p>OTA bookings are last in line for room upgrades and preferred room assignments.</p>
+          </div>
+          <div class="problem-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><path d="M8 10h8M8 14h4"/></svg>
+            <h3>Call centre support</h3>
+            <p>When something goes wrong, you speak to a rotating cast of agents who don't know you.</p>
+          </div>
+          <div class="problem-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <h3>No exclusive perks</h3>
+            <p>No complimentary breakfast. No property credits. No VIP treatment.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits-section">
+      <div class="container">
+        <div class="benefits-header">
+          <span class="section-label">What You Get</span>
+          <h2>Book through JUNO. Get more.</h2>
+          <p>Every booking comes with exclusive perks that OTAs simply cannot offer.</p>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Room upgrades</h3>
+              <p>When available, our bookings get priority for upgrades to better rooms, suites, and premium views.</p>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1M5 8H4a4 4 0 000 8h1"/><path d="M6 8h12v9a4 4 0 01-4 4h-4a4 4 0 01-4-4V8z"/><path d="M6 1v3M18 1v3M12 1v3"/></svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Complimentary breakfast</h3>
+              <p>Daily breakfast for two at partner properties. A $50-100+ daily value included at no extra cost.</p>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Property credit</h3>
+              <p>$100 credit for spa, dining, or experiences at Virtuoso partner hotels.</p>
+            </div>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div class="benefit-content">
+              <h3>Flexible check-in/out</h3>
+              <p>Early check-in and late checkout when available. Arrive on your schedule.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="comparison-section">
+      <div class="container">
+        <div class="comparison-header">
+          <span class="section-label">Comparison</span>
+          <h2>JUNO vs. booking direct</h2>
+        </div>
+
+        <div class="comparison-table">
+          <div class="comparison-row header">
+            <div class="comparison-cell">Feature</div>
+            <div class="comparison-cell">OTAs</div>
+            <div class="comparison-cell juno-col">JUNO</div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">Room upgrade priority</div>
+            <div class="comparison-cell"><svg class="check-no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div>
+            <div class="comparison-cell juno-col"><svg class="check-yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">Complimentary breakfast</div>
+            <div class="comparison-cell"><svg class="check-no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div>
+            <div class="comparison-cell juno-col"><svg class="check-yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">Property credits ($100+)</div>
+            <div class="comparison-cell"><svg class="check-no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div>
+            <div class="comparison-cell juno-col"><svg class="check-yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">Dedicated support person</div>
+            <div class="comparison-cell"><svg class="check-no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div>
+            <div class="comparison-cell juno-col"><svg class="check-yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">Earn hotel loyalty points</div>
+            <div class="comparison-cell"><svg class="check-no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div>
+            <div class="comparison-cell juno-col"><svg class="check-yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell feature">Advocacy when things go wrong</div>
+            <div class="comparison-cell"><svg class="check-no" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div>
+            <div class="comparison-cell juno-col"><svg class="check-yes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="support-section">
+      <div class="support-bg">
+        <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_1920,h_900,q_auto,f_auto/v1769957823/Namibia_onguma_Klein-280_ivrjst.jpg" alt="Travel support" loading="lazy">
+      </div>
+      <div class="support-overlay"></div>
+      <div class="support-content">
+        <span class="section-label" style="color: rgba(255,255,255,0.7);">Real Support</span>
+        <h2>When things go wrong, you have an advocate.</h2>
+        <p>Flight cancelled? Room not as expected? Need last-minute changes? You have someone in your corner with relationships and knowledge to solve problems fast.</p>
+        <ul class="support-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Direct relationships with hotels and partners
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Support before, during, and after your trip
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            One consistent contact who knows your booking
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Problem resolution, not call centre scripts
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Credit Card Points -->
+    <section class="points-section">
+      <div class="container">
+        <div class="points-grid">
+          <div class="points-content">
+            <span class="section-label">Points & Rewards</span>
+            <h2>You still earn your credit card points.</h2>
+            <p>A common misconception: booking through a travel advisor means losing credit card rewards. That's not true.</p>
+            <p>You earn the same points on your card whether you book through us or directly. And at partner hotels, you still earn loyalty program points too.</p>
+            <div class="points-highlight">
+              <p>"Save your points for flights, where they typically provide the best value. Let us handle hotels, where our perks add real value on top of points."</p>
+            </div>
+          </div>
+          <div class="points-image">
+            <img src="https://res.cloudinary.com/dng12bd0a/image/upload/c_fill,w_600,h_400,q_auto,f_auto/v1769733714/Namibia_onguma_Klein-100_u80mk0.jpg" alt="Luxury accommodation" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="why-cta">
+      <div class="container">
+        <h2>Ready to experience the difference?</h2>
+        <p>Browse trips curated by creators who've been there. Book with confidence knowing you're getting more.</p>
+        <div class="why-cta-buttons">
+          <a href="trips/" class="btn btn-primary">Browse Trips</a>
+          <a href="perks.html" class="btn btn-outline" style="border-color: var(--color-text); color: var(--color-text);">See All Perks</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logo.svg?v=2" alt="JUNO" style="height: 20px; margin-bottom: var(--space-md);">
+          <p>Creator-led travel. Bookable itineraries from people who've been there.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Creators</h4>
+          <div class="footer-links">
+            <a href="for-creators.html">Overview</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="portal/login.html">Log In</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">For Travellers</h4>
+          <div class="footer-links">
+            <a href="trips/">Browse Trips</a>
+            <a href="why-book-with-us.html">Why Book With Us</a>
+            <a href="perks.html">Exclusive Perks</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="safety.html">Safety & Security</a>
+            <a href="admin/">Admin</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 JUNO Travel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js?v=2"></script>
+</body>
+</html>
