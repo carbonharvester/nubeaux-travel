@@ -8,27 +8,28 @@
 :root {
   /* Light, Airy Palette with Subtle Warmth */
   --color-white: #ffffff;
-  --color-off-white: #fafafa;
+  --color-off-white: #FDF8F5;
   --color-cream: #f8f6f3;
-  --color-warm-cream: #f5f0ea;
+  --color-warm-cream: #FDF8F5;
   --color-sage-light: #f4f6f4;
-  --color-sand: #f7f4f0;
+  --color-sand: #FAF7F4;
   --color-slate-light: #f5f5f6;
-  --color-light-grey: #e8e6e3;
+  --color-light-grey: #e8e4e0;
   --color-medium-grey: #9a9a9a;
-  --color-text: #2d2d2d;
-  --color-text-light: #6b6b6b;
+  --color-text: #2D2926;
+  --color-text-light: #5a5652;
 
-  /* Accent Colors */
-  --color-accent: #c2703e;
-  --color-accent-hover: #a85d32;
-  --color-gold: #b8953f;
+  /* Accent Colors - Direction 1: Warm Sunset */
+  --color-accent: #E86A33;
+  --color-accent-hover: #d55a25;
+  --color-gold: #FFB347;
   --color-sage: #7a8b7a;
-  --color-terracotta-soft: #d4a574;
-  --color-mocha: #3E3228;
+  --color-terracotta-soft: #FFB347;
+  --color-mocha: #2D2926;
 
-  /* Typography */
-  --font-serif: 'Playfair Display', Georgia, serif;
+  /* Typography - Direction 1: Plus Jakarta Sans */
+  --font-serif: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Spacing */
@@ -89,8 +90,8 @@ a {
 
 /* ----- Typography ----- */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: var(--color-text);
@@ -119,18 +120,19 @@ p {
   line-height: 1.6;
 }
 
-/* Intro Statement - Elegant Serif */
+/* Intro Statement - Bold Display */
 .intro-statement {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: clamp(1.5rem, 3vw, 2.25rem);
-  line-height: 1.5;
+  font-weight: 700;
+  line-height: 1.4;
   color: var(--color-text);
   max-width: 800px;
   margin: 0 auto;
 }
 
 .intro-statement em {
-  font-style: italic;
+  font-style: normal;
   color: var(--color-accent);
 }
 
@@ -553,11 +555,14 @@ p {
 /* ----- Buttons ----- */
 .btn {
   display: inline-block;
-  font-size: 0.8125rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 1rem 2.5rem;
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  padding: 1rem 2rem;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
   transition: all var(--transition-fast);
   position: relative;
