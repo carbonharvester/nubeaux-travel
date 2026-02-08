@@ -149,6 +149,8 @@
     .creator-hero-ctas {
       display: flex;
       gap: var(--space-md);
+      align-items: center;
+      flex-wrap: nowrap;
       animation: fadeInUp 0.8s ease 0.3s forwards;
       opacity: 0;
     }
@@ -1927,7 +1929,13 @@
       }
 
       .creator-hero-ctas {
-        flex-direction: column;
+        gap: var(--space-sm);
+      }
+
+      .creator-hero-ctas .btn {
+        padding: 0.7rem 1rem !important;
+        font-size: 0.65rem !important;
+        white-space: nowrap;
       }
 
       .ig-post-mockup,
@@ -1994,6 +2002,17 @@
 
       .earnings-table .tier-badge {
         display: none;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .creator-hero-ctas {
+        gap: 0.5rem;
+      }
+
+      .creator-hero-ctas .btn {
+        padding: 0.6rem 0.75rem !important;
+        font-size: 0.6rem !important;
       }
     }
   </style>
