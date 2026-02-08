@@ -288,6 +288,7 @@ p {
   box-shadow: 0 10px 40px rgba(0,0,0,0.1);
   opacity: 0;
   visibility: hidden;
+  display: none;
   transition: opacity var(--transition-fast), visibility var(--transition-fast);
   z-index: 1000;
   margin-top: 0.5rem;
@@ -305,6 +306,7 @@ p {
 .nav-dropdown:hover .nav-subnav {
   opacity: 1;
   visibility: visible;
+  display: block;
 }
 
 .nav-subnav a {
